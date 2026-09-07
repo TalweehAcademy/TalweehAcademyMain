@@ -9,7 +9,8 @@
     "build:deploy": "npm run build",
     "start": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cms:import": "node scripts/import-cms-snapshot.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
