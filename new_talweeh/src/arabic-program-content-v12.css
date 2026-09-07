@@ -1,0 +1,268 @@
+
+/* TALWEEH ARABIC PROGRAM CONTENT REFINEMENT V1.2 START */
+
+/* Remove the repeated old introduction video completely. The redesigned page
+   already contains the featured video above this content. */
+.arabic-v2-legacy .arabic-legacy-duplicate-media {
+  display:none !important;
+}
+
+/* The preserved page is now treated as content, not as a second website. */
+.arabic-v2-legacy--enhanced {
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+.arabic-v2-legacy--enhanced .arabic-legacy-section {
+  position:relative;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:54px 52px !important;
+  border:0 !important;
+  border-bottom:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 96%,transparent) !important;
+}
+
+.arabic-v2-legacy--enhanced .arabic-legacy-section:last-child {
+  border-bottom:0 !important;
+}
+
+.arabic-v2-legacy--enhanced .arabic-legacy-section > h2,
+.arabic-v2-legacy--enhanced .arabic-legacy-section > h3 {
+  max-width:780px;
+  margin-top:0 !important;
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-weight:600 !important;
+  letter-spacing:-.025em !important;
+}
+
+.arabic-v2-legacy--enhanced .arabic-legacy-section > h2 {
+  font-size:clamp(31px,3.5vw,44px) !important;
+  line-height:1.08 !important;
+}
+
+.arabic-v2-legacy--enhanced .arabic-legacy-section > p {
+  max-width:860px;
+  color:var(--academy-text,#53675a) !important;
+  font-size:15px !important;
+  line-height:1.8 !important;
+}
+
+/* ============================================================
+   LEARNING OBJECTIVES
+   ============================================================ */
+.arabic-v2-legacy .arabic-legacy-objectives {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb,#e3ece1 50%,var(--academy-surface,#fff)),
+      color-mix(in srgb,var(--academy-surface,#fff) 97%,transparent)
+    ) !important;
+}
+
+.arabic-v2-legacy .arabic-legacy-objectives::before {
+  content:'Learning outcomes';
+  display:block;
+  margin:0 0 10px;
+  color:#a67d43;
+  font:800 9px/1.2 Arial,sans-serif;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+}
+
+.arabic-v2-legacy .arabic-objective-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:12px !important;
+  max-width:none !important;
+  margin:28px 0 0 !important;
+  padding:0 !important;
+  list-style:none !important;
+}
+
+.arabic-v2-legacy .arabic-objective-card {
+  position:relative;
+  display:flex !important;
+  align-items:flex-start !important;
+  min-height:90px;
+  margin:0 !important;
+  padding:18px 18px 18px 56px !important;
+  border:1px solid color-mix(in srgb,var(--academy-line,#dce4dc) 86%,transparent) !important;
+  border-radius:12px !important;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 92%,transparent) !important;
+  color:var(--academy-text,#466050) !important;
+  font:500 13.5px/1.62 Arial,sans-serif !important;
+  box-shadow:0 7px 19px rgba(22,55,37,.035) !important;
+}
+
+.arabic-v2-legacy .arabic-objective-card::before {
+  content:'✓';
+  position:absolute;
+  top:17px;
+  left:17px;
+  display:grid;
+  place-items:center;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#214d37;
+  color:#edd0a0;
+  font:800 12px/1 Arial,sans-serif;
+}
+
+/* ============================================================
+   MODULES
+   ============================================================ */
+.arabic-v2-legacy .arabic-legacy-modules {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb,var(--academy-canvas,#fbfaf6) 82%,var(--academy-surface,#fff)),
+      color-mix(in srgb,var(--academy-surface,#fff) 97%,transparent)
+    ) !important;
+}
+
+.arabic-v2-legacy .arabic-legacy-modules::before {
+  content:'Program pathway';
+  display:block;
+  margin:0 0 10px;
+  color:#a67d43;
+  font:800 9px/1.2 Arial,sans-serif;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+}
+
+.arabic-v2-legacy .arabic-module-card {
+  position:relative !important;
+  margin:12px 0 0 !important;
+  padding:19px 20px 19px 68px !important;
+  overflow:hidden !important;
+  border:1px solid color-mix(in srgb,var(--academy-line,#dce4dc) 90%,transparent) !important;
+  border-radius:12px !important;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 95%,transparent) !important;
+  box-shadow:0 7px 22px rgba(22,55,37,.035) !important;
+}
+
+.arabic-v2-legacy .arabic-module-card::before {
+  content:var(--module-index,'•');
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  display:grid;
+  place-items:center;
+  width:48px;
+  background:#173827;
+  color:#e8c995;
+  font:800 10px/1 Arial,sans-serif;
+  letter-spacing:.4px;
+}
+
+.arabic-v2-legacy .arabic-module-card h3,
+.arabic-v2-legacy .arabic-module-card h4,
+.arabic-v2-legacy .arabic-module-card h5 {
+  margin:0 0 6px !important;
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-size:19px !important;
+  line-height:1.25 !important;
+}
+
+.arabic-v2-legacy .arabic-module-card p {
+  margin:0 !important;
+  color:var(--academy-muted,#697a70) !important;
+  font-size:12.5px !important;
+  line-height:1.65 !important;
+}
+
+/* If the preserved modules already use a grid, keep cards aligned. */
+.arabic-v2-legacy .arabic-legacy-modules [class*="grid"],
+.arabic-v2-legacy .arabic-legacy-modules [class*="modules"] {
+  gap:12px !important;
+}
+
+/* ============================================================
+   AUDIENCE / FORMAT / OTHER INFORMATION
+   ============================================================ */
+.arabic-v2-legacy .arabic-info-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+  margin:24px 0 0 !important;
+  padding:0 !important;
+  list-style:none !important;
+}
+
+.arabic-v2-legacy .arabic-info-grid > li {
+  margin:0 !important;
+  padding:15px 16px !important;
+  border-left:2px solid #c79a59 !important;
+  border-radius:0 9px 9px 0 !important;
+  background:color-mix(in srgb,var(--academy-canvas,#fbfaf6) 66%,var(--academy-surface,#fff)) !important;
+  color:var(--academy-text,#4b6254) !important;
+  font-size:13px !important;
+  line-height:1.6 !important;
+}
+
+/* Tame old giant imagery/cards within the preserved content. */
+.arabic-v2-legacy--enhanced img {
+  max-width:100% !important;
+  height:auto !important;
+  border-radius:13px;
+}
+
+.arabic-v2-legacy--enhanced button,
+.arabic-v2-legacy--enhanced a[class*="button"],
+.arabic-v2-legacy--enhanced a[class*="btn"] {
+  border-radius:9px !important;
+}
+
+/* Study Mode follows the same surfaces as the rest of the public site. */
+[data-theme="dark"] .arabic-v2-legacy--enhanced .arabic-legacy-section {
+  background:rgba(17,36,26,.94) !important;
+  border-color:rgba(220,230,223,.10) !important;
+}
+
+[data-theme="dark"] .arabic-v2-legacy .arabic-legacy-objectives {
+  background:linear-gradient(135deg,rgba(35,69,49,.40),rgba(17,36,26,.96)) !important;
+}
+
+[data-theme="dark"] .arabic-v2-legacy .arabic-legacy-modules {
+  background:linear-gradient(180deg,rgba(12,30,21,.94),rgba(17,36,26,.96)) !important;
+}
+
+[data-theme="dark"] .arabic-v2-legacy .arabic-objective-card,
+[data-theme="dark"] .arabic-v2-legacy .arabic-module-card {
+  border-color:rgba(220,230,223,.11) !important;
+  background:rgba(255,255,255,.025) !important;
+}
+
+[data-theme="dark"] .arabic-v2-legacy .arabic-info-grid > li {
+  background:rgba(255,255,255,.025) !important;
+}
+
+@media(max-width:760px) {
+  .arabic-v2-legacy--enhanced .arabic-legacy-section {
+    padding:38px 24px !important;
+  }
+
+  .arabic-v2-legacy .arabic-objective-grid,
+  .arabic-v2-legacy .arabic-info-grid {
+    grid-template-columns:1fr !important;
+  }
+
+  .arabic-v2-legacy .arabic-module-card {
+    padding:17px 16px 17px 60px !important;
+  }
+
+  .arabic-v2-legacy .arabic-module-card::before {
+    width:43px;
+  }
+}
+
+/* TALWEEH ARABIC PROGRAM CONTENT REFINEMENT V1.2 END */

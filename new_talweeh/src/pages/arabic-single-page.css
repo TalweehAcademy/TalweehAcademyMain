@@ -1,0 +1,16 @@
+.arb-single-page .arb-hero,
+.arb-single-page .arb-welcome-video,
+.arb-single-page .arb-membership-finish {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0;
+  box-shadow: none !important;
+}
+.arb-single-page .arb-hero::before,
+.arb-single-page .arb-hero::after,
+.arb-single-page .arb-welcome-video::before,
+.arb-single-page .arb-welcome-video::after { content: none !important; }
+.arb-single-page .arb-welcome-video { padding: 0; margin: 36px auto 0; }
+.arb-single-page .arb-welcome-video .youtube-embed { box-shadow: none; }
+.arb-single-page .arb-membership-finish { text-align: center; padding: 24px 24px 72px; }
+.arb-single-page .arb-membership-finish .arb-btn-primary { font-size: 17px; padding: 15px 32px; }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
 import { extractVideoId } from '../utils/youtube'
+import { getArticleBySlug } from '../data/articles'
 
 function formatArticleDate(date) {
   if (!date) return ''
@@ -27,32 +27,16 @@ function getArticleEmbedUrl(url) {
 
 export default function ArticleDetailPage() {
   const { slug } = useParams()
-  const [article, setArticle] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    setLoading(true)
-    setError(null)
-
-    fetch(`/api/articles/${slug}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject('Article not found')))
-      .then((data) => setArticle(data))
-      .catch((e) => setError(String(e)))
-      .finally(() => setLoading(false))
-  }, [slug])
-
+  const article = getArticleBySlug(slug)
   const embedUrl = getArticleEmbedUrl(article?.youtubeUrl)
 
   return (
     <div className="page-shell">
       <PageHeader />
       <main>
-        {loading && <p className="courses-status">Loading article…</p>}
-
-        {error && (
+        {!article && (
           <section className="article-detail-shell">
-            <p className="courses-status courses-error">{error}</p>
+            <p className="courses-status courses-error">Article not found</p>
             <p><Link to="/articles">Back to Articles</Link></p>
           </section>
         )}
@@ -63,16 +47,17 @@ export default function ArticleDetailPage() {
               <Link to="/">Home</Link>
               <span>|</span>
               <Link to="/articles">Articles</Link>
-              <span>|</span>
-              <span>{article.category}</span>
+              {article.category && <><span>|</span><span>{article.category}</span></>}
             </nav>
 
             <header className="article-detail-header">
               <h1>{article.title}</h1>
-              <div className="article-meta">
-                <span>{formatArticleDate(article.publishedAt)}</span>
-                <span>{article.readTime}</span>
-              </div>
+              {(article.publishedAt || article.readTime) && (
+                <div className="article-meta">
+                  {article.publishedAt && <span>{formatArticleDate(article.publishedAt)}</span>}
+                  {article.readTime && <span>{article.readTime}</span>}
+                </div>
+              )}
             </header>
 
             {article.imageUrl && (

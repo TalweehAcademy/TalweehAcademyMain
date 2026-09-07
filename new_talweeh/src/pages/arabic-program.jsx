@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { PageHeader, PageFooter } from './_shared'
 import VideoFacade from '../components/VideoFacade'
-import { ASSET } from '../constants/assets'
+import './arabic-single-page.css'
 import {
   ARABIC_LINKS, PROGRAM_HERO, LEARNING_OBJECTIVES_INTRO, LEARNING_OBJECTIVES,
-  PROGRAM_MODULES, PROGRAM_CALENDAR_TEXT, PROGRAM_FACTS, PROGRAM_INVITATION,
+  PROGRAM_MODULES,
 } from '../content/arabicProgram'
 
 export function Accordion({ items }) {
@@ -35,35 +34,21 @@ export default function ArabicProgramPage() {
   const current = PROGRAM_MODULES.find((m) => m.n === activeModule)
 
   return (
-    <div className="page-shell arb-shell">
+    <div className="page-shell arb-shell arb-single-page">
       <PageHeader />
       <main>
         {/* ── Hero ─────────────────────────────────── */}
         <section className="arb-hero">
-          <h1>{PROGRAM_HERO.heading}</h1>
-          <div className="arb-hero-actions">
-            <a className="arb-btn-primary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
-            <Link className="arb-btn-secondary" to="/arabic/faq">Read the FAQs</Link>
-          </div>
+          <img className="arb-hero-bismillah" src="/legacy-assets/talweeharabic/2025/12/bismilla-e1755384561119-300.webp" alt="Bismillah al-Rahman al-Rahim" />
+          <h1>Unlock the Language of the Qur’an Beyond Translation</h1>
           <div className="arb-welcome-video">
             <VideoFacade src={PROGRAM_HERO.video.src} title="About the 2-Year Arabic Program" thumbnail={PROGRAM_HERO.video.thumbnail} />
           </div>
         </section>
 
-        {/* ── Program at a glance ───────────────────── */}
-        <section className="arb-facts">
-          {PROGRAM_FACTS.map((f) => (
-            <div key={f.label} className="arb-fact">
-              <span>{f.label}</span>
-              <strong>{f.value}</strong>
-            </div>
-          ))}
-        </section>
-
         {/* ── Learning objectives ───────────────────── */}
         <section className="arb-curriculum">
           <h2>Learning Objectives</h2>
-          <img className="section-divider" src={`${ASSET}/2024/08/border3.svg`} alt="" />
           <p className="arb-curriculum-intro">{LEARNING_OBJECTIVES_INTRO}</p>
           <div className="arb-panel-left">
             <Accordion items={LEARNING_OBJECTIVES} />
@@ -73,7 +58,6 @@ export default function ArabicProgramPage() {
         {/* ── Module overviews ──────────────────────── */}
         <section className="arb-curriculum" id="modules">
           <h2>Module Overviews</h2>
-          <img className="section-divider" src={`${ASSET}/2024/08/border3.svg`} alt="" />
           <p className="arb-curriculum-intro">
             At Talweeh Arabic, we have curated the most effective texts into a comprehensive two-year
             curriculum designed to guide you from beginner to advanced proficiency.
@@ -111,24 +95,8 @@ export default function ArabicProgramPage() {
           </div>
         </section>
 
-        {/* ── Calendar ──────────────────────────────── */}
-        <section className="arb-curriculum">
-          <h2>2-Year Arabic Program Calendar</h2>
-          <img className="section-divider" src={`${ASSET}/2024/08/border3.svg`} alt="" />
-          <p className="arb-curriculum-intro arb-justify">{PROGRAM_CALENDAR_TEXT}</p>
-          <a className="arb-btn-primary" href={ARABIC_LINKS.calendarPdf} target="_blank" rel="noreferrer">
-            📅 Student Calendar (PDF)
-          </a>
-        </section>
-
-        {/* ── Invitation + sign-up ──────────────────── */}
-        <section className="arb-verse">
-          <p className="arb-verse-translation arb-justify">{PROGRAM_INVITATION}</p>
-          <div className="arb-hero-actions arb-invite-actions">
-            <a className="arb-btn-invert" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
-            <a className="arb-btn-ghost" href={ARABIC_LINKS.signupVideo} target="_blank" rel="noreferrer">▶ How to Sign Up</a>
-            <a className="arb-btn-ghost" href={ARABIC_LINKS.terms} target="_blank" rel="noreferrer">Terms &amp; Conditions</a>
-          </div>
+        <section className="arb-membership-finish" aria-label="Join the Arabic program">
+          <a className="arb-btn-primary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
         </section>
       </main>
       <PageFooter />

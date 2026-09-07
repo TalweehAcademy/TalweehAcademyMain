@@ -5,11 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server": "npm --prefix server start",
-    "install:server": "npm --prefix server install",
-    "build": "vite build",
-    "build:deploy": "npm run install:server && npm run build",
-    "start": "node server/index.js",
+    "build": "node scripts/verify-public-paid-video-safety.mjs && node scripts/generate-public-course-index.mjs && node scripts/generate-public-course-details.mjs && node scripts/generate-sitemap.mjs && vite build",
+    "build:deploy": "npm run build",
+    "start": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -29,6 +27,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
+    "sharp": "^0.35.4",
     "vite": "^5.4.10"
   }
 }

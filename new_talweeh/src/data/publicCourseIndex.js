@@ -1,0 +1,562 @@
+// AUTO-GENERATED FILE — DO NOT EDIT BY HAND.
+//
+// Lightweight public course index for /courses.
+// Generated from publicCourseCatalog.js by scripts/generate-public-course-index.mjs.
+// Full curricula/lesson details remain in publicCourseCatalog.js and are loaded
+// only by the individual course landing route.
+
+export const PUBLIC_COURSE_CATEGORIES = [
+  {
+    "slug": "fiqh",
+    "label": "Fiqh"
+  },
+  {
+    "slug": "usul-al-fiqh",
+    "label": "Uṣūl al-Fiqh"
+  },
+  {
+    "slug": "hadith",
+    "label": "Ḥadīth"
+  },
+  {
+    "slug": "hadith-sciences",
+    "label": "Ḥadīth Sciences"
+  },
+  {
+    "slug": "aqidah-usul-al-din",
+    "label": "ʿAqīdah & Uṣūl al-Dīn"
+  },
+  {
+    "slug": "arabic-language",
+    "label": "Arabic Language"
+  },
+  {
+    "slug": "nahw-sarf",
+    "label": "Naḥw & Ṣarf"
+  },
+  {
+    "slug": "quran-tafsir",
+    "label": "Qurʾān & Tafsīr"
+  },
+  {
+    "slug": "tajwid",
+    "label": "Tajwīd"
+  },
+  {
+    "slug": "adab-akhlaq-tazkiyah",
+    "label": "Adab, Akhlāq & Tazkiyah"
+  },
+  {
+    "slug": "sirah-shamail",
+    "label": "Sīrah & Shamāʾil"
+  },
+  {
+    "slug": "islamic-studies",
+    "label": "Islamic Studies / Other Subjects"
+  }
+]
+
+export const PUBLIC_COURSES = [
+  {
+    "slug": "introduction-to-al-muwattayn",
+    "title": "Introduction to Al-Muwaṭṭaʾayn",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith",
+    "categoryLabel": "Ḥadīth",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/introduction-to-al-muwattayn.webp",
+    "description": "An introductory course on the two Muwaṭṭaʾ works, examining Imām Mālik, the history and scholarly rank of Al-Muwaṭṭaʾ, its students, narrators and transmission, followed by the life of Imām Muḥammad ibn al-Ḥasan and an introduction to his Muwaṭṭaʾ.",
+    "primaryText": "",
+    "lessonCount": 9
+  },
+  {
+    "slug": "muwatta-muhammad",
+    "title": "Muwatta Muhammad",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith",
+    "categoryLabel": "Ḥadīth",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/muwatta-muhammad.webp",
+    "description": "Join us in an advanced analytical study of Muwatta Imām Mālik with Sheikh Omer Khurshid, offering a deep dive into the teachings of Imām Mālik as transmitted by Imam Muḥammad Al-Shaybānī. This course is tailored for graduates, though all are welcome to gain benefit.\n\nStudents who attended the live classes and successfully completed the entire book received an Ijāza (certification), subject to specific conditions outlined by the Sheikh.\n\nInstructor\n\nThe Lessons were taught by Sheikh Omer Khurshid who had the privilege of studying the entire work upon the following Mashāyikh :\n\nShaykh Jameel Aḥmad al-Mazāhiri (India)\n\nShaykh Sāfwān Bin ʿAdnān Āl-Dāwūdī (Syria)\n\nShaykh Ḥāmid bin Aḥmad al-Bukhārī (Madinah)\n\nShaykh Ibrāhīm al-Saif (Makkah)\n\nShaykh Ḥassān al-Hāyis (Syria)\n\nShaykh Salmān al-Tāshkandī (Madinah)\n\nImam of Al Masjid Al Nabawi Shaykh Aḥmad bin Ṭālib bin Ḥamīd (Madinah)\n\nAlong with studying parts of the book upon many other Mashāyikh\n\nThis work provides an excellent opportunity to deepen your understanding of Ḥadīth Sciences under the guidance of scholars who have specialized in the field.",
+    "primaryText": "",
+    "lessonCount": 28
+  },
+  {
+    "slug": "takhri-j-al-h-adi-th-q2zxxj",
+    "title": "Takhrīj al-Ḥadīth",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith",
+    "categoryLabel": "Ḥadīth",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/takhri-j-al-h-adi-th-q2zxxj.webp",
+    "description": "This course trains students in the science of takhrīj — sourcing ḥadīth back to their original references. Students will learn to locate a narration based on partial or full isnād, partial or complete matn, keywords, or thematic subject.\nThe course covers the primary reference works of takhrīj and teaches how to utilize modern digital tools that facilitate this process. Instruction includes the proper formatting of a takhrīj, alongside creating visual charts mapping the various transmission routes of a ḥadīth.",
+    "primaryText": "تــخريـج الـحـديـث – بـإشـراف مـركـز إحـسـان للـدراسـات فـي الـسـنـة الـنـبـويـة",
+    "lessonCount": 0
+  },
+  {
+    "slug": "al-adab-al-mufrad",
+    "title": "Al-Adab al-Mufrad",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith",
+    "categoryLabel": "Ḥadīth",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-adab-al-mufrad.webp",
+    "description": "Reading & Explanation of Imām al-Bukhārī’s timeless work on Prophetic manners.\n\nJoin us for the recital of the timeless work of Imām al-Bukhārī – Al-Adab al-Mufrad\nA unique collection of aḥādīth focused on manners, etiquettes, and character from the traditions of the Prophet Muḥammad ﷺ.\nThe recorded lessons are open to all students regardless of level, although its better suited for intermediate to advanced levels.\n\nThe work was completed over 49 lessons , beginning on April 14, 2025 , and concluding on December 15, 2025 . Students who attended the entire work live were granted ijāzah upon completion.\n\nBook Highlights:\n\n• Study prophetic etiquette through authentic narrations\n• Spiritual & practical insights from classical scholars\n• Complete recitation of the book",
+    "primaryText": "",
+    "lessonCount": 47
+  },
+  {
+    "slug": "al-shamail-al-muhammadiyyah",
+    "title": "Al-Shamāʾil al-Muḥammadiyyah",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith",
+    "categoryLabel": "Ḥadīth",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-shamail-al-muhammadiyyah.webp",
+    "description": "Welcome to the Shama'il Muhammadiyyah classes by Talweeh Academy. This series covers one of the most celebrated works in Islamic literature that describes the noble attributes and qualities of the Prophet Muhammad ﷺ. Compiled by Imam al-Tirmidhi, the Shama'il deeply explores the physical features, character, habits, and moral excellence of the Prophet ﷺ.\nIn this work, we shall review the perfect life and the compassionate nature of the Prophet ﷺ in such a way that a closer spiritual affinity with him is established in the student. This is attained by integrating classical scholarship with modern perspectives to excavate timeless lessons that remain applicable today.\nThis series is perfect for anyone looking to deepen their knowledge of the Prophet ﷺ and to come closer to him personally. Students who complete the book will be granted an Ijaza (certification) pending certain conditions set by the sheikh.\nThe Lessons are taught by Sh. Omer Khurshid who has studied this work upon over 30 scholars worldwide, he has attained some of the highest chains for the transmission of this work.",
+    "primaryText": "",
+    "lessonCount": 33
+  },
+  {
+    "slug": "al-tuhfat-al-saniyyah",
+    "title": "Al-Tuḥfat al-Saniyyah",
+    "arabicTitle": "التحفة السنية بشرح المقدمة الآجرومية",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "nahw-sarf",
+    "categoryLabel": "Naḥw & Ṣarf",
+    "free": false,
+    "priceCents": 20000,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-tuhfat-al-saniyyah.webp",
+    "description": "About Course\nThis course offers an in-depth study of the renowned commentary on Al-Ajurrumiyyah, one of the most widely studied foundational texts in Arabic grammar and syntax.\n\nThrough a structured and carefully guided approach, students will develop a strong understanding of the core principles of Arabic syntax as presented in Al-Ajurrumiyyah and its commentary. The course is designed to strengthen grammatical foundations, clarify key concepts, and equip learners with the skills needed to approach more advanced Arabic texts with greater confidence.\n\nBeyond developing linguistic proficiency, this study provides students with an opportunity to engage with the rich intellectual heritage of Arabic scholarship and gain a deeper appreciation for the precision, structure, and beauty of the Arabic language.",
+    "primaryText": "Al-Tuḥfat al-Saniyyah",
+    "lessonCount": 54
+  },
+  {
+    "slug": "al-athbat-wal-faharis",
+    "title": "Al-Athbāt wal-Fahāris",
+    "arabicTitle": "الأثبات والفهارس",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-athbat-wal-faharis.webp",
+    "description": "This course offers a systematic introduction to later-era sources detailing the Asanid leading up to the books of Hadith. Many books will be quoted, explaining the most relavant sources to locate the chains of scholars in different times and places. The instructors chains to al-Shama'il will serve as the base, where the narrators from Egypt, India, Syria, and Hijaz will be discussed. Students will learn how to read and interpret these texts, extract chains of transmission, and identify the maqrūʾāt and masmūʿāt within a narrator’s scholarly network. Through guided analysis, the course bridges theoretical understanding with practical application.\n\nA central component of the course is the study of ʿuluww al-isnād, with emphasis on identifying the highest extant chains that retain verifiable samāʿ in the later generations. Students will explore how such chains are preserved, authenticated, and transmitted, engaging with real examples from the scholarly tradition.",
+    "primaryText": "",
+    "lessonCount": 14
+  },
+  {
+    "slug": "al-irab-an-qawaid-al-irab",
+    "title": "Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb",
+    "arabicTitle": "الإعراب عن قواعد الإعراب",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "nahw-sarf",
+    "categoryLabel": "Naḥw & Ṣarf",
+    "free": false,
+    "priceCents": 12500,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-irab-an-qawaid-al-irab.webp",
+    "description": "Join us as we cover Ibn Hisham's masterpiece, a book which Ibn Hisham describes as a drop of his knowledge, yet has become indespensible to students of the Arabic lanaguage! Ibn Hisham covers discussions surrounding the mahall of the sentece, the jar majrur, 20 agents of i'rab, and common mistakes made when analyzing structures. The book is crucial in understanding Linguistic Tafsir and paving the way to Ibn Hisham's masterpiece, the majestic Mughni al-Labib.",
+    "primaryText": "",
+    "lessonCount": 20
+  },
+  {
+    "slug": "al-jarh-wa-l-tadil",
+    "title": "Al-Jarḥ wa-l-Taʿdīl",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 10000,
+    "currency": "USD",
+    "poster": "/catalog-posters/al-jarh-wa-l-tadil.webp",
+    "description": "The science of Jarḥ wa Taʿdīl (الْجَرْحُ وَالتَّعْدِيلُ, al-jarḥ wa al-taʿdīl) stands as one of the most essential disciplines within ʿIlm al-Ḥadīth. It provides the methodological framework through which scholars evaluate the reliability, integrity, and precision of narrators (ruwāt), thereby preserving the authenticity of the Prophetic tradition.\n\nThis course offers a structured and in-depth study of the principles governing narrator criticism, guided by the well-regarded work Ḍawābiṭ al-Jarḥ wa al-Taʿdīl by ʿAbd al-ʿAzīz al-ʿAbd al-Laṭīf. Students will engage with both the theoretical foundations and practical applications of the discipline, gaining insight into how classical scholars assessed narrators and resolved complex evaluative differences.",
+    "primaryText": "",
+    "lessonCount": 23
+  },
+  {
+    "slug": "arabic-crash-course",
+    "title": "Arabic Crash Course",
+    "arabicTitle": "",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "arabic-language",
+    "categoryLabel": "Arabic Language",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/arabic-crash-course.webp",
+    "description": "Join us at Talweeh Academy for a focused introduction to the Arabic language—delivered in just a few carefully structured lessons.\nThis series is designed to provide you with a clear and systematic overview of the language, equipping you with the essential foundations needed to progress in Qur’anic Arabic without unnecessary complexity or distraction.\nOur objective is straightforward: to give you a solid starting framework that enables you to begin your journey toward understanding the Qur’an with confidence and clarity.",
+    "primaryText": "",
+    "lessonCount": 9
+  },
+  {
+    "slug": "introduction-to-hanafi-fiqh",
+    "title": "Introduction to Ḥanafī Fiqh",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "fiqh",
+    "categoryLabel": "Fiqh",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/introduction-to-hanafi-fiqh.webp",
+    "description": "This course serves as a comprehensive introduction to the Hanafi school of thought, meticulously tracing its historical development from the era of the noble companions of the Prophet Muhammad (peace be upon him) to the present day. This course is meticulously designed for students who possess a foundational understanding of the Arabic language and are eager to embark on their journey into the intricate field of Islamic jurisprudence, with a particular focus on the Hanafi school of thought. Target Audience Foundational Knowledge: A basic proficiency in Arabic is essential, as it will facilitate engagement with primary texts and classical sources integral to the Hanafi tradition. This prerequisite ensures that students can fully appreciate the nuances of the language as they explore legal terminology and concepts. Entry Point into Islamic Jurisprudence: The course serves as an ideal entry point for those who are new to the study of Islamic law. It provides a structured framework that guides students through the fundamental principles of the Hanafi madhhab, fostering a deep understanding of its methodologies, principles, and historical context. Focus on the Hanafi Tradition: Specifically tailored for individuals interested in the Hanafi school, the course emphasizes the unique characteristics and contributions of this legal tradition. Students will gain insights into the works of foundational scholars, the development of Hanafi jurisprudence, and its application in contemporary contexts. Participants will benefit from a dynamic learning environment that encourages critical thinking, discussion, and engagement with key texts. Through a combination of lectures, discussions, and practical exercises, students will not only enhance their understanding of the Hanafi school but also develop the skills necessary for further study in Islamic jurisprudence.",
+    "primaryText": "",
+    "lessonCount": 12
+  },
+  {
+    "slug": "introduction-to-usul-al-din",
+    "title": "Introduction to Uṣūl al-Dīn",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "aqidah-usul-al-din",
+    "categoryLabel": "ʿAqīdah & Uṣūl al-Dīn",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/introduction-to-usul-al-din.webp",
+    "description": "About Course\n\nThis introduction offers a comprehensive historical analysis of the early evolution of Sunni Kalam (theology) alongside the Athari creed. It delves into the foundational elements that contributed to the emergence of differing creedal doctrines within Islam, providing a nuanced understanding of the intellectual currents that shaped these developments\n\nWho is it for?\n\nThis introduction is indispensable for all students eager to explore the intricate discipline of Usūl al-Dīn (foundations of religion). It serves as a vital gateway into the rich and multifaceted world of Islamic theology, providing the foundational knowledge necessary for a deeper understanding of the subject.\n\n1. Language Proficiency\n\nWhile the course is delivered in English to accommodate a wider audience, a foundational understanding of the Arabic language is highly recommended. This proficiency will enhance students’ engagement with the material, allowing them to appreciate the original texts and terminology that are central to Usūl al-Dīn.\n\n2. Invitation to Explore\n\nWe encourage all students with a passion for theology and a desire to deepen their understanding of Islamic foundations to embark on this enlightening journey. The insights gained will equip them with the critical tools necessary for thoughtful reflection and informed engagement with the broader discourse on faith and belief in Islam.\n\nKey Elements of the Analysis\n\n1. Historical Context: The exploration begins by tracing the origins of Sunni Kalam, examining the theological debates and discussions that laid the groundwork for various interpretations. By contextualizing these early developments, we gain insight into how theological thought has evolved over time.\n\n2. Factors Influencing Doctrinal Differences: The analysis identifies and elaborates on the key factors that led to the divergence of creedal doctrines within the Islamic tradition. These factors include cultural, political, and philosophical influences that interacted to create a rich tapestry of beliefs and interpretations.\n\n3. Timeline of Theological Works: A significant aspect of this introduction is the presentation of a timeline showcasing the diverse array of works authored by theologians throughout history. This timeline highlights the intellectual contributions of key figures, illustrating how their writings have influenced the trajectory of Islamic thought.\n\n4. Synthesized Ash'arī-Māturīdī Approach: The culmination of this historical analysis leads to the synthesized Ash'arī-Māturīdī approach, as adopted by Al-Taftāzānī in his commentary. This section will explore how Al-Taftāzānī sought to reconcile various theological perspectives, providing a framework that encompasses the richness of Sunni thought.\n\nThrough this thorough examination, the introduction aims to illuminate the complexities of Islamic theology, fostering a deeper appreciation for the intellectual heritage that has shaped the beliefs and practices of the Muslim community throughout history.",
+    "primaryText": "",
+    "lessonCount": 10
+  },
+  {
+    "slug": "introduction-to-usul-al-fiqh",
+    "title": "Introduction to Uṣūl al-Fiqh",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "usul-al-fiqh",
+    "categoryLabel": "Uṣūl al-Fiqh",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/introduction-to-usul-al-fiqh.webp",
+    "description": "This introductory course to the discipline of Uṣūl al-Fiqh (the foundations of Islamic jurisprudence) offers a comprehensive historical analysis of the evolution of contrasting strands within Islamic legal theory. It meticulously examines how different philosophical influences have shaped the development of legal thought throughout history, highlighting the dynamic interplay between theology and philosophy. We encourage all students with a passion for Islamic legal theory and a desire to deepen their understanding of Islamic foundations to embark on this enlightening journey. The insights gained will equip them with the critical tools necessary for thoughtful reflection and informed engagement with the broader discourse on Islamic jurisprudence.",
+    "primaryText": "",
+    "lessonCount": 12
+  },
+  {
+    "slug": "introduction-to-usul-al-hadith",
+    "title": "Introduction to Uṣūl al-Ḥadīth",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/introduction-to-usul-al-hadith.webp",
+    "description": "This course provides a thorough historical analysis of the evolution of Uṣūl al-Ḥadīth (the foundations of ḥadīth science), tracing its development from the time of the Messenger of Allah (peace be upon him) to the compilation of later works. By the end of the course, students will have developed a comprehensive understanding of the historical trajectory of Uṣūl al-Ḥadīth, as well as the critical role it plays in Islamic scholarship. Through rigorous study and discussion, students will be equipped to appreciate the complexities of ḥadīth science and its significance in the broader context of Islamic jurisprudence and theology. This course invites those passionate about Islamic sciences to embark on a transformative intellectual journey, fostering a deeper appreciation for the rich heritage of Uṣūl al-Ḥadīth and its ongoing relevance in contemporary discourse.",
+    "primaryText": "",
+    "lessonCount": 9
+  },
+  {
+    "slug": "lamiyyat-abi-talib",
+    "title": "Lāmiyyat Abī Ṭālib",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "adab-akhlaq-tazkiyah",
+    "categoryLabel": "Adab, Akhlāq & Tazkiyah",
+    "free": false,
+    "priceCents": 6000,
+    "currency": "USD",
+    "poster": "/catalog-posters/lamiyyat-abi-talib.webp",
+    "description": "A structured self-paced study of Lāmiyyat Abī Ṭālib with Sh. Omer Khurshid. The complete curriculum is presented below; enrolled students continue the lessons and learning activities inside the Talweeh Student Portal.",
+    "primaryText": "",
+    "lessonCount": 11
+  },
+  {
+    "slug": "makanat-al-sunnah",
+    "title": "Makānat al-Sunnah",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/makanat-al-sunnah.webp",
+    "description": "This course examines the authoritative position of the Sunnah in Islam, with a detailed study of its role alongside the Qurʾān. It addresses the theological foundation for the infallibility of the Prophets, the binding nature of Prophetic narrations, and their legislative authority.\nStudents will explore responses to early ḥadīth rejectors, assess the nature of Prophetic narrations, and review significant works authored in defense of the Sunnah. The course emphasizes a critical understanding of both historical and contemporary perspectives, equipping students with the ability to articulate the Sunnah’s indispensable place in Islamic law and belief.",
+    "primaryText": "حجية السنة لعبد الغني عبد الخالق",
+    "lessonCount": 15
+  },
+  {
+    "slug": "min-adab-al-islam",
+    "title": "Min Adab al-Islām",
+    "arabicTitle": "",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "adab-akhlaq-tazkiyah",
+    "categoryLabel": "Adab, Akhlāq & Tazkiyah",
+    "free": false,
+    "priceCents": 10000,
+    "currency": "USD",
+    "poster": "/catalog-posters/min-adab-al-islam.webp",
+    "description": "The greatest leap students of the Arabic language must take is the jump from theory to appliction and memorizing rules to applying them! Unfortunately, many instituions do not have a period allocated for this, resulting in the average student lacking confidence in his ability to read Arabic without tashkil (harakaat). Join us as we disect Sh. Abdul Fattah Abu Ghuddah's Min Adab al-Islam, a beautiful book on etiquettes every Muslim should have.The course is hand crafted to ensure that students can smoothly transition from learning rule to applying them, serving as the bridge between your previous studies and everything that's to come!",
+    "primaryText": "من أدب الإسلام للشيخ عبد الفتاح أبو غدة",
+    "lessonCount": 33
+  },
+  {
+    "slug": "mukhtasar-al-quduri-al-uqubat",
+    "title": "Mukhtaṣar al-Qudūrī 4: Qism al-ʿUqūbāt",
+    "arabicTitle": "",
+    "instructor": "Sh. Hamza Aktas",
+    "category": "fiqh",
+    "categoryLabel": "Fiqh",
+    "free": false,
+    "priceCents": 20000,
+    "currency": "USD",
+    "poster": "/catalog-posters/mukhtasar-al-quduri-al-uqubat.webp",
+    "description": "Join Sh. Hamza to cover a portion of a legendary text often left untouched in the West. The last section of any Fiqh book is extremly important, but unfortunately, many institutions in the West leave it untouched, or even if read through, it is done so without any thourough explanation. Fiqh, however, is a body. In order to understand the science, you have to cover every chapter.\n\nThis course offers a structured and in-depth study of Mukhtasar al-Qudūrī, one of the most esteemed foundational texts in Hanafi jurisprudence. Authored by the distinguished jurist Imam Abu al-Husayn Ahmad ibn Muhammad al-Qudūrī (d. 428 AH), this concise yet comprehensive legal manual has served as a cornerstone for students and scholars across centuries. Its clarity, precision, and systematic presentation have established it as an essential entry point for understanding the legal methodology and rulings of the Hanafi madhhab.\n\n1. Foundational Knowledge\nThis course serves as an introduction to Mukhtasar al-Qudūrī, one of the most authoritative and widely taught primers in Hanafi jurisprudence. Designed for beginner students of Islamic law, the text offers a structured overview of essential legal rulings and categories. Through this course, participants will build a strong foundation in Hanafi fiqh, preparing them to engage with more advanced legal texts and concepts.\n\n2. A Distinctive Approach to Fiqh\nWhat distinguishes Mukhtasar al-Qudūrī—and this course—is the systematic approach to legal reasoning that it reflects. Students will explore the principles that inform Hanafi legal methodology, gaining insight into the rationale and thought process behind various rulings. Rather than merely memorizing legal outcomes, learners will be guided to understand the logic and structure that underpin Hanafi jurisprudence.\n\n3. Introduction to Legal Maxims and Methodology\nAs part of building legal literacy, the course will introduce students to foundational legal maxims (qawāʿid fiqhiyyah) and methodological tools that aid jurists in extrapolating rulings for new cases. These maxims not only simplify complex legal theory but also serve as guiding principles when navigating contemporary issues. This dimension of the course will help students develop the ability to think like jurists.\n4. Close Reading and Decoding the Text\nA significant component of the course is the detailed reading and explanation of the text itself. Mukhtasar al-Qudūrī is known for its concise and sometimes elliptical language, so the course will focus on unpacking its meanings with clarity. Where later Hanafi scholars have differed in interpretation or legal application, these positions will be discussed, along with an analysis of the stronger or more relied-upon views within the school. This careful engagement will allow students to appreciate the depth and nuance of Hanafi legal discourse.\n\n5. Exploring Foundational Evidences and Proofs\nThe course will also touch upon the basic proofs (adillah) employed by Hanafi scholars. While Mukhtasar al-Qudūrī is not a text of evidentiary discussion per se, we will highlight where classical proofs—drawn from the Qur’an, Sunnah, consensus (ijmāʿ), and analogy (qiyās)—are relevant. This will help students understand how legal rulings are anchored in the broader framework of Islamic legal theory, fostering a more holistic understanding of the school’s jurisprudential approach.",
+    "primaryText": "مختصر القدوري",
+    "lessonCount": 82
+  },
+  {
+    "slug": "mukhtasar-al-quduri-qism-al-ibadat",
+    "title": "Mukhtaṣar al-Qudūrī 1: Qism al-ʿIbādāt",
+    "arabicTitle": "",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "fiqh",
+    "categoryLabel": "Fiqh",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/mukhtasar-al-quduri-qism-al-ibadat.webp",
+    "description": "Join Mufti Mohammad Daud as he covers the sections of worship from Mukhtasar of al-Qudūrī in lessons rooted in Uṣūl and Fiqh! The rulings are explained allowign the student to gain a complete understanding of the discussion and its connection to the broader chapter. After this, the differences among the scholars of the school are examined, along with identifying the relied-upon (muʿtamad) view. The discussion then turns to the reasoning behind these differences, which may stem from a prophetic narration, a legal definition, a qāʿidah uṣūliyyah, or a ḍābiṭah fiqhiyyah.\nEnroll right now at https://talweehacademy.com/courses/mukhtasar-al-quduri-qism-al-ibadat/",
+    "primaryText": "مختصر القدوري",
+    "lessonCount": 50
+  },
+  {
+    "slug": "musallam-al-thubut",
+    "title": "Musallam al-Thubūt",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "usul-al-fiqh",
+    "categoryLabel": "Uṣūl al-Fiqh",
+    "free": false,
+    "priceCents": 25000,
+    "currency": "USD",
+    "poster": "/catalog-posters/musallam-al-thubut.webp",
+    "description": "This course offers an advanced study of the initial chapters from Muḥibbullāh al-Bihārī's works, blending the methodologies of Islamic jurists (Ṭarīqah al-Fuqahāʾ) and theologians (Ṭarīqah al-Mutaqallimīn). It is designed for graduates with a solid grounding in Uṣūl al-Fiqh, aiming to deepen their understanding of Islamic legal theory. Students are expected to have a thorough knowledge of foundational texts and principles to tackle the complex content effectively. The curriculum challenges students intellectually, enhances analytical skills, and prepares them for scholarly or professional roles in Islamic jurisprudence through rigorous study and critical engagement with intricate legal theories and texts.",
+    "primaryText": "",
+    "lessonCount": 56
+  },
+  {
+    "slug": "mutammimah-al-ajurrumiyyah",
+    "title": "Mutammimah al-Ājurrūmiyyah",
+    "arabicTitle": "",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "nahw-sarf",
+    "categoryLabel": "Naḥw & Ṣarf",
+    "free": false,
+    "priceCents": 22500,
+    "currency": "USD",
+    "poster": "/catalog-posters/mutammimah-al-ajurrumiyyah.webp",
+    "description": "A Comprehensive Gateway to Advanced Naḥw\n\nThis course offers an in-depth study of Mutammimah al-Ājurrūmiyyah, a key text designed to bridge the gap between foundational Arabic grammar and advanced Naḥw studies.\n\nOver 60 lessons, we will systematically analyze Mutammimah al-Ājurrūmiyyah, delving into its critical discussions and rulings. Supplementary insights and contextual explanations will be provided to enhance students’ understanding of grammatical structures and principles, allowing them to appreciate the depth of the science of Naḥw.",
+    "primaryText": "",
+    "lessonCount": 60
+  },
+  {
+    "slug": "nukhbat-al-fikr",
+    "title": "Nukhbat al-Fikar",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 25000,
+    "currency": "USD",
+    "poster": "/catalog-posters/nukhbat-al-fikr.webp",
+    "description": "This course is dedicated to a comprehensive examination of the foundational text by Al Ḥāfiz Ibn Ḥajar on the nomenclature of ḥadīth. In this concise yet profoundly informative work, Ibn Ḥajar meticulously summarizes more than 100 branches of the discipline of Uṣūl al-ḥadīth. This course is designed for intermediate to advanced students of knowledge, this course welcomes those eager to expand their understanding of ḥadīth science, regardless of their prior experience. While all students will find value in this course, those with prior exposure to the concept of ḥadīth nomenclature will particularly benefit from the insights and deeper explorations presented throughout the curriculum.",
+    "primaryText": "",
+    "lessonCount": 32
+  },
+  {
+    "slug": "nur-al-idah",
+    "title": "Nūr al-Īḍāḥ",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "fiqh",
+    "categoryLabel": "Fiqh",
+    "free": false,
+    "priceCents": 35000,
+    "currency": "USD",
+    "poster": "/catalog-posters/nur-al-idah.webp",
+    "description": "This course is dedicated to the comprehensive study of the critical primer authored by Al-Shurunbulālī, a prominent figure in the Hanafi school of thought. His work is celebrated globally as a foundational text for beginners seeking to understand jurisprudence within the Hanafi madhhab.By the conclusion of the course, students will have gained a robust understanding of the Hanafi jurisprudential framework as articulated by Al-Shurunbulālī. They will be equipped with the foundational knowledge necessary to engage with more advanced texts and concepts in Islamic law, fostering their growth as informed scholars and practitioners. Invitation to Learn We invite passionate learners to join us on this enlightening academic journey. As you engage with this critical primer, you will not only enhance your understanding of Hanafi jurisprudence but also develop the analytical skills needed to apply legal principles thoughtfully in various contexts. This course represents a valuable opportunity to immerse yourself in the rich intellectual heritage of the Hanafi school and to contribute meaningfully to the ongoing discourse in Islamic legal studies.",
+    "primaryText": "",
+    "lessonCount": 136
+  },
+  {
+    "slug": "sharh-qatr-al-nada-wa-ball-al-sada",
+    "title": "Sharḥ Qaṭr al-Nadā wa-Ball al-Ṣadā",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "nahw-sarf",
+    "categoryLabel": "Naḥw & Ṣarf",
+    "free": false,
+    "priceCents": 2500,
+    "currency": "USD",
+    "poster": "/catalog-posters/sharh-qatr-al-nada-wa-ball-al-sada.webp",
+    "description": "The book we will study in this course, *Sharh Qaṭr al-Nadā wa-Ball al-Ṣadā*, is one of the most renowned and widely taught texts in the field of Arabic grammar (naḥw). This commentary is known for its accessibility, making it easier for students to grasp the foundational issues of Arabic syntax.\nThe book addresses essential grammatical issues (masā’il), foundational principles of Arabic syntax, and at times, broader linguistic principles related to the Arabic language.\nNotably, the author was not one to merely follow the views of those who preceded him out of reverence for their stature. Rather, he engaged deeply with the material, conducting thorough research and arriving at independent conclusions. Having attained a level of expertise that enabled him to perform ijtihād (Independent reasoning) in Arabic grammar. And this is one of the benefits of this book, as you will find critiques of earlier opinions, and presentations of opinions that are more precise and thorough.",
+    "primaryText": "",
+    "lessonCount": 32
+  },
+  {
+    "slug": "sharh-al-waraqat-of-al-mahalli",
+    "title": "Sharḥ al-Waraqāt of al-Maḥallī",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "usul-al-fiqh",
+    "categoryLabel": "Uṣūl al-Fiqh",
+    "free": false,
+    "priceCents": 25000,
+    "currency": "USD",
+    "poster": "/catalog-posters/sharh-al-waraqat-of-al-mahalli.webp",
+    "description": "This course explores Jalāl al-Dīn al-Maḥallī's commentary on Imām Juwaynī's foundational text in Islamic legal theory, offering valuable insights into Uṣūl al-fiqh. It examines the evolution of legal thought in Islamic tradition, bridging theory with practical application through real-life case studies and examples. The course aims to make Islamic legal theory more engaging and accessible, deepening students' understanding of how these principles are applied in various contexts while enhancing retention of key concepts.",
+    "primaryText": "",
+    "lessonCount": 45
+  },
+  {
+    "slug": "tadrib-al-rawi",
+    "title": "Tadrīb al-Rāwī",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/tadrib-al-rawi.webp",
+    "description": "This course provides an in-depth study of al-Suyūṭī’s extensive masterpiece Tadrīb al-Rāwī, one of the most comprehensive works on ḥadīth nomenclature. Building upon the foundational principles acquired in Muṣṭalaḥ 1, students will explore the full spectrum of terminology, classifications, and technical discussions governing the authentication, transmission, and preservation of ḥadīth.\nThe course emphasizes advanced applications of ḥadīth terminology, examining case studies drawn from classical literature and demonstrating how the rules outlined by earlier scholars are applied in practice. The depth and breadth of Tadrīb al-Rāwī along with Sh. Awwamh’s extensive footnotes will enable students to approach higher-level ḥadīth research with methodological precision.",
+    "primaryText": "",
+    "lessonCount": 35
+  },
+  {
+    "slug": "tadwin-al-sunnah",
+    "title": "Tadwīn al-Sunnah",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 5000,
+    "currency": "USD",
+    "poster": "/catalog-posters/tadwin-al-sunnah.webp",
+    "description": "This course presents a detailed historical study of ḥadīth in light of its codification, beginning from the Prophetic era through the earliest generations. Students will examine the socio-historical context, motivations, and methodological developments that shaped the preservation of the Sunnah.\nThe course explores the different arguments presented by orientalists to attack the codification of the Sunnah, it highlights the weaknesses of their arguments and sheds light upon the authentic history behind the preservation of the Sunnah.",
+    "primaryText": "تدوين السنة للدكتور مـحمد بن مطر الزهرانـي",
+    "lessonCount": 10
+  },
+  {
+    "slug": "tafsir-of-juz-amma",
+    "title": "Tafsīr of Juzʾ ʿAmma",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "quran-tafsir",
+    "categoryLabel": "Qurʾān & Tafsīr",
+    "free": true,
+    "priceCents": 0,
+    "currency": "USD",
+    "poster": "/catalog-posters/tafsir-of-juz-amma.webp",
+    "description": "This exquisite linguistic exegesis of Surah An-Naba', Surah al-Nazi'at, and Surah 'Abasa offers a profound exploration of their themes and messages, presented in eloquent English. Tailored for students with an intermediate grasp of the Arabic language, this work serves as a bridge, inviting readers to appreciate the profound beauty and depth of the Quran. Through thoughtful analysis and insightful commentary, it illuminates the nuances of the text, encouraging a deeper understanding of its significance. This resource is not only an academic endeavor but also a spiritual journey, making it an ideal companion for those eager to enhance their knowledge and connect with the divine wisdom of the Quran.",
+    "primaryText": "",
+    "lessonCount": 17
+  },
+  {
+    "slug": "tajwid-mastery-level-one",
+    "title": "Tajwīd Mastery Level One",
+    "arabicTitle": "",
+    "instructor": "Sheikh Farhan Ingar",
+    "category": "tajwid",
+    "categoryLabel": "Tajwīd",
+    "free": false,
+    "priceCents": 10000,
+    "currency": "USD",
+    "poster": "/catalog-posters/tajwid-mastery-level-one.webp",
+    "description": "A comprehensive study of Tajwīd theory, designed to explain the governing principles behind correct Qur’an recitation.\nThis course provides an extensive study of the science of Tajwīd, the discipline through which the Qurʾān is recited as it was revealed. Rooted in the classical Islamic scholarly tradition, Tajwīd ensures the precise pronunciation and preservation of the Qurʾān across generations.\nThis program offers structured exposure to all the components of Tajwīd. It is suitable for those seeking to build a solid understanding of the subject, as well as for students who have previously studied Tajwīd and wish to review, organize, or reinforce their knowledge. Covering the core principles of articulation (makhārij), characteristics of letters (ṣifāt), and essential rules of recitation, the course presents Tajwīd in a clear, systematic, and engaging manner.\nBy the end of the course, students will have gained a well-rounded understanding of the topics of Tajwīd, enabling them to approach Qurʾānic recitation with greater awareness, accuracy, and confidence.",
+    "primaryText": "",
+    "lessonCount": 10
+  },
+  {
+    "slug": "takwin-al-asanid",
+    "title": "Takwīn al-Asānīd",
+    "arabicTitle": "",
+    "instructor": "Mufti Mohammad Daud Khurshid",
+    "category": "hadith-sciences",
+    "categoryLabel": "Ḥadīth Sciences",
+    "free": false,
+    "priceCents": 4000,
+    "currency": "USD",
+    "poster": "/catalog-posters/takwin-al-asanid.webp",
+    "description": "The isnād is the link connecting us back to our beloved Prophet (may peace and blessings be upon him). It is unique to this Ummah and is the backbone of grading Ahadith. The scholars of hadith have all penned down their chains to the Prophet (may peace and blessings be upon him) for every narration in their books, yet the narrators in those chains are in the thousands! Whilst studying all of their lives may be difficult, there are certain famous narrators whose names you will find again and again in the books of hadith. By zooming in on these narrators and their famous teachers and students, you will be familiar with 80 percent of the narrations he comes across, as many of them will go through these narrators.\nThis course provides a detailed explanation of how the Isnād developed from the Prophetic era through the generations of the Ṣaḥābah, their successors, and subsequent scholars, culminating in the major ḥadīth compilations. Students will study the various methods employed in identifying and learning the most prominent narrators, with practical application of the Madār method.\nThe course also examines the principal compilers of the early generations and the most significant teachers of the six Imāms. By the end of the course, students will be well-acquainted with the leading narrators whose transmissions form the core of the six canonical collections, and they will gain a deeper understanding of the natural progression of ḥadīth transmission. This foundation prepares students for advanced modules in al-Jarḥ wa al-Taʿdīl and al-ʿIlal.\nStudents will also be required to commit to memory a selection of hadiths along with their respective chains of transmission, employing the previously described method for ease in memorization. This practice serves as an initial engagement with the classical tradition of hadith preservation in its most authentic and unadulterated form.",
+    "primaryText": "",
+    "lessonCount": 13
+  },
+  {
+    "slug": "taiyyah-of-al-ilbiri",
+    "title": "Tāʾiyyah of al-Ilbīrī",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "adab-akhlaq-tazkiyah",
+    "categoryLabel": "Adab, Akhlāq & Tazkiyah",
+    "free": false,
+    "priceCents": 6000,
+    "currency": "USD",
+    "poster": "/catalog-posters/taiyyah-of-al-ilbiri.webp",
+    "description": "This exceptional course, conducted in English, invites students to engage deeply with the celebrated Tā'iyyah by Abu Isḥāq al-Ilbīrī. This profound poem serves as a rich tapestry woven with timeless themes that resonate across generations, including the pursuit of knowledge, the contemplation of mortality, and the virtues of asceticism. It emphasizes the transformative power of knowledge and the importance of lifelong learning, encouraging reflection on mortality to deepen mindfulness. The program explores ascetic values to balance material pursuits with spiritual growth, facilitated through detailed analyses of key verses to enhance understanding of al-Ilbīrī's virtues and the historical context of the poem. This engagement with Arabic poetry prompts a meaningful journey of personal and spiritual development.",
+    "primaryText": "تائية الإلبيري",
+    "lessonCount": 10
+  },
+  {
+    "slug": "usul-al-shashi",
+    "title": "Uṣūl al-Shāshī",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "usul-al-fiqh",
+    "categoryLabel": "Uṣūl al-Fiqh",
+    "free": false,
+    "priceCents": 4500,
+    "currency": "USD",
+    "poster": "/catalog-posters/usul-al-shashi.webp",
+    "description": "One of the most essential disciplines within the Islamic sciences—yet often underrepresented in contemporary curricula—is uṣūl al-fiqh (legal theory). Following the successful introduction of a foundational primer in Ḥanafī uṣūl, Talweeh Academy is pleased to offer Level 2, dedicated to a rigorous and in-depth study of the classical text Uṣūl al-Shāshī.\nAlthough widely taught across institutions, Uṣūl al-Shāshī is frequently introduced prematurely or approached through surface-level translation, often without sufficient critical engagement or broader methodological context. This course seeks to address these gaps by offering a structured, analytical, and comparative study of the text—aimed at unlocking its full scholarly potential.",
+    "primaryText": "أصول الشاشي",
+    "lessonCount": 34
+  },
+  {
+    "slug": "hanafi-usul-al-fiqh-101",
+    "title": "Ḥanafī Uṣūl al-Fiqh 101",
+    "arabicTitle": "",
+    "instructor": "Sh. Omer Khurshid",
+    "category": "usul-al-fiqh",
+    "categoryLabel": "Uṣūl al-Fiqh",
+    "free": false,
+    "priceCents": 10000,
+    "currency": "USD",
+    "poster": "/catalog-posters/hanafi-usul-al-fiqh-101.webp",
+    "description": "One of the most essential disciplines within the Islamic sciences—yet often underrepresented in contemporary curricula—is uṣūl al-fiqh (legal theory). Legal theory is the discipline that distinguishes the trained jurist from the lay reader; it provides the analytical tools necessary to understand the principles by which legal rulings are derived. As such, it is among the most intricate and intellectually demanding fields of Islamic studies.In the first level of Ḥanafī legal theory , Talweeh Academy will provide a clear and comprehensive study of Ḥanafī uṣūl based on the work of Shaykh Omer Khurshid. Traditionally, students of the Ḥanafī school began their engagement with legal theory through Uṣūl al-Shāshī, a text widely recognized as challenging for beginners. Although Mabādiʿ al-Uṣūl was later introduced as a concise entry point, it remains a summary of the same foundational work, and leaves out essential discussions.Drawing on multiple pedagogical approaches, Shaykh Omer has compiled a refined instructional text designed to bridge the gaps often encountered in the standard Ḥanafī curriculum. This course employs that text to provide beginning and intermediate students with a structured, accessible, and rigorous introduction to Ḥanafī legal theory.",
+    "primaryText": "Mabādi' al-Uṣūl Refined",
+    "lessonCount": 30
+  }
+]
+
+export function publicCategoryCounts() {
+  return PUBLIC_COURSES.reduce((counts, course) => {
+    counts[course.category] = (counts[course.category] || 0) + 1
+    return counts
+  }, {})
+}

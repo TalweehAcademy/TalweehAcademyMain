@@ -1,0 +1,338 @@
+
+/* TALWEEH MEDIA PLAYER V1.3 LAYOUT + BRAND MASK START */
+
+.talweeh-media-player-v13 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(24, 62, 41, .64);
+  border-radius: 12px;
+  background: #07120c;
+  box-shadow: 0 14px 34px rgba(18, 47, 31, .11);
+}
+
+/*
+  Keep the actual iframe inside a dedicated wrapper.
+  This fixes the broken small/centered iframe seen in v1.2 after the
+  YouTube API replaced the host element.
+*/
+.talweeh-media-player-v13 .talweeh-media-youtube-viewport {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+/*
+  Overscan the iframe slightly. This pushes YouTube's native top/bottom
+  chrome outside the visible Talweeh frame while retaining the video.
+*/
+.talweeh-media-player-v13 .talweeh-media-youtube-viewport iframe {
+  position: absolute !important;
+  left: -2.2% !important;
+  top: -7.5% !important;
+  width: 104.4% !important;
+  height: 115% !important;
+  max-width: none !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Cover any native YouTube title/share/watch-later row that still appears. */
+.talweeh-media-player-v13 .talweeh-media-native-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.talweeh-media-player-v13 .talweeh-media-native-mask-top {
+  top: 0;
+  height: 52px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 21, 13, .90) 0%,
+      rgba(7, 21, 13, .55) 52%,
+      rgba(7, 21, 13, 0) 100%
+    );
+}
+
+.talweeh-media-player-v13 .talweeh-media-native-mask-bottom {
+  bottom: 0;
+  height: 56px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 19, 12, 0) 0%,
+      rgba(6, 19, 12, .76) 38%,
+      rgba(6, 19, 12, 1) 100%
+    );
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #0b1a11;
+  cursor: pointer;
+  text-align: left;
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 16, 10, .10), rgba(4, 16, 10, .03) 55%, rgba(4, 16, 10, .72)),
+    linear-gradient(90deg, rgba(12, 50, 31, .20), transparent 48%);
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-brand {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 9px 5px 6px;
+  border: 1px solid rgba(237, 217, 180, .32);
+  border-radius: 999px;
+  background: rgba(10, 35, 22, .82);
+  color: #edd6b1;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font: 800 8.5px/1 Arial, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #d9b77c;
+  color: #173827;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-main-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 50%;
+  background: rgba(250, 243, 229, .97);
+  color: #173827;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .23);
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-main-play svg {
+  width: 28px;
+  height: 28px;
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-poster-title {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 17px;
+  max-width: 72%;
+  color: rgba(255, 255, 255, .94);
+  font: 700 11px/1.35 Arial, sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .34);
+}
+
+.talweeh-media-player-v13 .talweeh-media-player-stage-hit {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  top: 40px;
+  bottom: 40px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 38px tall rather than the thick YouTube bar. */
+.talweeh-media-player-v13 .talweeh-media-player-controls {
+  position: absolute;
+  z-index: 12;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 10px;
+  color: #fff;
+  background: rgba(6, 20, 12, .96);
+  border-top: 1px solid rgba(222, 190, 135, .16);
+}
+
+.talweeh-media-player-v13 .talweeh-media-control-button {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, .88);
+  cursor: pointer;
+}
+
+.talweeh-media-player-v13 .talweeh-media-control-button:hover {
+  background: rgba(255, 255, 255, .07);
+  color: #e8c995;
+}
+
+.talweeh-media-player-v13 .talweeh-media-control-button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.talweeh-media-player-v13 .talweeh-media-control-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.talweeh-media-player-v13 .talweeh-media-play-button {
+  color: #e8c995;
+}
+
+.talweeh-media-player-v13 .talweeh-media-time {
+  flex: 0 0 auto;
+  min-width: 31px;
+  color: rgba(255, 255, 255, .72);
+  font: 700 8.5px/1 Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.talweeh-media-player-v13 .talweeh-media-duration {
+  text-align: right;
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress {
+  --talweeh-progress: 0%;
+  flex: 1 1 auto;
+  min-width: 60px;
+  height: 13px;
+  margin: 0 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      #d9b77c var(--talweeh-progress),
+      rgba(255, 255, 255, .22) var(--talweeh-progress)
+    );
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress::-webkit-slider-thumb {
+  width: 8px;
+  height: 8px;
+  margin-top: -3px;
+  border: 0;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #ebcf9e;
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress::-moz-range-track {
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .22);
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress::-moz-range-progress {
+  height: 2px;
+  border-radius: 999px;
+  background: #d9b77c;
+}
+
+.talweeh-media-player-v13 .talweeh-media-progress::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: #ebcf9e;
+}
+
+.talweeh-media-player-v13:fullscreen {
+  border: 0;
+  border-radius: 0;
+  background: #000;
+}
+
+@media (max-width: 680px) {
+  .talweeh-media-player-v13 {
+    border-radius: 9px;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-native-mask-top {
+    height: 40px;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-player-controls {
+    height: 36px;
+    padding-inline: 7px;
+    gap: 4px;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-player-stage-hit {
+    top: 32px;
+    bottom: 36px;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-duration {
+    display: none;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-player-brand {
+    top: 9px;
+    left: 9px;
+  }
+
+  .talweeh-media-player-v13 .talweeh-media-player-poster-title {
+    display: none;
+  }
+}
+
+/* TALWEEH MEDIA PLAYER V1.3 LAYOUT + BRAND MASK END */

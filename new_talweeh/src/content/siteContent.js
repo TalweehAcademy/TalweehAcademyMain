@@ -73,9 +73,9 @@ export const CONTENT_REGISTRY = {
         ],
       },
       default: [
-        { heading: '2 Year Arabic Program', cta: 'Explore Arabic Program', ctaHref: '#', imageUrl: '/wp-content/uploads/2024/09/banner-16.webp' },
-        { heading: 'Discover! Enlighten! Empower!', cta: 'Start your Journey', ctaHref: '#', imageUrl: '/wp-content/uploads/2024/09/banner-14.webp' },
-        { heading: 'Revolutionizing your experience with Islamic Academia', cta: 'Start your Journey', ctaHref: '#', imageUrl: '/wp-content/uploads/2024/09/banner-17.webp' },
+        { heading: '2 Year Arabic Program', cta: 'Explore Arabic Program', ctaHref: '/arabic', imageUrl: '/brand/dashboard-books.webp' },
+        { heading: 'Discover! Enlighten! Empower!', cta: 'Start your Journey', ctaHref: '/courses', imageUrl: '/brand/dashboard-books.webp' },
+        { heading: 'Revolutionizing your experience with Islamic Academia', cta: 'Start your Journey', ctaHref: '/courses', imageUrl: '/brand/dashboard-books.webp' },
       ],
     },
     highlights: {

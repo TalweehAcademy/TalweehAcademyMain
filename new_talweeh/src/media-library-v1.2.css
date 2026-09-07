@@ -1,0 +1,445 @@
+
+/* TALWEEH MEDIA CUSTOM PLAYER V1.2 START */
+
+/*
+  The iframe remains the YouTube playback engine, but its standard control area
+  is disabled and physically covered by Talweeh's own slim controls.
+*/
+.talweeh-media-player-v12 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(27, 67, 44, .72);
+  border-radius: 13px;
+  background: #09150e;
+  box-shadow: 0 14px 34px rgba(18, 47, 31, .12);
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-frame,
+.talweeh-media-player-v12 .talweeh-media-player-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+}
+
+/* Opaque crop/mask over YouTube's lower overlay zone. */
+.talweeh-media-youtube-mask {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 24, 15, 0) 0%,
+      rgba(8, 24, 15, .70) 38%,
+      rgba(8, 24, 15, .98) 100%
+    );
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #0b1a11;
+  cursor: pointer;
+  text-align: left;
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 16, 10, .12), rgba(4, 16, 10, .06) 55%, rgba(4, 16, 10, .74)),
+    linear-gradient(90deg, rgba(12, 50, 31, .23), transparent 48%);
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-brand {
+  position: absolute;
+  top: 16px;
+  left: 17px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px 6px 7px;
+  border: 1px solid rgba(237, 217, 180, .34);
+  border-radius: 999px;
+  background: rgba(10, 35, 22, .80);
+  color: #edd6b1;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  font: 800 9px/1 Arial, sans-serif;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
+}
+
+.talweeh-media-player-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #d9b77c;
+  color: #173827;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-main-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, .44);
+  border-radius: 50%;
+  background: rgba(250, 243, 229, .96);
+  color: #173827;
+  box-shadow: 0 11px 28px rgba(0, 0, 0, .24);
+  transition: transform .16s ease, background .16s ease;
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-poster:hover .talweeh-media-player-main-play {
+  transform: translate(-50%, -50%) scale(1.045);
+  background: #fffaf1;
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-main-play svg {
+  width: 29px;
+  height: 29px;
+}
+
+.talweeh-media-player-poster-title {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  max-width: 72%;
+  color: rgba(255, 255, 255, .92);
+  font: 700 12px/1.35 Arial, sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .34);
+}
+
+.talweeh-media-player-v12 .talweeh-media-player-stage-hit {
+  position: absolute;
+  z-index: 4;
+  inset: 0 0 46px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Slim Talweeh control strip. */
+.talweeh-media-player-v12 .talweeh-media-player-controls {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 42px;
+  padding: 0 11px;
+  color: #fff;
+  background: rgba(8, 24, 15, .96);
+  border-top: 1px solid rgba(222, 190, 135, .19);
+}
+
+.talweeh-media-player-v12 .talweeh-media-control-button {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, .90);
+  cursor: pointer;
+}
+
+.talweeh-media-player-v12 .talweeh-media-control-button:hover {
+  background: rgba(255, 255, 255, .08);
+  color: #e8c995;
+}
+
+.talweeh-media-player-v12 .talweeh-media-control-button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.talweeh-media-player-v12 .talweeh-media-control-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.talweeh-media-player-v12 .talweeh-media-play-button {
+  color: #e8c995;
+}
+
+.talweeh-media-player-v12 .talweeh-media-time {
+  flex: 0 0 auto;
+  min-width: 33px;
+  color: rgba(255, 255, 255, .74);
+  font: 700 9px/1 Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.talweeh-media-player-v12 .talweeh-media-duration {
+  text-align: right;
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress {
+  --talweeh-progress: 0%;
+  flex: 1 1 auto;
+  min-width: 60px;
+  height: 14px;
+  margin: 0 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 99px;
+  background:
+    linear-gradient(
+      90deg,
+      #d9b77c var(--talweeh-progress),
+      rgba(255, 255, 255, .23) var(--talweeh-progress)
+    );
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress::-moz-range-track {
+  height: 2px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .23);
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress::-moz-range-progress {
+  height: 2px;
+  border-radius: 99px;
+  background: #d9b77c;
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress::-webkit-slider-thumb {
+  width: 9px;
+  height: 9px;
+  margin-top: -3.5px;
+  border: 0;
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #ebcf9e;
+  box-shadow: 0 0 0 2px rgba(11, 32, 20, .55);
+}
+
+.talweeh-media-player-v12 .talweeh-media-progress::-moz-range-thumb {
+  width: 9px;
+  height: 9px;
+  border: 0;
+  border-radius: 50%;
+  background: #ebcf9e;
+}
+
+.talweeh-media-player-v12:fullscreen {
+  border: 0;
+  border-radius: 0;
+  background: #000;
+}
+
+.talweeh-media-player-v12:fullscreen .talweeh-media-player-controls {
+  height: 46px;
+  padding-inline: 16px;
+}
+
+/* Overview + subscribe row */
+.academy-media-overview-card-v12 {
+  margin-top: 20px;
+  padding: 28px 31px 31px;
+}
+
+.academy-media-overview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e0e6dc;
+}
+
+.academy-media-overview-heading .academy-media-kicker {
+  margin-bottom: 5px;
+}
+
+.academy-media-overview-heading h2 {
+  margin: 0;
+  color: #1e3d2e;
+  font-size: 25px;
+  line-height: 1.12;
+}
+
+.academy-media-subscribe-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 7px 14px 7px 11px;
+  border: 1px solid #cfdbce;
+  border-radius: 10px;
+  background: #f7faf5;
+  color: #1d4934;
+  text-decoration: none;
+  box-shadow: 0 5px 14px rgba(23, 56, 39, .04);
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+
+.academy-media-subscribe-button:hover {
+  transform: translateY(-1px);
+  border-color: #b68c50;
+  background: #fffaf0;
+}
+
+.academy-media-subscribe-button svg {
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  color: #9a7138;
+}
+
+.academy-media-subscribe-button span {
+  display: grid;
+  gap: 2px;
+}
+
+.academy-media-subscribe-button strong {
+  color: #1d4934;
+  font: 800 12px/1 Arial, sans-serif;
+}
+
+.academy-media-subscribe-button small {
+  color: #788178;
+  font: 600 9px/1 Arial, sans-serif;
+}
+
+[data-theme="dark"] .academy-media-overview-heading {
+  border-color: #34453b;
+}
+
+[data-theme="dark"] .academy-media-overview-heading h2 {
+  color: #ead0a4;
+}
+
+[data-theme="dark"] .academy-media-subscribe-button {
+  border-color: #3a4d40;
+  background: #1c2b22;
+}
+
+[data-theme="dark"] .academy-media-subscribe-button strong {
+  color: #ecd0a0;
+}
+
+[data-theme="dark"] .academy-media-subscribe-button small {
+  color: #aab6ae;
+}
+
+@media (max-width: 680px) {
+  .talweeh-media-youtube-mask {
+    height: 54px;
+  }
+
+  .talweeh-media-player-v12 {
+    border-radius: 10px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-player-controls {
+    height: 39px;
+    gap: 4px;
+    padding: 0 7px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-player-stage-hit {
+    inset-bottom: 39px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-player-brand {
+    top: 10px;
+    left: 10px;
+    font-size: 7px;
+  }
+
+  .talweeh-media-player-brand-mark {
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-player-main-play {
+    width: 49px;
+    height: 49px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-player-main-play svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .talweeh-media-player-poster-title {
+    display: none;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-control-button {
+    width: 25px;
+    height: 25px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-time {
+    min-width: 30px;
+    font-size: 8px;
+  }
+
+  .talweeh-media-player-v12 .talweeh-media-duration {
+    display: none;
+  }
+
+  .academy-media-overview-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .academy-media-subscribe-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* TALWEEH MEDIA CUSTOM PLAYER V1.2 END */

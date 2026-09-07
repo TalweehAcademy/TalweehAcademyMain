@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /navigation-preview/
+
+Sitemap: https://talweehacademy.com/sitemap.xml

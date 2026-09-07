@@ -1,0 +1,99 @@
+
+/* Talweeh Media v1.5: compact Subscribe button + playback speed */
+
+/* Keep the Subscribe button compact even if older/global SVG rules exist. */
+.academy-media-subscribe-button {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: max-content !important;
+  min-height: 38px !important;
+  padding: 6px 10px !important;
+  gap: 7px !important;
+  border-radius: 8px !important;
+  flex: 0 0 auto !important;
+}
+
+.academy-media-subscribe-button > svg,
+.academy-media-subscribe-button svg {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  flex: 0 0 18px !important;
+}
+
+.academy-media-subscribe-button span {
+  display: grid !important;
+  gap: 1px !important;
+  width: auto !important;
+}
+
+.academy-media-subscribe-button strong {
+  font-size: 11px !important;
+  line-height: 1.05 !important;
+}
+
+.academy-media-subscribe-button small {
+  font-size: 8px !important;
+  line-height: 1.05 !important;
+}
+
+/* Compact playback-speed selector in the Talweeh player. */
+.tmx-player__speedLabel {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.tmx-player__speed {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 24px;
+  min-width: 42px;
+  padding: 0 15px 0 7px;
+  border: 1px solid rgba(235, 207, 158, .24);
+  border-radius: 7px;
+  background:
+    linear-gradient(45deg, transparent 50%, #e8c995 50%) calc(100% - 8px) 9px / 4px 4px no-repeat,
+    linear-gradient(135deg, #e8c995 50%, transparent 50%) calc(100% - 5px) 9px / 4px 4px no-repeat,
+    rgba(255, 255, 255, .045);
+  color: rgba(255, 255, 255, .88);
+  cursor: pointer;
+  outline: none;
+  font: 800 8.5px/1 Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.tmx-player__speed:hover,
+.tmx-player__speed:focus {
+  border-color: rgba(232, 201, 149, .48);
+  background-color: rgba(255, 255, 255, .08);
+}
+
+.tmx-player__speed:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.tmx-player__speed option {
+  background: #10271a;
+  color: #fff;
+}
+
+@media (max-width: 680px) {
+  .academy-media-subscribe-button {
+    width: auto !important;
+    max-width: max-content !important;
+    justify-content: flex-start !important;
+  }
+
+  .tmx-player__speed {
+    min-width: 38px;
+    height: 23px;
+    padding-left: 6px;
+    font-size: 8px;
+  }
+}

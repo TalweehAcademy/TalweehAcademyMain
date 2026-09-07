@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHeader, PageHero, PageFooter } from './_shared'
+import { ARTICLES } from '../data/articles'
 
 function formatArticleDate(date) {
   if (!date) return ''
@@ -13,18 +14,7 @@ function formatArticleDate(date) {
 
 export default function ArticlesPage() {
   const [activeCategory, setActiveCategory] = useState('All')
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    fetch('/api/articles')
-      .then((r) => (r.ok ? r.json() : Promise.reject('Failed to fetch articles')))
-      .then((data) => setArticles(data))
-      .catch((e) => setError(String(e)))
-      .finally(() => setLoading(false))
-  }, [])
-
+  const articles = ARTICLES
   const categories = ['All', ...Array.from(new Set(articles.map((a) => a.category).filter(Boolean)))]
 
   const filtered =
@@ -65,24 +55,25 @@ export default function ArticlesPage() {
             </select>
           </div>
 
-          {loading && <p className="courses-status">Loading articles…</p>}
-          {error && <p className="courses-status courses-error">{error}</p>}
-
           {filtered.map((article) => (
-            <article key={article.title} className="service-post-card">
-              <Link to={`/articles/${article.slug}`} className="service-post-thumb">
-                <img src={article.imageUrl} alt={article.title} />
-              </Link>
+            <article key={article.id || article.title} className="service-post-card">
+              {article.imageUrl && (
+                <Link to={`/articles/${article.slug}`} className="service-post-thumb">
+                  <img src={article.imageUrl} alt={article.title} />
+                </Link>
+              )}
               <div className="service-post-body">
                 <h1>
                   <Link to={`/articles/${article.slug}`}>
                     {article.title}
                   </Link>
                 </h1>
-                <div className="article-meta">
-                  <Link to={`/articles/${article.slug}`}>{formatArticleDate(article.publishedAt)}</Link>
-                  <Link to={`/articles/${article.slug}`}>{article.readTime}</Link>
-                </div>
+                {(article.publishedAt || article.readTime) && (
+                  <div className="article-meta">
+                    {article.publishedAt && <Link to={`/articles/${article.slug}`}>{formatArticleDate(article.publishedAt)}</Link>}
+                    {article.readTime && <Link to={`/articles/${article.slug}`}>{article.readTime}</Link>}
+                  </div>
+                )}
                 {article.excerpt && <p>{article.excerpt}</p>}
                 <Link className="service-read-more" to={`/articles/${article.slug}`}>
                   Read More.....

@@ -1,0 +1,155 @@
+
+/* TALWEEH MEDIA V1.6 — SPEED UI + SUBSCRIBE SIZE START */
+
+/* Slightly larger Subscribe button, still compact */
+.academy-media-subscribe-button {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: max-content !important;
+  min-height: 44px !important;
+  padding: 8px 13px !important;
+  gap: 9px !important;
+  border-radius: 9px !important;
+  flex: 0 0 auto !important;
+}
+
+.academy-media-subscribe-button > svg,
+.academy-media-subscribe-button svg {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  flex: 0 0 22px !important;
+}
+
+.academy-media-subscribe-button strong {
+  font-size: 13px !important;
+  line-height: 1.05 !important;
+}
+
+.academy-media-subscribe-button small {
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+}
+
+/* Make the accessibility-only label actually invisible */
+.tmx-player__speedLabel .sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Refined speed selector: compact Talweeh pill */
+.tmx-player__speedLabel {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  margin: 0 1px;
+  border: 1px solid rgba(226, 193, 137, .34);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025)),
+    rgba(17, 44, 29, .88);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  transition:
+    border-color .15s ease,
+    background .15s ease,
+    box-shadow .15s ease;
+}
+
+.tmx-player__speedLabel::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  transform: translateY(-35%);
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4px solid #e6c58f;
+  opacity: .88;
+}
+
+.tmx-player__speedLabel:hover,
+.tmx-player__speedLabel:focus-within {
+  border-color: rgba(230, 197, 143, .66);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035)),
+    rgba(19, 49, 32, .96);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 0 0 2px rgba(218, 183, 124, .07);
+}
+
+.tmx-player__speed {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  height: 24px !important;
+  min-width: 50px !important;
+  padding: 0 21px 0 10px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #f2dfbd !important;
+  cursor: pointer;
+  font: 800 9px/1 Arial, sans-serif !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .15px;
+}
+
+.tmx-player__speed:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.tmx-player__speed option {
+  background: #10271a;
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Keep the control row visually balanced */
+.tmx-player__controls {
+  gap: 7px;
+}
+
+@media (max-width: 680px) {
+  .academy-media-subscribe-button {
+    width: auto !important;
+    max-width: max-content !important;
+    min-height: 42px !important;
+    padding: 7px 11px !important;
+  }
+
+  .tmx-player__speedLabel {
+    height: 24px;
+  }
+
+  .tmx-player__speed {
+    height: 22px !important;
+    min-width: 46px !important;
+    padding-left: 8px !important;
+    padding-right: 19px !important;
+    font-size: 8.5px !important;
+  }
+
+  .tmx-player__speedLabel::after {
+    right: 7px;
+  }
+}
+
+/* TALWEEH MEDIA V1.6 — SPEED UI + SUBSCRIBE SIZE END */

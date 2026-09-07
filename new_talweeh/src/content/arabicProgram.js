@@ -2,7 +2,7 @@
 // extracted from the site's database dump. Media is hotlinked from that
 // site's own uploads.
 
-const TA = 'https://talweeharabic.com/wp-content/uploads'
+const TA = '/legacy-assets/talweeharabic'
 
 export const ARABIC_LINKS = {
   membership: 'https://talweeharabic.com/membership-pricing/',

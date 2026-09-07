@@ -1,39 +1,116 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 import { ASSET } from '../constants/assets'
 import { useContent } from '../hooks/useContent'
 import { Editable } from '../components/ContentEditor'
 
+const preview = (label) => ({ label, to: `/navigation-preview/${encodeURIComponent(label)}` })
+const courseCategoryLink = (label, slug) => ({ label, to: `/courses?category=${encodeURIComponent(slug)}` })
 const navLinks = [
-  { label: 'Courses', to: '/courses' },
-  { label: 'Arabic', to: '/arabic' },
-  { label: 'Services', to: '/services' },
   { label: 'Quran', to: '/quran' },
-  { label: 'Articles', to: '/articles' },
-  { label: 'About', to: '/about-us' },
-  { label: 'Instructors', to: '/instructors' },
-  { label: 'Contact', to: '/contact-us' },
+  { label: 'Courses', groups: [
+    { title: 'Browse courses', links: [
+      { label: 'All Courses', to: '/courses' },
+      { label: 'Live', to: '/alimiyyah' },
+      { label: 'On Demand', to: '/courses' },
+      { label: 'Free', to: '/courses?free=1' },
+      { label: 'Specialization', to: '/navigation-preview/Hadith%20Specialization' },
+    ] },
+    { title: 'On-Demand Subjects', links: [
+      courseCategoryLink('Fiqh', 'fiqh'),
+      courseCategoryLink('Uṣūl al-Fiqh', 'usul-al-fiqh'),
+      courseCategoryLink('Ḥadīth', 'hadith'),
+      courseCategoryLink('Ḥadīth Sciences', 'hadith-sciences'),
+      courseCategoryLink('ʿAqīdah & Uṣūl al-Dīn', 'aqidah-usul-al-din'),
+    ] },
+    { title: 'Language, Qurʾān & Adab', links: [
+      courseCategoryLink('Arabic Language', 'arabic-language'),
+      courseCategoryLink('Naḥw & Ṣarf', 'nahw-sarf'),
+      courseCategoryLink('Qurʾān & Tafsīr', 'quran-tafsir'),
+      courseCategoryLink('Tajwīd', 'tajwid'),
+      courseCategoryLink('Adab, Akhlāq & Tazkiyah', 'adab-akhlaq-tazkiyah'),
+    ] },
+  ] },
+  { label: 'Media', groups: [
+    { title: 'Academic Benefits', links: [
+      { label: 'Usul Al Hadith', to: '/media?category=usul-al-hadith' },
+      { label: 'Usul Al Fiqh', to: '/media?category=usul-al-fiqh' },
+      { label: 'Fiqh', to: '/media?category=fiqh' },
+      { label: 'Arabic', to: '/media?category=arabic' },
+      { label: 'Tips for Students', to: '/media?category=tips-for-students' },
+    ] },
+    { title: 'Explore', links: [
+      { label: 'All Media', to: '/media' },
+      { label: 'General Naseeha', to: '/media?category=general-naseeha' },
+      { label: 'Podcasts', to: '/media?category=podcasts' },
+      { label: 'Articles', to: '/articles' },
+    ] },
+  ] },
+  preview('Alimiyyah'),
+  { label: 'Arabic', to: '/arabic' },
+  preview('Hadith Specialization'),
+  { label: 'About', groups: [{ title: 'Talweeh Academy', links: [
+    { label: 'What is Talweeh', to: '/about-us' },
+    { label: 'Instructors', to: '/instructors' },
+    { label: 'Contact', to: '/contact-us' },
+    { label: 'Terms and Conditions', to: '/p/terms-conditions' },
+  ] }] },
 ]
 
+function NavigationDropdown({ item, closeMenu }) {
+  const [open, setOpen] = useState(false)
+  const container = useRef(null)
+  const trigger = useRef(null)
+  const id = `navigation-${item.label.toLowerCase()}`
+  useEffect(() => {
+    function outside(event) {
+      if (!container.current?.contains(event.target)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', outside)
+    return () => document.removeEventListener('pointerdown', outside)
+  }, [])
+  return (
+    <div className="academy-nav-dropdown" ref={container}
+      onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false) }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') { event.stopPropagation(); setOpen(false); trigger.current?.focus() }
+      }}>
+      <button type="button" className="academy-nav-trigger" ref={trigger}
+        aria-expanded={open} aria-controls={id} onClick={() => setOpen(value => !value)}>
+        {item.label} <span aria-hidden="true">{open ? '▴' : '▾'}</span>
+      </button>
+      <div id={id} className={`academy-nav-panel${item.label === 'Courses' ? ' academy-nav-panel-courses' : ''}`} hidden={!open}>
+        {item.groups.map(group => (
+          <section key={group.title}>
+            <h2>{group.title}</h2>
+            {group.links.map(link => (
+              <Link key={link.label} to={link.to} onClick={() => { setOpen(false); closeMenu() }}>
+                {link.label.replace('Academic Benefits: ', '')}
+              </Link>
+            ))}
+          </section>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const footerLinks = {
-  Home: [
-    { label: 'About Us', to: '/about-us' },
+  Explore: [
     { label: 'Courses', to: '/courses' },
+    { label: 'Arabic', to: '/arabic' },
+    { label: 'Quran', to: '/quran' },
+    { label: 'Alimiyyah', to: '/alimiyyah' },
+  ],
+  Academy: [
+    { label: 'About Us', to: '/about-us' },
     { label: 'Instructors', to: '/instructors' },
-    { label: 'Services', to: '/services' },
     { label: 'Articles', to: '/articles' },
   ],
-  'Login/Register': [
-    { label: 'Courses', to: '/courses' },
-    { label: 'Dashboard Panel', to: '/dashboard' },
+  Student: [
+    { label: 'Student Portal', to: '/navigation-preview/Student%20Portal' },
     { label: 'Contact', to: '/contact-us' },
-  ],
-  Miscellaneous: [
-    { label: 'My Dashboard', to: '/dashboard' },
-    { label: 'Enrolled Courses', to: '/dashboard' },
-    { label: 'Purchase History', to: '/dashboard' },
     { label: 'Terms & Conditions', to: '/p/terms-conditions' },
   ],
 }
@@ -55,73 +132,81 @@ export function SocialIcons({ social, className = 'social-links' }) {
   )
 }
 
+export function PublicThemeToggle() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'light'
+    return window.localStorage.getItem('tw-theme') === 'dark' ? 'dark' : 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('tw-theme', theme)
+  }, [theme])
+
+  const dark = theme === 'dark'
+  return (
+    <button
+      type="button"
+      className="academy-theme-toggle"
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to study mode'}
+      title={dark ? 'Switch to light mode' : 'Switch to study mode'}
+    >
+      <span className="academy-theme-icon" aria-hidden="true">{dark ? '☀' : '☾'}</span>
+      <span>{dark ? 'Light mode' : 'Study mode'}</span>
+    </button>
+  )
+}
+
 export function PageHeader() {
-  const { user, logout, openAuthModal } = useAuth()
   const { content: g } = useContent('global')
-  const [promoOpen, setPromoOpen] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="site-header">
-      {promoOpen && (
-        <Editable page="global" sectionKey="promoBar">
-          <div className="promo-bar">
-            <span>
-              {g.promoBar.text}{' '}
-              <Link to={g.promoBar.linkTo}>{g.promoBar.linkLabel}</Link>
-            </span>
-            <button type="button" aria-label="Close announcement" onClick={() => setPromoOpen(false)}>×</button>
-          </div>
-        </Editable>
-      )}
+    <header className="site-header academy-header">
       <div className="site-header-top">
         <div className="top-bar-links">
-          {user ? (
-            <>
-              <span className="top-bar-user">Welcome, {user.name}</span>
-              <button type="button" className="top-bar-btn" onClick={logout}>Logout</button>
-              <Link to="/dashboard">Dashboard</Link>
-            </>
-          ) : (
-            <>
-              <button type="button" className="top-bar-btn" onClick={() => openAuthModal('login')}>Login as a Student</button>
-              <button type="button" className="top-bar-btn" onClick={() => openAuthModal('register')}>Register as a Student</button>
-            </>
-          )}
+          <a className="top-bar-btn" href="https://portal.talweehacademy.com">
+            Student Portal
+          </a>
         </div>
-        <SocialIcons social={g.footer.social} className="top-bar-social" />
+        <div className="academy-top-tools">
+          <PublicThemeToggle />
+          <div className="academy-social-suite">
+          <span className="academy-social-label">Connect</span>
+          <SocialIcons social={g.footer.social} className="top-bar-social" />
+          </div>
+        </div>
       </div>
       <nav className="main-nav" aria-label="Main navigation">
         <Link className="brand" to="/" onClick={() => setMenuOpen(false)}>
-          <img src={`${ASSET}/2024/11/logo_final-scaled-600x171.webp`} alt="Talweeh Academy" />
+          <img src="/brand/talweeh-arabic-gold-ui.webp" alt="" />
+          <span className="academy-wordmark"><strong>Talweeh Academy</strong><small>Structured Islamic Academia</small></span>
         </Link>
         <button
           type="button"
           className="nav-burger"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
+          aria-controls="academy-main-links"
           onClick={() => setMenuOpen((o) => !o)}
         >
           {menuOpen ? '✕' : '☰'}
         </button>
-        <div
-          className={menuOpen ? 'nav-links open' : 'nav-links'}
-          onClick={() => setMenuOpen(false)}
-          role="presentation"
-        >
-          {navLinks.map(({ label, to }) => (
-            <Link to={to} key={label}>{label}</Link>
-          ))}
-          {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
+        <div id="academy-main-links" className={menuOpen ? 'nav-links open' : 'nav-links'}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              setMenuOpen(false)
+              event.currentTarget.parentElement.querySelector('.nav-burger')?.focus()
+            }
+          }}>
+          {navLinks.map(item => item.groups
+            ? <NavigationDropdown key={item.label} item={item} closeMenu={() => setMenuOpen(false)} />
+            : <Link to={item.to} key={item.label} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
+          <Link className="academy-portal-mobile" to="/navigation-preview/Student%20Portal" onClick={() => setMenuOpen(false)}>Student Portal</Link>
         </div>
         <div className="nav-actions">
-          <button className="cart-button" type="button" aria-label="Cart">
-            <span>▤</span>
-          </button>
-          <button className="journey-button" type="button">
-            <span>☻</span>
-            My Journey
-          </button>
+          <Link className="journey-button" to="/navigation-preview/Student%20Portal">Student Portal</Link>
         </div>
       </nav>
     </header>
@@ -133,7 +218,7 @@ export function PageHero({ title }) {
     <section className="hero">
       <div className="hero-overlay">
         <h1>{title}</h1>
-        <img className="hero-divider" src={`${ASSET}/2024/08/border3.svg`} alt="" />
+        <span className="page-hero-ornament" aria-hidden="true"><i /></span>
         <p>
           <Link to="/">Home</Link> | {title}
         </p>
@@ -149,11 +234,20 @@ export function PageFooter() {
     <Editable page="global" sectionKey="footer">
       <footer className="site-footer">
         <div className="footer-content">
-          <img
-            className="footer-seal"
-            src={`${ASSET}/2024/11/favicon_footer2.webp`}
-            alt="Talweeh Academy seal"
-          />
+          <div className="footer-brand-block">
+            <div className="footer-seal-frame">
+              <img
+                className="footer-seal"
+                src="/brand/talweeh-footer-seal.webp"
+                alt="Talweeh Academy seal"
+              />
+            </div>
+            <div className="footer-brand-copy">
+              <strong>Talweeh Academy</strong>
+              <span>Structured Islamic Academia</span>
+              <p>Study with clarity, structure, and purpose.</p>
+            </div>
+          </div>
           {Object.entries(footerLinks).map(([heading, links]) => (
             <div className="footer-column" key={heading}>
               <h4>{heading}</h4>
@@ -163,7 +257,7 @@ export function PageFooter() {
             </div>
           ))}
           <div className="footer-column">
-            <h4>Follow Us</h4>
+            <h4>Follow Talweeh</h4>
             <SocialIcons social={g.footer.social} />
           </div>
         </div>

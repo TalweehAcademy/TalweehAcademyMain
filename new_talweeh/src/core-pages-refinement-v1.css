@@ -1,0 +1,448 @@
+
+/* TALWEEH PUBLIC CORE PAGES REFINEMENT V1 START */
+
+/* ============================================================
+   Shared canvas
+   ============================================================ */
+html[data-talweeh-core-page] body {
+  background:var(--academy-canvas,#fbfaf6) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-page {
+  position:relative;
+  isolation:isolate;
+  min-height:60vh;
+  padding:28px 0 80px !important;
+  color:var(--academy-text,#3e5949);
+  background:
+    url('/brand/talweeh-pattern-light.png') repeat center top / 720px auto,
+    var(--academy-canvas,#fbfaf6) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-page::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.34),transparent 28%);
+}
+
+[data-theme="dark"] html[data-talweeh-core-page] .talweeh-refined-page,
+html[data-theme="dark"][data-talweeh-core-page] .talweeh-refined-page {
+  background:
+    url('/brand/talweeh-pattern-dark.png') repeat center top / 720px auto,
+    var(--academy-canvas,#111b15) !important;
+}
+
+/* ============================================================
+   Broken/empty legacy media
+   ============================================================ */
+html[data-talweeh-core-page] .talweeh-broken-image,
+html[data-talweeh-core-page] .talweeh-broken-media-wrapper {
+  display:none !important;
+}
+
+/* Old red broken-image captions/dividers are neutralized. */
+html[data-talweeh-core-page] .talweeh-refined-page img[src=""],
+html[data-talweeh-core-page] .talweeh-refined-page img:not([src]) {
+  display:none !important;
+}
+
+/* ============================================================
+   Universal hero treatment
+   ============================================================ */
+html[data-talweeh-core-page] .talweeh-refined-hero {
+  position:relative;
+  overflow:hidden;
+  width:calc(100% - 64px) !important;
+  max-width:1320px !important;
+  min-height:250px;
+  margin:0 auto 52px !important;
+  padding:54px 60px !important;
+  border:1px solid rgba(225,237,228,.14) !important;
+  border-radius:22px !important;
+  color:#f8f4ea !important;
+  background:
+    linear-gradient(102deg,rgba(12,43,28,.94),rgba(18,58,38,.82) 55%,rgba(21,65,42,.57)),
+    url('/legacy-assets/talweehacademy/2024/09/banner-13.webp') center/cover no-repeat !important;
+  box-shadow:0 18px 46px rgba(18,52,34,.13) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-hero h1,
+html[data-talweeh-core-page] .talweeh-refined-hero h2 {
+  max-width:780px;
+  margin-top:0 !important;
+  color:#fffaf1 !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-size:clamp(40px,5vw,64px) !important;
+  font-weight:600 !important;
+  line-height:1.03 !important;
+  letter-spacing:-.035em !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-hero p {
+  max-width:760px !important;
+  color:#dce8df !important;
+  font-size:15.5px !important;
+  line-height:1.75 !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-hero a,
+html[data-talweeh-core-page] .talweeh-refined-hero button {
+  border-color:rgba(225,191,135,.42) !important;
+}
+
+/* ============================================================
+   Shared content sections
+   ============================================================ */
+html[data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero) {
+  width:calc(100% - 64px) !important;
+  max-width:1180px !important;
+  margin:0 auto 24px !important;
+  padding:36px 40px !important;
+  border:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:16px !important;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 96%,transparent) !important;
+  box-shadow:0 8px 28px rgba(23,56,39,.045) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-section--feature:not(.talweeh-refined-hero) {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb,#e5eee3 52%,var(--academy-surface,#fff)),
+      color-mix(in srgb,var(--academy-surface,#fff) 97%,transparent)
+    ) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-section h2,
+html[data-talweeh-core-page] .talweeh-refined-section h3 {
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-weight:600 !important;
+  letter-spacing:-.02em !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-section h2 {
+  font-size:clamp(28px,3.2vw,40px) !important;
+  line-height:1.08 !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-section p,
+html[data-talweeh-core-page] .talweeh-refined-section li {
+  color:var(--academy-text,#52675a) !important;
+  line-height:1.75 !important;
+}
+
+/* Remove old red typography from these pages. */
+html[data-talweeh-core-page] .talweeh-refined-page h1,
+html[data-talweeh-core-page] .talweeh-refined-page h2,
+html[data-talweeh-core-page] .talweeh-refined-page h3,
+html[data-talweeh-core-page] .talweeh-refined-page h4 {
+  border-color:var(--academy-line,#dce4dc) !important;
+}
+
+html[data-talweeh-core-page] .talweeh-refined-page a {
+  color:#27533b;
+}
+
+[data-theme="dark"] html[data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero),
+html[data-theme="dark"][data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero) {
+  border-color:rgba(220,230,223,.10) !important;
+  background:rgba(17,37,27,.94) !important;
+}
+
+[data-theme="dark"] html[data-talweeh-core-page] .talweeh-refined-section--feature:not(.talweeh-refined-hero),
+html[data-theme="dark"][data-talweeh-core-page] .talweeh-refined-section--feature:not(.talweeh-refined-hero) {
+  background:linear-gradient(135deg,rgba(34,70,49,.38),rgba(17,37,27,.95)) !important;
+}
+
+/* ============================================================
+   About Us
+   ============================================================ */
+html[data-talweeh-core-page="about"] .talweeh-refined-section--story:not(.talweeh-refined-hero) {
+  display:grid !important;
+  grid-template-columns:minmax(0,.68fr) minmax(0,1.32fr) !important;
+  gap:34px !important;
+  align-items:start !important;
+}
+
+html[data-talweeh-core-page="about"] .talweeh-refined-section--story h2,
+html[data-talweeh-core-page="about"] .talweeh-refined-section--story h3 {
+  position:sticky;
+  top:110px;
+}
+
+html[data-talweeh-core-page="about"] .talweeh-refined-section ul {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  padding:0 !important;
+  list-style:none !important;
+}
+
+html[data-talweeh-core-page="about"] .talweeh-refined-section li {
+  position:relative;
+  margin:0 !important;
+  padding:15px 16px 15px 43px !important;
+  border:1px solid color-mix(in srgb,var(--academy-line,#dce4dc) 85%,transparent);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--academy-canvas,#fbfaf6) 68%,var(--academy-surface,#fff));
+}
+
+html[data-talweeh-core-page="about"] .talweeh-refined-section li::before {
+  content:'';
+  position:absolute;
+  top:20px;
+  left:18px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#b98d50;
+  box-shadow:0 0 0 4px rgba(185,141,80,.10);
+}
+
+/* ============================================================
+   Instructors
+   ============================================================ */
+html[data-talweeh-core-page="instructors"] .talweeh-refined-page {
+  --instructor-card-min:260px;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-page [class*="grid"],
+html[data-talweeh-core-page="instructors"] .talweeh-refined-page [class*="list"] {
+  gap:18px !important;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card {
+  overflow:hidden !important;
+  border:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:15px !important;
+  background:var(--academy-surface,#fff) !important;
+  box-shadow:0 9px 26px rgba(22,55,37,.055) !important;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease !important;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card:hover {
+  transform:translateY(-3px) !important;
+  border-color:rgba(184,137,76,.35) !important;
+  box-shadow:0 16px 34px rgba(22,55,37,.09) !important;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card img {
+  width:100% !important;
+  aspect-ratio:4 / 3 !important;
+  object-fit:cover !important;
+  border-radius:0 !important;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card h2,
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card h3 {
+  margin:17px 18px 6px !important;
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-size:22px !important;
+}
+
+html[data-talweeh-core-page="instructors"] .talweeh-refined-instructor-card p {
+  margin:0 18px 18px !important;
+  color:var(--academy-muted,#6a7b70) !important;
+  font-size:12.5px !important;
+  line-height:1.55 !important;
+}
+
+html[data-talweeh-core-page="instructor-detail"] .talweeh-refined-page img {
+  max-width:100%;
+  height:auto;
+  border-radius:15px;
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+html[data-talweeh-core-page="contact"] .talweeh-refined-page {
+  --contact-field-bg:color-mix(in srgb,var(--academy-surface,#fff) 88%,var(--academy-canvas,#fbfaf6));
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:15px !important;
+  max-width:860px !important;
+  margin:0 auto !important;
+  padding:32px !important;
+  border:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:16px !important;
+  background:var(--academy-surface,#fff) !important;
+  box-shadow:0 12px 32px rgba(22,55,37,.055) !important;
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form > * {
+  min-width:0;
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form textarea,
+html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form [class*="message"],
+html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form button[type="submit"] {
+  grid-column:1 / -1;
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-field {
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-height:46px !important;
+  border:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:9px !important;
+  padding:11px 13px !important;
+  background:var(--contact-field-bg) !important;
+  color:var(--academy-heading,#214834) !important;
+  outline:none !important;
+}
+
+html[data-talweeh-core-page="contact"] textarea.talweeh-refined-field {
+  min-height:150px !important;
+  resize:vertical;
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-field:focus {
+  border-color:#b98d50 !important;
+  box-shadow:0 0 0 3px rgba(185,141,80,.11) !important;
+}
+
+html[data-talweeh-core-page="contact"] .talweeh-refined-submit {
+  justify-self:start;
+  min-height:44px;
+  padding:10px 18px !important;
+  border:1px solid #173827 !important;
+  border-radius:9px !important;
+  background:#173827 !important;
+  color:#fff !important;
+  font-weight:800 !important;
+}
+
+/* ============================================================
+   Terms & Conditions
+   ============================================================ */
+html[data-talweeh-core-page="terms"] .talweeh-refined-page {
+  padding-bottom:96px !important;
+}
+
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose {
+  width:calc(100% - 64px) !important;
+  max-width:960px !important;
+  margin:0 auto !important;
+  padding:48px 56px !important;
+  border:1px solid var(--academy-line,#dce4dc) !important;
+  border-radius:17px !important;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 97%,transparent) !important;
+  box-shadow:0 12px 34px rgba(22,55,37,.05) !important;
+}
+
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose h1 {
+  margin:0 0 25px !important;
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+  font-size:clamp(38px,5vw,58px) !important;
+  line-height:1.04 !important;
+}
+
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose h2,
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose h3 {
+  margin:35px 0 12px !important;
+  color:var(--academy-heading,#214834) !important;
+  font-family:Georgia,'Times New Roman',serif !important;
+}
+
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose p,
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose li {
+  color:var(--academy-text,#53675a) !important;
+  font-size:14px !important;
+  line-height:1.8 !important;
+}
+
+html[data-talweeh-core-page="terms"] .talweeh-terms-prose hr {
+  border:0 !important;
+  border-top:1px solid var(--academy-line,#dce4dc) !important;
+  margin:30px 0 !important;
+}
+
+/* Generic page may have an old hero followed by the real prose; keep only one
+   strong top treatment instead of stacking multiple giant shells. */
+html[data-talweeh-core-page="terms"] .talweeh-refined-hero + .talweeh-terms-prose {
+  margin-top:-22px !important;
+  position:relative;
+  z-index:2;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media(max-width:800px) {
+  html[data-talweeh-core-page] .talweeh-refined-hero,
+  html[data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero),
+  html[data-talweeh-core-page="terms"] .talweeh-terms-prose {
+    width:calc(100% - 34px) !important;
+  }
+
+  html[data-talweeh-core-page] .talweeh-refined-hero {
+    padding:44px 34px !important;
+  }
+
+  html[data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero),
+  html[data-talweeh-core-page="terms"] .talweeh-terms-prose {
+    padding:31px 28px !important;
+  }
+
+  html[data-talweeh-core-page="about"] .talweeh-refined-section--story:not(.talweeh-refined-hero) {
+    grid-template-columns:1fr !important;
+  }
+
+  html[data-talweeh-core-page="about"] .talweeh-refined-section--story h2,
+  html[data-talweeh-core-page="about"] .talweeh-refined-section--story h3 {
+    position:static !important;
+  }
+
+  html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form {
+    grid-template-columns:1fr !important;
+    padding:25px !important;
+  }
+
+  html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form textarea,
+  html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form [class*="message"],
+  html[data-talweeh-core-page="contact"] .talweeh-refined-contact-form button[type="submit"] {
+    grid-column:auto;
+  }
+}
+
+@media(max-width:560px) {
+  html[data-talweeh-core-page] .talweeh-refined-page {
+    padding-top:12px !important;
+  }
+
+  html[data-talweeh-core-page] .talweeh-refined-hero {
+    width:calc(100% - 24px) !important;
+    min-height:210px;
+    margin-bottom:34px !important;
+    padding:35px 24px !important;
+    border-radius:15px !important;
+  }
+
+  html[data-talweeh-core-page] .talweeh-refined-hero h1,
+  html[data-talweeh-core-page] .talweeh-refined-hero h2 {
+    font-size:38px !important;
+  }
+
+  html[data-talweeh-core-page] .talweeh-refined-section:not(.talweeh-refined-hero),
+  html[data-talweeh-core-page="terms"] .talweeh-terms-prose {
+    width:calc(100% - 24px) !important;
+    padding:26px 21px !important;
+    border-radius:13px !important;
+  }
+
+  html[data-talweeh-core-page="about"] .talweeh-refined-section ul {
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* TALWEEH PUBLIC CORE PAGES REFINEMENT V1 END */
