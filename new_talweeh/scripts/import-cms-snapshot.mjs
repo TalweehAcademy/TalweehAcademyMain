@@ -61,6 +61,37 @@ async function downloadAsset(url, relativeBase) {
   return `/cms-assets/${rel}`
 }
 
+function isSupabaseStorageUrl(value) {
+  if (typeof value !== 'string' || !/^https?:\/\//i.test(value)) return false
+  try {
+    const url = new URL(value)
+    return url.hostname.endsWith('.supabase.co') && url.pathname.includes('/storage/v1/object/')
+  } catch {
+    return false
+  }
+}
+
+async function localizeNestedCmsAssets(value, relativeBase, state = { index: 0 }) {
+  if (typeof value === 'string') {
+    if (!isSupabaseStorageUrl(value)) return value
+    state.index += 1
+    return downloadAsset(value, `${relativeBase}-${state.index}`)
+  }
+  if (Array.isArray(value)) {
+    const output = []
+    for (const child of value) output.push(await localizeNestedCmsAssets(child, relativeBase, state))
+    return output
+  }
+  if (value && typeof value === 'object') {
+    const output = {}
+    for (const [key, child] of Object.entries(value)) {
+      output[key] = await localizeNestedCmsAssets(child, relativeBase, state)
+    }
+    return output
+  }
+  return value
+}
+
 let raw
 try {
   raw = await fs.readFile(inputPath, 'utf8')
@@ -99,6 +130,23 @@ for (const collection of collections) {
     const local = await downloadAsset(remote, `${safePart(collection)}/${safePart(entry.slug || entry.title)}`)
     entry.imageUrl = local
     entry.imageSignedUrl = local
+
+    const entrySlug = safePart(entry.slug || entry.title, 'entry')
+    if (entry.data && typeof entry.data === 'object') {
+      for (const [key, value] of Object.entries(entry.data)) {
+        if (key === 'content_json' && typeof value === 'string') {
+          try {
+            const parsed = JSON.parse(value)
+            entry.data[key] = JSON.stringify(await localizeNestedCmsAssets(parsed, `${safePart(collection)}/${entrySlug}-nested`))
+          } catch {
+            // Preserve legacy non-JSON content; the final safety check below
+            // still rejects any remaining Supabase Storage URL.
+          }
+        } else {
+          entry.data[key] = await localizeNestedCmsAssets(value, `${safePart(collection)}/${entrySlug}-${safePart(key)}`)
+        }
+      }
+    }
   }
 }
 
@@ -126,6 +174,14 @@ for (const collection of collections) {
 for (const course of snapshot.courses || []) {
   if (typeof course.posterSignedUrl === 'string' && course.posterSignedUrl.startsWith('http')) delete course.posterSignedUrl
   if (typeof course.posterThumbSignedUrl === 'string' && course.posterThumbSignedUrl.startsWith('http')) delete course.posterThumbSignedUrl
+}
+
+const serializedSnapshot = JSON.stringify(snapshot)
+if (/https?:\/\/[^"\\s]*\.supabase\.co\/storage\/v1\/object\//i.test(serializedSnapshot)) {
+  fail('snapshot still contains a Supabase Storage URL after asset localization')
+}
+if (serializedSnapshot.includes('cms-asset://')) {
+  fail('snapshot still contains an unresolved CMS asset token')
 }
 
 await fs.mkdir(cacheDir, { recursive: true })

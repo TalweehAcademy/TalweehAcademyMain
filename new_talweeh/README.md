@@ -1,78 +1,48 @@
-# Talweeh Academy
+# Talweeh Academy Public Website
 
-React + Vite frontend with an Express/MySQL API in `server/`.
+Static React + Vite public website. The production deployment has no Talweeh
+application backend, database client, Supabase client, authentication session,
+or serverless function dependency.
 
-See [`/AGENTS.md`](../AGENTS.md) for AI agent and contributor guidance (architecture, conventions, common tasks).
+The browser may connect directly to public content providers used by visible
+features, including YouTube embeds and the Qur'an reader's public text,
+translation, word-data, and audio providers. These providers do not receive
+Talweeh database credentials or student records.
 
-## Run Locally
-
-1. Open the app folder:
-
-```bash
-cd ~/TalweehAcademy/new_talweeh
-```
-
-2. Install frontend and server dependencies:
+## Local development
 
 ```bash
-npm install
-npm run install:server
+npm ci
+npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
-3. Start the API server:
-
-```bash
-npm run server
-```
-
-The API runs on:
-
-```text
-http://localhost:3001/
-```
-
-4. In another terminal, start the frontend development server:
-
-```bash
-npm run dev
-```
-
-5. Open the local URL shown in the terminal, usually:
-
-```text
-http://localhost:5173/
-```
-
-Vite proxies `/api` requests to `http://localhost:3001`.
-
-## Other Commands
-
-Start only the API server:
-
-```bash
-npm run server
-```
-
-Run lint checks:
+## Production build
 
 ```bash
 npm run lint
-```
-
-Create a production build:
-
-```bash
 npm run build
 ```
 
-Preview the production build locally:
+The build ends with `verify-static-frontend.mjs`. It fails if the deployable
+bundle contains a Supabase/database client, a Talweeh runtime API endpoint,
+serverless-function path, or a tracked backend directory.
+
+## Optional manual CMS import
+
+The Academic Portal may export a public-only JSON snapshot. Importing it is a
+local build operation, not a production connection:
 
 ```bash
-npm run preview
+npm run cms:import -- ./talweeh-public-site-snapshot.json
+npm run build
 ```
 
-## Notes
+During import, permitted CMS images are downloaded into
+`public/cms-assets/`, and the snapshot is stored locally under
+`.talweeh-cms/`. The production site never requests the portal or Supabase to
+render pages. Both generated directories are ignored by Git because a publish
+workflow should deliberately decide when to package or commit generated
+content.
 
-This project uses remote Talweeh Academy image and font assets, so an internet connection is needed for the page to fully match the design locally.
-
-Server environment variables live in `server/.env`.
+Never place Supabase keys, service-role keys, database credentials, Stripe
+secret keys, or student data in this project.

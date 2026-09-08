@@ -37,3 +37,4 @@ talweeh-*-v*/
 talweeh-public-site-audit-*.zip
 .talweeh-cms/
 public/cms-assets/
+talweeh-cms-import-*.json
