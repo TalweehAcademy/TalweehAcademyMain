@@ -4,6 +4,7 @@ import PreservedArabicPage from './arabic-preserved'
 import '../arabic-redesign-v1.css'
 import ArabicIntroVideo from '../components/ArabicIntroVideo'
 import ArabicLegacyEnhancer from '../components/ArabicLegacyEnhancer'
+import { ABOUT_SECTIONS } from '../content/arabicProgram'
 
 function BookIcon() {
   return (
@@ -42,10 +43,10 @@ export default function ArabicPage() {
             </p>
 
             <div className="arabic-v2-actions">
-              <Link className="arabic-v2-primary" to="/arabic-program">
+              <a className="arabic-v2-primary" href="#arabic-program-content">
                 <BookIcon />
                 Explore the Program
-              </Link>
+              </a>
 
               <a className="arabic-v2-secondary" href="#arabic-introduction">
                 <PlayIcon />
@@ -61,17 +62,17 @@ export default function ArabicPage() {
         </section>
 
         <nav className="arabic-v2-quicknav" aria-label="Arabic program navigation">
-          <Link to="/arabic-program">
+          <a href="#arabic-program-content">
             <span>01</span>
             <strong>Program</strong>
             <small>Explore the structured pathway</small>
-          </Link>
-          <Link to="/arabic-about">
+          </a>
+          <a href="#arabic-about-content">
             <span>02</span>
             <strong>About</strong>
             <small>Understand the approach</small>
-          </Link>
-          <Link to="/arabic-faq">
+          </a>
+          <Link to="/arabic/faq">
             <span>03</span>
             <strong>FAQ</strong>
             <small>Answers for prospective students</small>
@@ -110,6 +111,29 @@ export default function ArabicPage() {
           <div className="arabic-v2-legacy">
             <ArabicLegacyEnhancer />
             <PreservedArabicPage />
+          </div>
+        </section>
+
+        <section className="arabic-v2-about-section" id="arabic-about-content">
+          <header className="arabic-v2-section-heading arabic-v2-section-heading--content">
+            <div>
+              <p className="arabic-v2-kicker">About Talweeh Arabic</p>
+              <h2>A traditional language pathway with structured progression.</h2>
+            </div>
+            <p>
+              Learn how the program combines classical texts, applied analysis, and a
+              carefully sequenced curriculum for serious students of Arabic.
+            </p>
+          </header>
+
+          <div className="arabic-v2-about-grid">
+            {ABOUT_SECTIONS.map((section, index) => (
+              <article key={section.title} className="arabic-v2-about-card">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{section.title}</h3>
+                {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </article>
+            ))}
           </div>
         </section>
       </main>

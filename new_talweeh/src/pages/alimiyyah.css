@@ -1,2 +1,189 @@
 .alim-page{--alim-forest:#193d2e;--alim-wine:#7c302b;--alim-ink:#243c30;--alim-paper:#faf7f0;--alim-gold:#bca472;color:var(--alim-ink)}
 .alim-page main{background:transparent;font-family:Georgia,'Times New Roman',serif}.alim-page h1,.alim-page h2,.alim-page h3,.alim-page h4,.alim-page p{margin-top:0}.alim-page h1,.alim-page h2{letter-spacing:-.035em;line-height:1.08}.alim-page em{font-style:normal;color:var(--alim-wine)}.alim-eyebrow{display:block;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;line-height:1.7}.alim-hero{max-width:1240px;margin:auto;padding:86px 40px 70px;display:grid;grid-template-columns:1.45fr 1fr;gap:64px;align-items:center}.alim-hero h1{font-size:clamp(38px,4.7vw,65px);margin:25px 0}.alim-program-name{font-size:21px;font-weight:700}.alim-lead{font-size:18px;line-height:1.8;color:#526055;max-width:590px}.alim-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:30px}.alim-button{display:inline-flex;justify-content:center;align-items:center;gap:24px;padding:17px 25px;border-radius:7px;background:var(--alim-wine);color:#fff!important;text-decoration:none;font-family:Arial,sans-serif;font-size:14px;font-weight:700;line-height:1.5;transition:background .2s}.alim-button:hover{background:#60231f}.alim-text-link{color:var(--alim-forest);font-size:15px;text-underline-offset:5px}.alim-open{display:block;margin-top:18px;font-family:Arial,sans-serif;font-size:12px;color:#5d6a5d}.alim-open::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#587b55;margin-right:8px}.alim-program-card{position:relative;overflow:hidden;color:#fbf6e9;background:var(--alim-forest);padding:45px 35px 26px;border-radius:120px 120px 10px 10px;border:8px double #71816a;box-shadow:12px 16px 0 #eae4d7}.alim-program-card .alim-eyebrow{text-align:center;color:#dacba8;font-size:9px}.alim-card-mark{text-align:center;font-size:64px;line-height:1.5;color:#cdb988;margin-bottom:15px}.alim-program-card h2{text-align:center;font-size:35px;margin:16px 0 28px;color:inherit}.alim-program-card dl{margin:0}.alim-program-card dl div{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #ffffff26;padding:14px 0;font-size:14px}.alim-program-card dt{color:#d1d7c9}.alim-program-card dd{margin:0;text-align:right;font-weight:bold}.alim-program-card>p{font-size:13px;line-height:1.6;text-align:center;color:#d1d7c9;margin:18px 0 0}.alim-benefits{max-width:1160px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #d6d5c7;border-bottom:1px solid #d6d5c7;padding:32px 0;gap:35px}.alim-benefits article+article{border-left:1px solid #d6d5c7;padding-left:35px}.alim-benefits span{font:10px Arial,sans-serif;letter-spacing:.14em;color:#826f4b}.alim-benefits h2{font-size:24px;margin:16px 0 12px}.alim-benefits p{font-size:16px;line-height:1.75;color:#566359;margin-bottom:0}.alim-section{max-width:1240px;padding:75px 40px;margin:auto}.alim-mission{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;padding-bottom:36px}.alim-mission h2{font-size:43px;margin:18px 0}.alim-mission p{font-size:18px;line-height:1.8;color:#526055}.alim-values{max-width:1160px;display:grid;grid-template-columns:repeat(5,1fr);margin:0 auto 30px;gap:12px}.alim-values article{border:1px solid #dbddcf;padding:24px 19px;background:#f1f0e6;border-radius:6px}.alim-value-index{font:11px Arial,sans-serif;color:#7a785e}.alim-values .alim-value-term{font-size:25px;color:var(--alim-wine);margin:22px 0 8px}.alim-values h3{font-size:15px;margin-bottom:12px}.alim-values article>p:last-child{font-size:14px;line-height:1.7;color:#59665a;margin-bottom:0}.alim-section-heading{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:30px}.alim-section-heading h2{font-size:42px;margin:14px 0 0}.alim-section-heading>p{max-width:320px;font-size:16px;line-height:1.7;color:#526055;margin:0}.alim-year-tabs{display:flex;gap:10px;border-bottom:1px solid #d4d8c9;margin-bottom:30px}.alim-year-tabs button{font:700 18px Georgia,serif;border:0;background:transparent;color:#526055;padding:18px 26px;border-bottom:3px solid transparent;cursor:pointer}.alim-year-tabs button[aria-selected=true]{border-color:var(--alim-wine);color:var(--alim-wine);background:#f0ebe1}.alim-year-tabs button span{display:block;font:12px Arial,sans-serif;margin-top:7px;color:#626b60}.alim-year-intro h3{font-size:26px;margin-bottom:8px}.alim-year-intro p{font-size:16px;line-height:1.7;color:#526055}.alim-subjects{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}.alim-subjects li{display:flex;gap:18px;padding:22px;background:#fffdfa;border:1px solid #e0e1d5;border-radius:7px;align-items:flex-start}.alim-subject-number{font-size:13px;color:#987e52;padding-top:3px}.alim-subjects h4{font-size:18px;line-height:1.45;margin:0}.alim-subjects p{font-size:14px;color:#697066;margin:6px 0 0;line-height:1.5}.alim-mode{display:inline-block;margin-top:12px;border:1px solid #ddd7c7;background:#f4f0e5;border-radius:4px;padding:4px 8px;color:#605838;font:10px Arial,sans-serif}.alim-mode-live{background:#edf3eb;color:#2c593c;border-color:#ccd8c8}.alim-schedule{padding-top:15px}.alim-schedule-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.alim-schedule-grid article{background:#f0f1e9;border:1px solid #d9dfd1;border-radius:8px;padding:28px}.alim-schedule-title{display:flex;gap:20px;align-items:center;margin-bottom:24px}.alim-schedule-title span{font:10px Arial,sans-serif;background:#dfe6d8;color:#37563d;padding:9px;border-radius:4px;letter-spacing:.08em}.alim-schedule-title h3{font-size:25px;margin:0}.alim-schedule dl{margin:0}.alim-schedule dl div{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #d5ddcd;padding:17px 0}.alim-schedule dt{font-size:15px}.alim-schedule dd{margin:0;font-size:18px;font-weight:bold}.alim-schedule small{font:10px Arial,sans-serif}.alim-apply{background:var(--alim-forest);color:#f9f5e9;text-align:center;padding:70px 24px}.alim-apply .alim-eyebrow{color:#cbb989}.alim-apply h2{font-size:clamp(34px,4vw,49px);margin:20px 0;color:inherit}.alim-apply p{max-width:580px;margin:0 auto 28px;font-size:18px;line-height:1.7;color:#d7dfd1}.alim-apply .alim-button{background:#eee4cd;color:#193d2e!important}.alim-page a:focus-visible,.alim-page button:focus-visible{outline:3px solid #b0955c;outline-offset:5px}@media(max-width:1000px){.alim-hero{gap:35px;padding:55px 28px}.alim-benefits,.alim-values{margin-left:28px;margin-right:28px}.alim-values{grid-template-columns:repeat(3,1fr)}.alim-section{padding:55px 28px}.alim-schedule dl div{flex-direction:column;gap:8px}}@media(max-width:700px){.alim-hero{grid-template-columns:1fr;padding:42px 22px}.alim-hero h1{font-size:43px}.alim-program-card{max-width:400px;width:100%;box-sizing:border-box;margin:10px auto}.alim-benefits{grid-template-columns:1fr;margin:0 22px;gap:25px}.alim-benefits article+article{border-left:0;padding-left:0;border-top:1px solid #d6d5c7;padding-top:25px}.alim-mission{grid-template-columns:1fr;gap:10px}.alim-mission h2{font-size:36px}.alim-values{grid-template-columns:1fr 1fr;margin:0 22px}.alim-values article:last-child{grid-column:1/-1}.alim-section{padding:48px 22px}.alim-section-heading{display:block}.alim-section-heading h2{font-size:34px;margin-bottom:18px}.alim-section-heading>p{max-width:none}.alim-subjects,.alim-schedule-grid{grid-template-columns:1fr}.alim-year-tabs button{flex:1;padding:16px}.alim-schedule{padding-top:0}.alim-schedule dl div{flex-direction:row}.alim-actions{gap:20px}.alim-hero h1{overflow-wrap:break-word}}@media(prefers-reduced-motion:reduce){.alim-button{transition:none}}
+
+
+/* TALWEEH_ALIMIYYAH_SELECTOR_V1_3 */
+#alim-curriculum .alim-year-selector-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;
+  padding:0 0 24px!important;
+  margin:24px 0 36px!important;
+  border-bottom:1px solid var(--tw-line,#e3e9e1);
+  overflow:visible!important;
+}
+#alim-curriculum .alim-year-selector-grid>button{
+  width:100%!important;
+  min-width:0!important;
+  min-height:86px!important;
+  padding:13px 10px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border:1px solid var(--tw-line-strong,#cbd5cd)!important;
+  border-radius:12px!important;
+  background:color-mix(in srgb,var(--tw-surface,#fff) 88%,transparent)!important;
+  box-shadow:none!important;
+  color:var(--tw-heading,#294735)!important;
+  text-align:center!important;
+  transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease!important;
+}
+#alim-curriculum .alim-year-selector-grid>button:hover{
+  transform:translateY(-1px);
+  border-color:var(--tw-focus,#8fae81)!important;
+  box-shadow:0 8px 22px rgb(30 61 46 / .06)!important;
+}
+#alim-curriculum .alim-year-selector-grid>button.active,
+#alim-curriculum .alim-year-selector-grid>button.is-active,
+#alim-curriculum .alim-year-selector-grid>button[aria-selected="true"],
+#alim-curriculum .alim-year-selector-grid>button[aria-pressed="true"]{
+  background:var(--tw-surface-sage,#e4ecde)!important;
+  border-color:var(--tw-brand,#1e3d2e)!important;
+  color:var(--tw-heading-strong,#294936)!important;
+  box-shadow:inset 0 -3px 0 #7c302b!important;
+}
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button.active,
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button.is-active,
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button[aria-selected="true"],
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button[aria-pressed="true"]{
+  box-shadow:inset 0 -3px 0 var(--tw-accent-strong,#d9b36a)!important;
+}
+#alim-curriculum .alim-year-selector-grid>button strong,
+#alim-curriculum .alim-year-selector-grid>button b{
+  font-size:clamp(17px,1.25vw,21px)!important;
+  line-height:1.1!important;
+}
+#alim-curriculum .alim-year-selector-grid>button span,
+#alim-curriculum .alim-year-selector-grid>button small{
+  font-family:Arial,sans-serif!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+  color:var(--tw-text-muted,#68746c)!important;
+}
+.alim-button-enrollment{
+  background:var(--tw-surface,#fff)!important;
+  color:var(--tw-heading,#294735)!important;
+  border:1px solid var(--tw-line-strong,#cbd5cd)!important;
+  box-shadow:none!important;
+}
+.alim-button-enrollment:hover{background:var(--tw-surface-sage,#e4ecde)!important}
+@media(min-width:1550px){
+  #alim-curriculum .alim-year-selector-grid{grid-template-columns:repeat(10,minmax(0,1fr))!important}
+}
+@media(max-width:800px){
+  #alim-curriculum .alim-year-selector-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:18px!important}
+  #alim-curriculum .alim-year-selector-grid>button{min-height:76px!important}
+}
+
+/* PUBLIC SITE UPDATE 2026-09-07 — image-backed Alimiyyah application CTA */
+.alim-apply {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(20, 61, 44, .97) 0%, rgba(20, 61, 44, .94) 42%, rgba(20, 61, 44, .80) 72%, rgba(20, 61, 44, .68) 100%),
+    url('/brand/program-alimiyyah.webp') 82% 48% / cover no-repeat;
+}
+
+.alim-apply::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(5, 25, 17, .06), rgba(5, 25, 17, .24)),
+    url('/brand/talweeh-pattern-dark.png') center / 620px auto repeat;
+  opacity: .17;
+  pointer-events: none;
+}
+
+.alim-apply > * {
+  position: relative;
+  z-index: 1;
+}
+
+.alim-apply p {
+  color: #edf3ee;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, .18);
+}
+
+@media(max-width:700px){
+  .alim-apply {
+    background:
+      linear-gradient(90deg, rgba(20, 61, 44, .96), rgba(20, 61, 44, .86)),
+      url('/brand/program-alimiyyah.webp') 62% center / cover no-repeat;
+  }
+}
+
+
+/* PUBLIC SITE V1.4.2 — Alimiyyah curriculum cleanup + complete Study Mode contrast */
+.alim-subject-number { display:none !important; }
+.alim-subjects li { gap:0; }
+
+[data-theme="dark"] .alim-page {
+  --alim-forest:#173827;
+  --alim-wine:#d5ad70;
+  --alim-ink:#dce5de;
+  --alim-paper:#101a14;
+  --alim-gold:#d5b47c;
+  color:#dce5de;
+}
+[data-theme="dark"] .alim-page main { color:#dce5de; }
+[data-theme="dark"] .alim-hero-copy .alim-eyebrow { color:#d9bb84; }
+[data-theme="dark"] .alim-hero-copy h1 { color:#fff6e5; }
+[data-theme="dark"] .alim-hero-copy h1 em { color:#dda66b; }
+[data-theme="dark"] .alim-program-name { color:#f1e8d8; }
+[data-theme="dark"] .alim-lead,
+[data-theme="dark"] .alim-open,
+[data-theme="dark"] .alim-benefits p,
+[data-theme="dark"] .alim-mission p,
+[data-theme="dark"] .alim-section-heading>p,
+[data-theme="dark"] .alim-year-intro p,
+[data-theme="dark"] .alim-subjects p { color:#bdcbc1; }
+[data-theme="dark"] .alim-text-link { color:#e0bd7d; }
+[data-theme="dark"] .alim-benefits h2,
+[data-theme="dark"] .alim-mission h2,
+[data-theme="dark"] .alim-values h3,
+[data-theme="dark"] .alim-section-heading h2,
+[data-theme="dark"] .alim-year-intro h3,
+[data-theme="dark"] .alim-subjects h4 { color:#f3ecdd; }
+[data-theme="dark"] .alim-benefits,
+[data-theme="dark"] .alim-benefits article+article,
+[data-theme="dark"] .alim-year-tabs { border-color:#304a3a; }
+[data-theme="dark"] .alim-benefits span { color:#d2ae70; }
+[data-theme="dark"] .alim-values article,
+[data-theme="dark"] .alim-subjects li {
+  background:#1b2e24;
+  border-color:#304a3a;
+}
+[data-theme="dark"] .alim-values article>p:last-child { color:#bdcbc1; }
+[data-theme="dark"] .alim-values .alim-value-term { color:#dfb978; }
+[data-theme="dark"] .alim-mode {
+  border-color:#455b4b;
+  background:#24382c;
+  color:#d5dfd8;
+}
+[data-theme="dark"] .alim-mode-live {
+  border-color:#4b6f57;
+  background:#233d2f;
+  color:#dce9df;
+}
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button {
+  background:#1b2e24!important;
+  border-color:#304a3a!important;
+  color:#f1eadc!important;
+}
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button span,
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button small { color:#aebeb3!important; }
+[data-theme="dark"] #alim-curriculum .alim-year-selector-grid>button[aria-selected="true"] {
+  background:#274432!important;
+  border-color:#d1ad70!important;
+  color:#fff5e2!important;
+}
+[data-theme="dark"] .alim-button-enrollment {
+  background:#f4ead6!important;
+  border-color:#e0c38d!important;
+  color:#173827!important;
+}

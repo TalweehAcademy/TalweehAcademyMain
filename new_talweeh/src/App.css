@@ -12198,3 +12198,61 @@ body[data-qmr-theme="dark"] .qmr-read-error button {
   .qmr-read-page-nav-next { right: 4px; }
 }
 /* END QMR V1.7.3 READ MODE OPTIONS ONLY */
+
+/* PUBLIC SITE UPDATE 2026-09-07 — contact alignment + About terms CTA */
+.contact-info-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 980px;
+  margin: 0 auto 56px;
+  align-items: stretch;
+}
+
+.contact-info-card {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 32px;
+  border: 1px solid var(--academy-line, #dce4dc);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--academy-surface, #fff) 96%, transparent);
+  box-shadow: 0 10px 28px rgba(23, 56, 39, .055);
+}
+
+.contact-info-card p {
+  max-width: 410px;
+  margin-inline: auto;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+
+.about-terms-button {
+  display: inline-flex;
+  min-width: 190px;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 24px;
+  border: 1px solid #1e3d2e;
+  border-radius: 10px;
+  background: #1e3d2e;
+  color: #fff !important;
+  text-decoration: none;
+  font: 800 14px/1 Arial, sans-serif;
+  box-shadow: 0 9px 22px rgba(24, 62, 43, .13);
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.about-terms-button:hover {
+  transform: translateY(-1px);
+  background: #294f3a;
+  box-shadow: 0 13px 28px rgba(24, 62, 43, .17);
+}
+
+@media (max-width: 720px) {
+  .contact-info-cards { grid-template-columns: 1fr; }
+  .contact-info-card { min-height: 0; padding: 26px 22px; }
+}

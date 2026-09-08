@@ -47,7 +47,7 @@ export const CONTENT_REGISTRY = {
         social: [
           { label: 'X / Twitter', icon: '𝕏', href: '#' },
           { label: 'YouTube', icon: '▶', href: 'https://www.youtube.com/@Talweeh.Academy' },
-          { label: 'Telegram', icon: '◉', href: '#' },
+          { label: 'Telegram', icon: '◉', href: 'https://t.me/talweeh_academy' },
           { label: 'Instagram', icon: '◎', href: '#' },
           { label: 'WhatsApp', icon: '☎', href: '#' },
         ],
@@ -90,7 +90,7 @@ export const CONTENT_REGISTRY = {
       },
       default: [
         { title: 'Arabic Program', text: 'A step by step 2 year program to learn the Arabic language.', href: '/arabic' },
-        { title: 'Talweeh Society', text: 'Get access to our free courses and weekly lessons.', href: 'https://t.me/TalweehAcademy' },
+        { title: 'Talweeh Society', text: 'Get access to our free courses and weekly lessons.', href: 'https://t.me/talweeh_academy' },
         { title: 'Authorized Instructors', text: 'Qualified instructors navigating your path.', href: '/instructors' },
       ],
     },
@@ -145,7 +145,7 @@ export const CONTENT_REGISTRY = {
         heading: 'Join Talweeh Society',
         text: 'Join us as we share uplifting reminders and insights from various texts, along with access to our free weekly lessons.',
         buttonLabel: 'Join Us',
-        buttonHref: '/membership',
+        buttonHref: 'https://t.me/talweeh_academy',
       },
     },
     youtube: {
@@ -156,7 +156,7 @@ export const CONTENT_REGISTRY = {
         { name: 'url', label: 'Channel link', type: 'url' },
         {
           name: 'videos',
-          label: 'Embedded videos',
+          label: 'YouTube links (up to 7)',
           type: 'list',
           item: { label: 'YouTube embed link', type: 'url' },
         },
@@ -171,32 +171,6 @@ export const CONTENT_REGISTRY = {
           'https://www.youtube.com/embed/mmXvxdH9mAs',
         ],
       },
-    },
-    gifts: {
-      label: 'Gift cards',
-      fields: {
-        type: 'list',
-        item: [
-          { name: 'title', label: 'Title', type: 'text' },
-          { name: 'text', label: 'Text', type: 'textarea' },
-          { name: 'buttonLabel', label: 'Button label', type: 'text' },
-          { name: 'href', label: 'Button link', type: 'url' },
-        ],
-      },
-      default: [
-        {
-          title: 'Gift a Membership',
-          text: "Sponsor a course which will be given to an applicant who can't afford Talweeh Academy.",
-          buttonLabel: 'Give a Gift',
-          href: '#',
-        },
-        {
-          title: 'Apply for a Gift',
-          text: "If you can't afford a subscription, please submit an application for a course.",
-          buttonLabel: 'Apply for a Gift',
-          href: '#',
-        },
-      ],
     },
     testimonials: {
       label: 'Testimonials',
@@ -357,7 +331,7 @@ export const CONTENT_REGISTRY = {
       default: {
         heading: 'Follow us via Telegram',
         prefix: 'Follow us on',
-        url: 'https://t.me/TalweehAcademy',
+        url: 'https://t.me/talweeh_academy',
         suffix: 'for updates.',
       },
     },

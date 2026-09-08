@@ -8,7 +8,7 @@ export default function AboutUsPage() {
   const { content: c } = useContent('about')
 
   return (
-    <div className="page-shell">
+    <div className="page-shell about-page-shell">
       <PageHeader />
       <main>
         <PageHero title="About Us" />
@@ -93,12 +93,12 @@ export default function AboutUsPage() {
 
         {/* Terms & Conditions */}
         <Editable page="about" sectionKey="terms">
-          <section className="about-text-section">
+          <section className="about-text-section about-terms-section">
             <div className="about-text-inner">
               <h2>{c.terms.heading}</h2>
               <img src={`${ASSET}/2024/08/border3.svg`} alt="" />
-              <Link className="red-button" to="/p/terms-conditions">
-                {c.terms.buttonLabel}
+              <Link className="about-terms-button" to="/p/terms-conditions">
+                {c.terms.buttonLabel} <span aria-hidden="true">→</span>
               </Link>
             </div>
           </section>

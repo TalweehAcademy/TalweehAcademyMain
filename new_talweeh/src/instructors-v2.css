@@ -511,3 +511,17 @@
 }
 
 /* TALWEEH INSTRUCTORS V2 END */
+
+
+/* PUBLIC SITE V1.4.2 — instructor hero contrast only */
+.instructors-v2-hero .instructors-v2-kicker,
+.instructor-v2-hero .instructors-v2-kicker {
+  color:#e2c28e;
+  text-shadow:0 1px 14px rgba(0,0,0,.18);
+}
+.instructors-v2-hero > p:last-child,
+.instructor-v2-hero-copy > p:last-child {
+  color:#edf3ee;
+  opacity:1;
+  text-shadow:0 1px 16px rgba(0,0,0,.2);
+}

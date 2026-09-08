@@ -416,3 +416,80 @@
 }
 
 /* TALWEEH ARABIC REDESIGN V1 END */
+
+/* TALWEEH ARABIC V1.4.1 — in-page Program/About navigation */
+#arabic-introduction,
+#arabic-program-content,
+#arabic-about-content {
+  scroll-margin-top:150px;
+}
+
+.arabic-v2-about-section {
+  width:calc(100% - 64px);
+  max-width:1180px;
+  margin:0 auto;
+  padding-top:82px;
+}
+
+.arabic-v2-about-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.arabic-v2-about-card {
+  position:relative;
+  padding:28px 30px 30px;
+  overflow:hidden;
+  border:1px solid var(--academy-line,#dbe4da);
+  border-radius:16px;
+  background:color-mix(in srgb,var(--academy-surface,#fff) 96%,transparent);
+  box-shadow:0 10px 30px rgba(22,55,37,.045);
+}
+
+.arabic-v2-about-card:first-child {
+  grid-column:1/-1;
+  padding-right:min(12vw,150px);
+  background:
+    linear-gradient(110deg,color-mix(in srgb,var(--academy-surface,#fff) 96%,transparent),color-mix(in srgb,var(--academy-surface-sage,#e4ecde) 58%,var(--academy-surface,#fff)));
+}
+
+.arabic-v2-about-card > span {
+  display:inline-block;
+  margin-bottom:12px;
+  color:#a27b45;
+  font:800 9px/1 Arial,sans-serif;
+  letter-spacing:.13em;
+}
+
+.arabic-v2-about-card h3 {
+  margin:0 0 11px;
+  color:var(--academy-heading,#214834);
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:24px;
+  line-height:1.15;
+}
+
+.arabic-v2-about-card p {
+  margin:0 0 12px;
+  color:var(--academy-muted,#6e7d73);
+  font:400 13.5px/1.75 Arial,sans-serif;
+}
+.arabic-v2-about-card p:last-child { margin-bottom:0; }
+
+[data-theme="dark"] .arabic-v2-about-card {
+  background:rgba(18,38,27,.94);
+  border-color:var(--academy-line);
+}
+[data-theme="dark"] .arabic-v2-about-card:first-child {
+  background:linear-gradient(110deg,rgba(18,38,27,.96),rgba(26,53,37,.94));
+}
+
+@media(max-width:900px){
+  .arabic-v2-about-section { width:calc(100% - 36px); }
+}
+@media(max-width:680px){
+  .arabic-v2-about-section { width:calc(100% - 28px); padding-top:58px; }
+  .arabic-v2-about-grid { grid-template-columns:1fr; }
+  .arabic-v2-about-card:first-child { grid-column:auto; padding-right:30px; }
+}

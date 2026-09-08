@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { lazy as talweehProgramLazy } from 'react'
 import { lazy, Suspense, useState, useEffect, useRef } from 'react'
 import './App.css'
 import './public-theme.css'
@@ -24,6 +25,7 @@ import { PageHeader, PageFooter } from './pages/_shared'
 import { useContent } from './hooks/useContent'
 import { EditModeProvider, EditModeToggle, Editable } from './components/ContentEditor'
 import PublicCorePageRefinement from './components/PublicCorePageRefinement'
+const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith-specialization'))
 const InstructorsV2Page = lazy(() => import('./pages/instructors-v2'))
 const InstructorDetailV2Page = lazy(() => import('./pages/instructor-detail-v2'))
 const AlimiyyahPage = lazy(() => import('./pages/alimiyyah'))
@@ -109,6 +111,7 @@ function FeaturedCourseCarousel({ courses }) {
 }
 
 function YouTubeCarousel({ videos }) {
+  const visibleVideos = (videos || []).filter(Boolean).slice(0, 7)
   const trackRef = useRef(null)
   const pausedRef = useRef(false)
 
@@ -137,14 +140,14 @@ function YouTubeCarousel({ videos }) {
   }
 
   useEffect(() => {
-    if (!videos || videos.length <= 3) return undefined
+    if (visibleVideos.length <= 3) return undefined
     const timer = window.setInterval(() => {
       if (!pausedRef.current) move(1)
     }, 4800)
     return () => window.clearInterval(timer)
-  }, [videos?.length])
+  }, [visibleVideos.length])
 
-  if (!videos?.length) return null
+  if (!visibleVideos.length) return null
 
   return (
     <div className="academy-youtube-carousel">
@@ -157,7 +160,7 @@ function YouTubeCarousel({ videos }) {
         onTouchStart={() => { pausedRef.current = true }}
         onTouchEnd={() => { pausedRef.current = false }}
       >
-        {videos.map((src, index) => (
+        {visibleVideos.map((src, index) => (
           <article className="academy-video-card" key={`${src}-${index}`}>
             <VideoFacade src={src} title={`Talweeh Academy featured lecture ${index + 1}`} />
             <div className="academy-video-card-meta">
@@ -307,7 +310,7 @@ function LandingPage() {
               <div className="academy-program-media" aria-hidden="true"><span>02</span></div>
               <div className="academy-program-copy"><span className="academy-program-number">Islamic scholarship</span><h3>Alimiyyah</h3><p>Explore a guided path through the Islamic sciences with structured progression and serious study.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
             </Link>
-            <Link to="/navigation-preview/Hadith%20Specialization" className="academy-program-card academy-program-hadith">
+            <Link to="/hadith-specialization" className="academy-program-card academy-program-hadith">
               <div className="academy-program-media" aria-hidden="true"><span>03</span></div>
               <div className="academy-program-copy"><span className="academy-program-number">Specialized study</span><h3>Hadith Specialization</h3><p>Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
             </Link>
@@ -328,7 +331,7 @@ function LandingPage() {
                   ['Live', 'Join guided classes with scheduled instruction', '/alimiyyah'],
                   ['On Demand', 'Study structured lessons at your own pace', '/courses'],
                   ['Free', 'Begin with accessible courses and resources', '/courses?free=1'],
-                  ['Specialization', 'Advance into focused study through dedicated specialist pathways', '/navigation-preview/Hadith%20Specialization'],
+                  ['Specialization', 'Advance into focused study through dedicated specialist pathways', '/hadith-specialization'],
                 ].map(([label, text, destination], index) => (
                   <Link key={label} to={destination}>
                     <span className="academy-path-index">0{index + 1}</span>
@@ -441,22 +444,6 @@ function LandingPage() {
           </section>
         </Editable>
 
-        {/* ── Gift Sections ────────────────────────── */}
-        <Editable page="landing" sectionKey="gifts">
-          <section className="gift-section">
-            {c.gifts.map((gift) => (
-              <div className="gift-card" key={gift.title}>
-                <h3>{gift.title}</h3>
-                <span className="academy-divider" aria-hidden="true" />
-                <p>{gift.text}</p>
-                <a className="red-button" href={gift.href || '#'}>
-                  {gift.buttonLabel}
-                </a>
-              </div>
-            ))}
-          </section>
-        </Editable>
-
         <section className="academy-final-cta" aria-labelledby="academy-final-cta-heading">
           <div>
             <p className="academy-eyebrow">Begin your next chapter</p>
@@ -559,6 +546,8 @@ function AppInner() {
         <Routes>
         <Route path="/navigation-preview/Alimiyyah" element={<AlimiyyahPage />} />
         <Route path="/alimiyyah" element={<AlimiyyahPage />} />
+        <Route path="/hadith-specialization" element={<HadithSpecializationPage />} />
+        <Route path="/navigation-preview/Hadith%20Specialization" element={<HadithSpecializationPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/navigation-preview/:section" element={<NavigationPreviewPage />} />
         <Route path="/courses" element={<CoursesPage />} />

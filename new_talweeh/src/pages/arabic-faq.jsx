@@ -24,7 +24,7 @@ export default function ArabicFaqPage() {
           </p>
           <div className="arb-hero-actions">
             <a className="arb-btn-primary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
-            <Link className="arb-btn-outline" to="/arabic/program">View the Full Program</Link>
+            <a className="arb-btn-outline" href="/arabic#arabic-program-content">View the Full Program</a>
           </div>
         </section>
       </main>

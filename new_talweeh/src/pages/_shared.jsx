@@ -15,7 +15,7 @@ const navLinks = [
       { label: 'Live', to: '/alimiyyah' },
       { label: 'On Demand', to: '/courses' },
       { label: 'Free', to: '/courses?free=1' },
-      { label: 'Specialization', to: '/navigation-preview/Hadith%20Specialization' },
+      { label: 'Specialization', to: '/hadith-specialization' },
     ] },
     { title: 'On-Demand Subjects', links: [
       courseCategoryLink('Fiqh', 'fiqh'),
@@ -49,7 +49,7 @@ const navLinks = [
   ] },
   preview('Alimiyyah'),
   { label: 'Arabic', to: '/arabic' },
-  preview('Hadith Specialization'),
+  { label: 'Hadith Specialization', to: '/hadith-specialization' },
   { label: 'About', groups: [{ title: 'Talweeh Academy', links: [
     { label: 'What is Talweeh', to: '/about-us' },
     { label: 'Instructors', to: '/instructors' },

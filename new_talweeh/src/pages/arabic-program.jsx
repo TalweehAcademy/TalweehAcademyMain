@@ -8,6 +8,29 @@ import {
   PROGRAM_MODULES,
 } from '../content/arabicProgram'
 
+function renderInlineBold(text) {
+  return String(text || '').split(/(\*\*[^*]+\*\*)/g).filter(Boolean).map((part, index) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={`${part}-${index}`}>{part.slice(2, -2)}</strong>
+      : <span key={`${part}-${index}`}>{part}</span>
+  )
+}
+
+function AccordionAnswer({ value }) {
+  const lines = String(value || '').split('\n')
+  return (
+    <div className="arb-accordion-answer">
+      {lines.map((raw, index) => {
+        const line = raw.trim()
+        if (!line) return <span className="arb-answer-space" aria-hidden="true" key={`space-${index}`} />
+        if (line.startsWith('- ')) return <div className="arb-answer-bullet" key={`${line}-${index}`}><span aria-hidden="true">•</span><span>{renderInlineBold(line.slice(2))}</span></div>
+        if (line.startsWith('**') && line.endsWith('**') && line.length > 4) return <strong className="arb-answer-subhead" key={`${line}-${index}`}>{line.slice(2, -2)}</strong>
+        return <p key={`${line}-${index}`}>{renderInlineBold(line)}</p>
+      })}
+    </div>
+  )
+}
+
 export function Accordion({ items }) {
   const [openIndex, setOpenIndex] = useState(0)
   return (
@@ -22,7 +45,7 @@ export function Accordion({ items }) {
             <span>{item.title || item.q}</span>
             <span className="arb-accordion-caret" aria-hidden="true">{openIndex === i ? '−' : '+'}</span>
           </button>
-          {openIndex === i && <p>{item.text || item.a}</p>}
+          {openIndex === i && <AccordionAnswer value={item.text || item.a} />}
         </div>
       ))}
     </div>

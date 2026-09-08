@@ -35,7 +35,7 @@ export default {
     {
       "portalId": "3f76806a-aecc-457d-84ef-3e7b4b14d993",
       "title": "Lesson 1",
-      "overview": "Access the full Tā’iyyah of al-Ilbīrī course 📚\nClick the link below to enroll and start learning today:\nhttps://talweehacademy.com/courses/taiyyah-of-al-ilbiri/\n\nFor more Islamic educational content, visit our website:\nwww.TalweehAcademy.com\n\nFollow us on social media for updates and resources:\n\nTelegram: https://t.me/TalweehAcademy 🔗\nTwitter: https://x.com/Talweeh_Academy 💬\nInstagram: https://www.instagram.com/talweeh.academy 📸\n\nDon't forget to like, share, and subscribe 🔔 to stay updated with our latest videos!",
+      "overview": "Access the full Tā’iyyah of al-Ilbīrī course 📚\nClick the link below to enroll and start learning today:\nhttps://talweehacademy.com/courses/taiyyah-of-al-ilbiri/\n\nFor more Islamic educational content, visit our website:\nwww.TalweehAcademy.com\n\nFollow us on social media for updates and resources:\n\nTelegram: https://t.me/talweeh_academy 🔗\nTwitter: https://x.com/Talweeh_Academy 💬\nInstagram: https://www.instagram.com/talweeh.academy 📸\n\nDon't forget to like, share, and subscribe 🔔 to stay updated with our latest videos!",
       "topic": ""
     },
     {

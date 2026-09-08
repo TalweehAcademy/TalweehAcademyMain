@@ -14,3 +14,43 @@
 .arb-single-page .arb-welcome-video .youtube-embed { box-shadow: none; }
 .arb-single-page .arb-membership-finish { text-align: center; padding: 24px 24px 72px; }
 .arb-single-page .arb-membership-finish .arb-btn-primary { font-size: 17px; padding: 15px 32px; }
+
+/* Arabic FAQ v1.4.1 — structured answers supplied for the two-year program */
+.arb-accordion-answer {
+  display:block;
+  padding:0 18px 18px;
+  color:#35453b;
+  font-size:14px;
+  line-height:1.72;
+}
+.arb-accordion-answer p {
+  margin:0;
+  color:inherit;
+  line-height:inherit;
+}
+.arb-answer-space {
+  display:block;
+  height:9px;
+}
+.arb-answer-subhead {
+  display:block;
+  margin:2px 0 3px;
+  color:var(--green-dark,#1e3d2e);
+  font-size:13.5px;
+  line-height:1.55;
+}
+.arb-answer-bullet {
+  display:grid;
+  grid-template-columns:14px minmax(0,1fr);
+  gap:6px;
+  align-items:start;
+  margin:3px 0;
+}
+.arb-answer-bullet>span:first-child {
+  color:#a67c42;
+  font-weight:900;
+}
+.arb-accordion-answer strong { color:var(--green-dark,#1e3d2e); }
+[data-theme="dark"] .arb-accordion-answer { color:var(--academy-text,#cbd6ce); }
+[data-theme="dark"] .arb-answer-subhead,
+[data-theme="dark"] .arb-accordion-answer strong { color:var(--academy-gold,#e0c28d); }

@@ -35,7 +35,7 @@ export default {
     {
       "portalId": "9671b756-b6b2-4ebc-afe9-aee9cd1af5d5",
       "title": "Lesson 1 | Lines 1 -3",
-      "overview": "For more beneficial content, visit our official website:\nhttps://talweehacademy.com/\n\n🔹 Stay connected with us on social media:\nTelegram: https://t.me/TalweehAcademy\nTwitter: https://x.com/Talweeh_Academy\nInstagram: https://www.instagram.com/talweeh.academy 📸\n\nDon't forget to like, share, and subscribe for more inspiring content!",
+      "overview": "For more beneficial content, visit our official website:\nhttps://talweehacademy.com/\n\n🔹 Stay connected with us on social media:\nTelegram: https://t.me/talweeh_academy\nTwitter: https://x.com/Talweeh_Academy\nInstagram: https://www.instagram.com/talweeh.academy 📸\n\nDon't forget to like, share, and subscribe for more inspiring content!",
       "topic": ""
     },
     {

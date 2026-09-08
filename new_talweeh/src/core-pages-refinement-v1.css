@@ -446,3 +446,44 @@ html[data-talweeh-core-page="terms"] .talweeh-refined-hero + .talweeh-terms-pros
 }
 
 /* TALWEEH PUBLIC CORE PAGES REFINEMENT V1 END */
+
+/* PUBLIC SITE UPDATE 2026-09-07 — preserve contrast on the legal hero. */
+html[data-talweeh-core-page="terms"] .legal-hero.talweeh-refined-hero {
+  background:
+    linear-gradient(100deg, rgba(8, 35, 23, .96) 0%, rgba(12, 48, 32, .91) 54%, rgba(17, 60, 41, .82) 100%),
+    url('/legacy-assets/talweehacademy/2024/09/banner-13.webp') center 48% / cover no-repeat !important;
+}
+
+html[data-talweeh-core-page="terms"] .legal-hero.talweeh-refined-hero .legal-eyebrow {
+  color: #e4c58f !important;
+  opacity: 1 !important;
+}
+
+html[data-talweeh-core-page="terms"] .legal-hero.talweeh-refined-hero .legal-effective {
+  border-color: rgba(229, 197, 141, .72) !important;
+  background: rgba(8, 33, 22, .24) !important;
+  color: #f3dfb9 !important;
+  opacity: 1 !important;
+}
+
+html[data-talweeh-core-page="terms"] .legal-hero.talweeh-refined-hero .legal-intro {
+  color: #eef4ef !important;
+  opacity: 1 !important;
+}
+
+html[data-talweeh-core-page="about"] .about-terms-section .about-terms-button {
+  border-color: #1e3d2e !important;
+  background: #1e3d2e !important;
+  color: #fff !important;
+}
+
+html[data-talweeh-core-page="about"] .about-terms-section .about-terms-button:hover {
+  background: #294f3a !important;
+  color: #fff !important;
+}
+
+
+/* PUBLIC SITE V1.4.2 — keep the About paper pattern stationary while content scrolls. */
+html[data-talweeh-core-page="about"] .talweeh-refined-page {
+  background-attachment:fixed!important;
+}

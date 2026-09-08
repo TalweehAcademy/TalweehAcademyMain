@@ -9,7 +9,7 @@ export const ARABIC_LINKS = {
   terms: 'https://talweeharabic.com/terms-conditions/',
   calendarPdf: `${TA}/2026/03/Talweeh-Arabic-Calendar.pdf`,
   signupVideo: 'https://www.youtube.com/watch?v=f5vb0tnNQQA',
-  telegram: 'https://t.me/TalweehAcademy',
+  telegram: 'https://t.me/talweeh_academy',
 }
 
 export const PROGRAM_HERO = {
@@ -217,79 +217,196 @@ export const PROGRAM_INVITATION =
 export const FAQ_ITEMS = [
   {
     q: 'What is the Talweeh 2-Year Arabic Program?',
-    a: 'The Talweeh 2-Year Arabic Program is a comprehensive and structured course designed to guide students from the foundations of Arabic toward the ability to confidently understand classical and Qurʾānic Arabic. Through a carefully sequenced curriculum, students progressively develop proficiency in Arabic grammar (Naḥw), Arabic morphology (Ṣarf), sentence analysis (Tarkīb), Arabic rhetoric (Balāghah), and reading and analyzing classical Arabic texts. By the end of the program, students gain the linguistic tools necessary to engage directly with Arabic texts and deepen their understanding of the language of the Qurʾān.',
+    a: `The Talweeh 2-Year Arabic Program is a comprehensive and structured course designed to guide students from the foundations of Arabic toward the ability to confidently understand classical and Qurʾānic Arabic.
+
+Through a carefully sequenced curriculum, students progressively develop proficiency in:
+- Arabic grammar (Naḥw)
+- Arabic morphology (Ṣarf)
+- Sentence analysis (Tarkīb)
+- Arabic rhetoric (Balāghah)
+- Reading and analyzing classical Arabic texts
+
+By the end of the program, students gain the linguistic tools necessary to engage directly with Arabic texts and deepen their understanding of the language of the Qurʾān.`,
   },
   {
     q: 'Who is this program designed for?',
-    a: 'This program is suitable for beginners seeking a structured pathway to learning Arabic, students who can recite the Qurʾān but wish to understand its meaning, seekers of knowledge interested in Islamic scholarship, and individuals looking to build a strong linguistic foundation for studying Islamic sciences. No prior knowledge of Arabic grammar is required.',
+    a: `This program is suitable for:
+
+- Beginners seeking a structured pathway to learning Arabic
+- Students who can recite the Qurʾān but wish to understand its meaning
+- Seekers of knowledge interested in Islamic scholarship
+- Individuals looking to build a strong linguistic foundation for studying Islamic sciences
+
+No prior knowledge of Arabic grammar is required.`,
   },
   {
     q: 'What will students learn during the program?',
-    a: 'Students gradually develop proficiency in several essential Arabic disciplines: Arabic Grammar (Naḥw) — understanding how Arabic sentences are structured and how grammatical roles influence meaning; Arabic Morphology (Ṣarf) — studying verb patterns, root systems, and word derivation; Text Analysis (Tarkīb) — learning how to break down and analyze Arabic sentences and texts; Arabic Rhetoric (Balāghah) — exploring the eloquence and stylistic beauty of Arabic, particularly within the Qurʾān; and Applied Qurʾānic Language Analysis — analyzing Qurʾānic verses linguistically to appreciate deeper layers of meaning.',
+    a: `Students gradually develop proficiency in several essential Arabic disciplines, including:
+
+**Arabic Grammar (Naḥw)**
+Understanding how Arabic sentences are structured and how grammatical roles influence meaning.
+
+**Arabic Morphology (Ṣarf)**
+Studying verb patterns, root systems, and word derivation.
+
+**Text Analysis (Tarkīb)**
+Learning how to break down and analyze Arabic sentences and texts.
+
+**Arabic Rhetoric (Balāghah)**
+Exploring the eloquence and stylistic beauty of Arabic, particularly within the Qurʾān.
+
+**Applied Qurʾānic Language Analysis**
+Students begin analyzing Qurʾānic verses linguistically to appreciate deeper layers of meaning.`,
   },
   {
     q: 'How is the curriculum structured?',
-    a: 'The program is divided into sequential modules that gradually build mastery. Module 1 – Foundations (3 months): the fundamental building blocks of the Arabic language, including types of words (noun, verb, particle), basic sentence structures, an introduction to Naḥw and Ṣarf, foundational vocabulary and phrase construction, and introductory Balāghah. Module 2 – Applied Grammar & Reading (6 months): students begin engaging with real Arabic texts while strengthening grammar and morphology — studying foundational Arabic grammar texts, learning verb patterns and morphological systems, reading classical narratives, and developing sentence analysis and reading comprehension skills. Advanced Modules introduce advanced syntax and grammatical theory, sentence parsing (Iʿrāb), classical Arabic literature, linguistic analysis of Qurʾānic passages, and the science of Balāghah.',
+    a: `The program is divided into sequential modules that gradually build mastery.
+
+**Module 1 – Foundations (3 months)**
+Students are introduced to the fundamental building blocks of the Arabic language, including:
+- Types of words (noun, verb, particle)
+- Basic sentence structures
+- Introduction to Naḥw and Ṣarf
+- Foundational vocabulary and phrase construction
+- Introductory Balāghah
+
+**Module 2 – Applied Grammar & Reading (6 months)**
+Students begin engaging with real Arabic texts while strengthening grammar and morphology.
+Highlights include:
+- Studying foundational Arabic grammar texts
+- Learning verb patterns and morphological systems
+- Reading classical narratives
+- Developing sentence analysis and reading comprehension skills
+
+**Advanced Modules**
+Later modules introduce students to:
+- Advanced syntax and grammatical theory
+- Sentence parsing (Iʿrāb)
+- Classical Arabic literature
+- Linguistic analysis of Qurʾānic passages
+- The science of Balāghah`,
   },
   {
     q: 'Will the program help me understand the Qurʾān?',
-    a: 'Yes. One of the central goals of the program is to equip students with the linguistic tools needed to access the meanings of the Qurʾān through the Arabic language itself. The last module will be a direct application upon the 30th Juz of the Qur’an using linguistic-based Tafaseer. Students will learn to recognize grammatical structures in Qurʾānic verses, understand how morphology and syntax affect meaning, identify rhetorical features used within the Qurʾān, and analyze verses through linguistic principles. This allows students to move beyond translation and begin appreciating the depth and precision of Qurʾānic language.',
+    a: `Yes. One of the central goals of the program is to equip students with the linguistic tools needed to access the meanings of the Qurʾān through the Arabic language itself. The last module will be a direct application upon the 30th Juz of the Qur’an using linguistic based Tafaseer.
+
+Students will learn to:
+- Recognize grammatical structures in Qurʾānic verses
+- Understand how morphology and syntax affect meaning
+- Identify rhetorical features used within the Qurʾān
+- Analyze verses through linguistic principles
+
+This allows students to move beyond translation and begin appreciating the depth and precision of Qurʾānic language.`,
   },
   {
     q: 'What kind of Arabic will students study?',
-    a: 'Students study classical Arabic, the language used in the Qurʾān, Hadith literature, classical Islamic scholarship, and traditional Arabic texts. This enables students to engage directly with the primary sources of Islamic knowledge.',
+    a: `Students study **classical Arabic**, the language used in:
+
+- The Qurʾān
+- Hadith literature
+- Classical Islamic scholarship
+- Traditional Arabic texts
+
+This enables students to engage directly with the primary sources of Islamic knowledge.`,
   },
   {
     q: 'Do I need prior knowledge of Arabic to enroll?',
-    a: 'Students should have a basic ability to read Arabic script, including recognizing letters and reading words with vowel markings (ḥarakāt). The program then builds upon this foundation by developing a deeper understanding of grammar, vocabulary, and sentence structure.',
+    a: `Students should have a **basic ability to read Arabic script**, including recognizing letters and reading words with vowel markings (ḥarakāt).
+
+The program then builds upon this foundation by developing a deeper understanding of grammar, vocabulary, and sentence structure.`,
   },
   {
     q: 'When does the program begin?',
-    a: 'The next cohort of the Two-Year Arabic Program is scheduled to begin in April 2026.',
+    a: `The next cohort of the Two-Year Arabic Program is scheduled to begin in:
+
+**April 2026**`,
   },
   {
     q: 'What are the program fees?',
-    a: 'The tuition fee for the program is $99 USD per month. A 30% Ramadan Early-Bird Discount is currently available for students who register during the month of Ramadan. Full details regarding enrollment and payment are available on the program registration page.',
+    a: `The tuition fee for the program is:
+
+**$99 USD per month**
+
+A **30% Ramadan Early-Bird Discount** is currently available for students who register during the month of Ramadan.
+
+Full details regarding enrollment and payment are available on the program registration page.`,
   },
   {
     q: 'What language will the program be taught in?',
-    a: 'The primary language of instruction is English. Arabic terminology and texts will be gradually introduced throughout the program as students develop their language proficiency.',
+    a: `The primary language of instruction is **English**.
+
+Arabic terminology and texts will be gradually introduced throughout the program as students develop their language proficiency.`,
   },
   {
     q: 'Who are the instructors?',
-    a: 'The program is taught by Shaykh Omer Khurshid and Mufti Dawood Khurshid. Both instructors completed advanced Islamic studies at the Islamic University of Madinah and have extensive experience teaching Arabic and Islamic sciences.',
+    a: `The program is taught by:
+
+**Shaykh Omer Khurshid**
+**Mufti Dawood Khurshid**
+
+Both instructors completed advanced Islamic studies at the **Islamic University of Madinah** and have extensive experience teaching Arabic and Islamic sciences.`,
   },
   {
     q: 'Are the classes live or recorded?',
-    a: 'The program combines live instruction and pre-recorded lessons, depending on the module. Modules 1 & 2: primarily live classes. Modules 3 & 4: a combination of recorded lessons and live sessions. Module 5: primarily live classes. All live classes are recorded and uploaded to the student portal.',
+    a: `The program combines **live instruction and pre-recorded lessons**, depending on the module.
+
+- **Module 1 & Module 2:** Primarily live classes
+- **Module 3 & Module 4:** Combination of recorded lessons and live sessions
+- **Module 5:** Primarily live classes
+
+All live classes are recorded and uploaded to the student portal.`,
   },
   {
     q: 'What time are the live classes held?',
-    a: 'Live sessions are typically scheduled at 3:00 PM EST (Eastern Standard Time), 8:00 PM UK Time, 9:00 PM Central European Time, 11:00 PM Gulf Standard Time (UAE / Saudi Arabia), and 12:30 AM Pakistan Standard Time. A detailed schedule is available in the Program Calendar on the program page. Daylight savings might affect the time, and class timings can potentially be updated based on the commitments of the instructors.',
+    a: `Live sessions are typically scheduled at the following times:
+
+- **3:00 PM EST (Eastern Standard Time)**
+- **8:00 PM UK Time**
+- **9:00 PM Central European Time**
+- **11:00 PM Gulf Standard Time (UAE / Saudi Arabia)**
+- **12:30 AM Pakistan Standard Time**
+
+A detailed schedule is available in the **Program Calendar** on the program page.
+Daylight savings might affect the time.
+Class timings can potentially be updated based on the commitments of the instructors.`,
   },
   {
     q: 'How many hours per week does the program require?',
-    a: 'The expected weekly commitment varies by module. Module 1: approximately 3–4 hours per week. Modules 2–5: approximately 5–6 hours per week. Students are encouraged to complete recommended practice exercises to reinforce their learning.',
+    a: `The expected weekly commitment varies by module:
+
+- **Module 1:** Approximately 3–4 hours per week
+- **Modules 2–5:** Approximately 5–6 hours per week
+
+Students are encouraged to complete recommended practice exercises to reinforce their learning.`,
   },
   {
     q: 'Will I have access to class recordings?',
-    a: 'Yes. All live classes are recorded and uploaded to the Talweeh Student Portal, allowing students to review lessons at their convenience.',
+    a: `Yes. All live classes are recorded and uploaded to the **Talweeh Student Portal**, allowing students to review lessons at their convenience.`,
   },
   {
     q: 'What if I miss a live class?',
-    a: 'If you are unable to attend a live session, you can watch the full recording through the student portal shortly after the class is completed.',
+    a: `If you are unable to attend a live session, you can watch the full recording through the student portal shortly after the class is completed.`,
   },
   {
     q: 'How are classes accessed?',
-    a: 'All classes are delivered through an online learning platform. Students will have access to recorded lessons, course materials, class resources, and program announcements through the Talweeh Student Portal.',
+    a: `All classes are delivered through an **online learning platform**.
+
+Students will have access to:
+- Recorded lessons
+- Course materials
+- Class resources
+- Program announcements
+
+through the **Talweeh Student Portal**.`,
   },
   {
     q: 'What will students be able to achieve after completing the program?',
-    a: 'By the end of the program, students will have developed a solid foundation in Arabic grammar and morphology, the ability to read and analyze Arabic texts, the linguistic tools to begin understanding Qurʾānic Arabic, and a strong basis for pursuing further studies in Arabic and Islamic sciences.',
-  },
-  {
-    q: 'Can I ask questions if I’m watching the recorded classes instead of attending live?',
-    a: 'Yes. Even if you are watching the recorded classes, you can still ask questions through the live chat on the student portal. This platform allows students to communicate with the instructors, ask questions, share examples, and post inquiries. It is also used to share important updates and announcements related to the program.',
+    a: `By the end of the program, students will have developed:
+
+- A solid foundation in Arabic grammar and morphology
+- The ability to read and analyze Arabic texts
+- The linguistic tools to begin understanding Qurʾānic Arabic
+- A strong basis for pursuing further studies in Arabic and Islamic sciences`,
   },
 ]
 
@@ -330,8 +447,8 @@ export const ABOUT_SECTIONS = [
 ]
 
 export const PROUD_CARDS = [
-  { title: 'Qur’an-Centered', text: 'Talweeh Arabic is centered on equipping students with the linguistic tools needed to deepen their understanding of the Qur’an.', href: '/arabic/program' },
+  { title: 'Qur’an-Centered', text: 'Talweeh Arabic is centered on equipping students with the linguistic tools needed to deepen their understanding of the Qur’an.', href: '/arabic#arabic-program-content' },
   { title: 'Frequently Asked Questions', text: 'Everything you need to know about joining Talweeh Arabic.', href: '/arabic/faq' },
-  { title: 'Talweeh Society', text: 'Get access to our free courses and weekly lessons.', href: 'https://t.me/TalweehAcademy' },
+  { title: 'Talweeh Society', text: 'Get access to our free courses and weekly lessons.', href: 'https://t.me/talweeh_academy' },
   { title: 'Authorized Instructors', text: 'Expert instructors available for your online support.', href: '/instructors' },
 ]

@@ -2963,7 +2963,8 @@
 
 .site-footer .footer-brand-copy {
   min-width: 0 !important;
-  padding-top: 6px !important;
+  padding-top: 0 !important;
+  transform: translateY(-3px) !important;
 }
 
 .site-footer .footer-brand-copy strong {
@@ -3761,4 +3762,206 @@
   .public-course-lesson-row{grid-template-columns:36px minmax(0,1fr)!important}
   .public-course-lesson-watch{grid-column:2;justify-self:start;margin-top:7px}
   .public-course-lesson-access.free{grid-column:2;justify-self:start}
+}
+
+/* PUBLIC SITE V1.4.1 — global footer alignment + free-course media frame */
+@media (min-width:1081px) {
+  .site-footer .footer-content {
+    grid-template-columns:minmax(330px,390px) repeat(4,minmax(135px,165px)) !important;
+    justify-content:center !important;
+    column-gap:34px !important;
+    row-gap:24px !important;
+    max-width:1240px !important;
+    padding-left:34px !important;
+    padding-right:34px !important;
+  }
+  .site-footer .footer-brand-block {
+    align-items:center !important;
+    gap:18px !important;
+  }
+  .site-footer .footer-column {
+    padding-top:7px !important;
+  }
+}
+.site-footer .footer-seal-frame {
+  display:grid !important;
+  place-items:center !important;
+  flex:0 0 108px !important;
+  width:108px !important;
+  height:108px !important;
+  border-radius:50% !important;
+}
+.site-footer .footer-seal,
+.academy-home .footer-seal {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  margin:0 !important;
+  object-fit:cover !important;
+  object-position:50% 50% !important;
+  transform:scale(1.095) !important;
+  transform-origin:50% 50% !important;
+}
+
+/* Match free-course video framing to the Media player surface. */
+.public-free-course-video-wrap {
+  border:1px solid rgba(25,63,42,.62) !important;
+  border-radius:12px !important;
+  background:#07120c !important;
+  box-shadow:0 14px 34px rgba(18,47,31,.10) !important;
+}
+.public-free-course-video-wrap:focus-within {
+  outline:2px solid color-mix(in srgb,var(--academy-gold-strong,#80683f) 58%,transparent);
+  outline-offset:3px;
+}
+
+
+/* PUBLIC SITE V1.4.2 — requested page-level refinements */
+/* About: the decorative paper belongs to the document, not the viewport. */
+.about-page-shell { background-attachment:fixed!important; }
+
+/* Course page: show the entire supplied poster and let the poster shell fit it. */
+.public-course-hero-poster { align-self:start; }
+.public-course-hero-poster .public-course-poster-image-large {
+  width:100%;
+  height:auto;
+  aspect-ratio:auto;
+  object-fit:contain;
+}
+
+/* Global footer: keep every page on the exact same top alignment. */
+.site-footer .footer-brand-copy { padding-top:0!important; transform:translateY(-3px)!important; }
+
+/* Terms: force legible Study Mode prose/navigation even when legacy rules are present. */
+html[data-theme="dark"] .academy-legal-page,
+html[data-theme="dark"] .academy-legal-page .legal-layout,
+html[data-theme="dark"] .academy-legal-page .legal-document { color:#dce5de!important; }
+html[data-theme="dark"] .academy-legal-page .legal-toc {
+  background:rgba(25,48,36,.94)!important;
+  border-color:#385444!important;
+}
+html[data-theme="dark"] .academy-legal-page .legal-toc a { color:#d6e0d8!important; opacity:1!important; }
+html[data-theme="dark"] .academy-legal-page .legal-toc a:hover { color:#ffe7b9!important; background:rgba(214,178,116,.12)!important; }
+html[data-theme="dark"] .academy-legal-page .legal-opening,
+html[data-theme="dark"] .academy-legal-page .legal-section-body { color:#dce5de!important; }
+html[data-theme="dark"] .academy-legal-page .legal-section-body p,
+html[data-theme="dark"] .academy-legal-page .legal-section-body li { color:#dce5de!important; }
+
+/* Media: inactive category controls must remain readable in Study Mode. */
+[data-theme="dark"] .academy-media-categories button { color:#d6e0d8!important; opacity:1!important; }
+[data-theme="dark"] .academy-media-categories button.active { color:#17251c!important; background:#d7b274!important; }
+[data-theme="dark"] .academy-media-library-heading p,
+[data-theme="dark"] .academy-media-entry-copy p,
+[data-theme="dark"] .academy-media-overview p { color:#c5d1c8!important; opacity:1!important; }
+
+/* Articles: legacy red/dark text is replaced with the shared Study Mode palette. */
+[data-theme="dark"] .services-archive,
+[data-theme="dark"] .service-post-card,
+[data-theme="dark"] .service-post-body { color:var(--academy-text)!important; }
+[data-theme="dark"] .service-post-card { background:var(--academy-surface)!important; border-color:var(--academy-line)!important; }
+[data-theme="dark"] .service-post-body h1 a,
+[data-theme="dark"] .service-post-body h2 a,
+[data-theme="dark"] .service-post-body h3 a { color:var(--academy-heading)!important; }
+[data-theme="dark"] .service-post-body p,
+[data-theme="dark"] .article-meta a { color:#c4d0c7!important; opacity:1!important; }
+[data-theme="dark"] .service-read-more { color:#e3bd79!important; }
+[data-theme="dark"] .articles-filter-bar h6 { color:#f1eadc!important; }
+[data-theme="dark"] .articles-filter-buttons button {
+  background:#1b2e24!important;
+  border-color:#3a5645!important;
+  color:#d5e0d7!important;
+}
+[data-theme="dark"] .articles-filter-buttons button.active,
+[data-theme="dark"] .articles-filter-buttons button:hover {
+  background:#d4b171!important;
+  border-color:#d4b171!important;
+  color:#17251c!important;
+}
+
+/* PUBLIC SITE V1.4.2 — homepage editorial Study Mode contrast */
+[data-theme="dark"] .academy-home .landing-articles .academy-eyebrow {
+  color:#d5b274!important;
+}
+[data-theme="dark"] .academy-home .landing-articles h2,
+[data-theme="dark"] .academy-home .landing-article-body h3 {
+  color:var(--academy-heading)!important;
+}
+[data-theme="dark"] .academy-home .landing-articles .academy-home-section-intro>p,
+[data-theme="dark"] .academy-home .landing-article-body p,
+[data-theme="dark"] .academy-home .landing-article-body .article-meta,
+[data-theme="dark"] .academy-home .landing-article-body .article-meta span {
+  color:#c4d0c7!important;
+  opacity:1!important;
+}
+[data-theme="dark"] .academy-home .landing-article-body>a {
+  color:#e1bb78!important;
+}
+[data-theme="dark"] .academy-home .landing-article-grid article {
+  border-color:var(--academy-line)!important;
+  background:color-mix(in srgb,var(--academy-surface) 97%,transparent)!important;
+}
+
+/* PUBLIC SITE V1.4.3 — footer brand top alignment + image-blended final CTA */
+
+/* Keep the complete brand copy beside the seal aligned from the top.
+   v1.4.1 deliberately centered the brand block vertically; this override
+   restores a top-aligned editorial lockup on every public page. */
+.site-footer .footer-brand-block {
+  align-items:flex-start!important;
+}
+.site-footer .footer-brand-copy {
+  padding-top:0!important;
+  transform:none!important;
+  margin-top:0!important;
+}
+.site-footer .footer-brand-copy strong {
+  margin-top:0!important;
+}
+
+/* Homepage final CTA: reuse an existing Talweeh study image and merge it
+   beneath the forest-green treatment so the content remains fully legible. */
+.academy-final-cta {
+  background:
+    linear-gradient(90deg,
+      rgba(18,55,37,.98) 0%,
+      rgba(25,70,48,.96) 48%,
+      rgba(28,74,51,.86) 72%,
+      rgba(23,63,43,.78) 100%),
+    url('/brand/dashboard-books.webp') center right / cover no-repeat!important;
+}
+.academy-final-cta::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(10,39,25,.18),transparent 52%,rgba(10,34,23,.08));
+  z-index:0;
+}
+.academy-final-cta > * {
+  position:relative;
+  z-index:2;
+}
+.academy-final-cta::after {
+  z-index:1;
+}
+
+[data-theme="dark"] .academy-final-cta {
+  background:
+    linear-gradient(90deg,
+      rgba(8,27,18,.98) 0%,
+      rgba(13,42,28,.96) 48%,
+      rgba(18,52,35,.88) 72%,
+      rgba(14,42,29,.80) 100%),
+    url('/brand/dashboard-books.webp') center right / cover no-repeat!important;
+}
+
+@media(max-width:720px) {
+  .site-footer .footer-brand-block {
+    align-items:flex-start!important;
+  }
+  .academy-final-cta {
+    background:
+      linear-gradient(120deg,rgba(18,55,37,.98),rgba(24,67,46,.92)),
+      url('/brand/dashboard-books.webp') center / cover no-repeat!important;
+  }
 }
