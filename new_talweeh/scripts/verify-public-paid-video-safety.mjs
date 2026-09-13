@@ -1,11 +1,9 @@
-const catalogUrl = new URL('../src/data/publicCourseCatalog.js', import.meta.url)
-catalogUrl.searchParams.set('verify', Date.now().toString())
+import { loadPublicCourses } from './lib/load-public-courses.mjs'
 
-const { PUBLIC_COURSES } = await import(catalogUrl.href)
-
-if (!Array.isArray(PUBLIC_COURSES)) {
-  throw new Error('PUBLIC_COURSES not found in publicCourseCatalog.js')
-}
+// Checks the courses that will actually ship, CMS overlay included — not just
+// the committed catalog. Before this went through loadPublicCourses(), a paid
+// course introduced by a CMS snapshot was never inspected by this gate.
+const { PUBLIC_COURSES, source } = await loadPublicCourses()
 
 const VIDEO_KEYS = [
   'youtubeUrl',
@@ -54,6 +52,6 @@ if (violations.length) {
 }
 
 console.log(
-  `Paid-video safety check passed: ${PUBLIC_COURSES.length} public courses checked; ` +
-  'no paid-course YouTube lesson URLs found.'
+  `Paid-video safety check passed: ${PUBLIC_COURSES.length} public courses checked ` +
+  `(source: ${source}); no paid-course YouTube lesson URLs found.`
 )

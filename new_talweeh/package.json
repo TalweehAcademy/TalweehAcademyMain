@@ -10,7 +10,8 @@
     "start": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
     "preview": "vite preview",
-    "cms:import": "node scripts/import-cms-snapshot.mjs"
+    "cms:import": "node scripts/import-cms-snapshot.mjs",
+    "cms:verify": "node scripts/verify-cms-fixture.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

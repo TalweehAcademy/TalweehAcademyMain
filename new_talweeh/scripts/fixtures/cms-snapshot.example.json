@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 5,
+  "exportMode": "full-public-site",
+  "exportedAt": "2026-09-13T00:00:00.000Z",
+  "source": "FIXTURE — not a real Talweeh export",
+  "snapshotNumber": 9999,
+  "publicOnly": true,
+  "freeLessonVideoUrlsIncluded": true,
+  "paidLessonVideoUrlsIncluded": false,
+  "courseCount": 2,
+  "lessonCount": 2,
+  "topicCount": 1,
+  "categories": [
+    { "slug": "fiqh", "name": "CMSFIXTURE Fiqh Category", "sort_order": 1 },
+    { "slug": "hadith", "name": "CMSFIXTURE Hadith Category", "sort_order": 2 }
+  ],
+  "websiteCategories": [
+    { "content_type": "media", "slug": "usul-al-hadith", "name": "CMSFIXTURE Usul Al Hadith", "description": "", "sort_order": 1 },
+    { "content_type": "media", "slug": "cmsfixture-only", "name": "CMSFIXTURE Media Only Category", "description": "", "sort_order": 2 },
+    { "content_type": "article", "slug": "cmsfixture-articles", "name": "CMSFIXTURE Article Category", "description": "", "sort_order": 1 }
+  ],
+  "courses": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "slug": "cmsfixture-free-course",
+      "title": "CMSFIXTURE Free Course Title",
+      "arabic_title": "",
+      "subtitle": "CMSFIXTURE free subtitle",
+      "description": "CMSFIXTURE free course description.",
+      "instructor_name": "CMSFIXTURE Instructor",
+      "price_cents": 0,
+      "currency": "USD",
+      "status": "published",
+      "featured": true,
+      "publicly_listed": true,
+      "requires_payment": false,
+      "categories": [{ "slug": "fiqh", "name": "CMSFIXTURE Fiqh Category" }],
+      "lessons": [
+        {
+          "title": "CMSFIXTURE free lesson",
+          "youtube_url": "https://www.youtube.com/watch?v=aaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "slug": "cmsfixture-paid-course",
+      "title": "CMSFIXTURE Paid Course Title",
+      "arabic_title": "",
+      "subtitle": "CMSFIXTURE paid subtitle",
+      "description": "CMSFIXTURE paid course description.",
+      "instructor_name": "CMSFIXTURE Instructor",
+      "price_cents": 0,
+      "currency": "CAD",
+      "status": "published",
+      "featured": false,
+      "publicly_listed": true,
+      "requires_payment": true,
+      "categories": [{ "slug": "hadith", "name": "CMSFIXTURE Hadith Category" }],
+      "lessons": [
+        {
+          "title": "CMSFIXTURE paid lesson with no video url"
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "cmsfixture-article",
+      "title": "CMSFIXTURE Article Title",
+      "featured": true,
+      "categories": [{ "content_type": "article", "slug": "cmsfixture-articles", "name": "CMSFIXTURE Article Category" }],
+      "data": {
+        "excerpt": "CMSFIXTURE article excerpt.",
+        "author": "CMSFIXTURE Author",
+        "published_date": "2026-09-13",
+        "read_time": "3 min",
+        "body": "CMSFIXTURE article body paragraph."
+      }
+    }
+  ],
+  "media": [
+    {
+      "slug": "cmsfixture-media",
+      "title": "CMSFIXTURE Media Title",
+      "featured": false,
+      "categories": [{ "content_type": "media", "slug": "usul-al-hadith", "name": "CMSFIXTURE Usul Al Hadith" }],
+      "data": {
+        "description": "CMSFIXTURE media description used as the card blurb.",
+        "youtube_url": "https://www.youtube.com/watch?v=bbbbbbbbbbb",
+        "instructor": "CMSFIXTURE Speaker",
+        "published_date": "2026-09-13",
+        "duration": "12:34"
+      }
+    }
+  ],
+  "instructors": [
+    {
+      "slug": "cmsfixture-instructor",
+      "title": "CMSFIXTURE Instructor Name",
+      "featured": true,
+      "categories": [],
+      "data": {
+        "role": "CMSFIXTURE Role",
+        "bio": "CMSFIXTURE instructor biography."
+      }
+    }
+  ],
+  "homepage": [
+    {
+      "slug": "hero",
+      "title": "CMSFIXTURE Hero Title",
+      "featured": false,
+      "categories": [],
+      "data": {
+        "eyebrow": "CMSFIXTURE eyebrow",
+        "body": "CMSFIXTURE hero body copy.",
+        "cta_label": "CMSFIXTURE CTA"
+      }
+    }
+  ],
+  "pages": [],
+  "siteSettings": []
+}

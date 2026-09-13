@@ -2,15 +2,12 @@ import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
+import { loadPublicCourses } from './lib/load-public-courses.mjs'
+
 const here = path.dirname(fileURLToPath(import.meta.url))
-const catalogUrl = new URL('../src/data/publicCourseCatalog.js', import.meta.url)
-catalogUrl.searchParams.set('generated', Date.now().toString())
 
-const { PUBLIC_COURSES } = await import(catalogUrl.href)
-
-if (!Array.isArray(PUBLIC_COURSES)) {
-  throw new Error('PUBLIC_COURSES was not found in src/data/publicCourseCatalog.js')
-}
+// Reads the committed catalog and applies the CMS snapshot when one is present.
+const { PUBLIC_COURSES } = await loadPublicCourses()
 
 const detailsDir = path.join(here, '../src/data/public-course-details')
 await rm(detailsDir, { recursive: true, force: true })
