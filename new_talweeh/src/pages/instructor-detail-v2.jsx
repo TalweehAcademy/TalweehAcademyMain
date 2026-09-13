@@ -1,11 +1,14 @@
 import { Link, useParams } from 'react-router-dom'
 import { PageHeader, PageFooter } from './_shared'
 import { getInstructor } from '../data/instructors'
+import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 import '../instructors-v2.css'
 
 export default function InstructorDetailV2Page() {
   const { slug } = useParams()
   const instructor = getInstructor(slug)
+  // Called before the not-found early return so the hook order stays stable.
+  useDocumentMeta({ title: instructor?.name, description: instructor?.bio || instructor?.role, image: absoluteUrl(instructor?.imageUrl) })
 
   if (!instructor) {
     return (

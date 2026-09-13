@@ -4,6 +4,7 @@ import { lazy, Suspense, useState, useEffect, useRef } from 'react'
 import './App.css'
 import './public-theme.css'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { RouteMeta } from './hooks/useDocumentMeta'
 import CourseCard from './components/CourseCard'
 import VideoFacade from './components/VideoFacade'
 const CoursesPage = lazy(() => import('./pages/courses'))
@@ -306,7 +307,7 @@ function LandingPage() {
               <div className="academy-program-media" aria-hidden="true"><span>01</span></div>
               <div className="academy-program-copy"><span className="academy-program-number">Language &amp; understanding</span><h3>Arabic</h3><p>A step-by-step, two-year program designed to build lasting understanding of the Arabic language.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
             </Link>
-            <Link to="/navigation-preview/Alimiyyah" className="academy-program-card academy-program-alimiyyah">
+            <Link to="/alimiyyah" className="academy-program-card academy-program-alimiyyah">
               <div className="academy-program-media" aria-hidden="true"><span>02</span></div>
               <div className="academy-program-copy"><span className="academy-program-number">Islamic scholarship</span><h3>Alimiyyah</h3><p>Explore a guided path through the Islamic sciences with structured progression and serious study.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
             </Link>
@@ -452,7 +453,7 @@ function LandingPage() {
           </div>
           <div className="academy-final-cta-actions">
             <Link className="hero-cta-btn" to="/courses">Explore courses <span aria-hidden="true">→</span></Link>
-            <Link className="academy-secondary-button" to="/navigation-preview/Student%20Portal">Student Portal</Link>
+            <a className="academy-secondary-button" href="https://alimiyyah.talweehacademy.com" rel="noopener">Student Portal</a>
           </div>
         </section>
 
@@ -542,6 +543,7 @@ function AppInner() {
       <ScrollToTop />
       <PublicCorePageRefinement />
       <EditModeToggle />
+      <RouteMeta />
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
         <Route path="/navigation-preview/Alimiyyah" element={<AlimiyyahPage />} />

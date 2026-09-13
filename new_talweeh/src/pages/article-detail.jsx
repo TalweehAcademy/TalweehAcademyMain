@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
 import { extractVideoId } from '../utils/youtube'
 import { getArticleBySlug } from '../data/articles'
+import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 
 function formatArticleDate(date) {
   if (!date) return ''
@@ -29,6 +30,7 @@ export default function ArticleDetailPage() {
   const { slug } = useParams()
   const article = getArticleBySlug(slug)
   const embedUrl = getArticleEmbedUrl(article?.youtubeUrl)
+  useDocumentMeta({ title: article?.title, description: article?.excerpt, image: absoluteUrl(article?.imageUrl) })
 
   return (
     <div className="page-shell">

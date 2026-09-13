@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { PageHeader, PageFooter } from './_shared'
 import { getMediaItem, mediaCategoryLabel, MEDIA_ITEMS } from '../data/mediaCatalog'
 import TalweehMediaPlayer from '../components/TalweehMediaPlayer'
+import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 import '../media-v17.css'
 
 const TALWEEH_YOUTUBE_SUBSCRIBE =
@@ -21,6 +22,8 @@ function SubscribeIcon() {
 export default function MediaDetailPage() {
   const { slug } = useParams()
   const item = getMediaItem(slug)
+  // Called before the not-found early return so the hook order stays stable.
+  useDocumentMeta({ title: item?.title, description: item?.shortOverview, image: absoluteUrl(item?.thumbnail) })
 
   if (!item) {
     return (

@@ -130,7 +130,7 @@ export default function CoursesPage() {
         <Link to="/navigation-preview/Alimiyyah"><span>Live study</span><strong>Alimiyyah Program</strong><small>Structured live classes</small></Link>
         <Link className="active" to="/courses"><span>Self-paced</span><strong>Course Library</strong><small>Browse all public courses</small></Link>
         <Link to="/courses?free=1"><span>Begin here</span><strong>Free Courses</strong><small>Watch directly on this website</small></Link>
-        <Link to="/navigation-preview/Hadith%20Specialization"><span>Advanced study</span><strong>Hadith Specialization</strong><small>Dedicated specialization program</small></Link>
+        <Link to="/hadith-specialization"><span>Advanced study</span><strong>Hadith Specialization</strong><small>Dedicated specialization program</small></Link>
       </section>
 
       <section className="public-catalog-content">

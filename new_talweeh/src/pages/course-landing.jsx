@@ -4,6 +4,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
 import { PUBLIC_COURSES } from '../data/publicCourseIndex'
 import { loadPublicCourse } from '../data/publicCourseDetails'
+import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 
 const PAID_ENROLLMENT_URL = 'https://talweehacademy.com/course/'
 
@@ -83,6 +84,9 @@ export default function CourseLandingPage() {
   const [showAll, setShowAll] = useState(false)
   const [expandedLessons, setExpandedLessons] = useState({})
   const playerRef = useRef(null)
+
+  // Re-runs when the course resolves, overriding the static route metadata.
+  useDocumentMeta({ title: course?.title, description: course?.description, image: absoluteUrl(course?.poster) })
 
   useEffect(() => {
     let active = true
