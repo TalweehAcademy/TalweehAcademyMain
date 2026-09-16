@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "cms:import": "node scripts/import-cms-snapshot.mjs",
-    "cms:verify": "node scripts/verify-cms-fixture.mjs"
+    "cms:verify": "node scripts/verify-cms-fixture.mjs",
+    "quran-study:import": "node scripts/import-quran-study-snapshot.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

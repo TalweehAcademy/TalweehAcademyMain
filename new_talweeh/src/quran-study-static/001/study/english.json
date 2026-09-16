@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 3,
+  "language": "english",
+  "scope": {
+    "surah": 1,
+    "fromAyah": 1,
+    "toAyah": 7,
+    "type": "surah-or-leading-range"
+  },
+  "records": [
+    {
+      "verseKey": "1:1",
+      "language": "english",
+      "items": [
+        {
+          "id": "rabt-1",
+          "feature": "rabt",
+          "label": "Rabṭ",
+          "text": "test",
+          "wordArabic": "",
+          "transliteration": "",
+          "references": []
+        },
+        {
+          "id": "1789337703348-e0fen4",
+          "feature": "rabt",
+          "label": "Rabṭ",
+          "text": "accas",
+          "wordArabic": "",
+          "transliteration": "",
+          "references": []
+        },
+        {
+          "id": "translation-1",
+          "feature": "translation",
+          "label": "Talweeh translation",
+          "text": "In the name of Allah, (the Entirely), the Especially Merciful (to everyone)",
+          "brackets": [
+            {
+              "id": "bracket-1",
+              "text": "the Entirely",
+              "reason": "Explain here why this supplied wording is included.",
+              "reference": "نَصُّ الْمَرْجِعِ الْعَرَبِيِّ يُذْكَرُ هُنَا."
+            },
+            {
+              "id": "1789337718620-1hx86f",
+              "text": "to everyone",
+              "reason": "tets",
+              "reference": ""
+            }
+          ]
+        },
+        {
+          "id": "irab-1",
+          "feature": "irab",
+          "label": "Iʿrāb",
+          "text": "The bāʾ is a preposition and ism is governed by it in the genitive.",
+          "wordArabic": "بِسْمِ",
+          "transliteration": "bismi",
+          "references": []
+        },
+        {
+          "id": "faidah-1",
+          "feature": "fawaid",
+          "label": "Fawāʾid",
+          "text": "An English scholarly benefit appears here.",
+          "wordArabic": "",
+          "transliteration": "",
+          "references": []
+        },
+        {
+          "id": "1789332168513-6t1587",
+          "feature": "fawaid",
+          "label": "Fawāʾid",
+          "text": "test",
+          "wordArabic": "",
+          "transliteration": "",
+          "references": [
+            {
+              "id": "1789332046848-16900s",
+              "arabic": "cdascd",
+              "locator": ""
+            }
+          ]
+        },
+        {
+          "id": "section:rabt:1:1:rabt",
+          "feature": "rabt",
+          "label": "Rabṭ",
+          "text": "test"
+        }
+      ],
+      "vocabulary": [
+        {
+          "id": "vocab-1",
+          "wordNumber": 0,
+          "wordArabic": "الرَّحْمَٰنِ",
+          "transliteration": "al-Raḥmāni",
+          "rootId": "rhm",
+          "lemmaId": "",
+          "note": ""
+        }
+      ],
+      "citations": [
+        {
+          "id": "durr-irab:1:1",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00001",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:2",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:2",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00002",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:3",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:3",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00003",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:4",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:4",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00004",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:5",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:5",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00005",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:6",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:6",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00006",
+          "sortOrder": 20
+        }
+      ]
+    },
+    {
+      "verseKey": "1:7",
+      "language": "english",
+      "items": [],
+      "vocabulary": [],
+      "citations": [
+        {
+          "id": "durr-irab:1:7",
+          "feature": "irab",
+          "sourceId": "source-al-durr-al-masun",
+          "passageId": "durr-00007",
+          "sortOrder": 20
+        }
+      ]
+    }
+  ]
+}

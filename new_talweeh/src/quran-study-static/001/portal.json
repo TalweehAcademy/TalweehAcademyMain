@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 3,
+  "surah": {
+    "number": 1,
+    "legacy": null,
+    "sections": []
+  },
+  "verses": {
+    "drafts": {
+      "1:1": {
+        "translationId": "84",
+        "rabt": [
+          {
+            "id": "rabt-1",
+            "english": "test",
+            "arabic": "كل أمر ذي بال لا يبدأ ببسم الله فهو .... "
+          },
+          {
+            "id": "1789337703348-e0fen4",
+            "english": "accas",
+            "arabic": "test"
+          }
+        ],
+        "translations": [
+          {
+            "id": "translation-1",
+            "translation": "In the name of Allah, (the Entirely), the Especially Merciful (to everyone)",
+            "brackets": [
+              {
+                "id": "bracket-1",
+                "text": "the Entirely",
+                "reason": "Explain here why this supplied wording is included.",
+                "reference": "نَصُّ الْمَرْجِعِ الْعَرَبِيِّ يُذْكَرُ هُنَا."
+              },
+              {
+                "id": "1789337718620-1hx86f",
+                "text": "to everyone",
+                "reason": "tets",
+                "reference": ""
+              }
+            ]
+          }
+        ],
+        "irab": [
+          {
+            "id": "irab-1",
+            "arabicWord": "بِسْمِ",
+            "transliteration": "bismi",
+            "english": "The bāʾ is a preposition and ism is governed by it in the genitive.",
+            "arabic": "الْبَاءُ حَرْفُ جَرٍّ، وَاسْمٌ مَجْرُورٌ بِالْبَاءِ.",
+            "reference": "",
+            "termIds": []
+          }
+        ],
+        "vocab": [
+          {
+            "id": "vocab-1",
+            "wordArabic": "الرَّحْمَٰنِ",
+            "transliteration": "al-Raḥmāni",
+            "rootId": "rhm",
+            "lemmaId": "",
+            "wordNumber": null
+          }
+        ],
+        "fawaid": [
+          {
+            "id": "faidah-1",
+            "categories": "Balāghah, Lughah",
+            "english": "An English scholarly benefit appears here.",
+            "arabic": "ثُمَّ تُذْكَرُ الْفَائِدَةُ بِالْعَرَبِيَّةِ.",
+            "references": []
+          },
+          {
+            "id": "1789332168513-6t1587",
+            "categories": "lughah",
+            "english": "test",
+            "arabic": "",
+            "references": [
+              {
+                "id": "1789332046848-16900s",
+                "arabic": "cdascd",
+                "locator": ""
+              }
+            ]
+          }
+        ]
+      },
+      "1:2": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      },
+      "1:3": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      },
+      "1:4": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      },
+      "1:5": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      },
+      "1:6": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      },
+      "1:7": {
+        "translationId": "",
+        "rabt": [],
+        "translations": [],
+        "irab": [],
+        "vocab": [],
+        "fawaid": []
+      }
+    },
+    "sections": [
+      {
+        "id": "section:rabt:1:1:rabt",
+        "feature": "rabt",
+        "targetKey": "1:1",
+        "tabId": "rabt",
+        "labelArabic": "الربط",
+        "labelEnglish": "Rabṭ",
+        "english": "test",
+        "arabic": "كل أمر ذي بال لا يبدأ ببسم الله فهو ....",
+        "updatedAt": "2026-09-15T15:51:18.715Z"
+      }
+    ],
+    "sourceLinks": [
+      {
+        "id": "durr-irab:1:1",
+        "feature": "irab",
+        "targetKey": "1:1",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00001",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:2",
+        "feature": "irab",
+        "targetKey": "1:2",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00002",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:3",
+        "feature": "irab",
+        "targetKey": "1:3",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00003",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:4",
+        "feature": "irab",
+        "targetKey": "1:4",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00004",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:5",
+        "feature": "irab",
+        "targetKey": "1:5",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00005",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:6",
+        "feature": "irab",
+        "targetKey": "1:6",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00006",
+        "sortOrder": 20
+      },
+      {
+        "id": "durr-irab:1:7",
+        "feature": "irab",
+        "targetKey": "1:7",
+        "sourceId": "source-al-durr-al-masun",
+        "passageId": "durr-00007",
+        "sortOrder": 20
+      }
+    ]
+  },
+  "words": {
+    "mappings": [
+      {
+        "id": "vocab-1",
+        "surahNumber": 1,
+        "ayahNumber": 1,
+        "wordNumber": null,
+        "wordArabic": "الرَّحْمَٰنِ",
+        "transliteration": "al-Raḥmāni",
+        "rootId": "rhm",
+        "lemmaId": "",
+        "noteArabic": "",
+        "noteEnglish": ""
+      }
+    ],
+    "roots": [
+      {
+        "id": "rhm",
+        "rootArabic": "ر ح م",
+        "transliteration": "r-ḥ-m",
+        "meanings": [
+          {
+            "id": "m1",
+            "text": "mercy, tenderness and compassion"
+          }
+        ],
+        "excerpts": []
+      }
+    ],
+    "dictionaries": [
+      {
+        "id": "dict-legacy-imported-vocabulary",
+        "slug": "legacy-imported-vocabulary",
+        "nameArabic": "مادة الألفاظ المستوردة",
+        "nameEnglish": "Imported vocabulary notes",
+        "authorArabic": "",
+        "authorEnglish": "",
+        "language": "ar",
+        "active": true,
+        "sortOrder": 900
+      }
+    ],
+    "lemmas": [],
+    "entries": [],
+    "irabRecords": [],
+    "irabTerms": [
+      {
+        "id": "fail",
+        "arabic": "فَاعِل",
+        "transliteration": "fāʿil",
+        "english": "Subject / doer",
+        "category": "Naḥw",
+        "definition": "The noun to which the action of the verb is ascribed.",
+        "template": "{word} is the fāʿil."
+      },
+      {
+        "id": "maful",
+        "arabic": "مَفْعُولٌ بِهِ",
+        "transliteration": "mafʿūl bihi",
+        "english": "Direct object",
+        "category": "Naḥw",
+        "definition": "The noun upon which the action of the verb falls.",
+        "template": "{word} is the mafʿūl bihi."
+      }
+    ]
+  }
+}

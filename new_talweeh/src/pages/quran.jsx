@@ -3,6 +3,9 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { PageHeader, PageFooter } from './_shared'
 import { QURAN_SURAH_INTRODUCTIONS } from '../data/quranSurahIntroductions'
+import { makePortalAyahStudy, PortalSourceActions, PortalSourceDialog, PortalStudyDialog, surahStudyDetail, usePortalStudy } from '../components/QuranPortalStudyBridge'
+import '../quran-study-portal-layer.css'
+import '../quran-study-v75.css'
 
 // Reader settings remain numeric for backwards compatibility; Quran content is fetched directly in the browser.
 const SETTINGS_KEY = 'qmr-settings-v2'
@@ -1041,6 +1044,15 @@ function IconSettings({ size = 18 }) {
   )
 }
 
+function IconPen({ size = 18 }) {
+  return (
+    <svg className="qmr-svg-icon" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 20l4.2-1 10.7-10.7a2.4 2.4 0 0 0-3.4-3.4L4.8 15.6 4 20Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m13.8 6.6 3.6 3.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 function youtubeIdFromUrl(url) {
   const value = String(url || '').trim()
   if (!value) return ''
@@ -2028,6 +2040,11 @@ const AyahRow = memo(function AyahRow({
   menuOpen,
   script,
   showTranslation,
+  studyBefore,
+  studyArabic,
+  studyTranslation,
+  studyActions,
+  sourceActions,
   playbackContextKey,
   bookmarkContextKey,
   registerRef,
@@ -2137,9 +2154,12 @@ const AyahRow = memo(function AyahRow({
           )}
         </div>
       </div>
+      {studyBefore}
       <div className="qmr-ayah-text">
-        {renderArabic()}
-        {showTranslation && <p className="qmr-translation">{verse.translation_text}</p>}
+        {studyArabic || renderArabic()}
+        {showTranslation && (studyTranslation === undefined ? <p className="qmr-translation">{verse.translation_text}</p> : studyTranslation)}
+        {studyActions}
+        {sourceActions}
       </div>
     </li>
   )
@@ -2153,6 +2173,11 @@ const AyahRow = memo(function AyahRow({
   prev.menuOpen === next.menuOpen &&
   prev.script === next.script &&
   prev.showTranslation === next.showTranslation &&
+  prev.studyBefore === next.studyBefore &&
+  prev.studyArabic === next.studyArabic &&
+  prev.studyTranslation === next.studyTranslation &&
+  prev.studyActions === next.studyActions &&
+  prev.sourceActions === next.sourceActions &&
   prev.playbackContextKey === next.playbackContextKey &&
   prev.bookmarkContextKey === next.bookmarkContextKey
 ))
@@ -2191,6 +2216,30 @@ export default function QuranPage() {
   const [arabicSize, setArabicSize] = useState(initialSettings.arabicSize || 30)
   const [translationSize, setTranslationSize] = useState(initialSettings.translationSize || 17)
   const [showTranslation, setShowTranslation] = useState(initialSettings.showTranslation !== false)
+  const initialQuranMode = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href)
+        const requested = url.searchParams.get('quranMode')
+        if (['reader', 'study', 'sources'].includes(requested)) return requested
+        if (url.searchParams.get('study') === '1') return 'study'
+      } catch {}
+    }
+    return ['reader', 'study', 'sources'].includes(initialSettings.quranMode) ? initialSettings.quranMode : (initialSettings.studyMode ? 'study' : 'reader')
+  }, [initialSettings])
+  const [quranMode, setQuranMode] = useState(initialQuranMode)
+  const studyMode = quranMode === 'study'
+  const sourcesMode = quranMode === 'sources'
+  const [studyLanguage, setStudyLanguage] = useState(['english', 'arabic', 'both'].includes(initialSettings.studyLanguage) ? initialSettings.studyLanguage : 'both')
+  const [rabtHoverEnabled, setRabtHoverEnabled] = useState(initialSettings.rabtHoverEnabled !== false)
+  const [rabtHoverSize, setRabtHoverSize] = useState(['compact', 'standard', 'large'].includes(initialSettings.rabtHoverSize) ? initialSettings.rabtHoverSize : 'compact')
+  const [vocabArabicSize, setVocabArabicSize] = useState(() => {
+    const saved = Number(initialSettings.vocabArabicSize)
+    return Number.isFinite(saved) ? Math.min(34, Math.max(16, saved)) : 22
+  })
+  const [studyDialog, setStudyDialog] = useState(null)
+  const [sourceDialog, setSourceDialog] = useState(null)
+  const { store: studyStore, loading: studyLoading } = usePortalStudy(chapterNumber, true, quranMode !== 'reader')
 
   const [bookmarks, setBookmarks] = useState(() => loadBookmarks())
   const [searchOpen, setSearchOpen] = useState(false)
@@ -2233,9 +2282,12 @@ export default function QuranPage() {
   })
   const [playerMenuOpen, setPlayerMenuOpen] = useState(false)
   const [audioPos, setAudioPos] = useState({ t: 0, d: 0 })
+  const [playerPosition, setPlayerPosition] = useState(null)
 
   const audioSelectionKey = `${recitationId}:${chapterNumber}`
   const audioRef = useRef(null)
+  const playerRef = useRef(null)
+  const playerDragRef = useRef(null)
   const subbarRef = useRef(null)
   const audioPosSecRef = useRef(-1)
   const ayahRefs = useRef(new Map())
@@ -2260,6 +2312,62 @@ export default function QuranPage() {
   useEffect(() => { repeatAyahRef.current = repeatAyah }, [repeatAyah])
   useEffect(() => { loopEnabledRef.current = loopEnabled }, [loopEnabled])
 
+  function beginPlayerDrag(event) {
+    if (event.button !== 0) return
+    if (event.target.closest?.('button,input,select,textarea,a,label,[role="button"],.qmr-reciter-control')) return
+    const box = playerRef.current?.getBoundingClientRect()
+    if (!box) return
+    event.preventDefault()
+    playerDragRef.current = {
+      pointerId: event.pointerId,
+      dx: event.clientX - box.left,
+      dy: event.clientY - box.top,
+      width: box.width,
+      height: box.height,
+    }
+    setPlayerPosition({ left: box.left, top: box.top })
+    try { event.currentTarget.setPointerCapture?.(event.pointerId) } catch {}
+  }
+
+  useEffect(() => {
+    const onMove = (event) => {
+      const drag = playerDragRef.current
+      if (!drag || event.pointerId !== drag.pointerId) return
+      const edge = 8
+      const left = Math.max(edge, Math.min(event.clientX - drag.dx, window.innerWidth - drag.width - edge))
+      const top = Math.max(edge, Math.min(event.clientY - drag.dy, window.innerHeight - drag.height - edge))
+      setPlayerPosition({ left, top })
+    }
+    const onEnd = (event) => {
+      const drag = playerDragRef.current
+      if (!drag || (event.pointerId != null && event.pointerId !== drag.pointerId)) return
+      playerDragRef.current = null
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onEnd)
+    window.addEventListener('pointercancel', onEnd)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onEnd)
+      window.removeEventListener('pointercancel', onEnd)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!playerPosition) return undefined
+    const clamp = () => {
+      const box = playerRef.current?.getBoundingClientRect()
+      if (!box) return
+      const edge = 8
+      setPlayerPosition((current) => current ? {
+        left: Math.max(edge, Math.min(current.left, window.innerWidth - box.width - edge)),
+        top: Math.max(edge, Math.min(current.top, window.innerHeight - box.height - edge)),
+      } : current)
+    }
+    window.addEventListener('resize', clamp)
+    return () => window.removeEventListener('resize', clamp)
+  }, [Boolean(playerPosition)])
+
   const activeChapterInfo = chapters.find((c) => c.id === chapterNumber)
   const activeReciterInfo = recitations.find((r) => Number(r.id) === Number(recitationId))
   const activeReciterName = activeReciterInfo?.name || 'Selected reciter'
@@ -2271,6 +2379,49 @@ export default function QuranPage() {
   const verseCount = activeChapterInfo?.verse_count || 1
   const bookmarkedKeys = useMemo(() => new Set(bookmarks.map((item) => item.verseKey)), [bookmarks])
   const bookmarkContextKey = `${chapterNumber}:${translationId}:${script}:${activeChapterInfo?.english_name || ''}`
+
+  const studySnapshotAvailable = Boolean(studyStore?.snapshotAvailable && (studyStore?.snapshotVerseKeys || []).length)
+  const sourcesSnapshotAvailable = Boolean(studyStore?.sourcesAvailable && (studyStore?.sourceVerseKeys || []).length)
+  const enhancedModesAvailable = studySnapshotAvailable || sourcesSnapshotAvailable
+
+  useEffect(() => {
+    if (quranMode === 'study' && !studySnapshotAvailable) {
+      setQuranMode('reader')
+      setStudyDialog(null)
+    }
+    if (quranMode === 'sources' && !sourcesSnapshotAvailable) {
+      setQuranMode('reader')
+      setSourceDialog(null)
+    }
+  }, [quranMode, chapterNumber, studySnapshotAvailable, sourcesSnapshotAvailable])
+
+  // Build Study/Source presentation only when Study data or Reader content changes.
+  // Audio progress, menus, and other Reader updates can then keep memoized ayah rows stable.
+  const studyPresentationByVerse = useMemo(() => {
+    const map = new Map()
+    if (!studyMode) return map
+    for (const verse of verses) {
+      map.set(verse.verse_key, makePortalAyahStudy({
+        verse,
+        store: studyStore,
+        onOpen: setStudyDialog,
+        script,
+        languageMode: studyLanguage,
+        rabtHoverEnabled,
+        rabtHoverSize,
+      }))
+    }
+    return map
+  }, [studyMode, verses, studyStore, script, studyLanguage, rabtHoverEnabled, rabtHoverSize])
+
+  const sourceActionsByVerse = useMemo(() => {
+    const map = new Map()
+    if (!sourcesMode) return map
+    for (const verse of verses) {
+      map.set(verse.verse_key, <PortalSourceActions verseKey={verse.verse_key} store={studyStore} onOpen={setSourceDialog} />)
+    }
+    return map
+  }, [sourcesMode, verses, studyStore])
 
   // The surah bar sticks below the site header on desktop (where the header
   // is sticky) and at the very top on mobile (where the header is static and
@@ -2338,6 +2489,8 @@ export default function QuranPage() {
   }, [])
 
   function setChapterLocation(chapter) {
+    setStudyDialog(null)
+    setSourceDialog(null)
     const next = Math.min(114, Math.max(1, Number(chapter) || 1))
     setPendingJump(null)
     setTargetAyahKey(null)
@@ -2541,13 +2694,35 @@ export default function QuranPage() {
       arabicSize,
       translationSize,
       showTranslation,
+      quranMode,
+      studyMode,
+      studyLanguage,
+      rabtHoverEnabled,
+      rabtHoverSize,
+      vocabArabicSize,
       audioProvider: AUDIO_PROVIDER_KEY,
     })
-  }, [chapterNumber, translationId, recitationId, script, arabicSize, translationSize, showTranslation])
+  }, [chapterNumber, translationId, recitationId, script, arabicSize, translationSize, showTranslation, quranMode, studyLanguage, rabtHoverEnabled, rabtHoverSize, vocabArabicSize])
 
   useEffect(() => {
     saveBookmarks(bookmarks)
   }, [bookmarks])
+
+  useEffect(() => {
+    try {
+      const url = new URL(window.location.href)
+      if (quranMode === 'reader') url.searchParams.delete('quranMode')
+      else url.searchParams.set('quranMode', quranMode)
+      if (quranMode === 'study') url.searchParams.set('study', '1')
+      else url.searchParams.delete('study')
+      window.history.replaceState({}, '', url)
+    } catch {}
+  }, [quranMode])
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    document.documentElement.style.setProperty('--qmr-vocab-arabic-size', `${vocabArabicSize}px`)
+  }, [vocabArabicSize])
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -2557,6 +2732,8 @@ export default function QuranPage() {
       setSearchOpen(false)
       setSavedOpen(false)
       setActionVerseKey(null)
+      setStudyDialog(null)
+      setSourceDialog(null)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
@@ -3237,12 +3414,12 @@ export default function QuranPage() {
   }
 
   useEffect(() => {
-    const modalOpen = settingsOpen || searchOpen || savedOpen
+    const modalOpen = settingsOpen || searchOpen || savedOpen || Boolean(studyDialog) || Boolean(sourceDialog)
     if (!modalOpen) return undefined
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = previousOverflow }
-  }, [settingsOpen, searchOpen, savedOpen])
+  }, [settingsOpen, searchOpen, savedOpen, studyDialog, sourceDialog])
 
   function registerAyahRef(verseKey, el) {
     if (el) ayahRefs.current.set(verseKey, el)
@@ -3304,6 +3481,18 @@ export default function QuranPage() {
               <button type="button" className="qmr-toolbar-btn" onClick={openReadMode} aria-label="Open Read Mode" data-qmr-tooltip="Read Mode">
                 <IconBookOpen /><span className="qmr-toolbar-label">Read</span>
               </button>
+              {enhancedModesAvailable ? <div className="qmr-reader-mode-switch" role="group" aria-label="Qurʾān mode">
+                <button type="button" className={quranMode === 'reader' ? 'is-active' : ''} onClick={() => { setQuranMode('reader'); setStudyDialog(null); setSourceDialog(null) }}>Reader</button>
+                {studySnapshotAvailable ? <button type="button" className={quranMode === 'study' ? 'is-active' : ''} onClick={() => { setQuranMode('study'); setSourceDialog(null) }}>Study</button> : null}
+                {sourcesSnapshotAvailable ? <button type="button" className={quranMode === 'sources' ? 'is-active' : ''} onClick={() => { setQuranMode('sources'); setStudyDialog(null) }}>Sources</button> : null}
+              </div> : null}
+              {quranMode !== 'reader' && ((quranMode === 'study' && studySnapshotAvailable) || (quranMode === 'sources' && sourcesSnapshotAvailable)) ? (
+                <div className="qmr-study-language-switch" role="group" aria-label="Study language">
+                  <button type="button" className={studyLanguage === 'english' ? 'is-active' : ''} onClick={() => setStudyLanguage('english')}>English</button>
+                  <button type="button" className={studyLanguage === 'arabic' ? 'is-active' : ''} onClick={() => setStudyLanguage('arabic')}>Arabic</button>
+                  <button type="button" className={studyLanguage === 'both' ? 'is-active' : ''} onClick={() => setStudyLanguage('both')}>Both</button>
+                </div>
+              ) : null}
               <button type="button" className="qmr-toolbar-btn" onClick={openSearch} aria-label="Search the Qurʾān" data-qmr-tooltip="Search Qurʾān">
                 <IconSearch /><span className="qmr-toolbar-label">Search</span>
               </button>
@@ -3368,6 +3557,11 @@ export default function QuranPage() {
                   >
                     {audioState === 'loading' ? '…' : <IconPlay size={15} />} <span>Play Surah</span>
                   </button>
+                  {studyMode && surahStudyDetail(chapterNumber, studyStore) ? (
+                    <button type="button" className="qmr-study-surah-button" onClick={() => setStudyDialog(surahStudyDetail(chapterNumber, studyStore))}>
+                      <IconPen size={15} /><span>Sūrah Study</span>
+                    </button>
+                  ) : null}
                 </div>
                 {(() => {
                   const intro = QURAN_SURAH_INTRODUCTIONS[chapterNumber]
@@ -3424,6 +3618,8 @@ export default function QuranPage() {
               <ol className="qmr-ayah-list" style={{ '--qmr-arabic-size': `${arabicSize}px`, '--qmr-translation-size': `${translationSize}px` }}>
                 {verses.map((v) => {
                   const active = v.verse_key === currentAyahKey
+                  const study = studyMode ? (studyPresentationByVerse.get(v.verse_key) || {}) : {}
+                  const sourceActions = sourcesMode ? (sourceActionsByVerse.get(v.verse_key) || null) : null
                   return (
                     <AyahRow
                       key={v.verse_key}
@@ -3436,6 +3632,11 @@ export default function QuranPage() {
                       menuOpen={actionVerseKey === v.verse_key}
                       script={script}
                       showTranslation={showTranslation}
+                      studyBefore={study.before}
+                      studyArabic={study.arabic}
+                      studyTranslation={study.translation}
+                      studyActions={study.actions}
+                      sourceActions={sourceActions}
                       playbackContextKey={audioSelectionKey}
                       bookmarkContextKey={bookmarkContextKey}
                       registerRef={registerAyahRef}
@@ -3457,7 +3658,9 @@ export default function QuranPage() {
             )}
         </section>
       </main>
-
+      {quranMode !== 'reader' && studyLoading ? <div className="qmr-study-loading-badge">Loading {studyMode ? 'Study' : 'Sources'}…</div> : null}
+      <PortalStudyDialog detail={studyDialog} store={studyStore} languageMode={studyLanguage} onClose={() => setStudyDialog(null)} />
+      <PortalSourceDialog detail={sourceDialog} store={studyStore} languageMode={studyLanguage} onClose={() => setSourceDialog(null)} />
       {/* ── Reader search ───────────────────────────────── */}
       {searchOpen && (
         <ReaderPortal>
@@ -3609,6 +3812,42 @@ export default function QuranPage() {
                 </label>
               </div>
 
+              <div className="qmr-drawer-group qmr-study-settings-group">
+                <span className="qmr-drawer-label">Qurʾān mode</span>
+                <div className="qmr-script-toggle qmr-settings-mode-toggle" role="group" aria-label="Qurʾān mode">
+                  <button type="button" className={quranMode === 'reader' ? 'active' : ''} onClick={() => setQuranMode('reader')}>Reader</button>
+                  {studySnapshotAvailable ? <button type="button" className={quranMode === 'study' ? 'active' : ''} onClick={() => setQuranMode('study')}>Study</button> : null}
+                  {sourcesSnapshotAvailable ? <button type="button" className={quranMode === 'sources' ? 'active' : ''} onClick={() => setQuranMode('sources')}>Sources</button> : null}
+                </div>
+              </div>
+
+              {quranMode !== 'reader' ? <>
+                <div className="qmr-drawer-group">
+                  <span className="qmr-drawer-label">Study / Sources language</span>
+                  <div className="qmr-script-toggle qmr-settings-language-toggle" role="group" aria-label="Study language">
+                    <button type="button" className={studyLanguage === 'english' ? 'active' : ''} onClick={() => setStudyLanguage('english')}>English</button>
+                    <button type="button" className={studyLanguage === 'arabic' ? 'active' : ''} onClick={() => setStudyLanguage('arabic')}>Arabic</button>
+                    <button type="button" className={studyLanguage === 'both' ? 'active' : ''} onClick={() => setStudyLanguage('both')}>Both</button>
+                  </div>
+                </div>
+                <div className="qmr-drawer-group qmr-drawer-inline">
+                  <span className="qmr-drawer-label">Study hover previews</span>
+                  <label className="qmr-switch"><input type="checkbox" checked={rabtHoverEnabled} onChange={(event) => setRabtHoverEnabled(event.target.checked)} /><span aria-hidden="true" /></label>
+                </div>
+                <div className="qmr-drawer-group">
+                  <span className="qmr-drawer-label">Hover text size</span>
+                  <div className="qmr-script-toggle qmr-hover-size-toggle" role="group" aria-label="Hover text size">
+                    <button type="button" className={rabtHoverSize === 'compact' ? 'active' : ''} onClick={() => setRabtHoverSize('compact')}>Small</button>
+                    <button type="button" className={rabtHoverSize === 'standard' ? 'active' : ''} onClick={() => setRabtHoverSize('standard')}>Medium</button>
+                    <button type="button" className={rabtHoverSize === 'large' ? 'active' : ''} onClick={() => setRabtHoverSize('large')}>Large</button>
+                  </div>
+                </div>
+                <div className="qmr-drawer-group qmr-drawer-inline">
+                  <span className="qmr-drawer-label">Vocabulary Arabic size</span>
+                  <div className="qmr-stepper"><button type="button" onClick={() => setVocabArabicSize((size) => Math.max(16, size - 2))}>–</button><span>{vocabArabicSize}</span><button type="button" onClick={() => setVocabArabicSize((size) => Math.min(34, size + 2))}>+</button></div>
+                </div>
+              </> : null}
+
               <div className="qmr-drawer-group">
                 <span className="qmr-drawer-label">Reciter</span>
                 <ReciterPicker
@@ -3709,8 +3948,14 @@ export default function QuranPage() {
 
       {/* ── Compact audio player ─────────────────────────── */}
       {audioState !== 'idle' && (
-        <div className="qmr-player" role="region" aria-label="Qur'an audio player">
-          <div className="qmr-player-head">
+        <div
+          ref={playerRef}
+          className={`qmr-player${playerPosition ? ' qmr-player--dragged' : ''}`}
+          role="region"
+          aria-label="Qur'an audio player"
+          style={playerPosition ? { '--qmr-player-drag-left': `${playerPosition.left}px`, '--qmr-player-drag-top': `${playerPosition.top}px` } : undefined}
+        >
+          <div className="qmr-player-head qmr-player-drag-handle" onPointerDown={beginPlayerDrag} title="Drag player">
             <div className="qmr-player-now">
               <span className="qmr-player-eyebrow">Now reciting</span>
               <strong>

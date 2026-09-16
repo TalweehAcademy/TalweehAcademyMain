@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 3,
+  "scope": {
+    "surah": 1,
+    "fromAyah": 1,
+    "toAyah": 7,
+    "type": "surah-or-leading-range"
+  },
+  "books": [
+    {
+      "id": "source-maqayis-al-lughah",
+      "slug": "maqayis-al-lughah",
+      "nameArabic": "معجم مقاييس اللغة",
+      "nameEnglish": "Maqāyīs al-Lughah",
+      "authorArabic": "أحمد بن فارس",
+      "authorEnglish": "Aḥmad ibn Fāris",
+      "categories": [
+        "vocab"
+      ],
+      "language": "ar",
+      "active": true,
+      "sortOrder": 10,
+      "corpusKind": "maqayis",
+      "publicationPolicy": "public-eligible",
+      "entryCount": 1,
+      "path": "sources/maqayis-al-lughah.json"
+    },
+    {
+      "id": "source-al-mujam-al-ishtiqaqi",
+      "slug": "al-mujam-al-ishtiqaqi",
+      "nameArabic": "المعجم الاشتقاقي المؤصل لألفاظ القرآن الكريم",
+      "nameEnglish": "al-Muʿjam al-Ishtiqāqī al-Muʾaṣṣal li-Alfāẓ al-Qurʾān al-Karīm",
+      "authorArabic": "محمد حسن حسن جبل",
+      "authorEnglish": "Muḥammad Ḥasan Ḥasan Jabal",
+      "categories": [
+        "vocab"
+      ],
+      "language": "ar",
+      "active": true,
+      "sortOrder": 20,
+      "corpusKind": "shamela-root-dictionary",
+      "publicationPolicy": "public-eligible",
+      "entryCount": 1,
+      "path": "sources/al-mujam-al-ishtiqaqi.json"
+    },
+    {
+      "id": "source-al-durr-al-masun",
+      "slug": "al-durr-al-masun",
+      "nameArabic": "الدر المصون في علوم الكتاب المكنون",
+      "nameEnglish": "Al-Durr al-Maṣūn fī ʿUlūm al-Kitāb al-Maknūn",
+      "authorArabic": "السمين الحلبي",
+      "authorEnglish": "al-Samīn al-Ḥalabī",
+      "categories": [
+        "irab"
+      ],
+      "language": "ar",
+      "active": true,
+      "sortOrder": 20,
+      "corpusKind": "study-passages",
+      "publicationPolicy": "public-eligible",
+      "provider": "Shamela",
+      "shamelaBookId": 9057,
+      "editorEnglish": "Aḥmad Muḥammad al-Kharrāṭ",
+      "importStatus": "audited-ready",
+      "entryCount": 7,
+      "path": "sources/al-durr-al-masun.json"
+    },
+    {
+      "id": "source-kitab-al-ayn",
+      "slug": "kitab-al-ayn",
+      "nameArabic": "كتاب العين",
+      "nameEnglish": "Kitāb al-ʿAyn",
+      "authorArabic": "الخليل بن أحمد الفراهيدي",
+      "authorEnglish": "al-Khalīl ibn Aḥmad al-Farāhīdī",
+      "categories": [
+        "vocab"
+      ],
+      "language": "ar",
+      "active": true,
+      "sortOrder": 30,
+      "corpusKind": "kitab-al-ayn-v2",
+      "publicationPolicy": "public-eligible",
+      "entryCount": 1,
+      "path": "sources/kitab-al-ayn.json"
+    },
+    {
+      "id": "source-al-tahrir-wa-al-tanwir",
+      "slug": "al-tahrir-wa-al-tanwir",
+      "nameArabic": "التحرير والتنوير",
+      "nameEnglish": "Al-Taḥrīr wa-al-Tanwīr",
+      "authorArabic": "محمد الطاهر ابن عاشور",
+      "authorEnglish": "Muḥammad al-Ṭāhir ibn ʿĀshūr",
+      "categories": [
+        "tafsir"
+      ],
+      "language": "ar",
+      "active": true,
+      "sortOrder": 40,
+      "corpusKind": "shamela-tafsir-indexed",
+      "publicationPolicy": "public-eligible",
+      "entryCount": 1,
+      "path": "sources/al-tahrir-wa-al-tanwir.json"
+    }
+  ]
+}

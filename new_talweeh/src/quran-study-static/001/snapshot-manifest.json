@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 3,
+  "packageType": "talweeh-quran-study",
+  "snapshotId": "talweeh-quran-001-001-007-20260916T224638Z",
+  "generatedAt": "2026-09-16T22:46:38.493Z",
+  "mergeMode": "replace-selected-study-range",
+  "scope": {
+    "surah": 1,
+    "fromAyah": 1,
+    "toAyah": 7,
+    "type": "surah-or-leading-range"
+  },
+  "study": {
+    "english": "study/english.json",
+    "arabic": "study/arabic.json",
+    "portal": "study/portal.json"
+  },
+  "sourceLibrary": {
+    "manifest": "sources/manifest.json",
+    "bookCount": 5
+  },
+  "readerMode": {
+    "modified": false,
+    "audioIncluded": false
+  },
+  "imports": [
+    {
+      "snapshotId": "talweeh-quran-001-001-007-20260916T224638Z",
+      "importedAt": "2026-09-16T22:52:00.565Z",
+      "scope": {
+        "surah": 1,
+        "fromAyah": 1,
+        "toAyah": 7,
+        "type": "surah-or-leading-range"
+      }
+    }
+  ]
+}

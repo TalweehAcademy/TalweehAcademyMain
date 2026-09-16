@@ -1,0 +1,1872 @@
+/* Portal Study/Sources parity rules extracted from the project's portal reader CSS. */
+.qmr-study-toolbar.active{
+  background:var(--qmr-v15-green-soft)!important;
+  color:var(--qmr-v15-green)!important;
+
+  box-shadow:
+    inset 0 0 0 1px
+    color-mix(
+      in srgb,
+      var(--qmr-v15-green) 24%,
+      transparent
+    );
+}.qmr-study-toolbar.active .qmr-svg-icon{
+  color:var(--qmr-v15-green)!important;
+}.qmr-study-settings-group{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:9px 16px;
+  padding:15px 0;
+}.qmr-study-settings-copy{
+  display:grid;
+  gap:5px;
+}.qmr-study-settings-label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--qmr-v15-text-strong,#12291c);
+}.qmr-study-settings-copy small{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:11px;
+  line-height:1.55;
+  max-width:300px;
+}.qmr-study-settings-status{
+  grid-column:1 / -1;
+  margin:0;
+  font-size:11px;
+  color:var(--qmr-v15-muted,#718078);
+}.qmr-study-before-ayah{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  margin:8px 0 2px;
+}.qmr-study-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+}.qmr-study-chip{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:34px;
+  padding:7px 12px;
+  border:1px solid #d7e2d7;
+  border-radius:999px;
+  background:rgba(255,255,255,.88);
+  color:#29533a;
+  font:inherit;
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer;
+  box-shadow:0 2px 10px rgba(25,75,50,.035);
+  transition:background 140ms ease,border-color 140ms ease,transform 140ms ease,box-shadow 140ms ease;
+}.qmr-study-chip:hover{
+  background:#f2f7f1;
+  border-color:#bfd0c0;
+  box-shadow:0 5px 16px rgba(25,75,50,.07);
+  transform:translateY(-1px);
+}.qmr-study-chip > span{
+  display:grid;
+  place-items:center;
+  min-width:19px;
+  height:19px;
+  padding:0 5px;
+  border-radius:999px;
+  background:#edf3ec;
+  color:#68776e;
+  font-size:10px;
+}.qmr-study-chip-rabt{
+  border-color:#ead8b5;
+  background:rgba(255,250,239,.92);
+  color:#806329;
+}.qmr-study-chip-rabt:hover{
+  background:#fff7e7;
+  border-color:#dbbf87;
+}.qmr-study-translation{
+  line-height:1.85;
+}.qmr-study-bracket{
+  appearance:none;
+  display:inline;
+  margin:0 .07em;
+  padding:.06em .24em .1em;
+  border:0;
+  border-bottom:1px solid rgba(169,125,47,.42);
+  border-radius:5px;
+  background:rgba(229,187,88,.22);
+  color:inherit;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}.qmr-study-bracket:hover,
+.qmr-study-bracket:focus-visible{
+  background:rgba(229,187,88,.34);
+  outline:none;
+}.qmr-study-word{
+  cursor:pointer;
+  border-radius:5px;
+  box-shadow:inset 0 -1px 0 rgba(184,138,54,.35);
+}.qmr-study-word:hover,
+.qmr-study-word:focus-visible{
+  background:rgba(224,159,62,.19) !important;
+  box-shadow:inset 0 -2px 0 rgba(184,138,54,.52);
+}.qmr-study-dialog-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  border:0;
+  background:rgba(9,27,17,.42);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}.qmr-study-dialog{
+  position:fixed;
+  left:50%;
+  top:50%;
+  z-index:9999;
+  width:min(700px,calc(100vw - 36px));
+  max-height:min(78svh,760px);
+  transform:translate(-50%,-50%);
+  overflow:hidden;
+  border:1px solid var(--qmr-v15-border,#dce6dc);
+  border-radius:20px;
+  background:var(--qmr-v15-surface,#fff);
+  color:var(--qmr-v15-text,#183522);
+  box-shadow:0 30px 100px rgba(8,26,16,.28);
+}.qmr-study-dialog-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--qmr-v15-border,#dce6dc);
+  background:linear-gradient(180deg,var(--qmr-v15-surface-raised,#fbfdfb),var(--qmr-v15-surface,#fff));
+}.qmr-study-dialog-head > div{
+  display:grid;
+  gap:2px;
+}.qmr-study-dialog-head small{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+}.qmr-study-dialog-head h3{
+  margin:0;
+  color:var(--qmr-v15-text-strong,#12291c);
+  font-size:21px;
+}.qmr-study-dialog-close{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  border:1px solid var(--qmr-v15-border,#dce6dc);
+  border-radius:50%;
+  background:transparent;
+  color:var(--qmr-v15-text,#183522);
+  font-size:26px;
+  line-height:1;
+  cursor:pointer;
+}.qmr-study-dialog-close:hover{
+  background:var(--qmr-v15-surface-soft,#f7faf6);
+}.qmr-study-dialog-body{
+  max-height:calc(min(78svh,760px) - 76px);
+  overflow:auto;
+  padding:20px;
+}.qmr-study-dialog-sections{
+  display:grid;
+  gap:14px;
+}.qmr-study-dialog-section{
+  display:grid;
+  gap:12px;
+  padding:16px;
+  border:1px solid var(--qmr-v15-border,#dce6dc);
+  border-radius:14px;
+  background:var(--qmr-v15-surface-raised,#fbfdfb);
+}.qmr-study-prose{
+  margin:0;
+  color:var(--qmr-v15-text,#183522);
+  font-size:15px;
+  line-height:1.75;
+}.qmr-study-arabic{
+  padding:14px 16px;
+  border-radius:12px;
+  background:var(--qmr-v15-surface-soft,#f7faf6);
+  color:var(--qmr-v15-text-strong,#12291c);
+  font-family:"Talweeh Naskh","Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:24px;
+  line-height:1.9;
+  text-align:right;
+  letter-spacing:normal;
+  word-spacing:normal;
+  font-feature-settings:"liga" 1,"calt" 1;
+}.qmr-study-arabic-subtle{
+  font-size:20px;
+}.qmr-study-reference-list{
+  display:grid;
+  gap:10px;
+}.qmr-study-reference{
+  display:grid;
+  gap:6px;
+}.qmr-study-reference small{
+  color:var(--qmr-v15-muted,#718078);
+  text-align:right;
+}.qmr-study-word-heading{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+}.qmr-study-word-heading strong{
+  color:var(--qmr-v15-text-strong,#12291c);
+  font-family:"Talweeh Naskh","Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:34px;
+  font-weight:600;
+}.qmr-study-word-heading span{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:13px;
+  font-style:italic;
+}.qmr-study-root-card{
+  grid-template-columns:auto 1fr;
+  align-items:center;
+}.qmr-study-small-label{
+  grid-column:1 / -1;
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}.qmr-study-root{
+  font-family:"Talweeh Naskh","Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:28px;
+  font-weight:600;
+}.qmr-study-meaning-list{
+  grid-column:1 / -1;
+  display:grid;
+  gap:6px;
+}.qmr-study-meaning-list p,
+.qmr-study-muted{
+  margin:0;
+  color:var(--qmr-v15-muted,#718078);
+  line-height:1.65;
+}.qmr-study-dictionary-entry{
+  display:grid;
+  gap:8px;
+}.qmr-study-source-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  color:var(--qmr-v15-muted,#718078);
+  font-size:12px;
+}.qmr-study-source-line strong{
+  color:var(--qmr-v15-text,#183522);
+}.qmr-study-term-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}.qmr-study-term-list > span{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:6px 9px;
+  border-radius:999px;
+  background:var(--qmr-v15-green-soft,#eaf3ec);
+  color:var(--qmr-v15-text,#183522);
+  font-size:11px;
+  font-weight:700;
+}body[data-qmr-theme="dark"] .qmr-study-chip{
+  border-color:var(--qmr-v15-border);
+  background:var(--qmr-v15-surface-raised);
+  color:var(--qmr-v15-text);
+}body[data-qmr-theme="dark"] .qmr-study-chip-rabt{
+  color:var(--qmr-v15-gold);
+}@media(max-width:700px){
+.qmr-study-dialog{
+    left:0;
+    right:0;
+    top:auto;
+    bottom:0;
+    width:100%;
+    max-height:84svh;
+    transform:none;
+    border-radius:20px 20px 0 0;
+    border-left:0;
+    border-right:0;
+    border-bottom:0;
+  }.qmr-study-dialog-body{
+    max-height:calc(84svh - 76px);
+    padding:16px;
+  }.qmr-study-dialog-head{
+    padding:15px 16px;
+  }.qmr-study-arabic{
+    padding:12px 13px;
+    font-size:22px;
+  }.qmr-study-settings-group{
+    grid-template-columns:minmax(0,1fr) auto;
+  }
+}.qmr-study-prose,
+.qmr-study-arabic{
+  white-space:pre-wrap;
+}.qmr-study-surah-button{
+  min-height:46px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 18px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 22%,transparent);
+  border-radius:13px;
+  background:var(--qmr-v15-surface,#fff);
+  color:var(--qmr-v15-green,#174f34);
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .16s ease,background .16s ease,border-color .16s ease;
+}.qmr-study-surah-button:hover{
+  transform:translateY(-1px);
+  background:var(--qmr-v15-green-soft,#eef6ef);
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 38%,transparent);
+}.qmr-study-surah-meta{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}.qmr-study-surah-meta-item{
+  min-width:0;
+  padding:12px 14px;
+  border:1px solid var(--qmr-v15-line,#dce7df);
+  border-radius:12px;
+  background:var(--qmr-v15-surface-soft,#f7faf6);
+}.qmr-study-surah-meta-en,
+.qmr-study-surah-meta-ar{
+  display:grid;
+  gap:3px;
+}.qmr-study-surah-meta-ar{
+  text-align:right;
+  font-family:"Talweeh Naskh","Noto Naskh Arabic","Traditional Arabic",serif;
+}.qmr-study-surah-meta-item small{
+  color:var(--qmr-v15-muted,#718078);
+  font-weight:750;
+}.qmr-study-surah-meta-item strong{
+  color:var(--qmr-v15-text-strong,#12291c);
+  line-height:1.6;
+}@media(max-width:640px){
+.qmr-study-surah-meta{
+    grid-template-columns:1fr;
+  }.qmr-study-surah-button{
+    width:100%;
+  }
+}.qmr-vocab-v2-heading{margin-bottom:2px}.qmr-vocab-v2-identity{display:flex;gap:12px;flex-wrap:wrap}.qmr-vocab-v2-identity-item{display:grid;gap:3px;min-width:130px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 75%,white)}.qmr-vocab-v2-identity-item strong[dir="rtl"]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:24px;line-height:1.45}.qmr-vocab-v2-dictionary-section{display:grid;gap:14px}.qmr-vocab-v2-dictionary-picker{display:grid;gap:7px}.qmr-vocab-v2-dictionary-picker select{width:100%;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);border-radius:12px;background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-text-strong,#173c2b);padding:11px 12px;font:inherit;font-weight:750;outline:none}.qmr-vocab-v2-dictionary-picker select:focus{border-color:var(--qmr-v15-green,#174f34);box-shadow:0 0 0 3px color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent)}.qmr-vocab-v2-source-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--qmr-v15-muted,#718078);font-size:13px}.qmr-vocab-v2-source-meta strong[dir="rtl"],.qmr-vocab-v2-source-meta span[dir="rtl"]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif}.qmr-vocab-v2-entry{display:grid;gap:10px;padding:14px 0;border-top:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent)}.qmr-vocab-v2-entry:first-of-type{border-top:0;padding-top:0}.qmr-vocab-v2-headword{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.qmr-vocab-v2-headword strong[dir="rtl"]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:22px}.qmr-vocab-v2-locator{color:var(--qmr-v15-muted,#718078)}.qmr-vocab-v2-full-entry{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);border-radius:12px;overflow:hidden}.qmr-vocab-v2-full-entry summary{cursor:pointer;padding:10px 12px;font-weight:800;color:var(--qmr-v15-green,#174f34);background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 55%,white)}.qmr-vocab-v2-full-entry>div{padding:12px}.qmr-vocab-v2-root-meanings{background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 45%,white)}.qmr-vocab-corpus-status{
+  padding:9px 11px;
+  border-radius:10px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 60%,white);
+  color:var(--qmr-v15-muted,#718078);
+  font-size:13px;
+  font-weight:700;
+}.qmr-vocab-corpus-warning{
+  margin:0;
+  padding:9px 11px;
+  border-radius:10px;
+  background:#fff7ee;
+  color:#8b6233;
+  font-size:12px;
+  line-height:1.5;
+}.qmr-vocab-arabic-blocks{
+  direction:rtl;
+  text-align:right;
+  font-family:var(--qmr-arabic-font,"Noto Naskh Arabic",serif);
+  font-size:var(--qmr-vocab-arabic-size,22px);
+  line-height:2.05;
+}.qmr-vocab-prose{
+  margin:0;
+}.qmr-vocab-prose + .qmr-vocab-prose{
+  margin-top:.75rem;
+}.qmr-vocab-poetry{
+  margin:1rem auto;
+  padding:.75rem 1rem;
+  border:0;
+  background:transparent;
+  text-align:center;
+}.qmr-vocab-poetry > div{
+  display:block;
+  margin:.2rem 0;
+  white-space:normal;
+}.qmr-vocab-v2-entry .qmr-vocab-arabic-blocks,
+.qmr-vocab-v2-entry .qmr-study-arabic,
+.qmr-vocab-v2-entry [dir="rtl"][lang="ar"]{
+  font-size:var(--qmr-vocab-arabic-size,22px);
+}.qmr-vocab-poetry{
+  text-align:center;
+}.qmr-vocab-poetry + .qmr-vocab-prose{
+  text-align:right;
+}.qmr-vocab-prose{
+  text-align:right;
+}.qmr-study-dialog-head-actions{display:flex;align-items:center;gap:8px}.qmr-study-dialog-edit{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-green,#174f34);border-radius:10px;padding:8px 11px;font:inherit;font-weight:800;cursor:pointer}.qmr-inline-english{order:-3}.qmr-inline-editor-card{order:-4;display:grid;gap:10px}.qmr-inline-editor-label{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.qmr-inline-editor-label span{font-size:12px;color:var(--qmr-v15-muted,#718078)}.qmr-inline-editor-card textarea,.qmr-source-editor textarea{width:100%;box-sizing:border-box;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);border-radius:12px;background:var(--qmr-v15-surface,#fff);color:inherit;padding:11px 12px;font:inherit;line-height:1.6;resize:vertical;outline:none}.qmr-source-editor textarea[dir="rtl"]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:var(--qmr-vocab-arabic-size,22px);line-height:1.9}.qmr-inline-editor-actions,.qmr-source-editor-footer{display:flex;align-items:center;justify-content:flex-end;gap:8px}.qmr-inline-editor-actions>span,.qmr-source-editor-footer>span{flex:1}.qmr-inline-editor-actions button,.qmr-source-editor-footer button,.qmr-source-format-actions button,.qmr-source-editor-controls button{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-green,#174f34);border-radius:9px;padding:7px 10px;font:inherit;font-weight:750;cursor:pointer}.qmr-source-save{background:var(--qmr-v15-green,#174f34)!important;color:white!important}.qmr-source-format-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 8px}.qmr-source-format-actions small{color:var(--qmr-v15-muted,#718078)}.qmr-source-reset{color:#8c5349!important}.qmr-source-blocks{direction:rtl;text-align:right;font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:var(--qmr-vocab-arabic-size,22px);line-height:2}.qmr-source-prose{margin:0;text-align:right}.qmr-source-prose+.qmr-source-prose{margin-top:.7rem}.qmr-source-poetry{margin:1rem auto;padding:.5rem 1rem;border:0;background:transparent;text-align:center}.qmr-source-poetry>div{margin:.2rem 0}.qmr-source-heading{text-align:right;margin:.8rem 0 .3rem;font-size:1.08em}.qmr-source-quote{margin:.8rem 0;padding:.3rem 1rem;border-inline-start:3px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 25%,transparent);text-align:right}.qmr-source-editor{display:grid;gap:12px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);border-radius:14px;padding:12px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 32%,white)}.qmr-source-editor-head{display:flex;justify-content:space-between;gap:12px}.qmr-source-editor-head span{font-size:12px;color:var(--qmr-v15-muted,#718078)}.qmr-source-editor-row{display:grid;gap:8px;padding:10px;border-radius:12px;background:var(--qmr-v15-surface,#fff)}.qmr-source-editor-controls{display:flex;align-items:center;gap:6px}.qmr-source-editor-controls select{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);border-radius:9px;padding:7px 9px;background:var(--qmr-v15-surface,#fff);color:inherit}.qmr-inline-message{margin:0;color:var(--qmr-v15-muted,#718078);font-size:12px}@media(max-width:680px){
+.qmr-source-editor-head,.qmr-inline-editor-label{display:grid}.qmr-study-dialog-edit{padding:7px 9px}.qmr-source-editor-controls{flex-wrap:wrap}
+}.qmr-study-word{
+  cursor:pointer;
+  box-shadow:none;
+}.qmr-study-word:hover,
+.qmr-study-word:focus-visible{
+  background:rgba(224,159,62,.14)!important;
+  box-shadow:inset 0 -2px 0 rgba(184,138,54,.45);
+}.qmr-word-study{
+  display:grid;
+  gap:14px;
+}.qmr-word-study-heading{
+  margin-bottom:0;
+}.qmr-word-study-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  padding:5px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 13%,transparent);
+  border-radius:14px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 36%,white);
+}.qmr-word-study-tabs button{
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:var(--qmr-v15-green,#174f34);
+  padding:9px 10px;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}.qmr-word-study-tabs button.is-active{
+  background:var(--qmr-v15-green,#174f34);
+  color:white;
+}.qmr-word-study-editbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}.qmr-study-word-all{
+  cursor:pointer;
+}.qmr-study-word-all:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 52%,transparent);
+  outline-offset:3px;
+  border-radius:5px;
+}.qmr-source-blocks--manual .qmr-source-prose,
+.qmr-source-blocks--manual .qmr-source-quote,
+.qmr-source-blocks--manual .qmr-source-heading{
+  white-space:pre-line;
+}.qmr-source-picker,
+.qmr-vocab-v2-dictionary-picker{
+  gap:6px;
+}.qmr-source-picker select,
+.qmr-vocab-v2-dictionary-picker select{
+  min-height:48px;
+  padding:9px 42px 9px 13px;
+  border-radius:11px;
+  font-size:15px;
+  line-height:1.3;
+}.qmr-tafsir-source-section{
+  display:grid;
+  gap:14px;
+}.qmr-tafsir-source-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px 12px;
+  border-radius:11px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 45%,white);
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}.qmr-tafsir-source-title{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  flex-wrap:wrap;
+}.qmr-tafsir-source-title strong{
+  color:var(--qmr-v15-green,#174f34);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:18px;
+}.qmr-tafsir-source-title span,
+.qmr-tafsir-source-facts{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:12px;
+}.qmr-tafsir-source-facts{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+}.qmr-tafsir-source-facts span{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:var(--qmr-v15-surface,#fff);
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}.qmr-tafsir-source-section .qmr-source-blocks{
+  line-height:1.82;
+}.qmr-tafsir-source-section .qmr-source-prose{
+  margin:0;
+}.qmr-tafsir-source-section .qmr-source-prose+.qmr-source-prose{
+  margin-top:.45rem;
+}.qmr-tafsir-source-section .qmr-source-heading{
+  margin:.8rem 0 .25rem;
+  padding-bottom:.3rem;
+  border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 11%,transparent);
+}.qmr-tafsir-source-section .qmr-source-quote{
+  margin:.55rem 0;
+  padding:.5rem .8rem;
+  border-inline-start:3px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 28%,transparent);
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 25%,transparent);
+  border-radius:8px;
+}@media(max-width:680px){
+.qmr-tafsir-source-meta{align-items:flex-start}.qmr-tafsir-source-facts{width:100%}
+}.qmr-feature-tabs-wrap{display:grid;gap:14px}.qmr-feature-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 6px;scrollbar-width:thin}.qmr-feature-tabs button{flex:0 0 auto;min-width:118px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-green,#174f34);border-radius:12px;padding:9px 12px;display:grid;gap:1px;text-align:center;cursor:pointer;font:inherit}.qmr-feature-tabs button strong{font-size:15px}.qmr-feature-tabs button small{font-size:10px;color:var(--qmr-v15-muted,#718078)}.qmr-feature-tabs button.is-active{background:var(--qmr-v15-green,#174f34);color:white;border-color:var(--qmr-v15-green,#174f34);box-shadow:0 8px 20px rgba(22,72,49,.12)}.qmr-feature-tabs button.is-active small{color:rgba(255,255,255,.78)}.qmr-bilingual-editor{display:grid;gap:14px}.qmr-bilingual-field{display:grid;gap:7px}.qmr-bilingual-field>span{font-weight:850;color:var(--qmr-v15-green,#174f34)}.qmr-bilingual-field>small{color:var(--qmr-v15-muted,#718078);font-size:11px}.qmr-bilingual-field textarea{width:100%;box-sizing:border-box;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);border-radius:12px;background:var(--qmr-v15-surface,#fff);color:inherit;padding:12px 13px;font:inherit;line-height:1.65;resize:vertical;outline:none}.qmr-bilingual-field textarea[dir="rtl"]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:var(--qmr-vocab-arabic-size,22px);line-height:1.95}.qmr-bilingual-display{display:grid;gap:14px}.qmr-bilingual-english{display:grid;gap:5px}.qmr-study-empty-section{color:var(--qmr-v15-muted,#718078);font-size:13px}.qmr-study-empty-section p{margin:0}.qmr-study-toolbar-btn,.qmr-toolbar-btn[aria-pressed]{position:relative;gap:7px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent)!important;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 30%,white)!important}.qmr-study-toolbar-btn.is-active,.qmr-toolbar-btn[aria-pressed="true"]{background:var(--qmr-v15-green,#174f34)!important;color:#fff!important;border-color:var(--qmr-v15-green,#174f34)!important;box-shadow:0 6px 18px rgba(22,72,49,.16)}.qmr-study-toolbar-state{font-size:9px;line-height:1;text-transform:uppercase;letter-spacing:.08em;border-radius:999px;padding:4px 5px;background:color-mix(in srgb,currentColor 10%,transparent);opacity:.82}.qmr-study-toolbar-btn.is-active .qmr-study-toolbar-state{background:rgba(255,255,255,.16);opacity:1}@media(max-width:680px){
+.qmr-feature-tabs button{min-width:104px;padding:8px 10px}.qmr-study-toolbar-state{display:none}
+}.qmr-study-inline-note--empty{}.qmr-study-inline-note--empty::after{}.qmr-study-bracket--empty{
+  /* Keep the exact same gold highlight as an existing saved annotation. */
+  opacity:1 !important;
+  border-style:solid !important;
+}.qmr-study-bracket--empty::after{
+  content:"+";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:1.05em;
+  height:1.05em;
+  margin-inline-start:.28em;
+  border-radius:999px;
+  font-size:.72em;
+  line-height:1;
+  font-weight:900;
+  vertical-align:.08em;
+  background:rgba(22,72,49,.10);
+  color:#174831;
+}.qmr-study-translation-stack{
+  display:grid;
+  gap:8px;
+}.qmr-study-translation-stack .qmr-translation{
+  margin:0;
+}.qmr-study-translation-secondary{
+  padding-top:10px;
+  border-top:1px solid rgba(23,72,49,.12);
+}.qmr-secondary-translation-editor{
+  display:grid;
+  gap:10px;
+}.qmr-secondary-translation-add,
+.qmr-secondary-translation-remove{
+  justify-self:start;
+  border:1px solid rgba(23,72,49,.18);
+  border-radius:999px;
+  background:#fff;
+  color:#174831;
+  padding:9px 14px;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}.qmr-secondary-translation-remove{
+  color:#8c5148;
+}.qmr-rabt-chip-wrap{
+  position:relative;
+  display:inline-flex;
+}.qmr-rabt-hover-card{
+  position:absolute;
+  inset-inline-start:0;
+  bottom:calc(100% + 10px);
+  z-index:80;
+  width:min(430px,calc(100vw - 36px));
+  max-height:min(360px,60vh);
+  overflow:auto;
+  display:grid;
+  gap:10px;
+  padding:14px 15px;
+  border:1px solid rgba(23,72,49,.16);
+  border-radius:16px;
+  background:rgba(255,255,255,.98);
+  box-shadow:0 18px 48px rgba(22,55,40,.16);
+  color:#173c2b;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(5px);
+  transition:opacity .14s ease,transform .14s ease,visibility .14s ease;
+  pointer-events:none;
+}.qmr-rabt-chip-wrap:hover .qmr-rabt-hover-card,
+.qmr-rabt-chip-wrap:focus-within .qmr-rabt-hover-card{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}.qmr-rabt-hover-title{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#7b8b82;
+}.qmr-rabt-hover-item{
+  display:grid;
+  gap:7px;
+}.qmr-rabt-hover-item + .qmr-rabt-hover-item{
+  padding-top:10px;
+  border-top:1px solid rgba(23,72,49,.10);
+}.qmr-rabt-hover-en{
+  font-size:14px;
+  line-height:1.55;
+  text-align:left;
+}.qmr-rabt-hover-ar{
+  font-size:18px;
+  line-height:1.9;
+  text-align:right;
+}.qmr-rabt-hover-more,
+.qmr-rabt-hover-hint{
+  font-size:11px;
+  font-weight:800;
+  color:#7b8b82;
+}.qmr-word-study .qmr-vocab-v2-heading{
+  display:none !important;
+}.qmr-study-before-ayah,
+.qmr-rabt-chip-wrap,
+.qmr-ayah{
+  overflow:visible !important;
+}.qmr-rabt-chip-wrap{
+  position:relative !important;
+  z-index:35;
+}.qmr-rabt-chip-wrap::after{
+  content:"";
+  position:absolute;
+  top:100%;
+  inset-inline-start:0;
+  width:100%;
+  height:12px;
+}.qmr-rabt-hover-card{
+  top:calc(100% + 9px) !important;
+  bottom:auto !important;
+  inset-inline-start:0 !important;
+  z-index:500 !important;
+  width:min(460px,calc(100vw - 32px)) !important;
+  max-height:min(420px,62vh) !important;
+  overflow:auto !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  transform:translateY(-5px) scale(.99) !important;
+  transform-origin:top left;
+  transition:
+    opacity .14s ease,
+    transform .14s ease,
+    visibility .14s ease !important;
+  pointer-events:none !important;
+}.qmr-rabt-chip-wrap:hover .qmr-rabt-hover-card,
+.qmr-rabt-chip-wrap:focus-within .qmr-rabt-hover-card{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translateY(0) scale(1) !important;
+  pointer-events:auto !important;
+}@media (max-width:700px){
+.qmr-rabt-hover-card{
+    width:min(390px,calc(100vw - 24px)) !important;
+    max-height:52vh !important;
+  }
+}.qmr-rabt-chip-wrap{
+  position:relative !important;
+  z-index:80 !important;
+}.qmr-rabt-chip-wrap::after{
+  content:"" !important;
+  position:absolute !important;
+  top:-10px !important;
+  bottom:auto !important;
+  inset-inline-start:100% !important;
+  width:16px !important;
+  height:calc(100% + 20px) !important;
+  pointer-events:auto !important;
+}.qmr-rabt-hover-card{
+  top:-24px !important;
+  bottom:auto !important;
+  inset-inline-start:calc(100% + 12px) !important;
+  inset-inline-end:auto !important;
+
+  width:min(560px,calc(100vw - 280px)) !important;
+  min-width:360px !important;
+  max-height:290px !important;
+  overflow:auto !important;
+
+  padding:14px 16px !important;
+  border-radius:16px !important;
+
+  opacity:0 !important;
+  visibility:hidden !important;
+  transform:translateX(-7px) scale(.985) !important;
+  transform-origin:top left !important;
+
+  transition:
+    opacity .14s ease,
+    transform .14s ease,
+    visibility .14s ease !important;
+
+  pointer-events:none !important;
+  overscroll-behavior:contain;
+}.qmr-rabt-chip-wrap:hover .qmr-rabt-hover-card,
+.qmr-rabt-chip-wrap:focus-within .qmr-rabt-hover-card{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translateX(0) scale(1) !important;
+  pointer-events:auto !important;
+}.qmr-rabt-hover-ar{
+  font-size:17px !important;
+  line-height:1.85 !important;
+}.qmr-rabt-hover-en{
+  font-size:14px !important;
+  line-height:1.55 !important;
+}@media (max-width:820px){
+.qmr-rabt-chip-wrap::after{
+    top:100% !important;
+    inset-inline-start:-8px !important;
+    width:calc(100% + 16px) !important;
+    height:14px !important;
+  }.qmr-rabt-hover-card{
+    top:calc(100% + 10px) !important;
+    bottom:auto !important;
+    inset-inline-start:0 !important;
+
+    width:min(430px,calc(100vw - 28px)) !important;
+    min-width:0 !important;
+    max-height:235px !important;
+
+    transform:translateY(-6px) scale(.985) !important;
+  }.qmr-rabt-chip-wrap:hover .qmr-rabt-hover-card,
+  .qmr-rabt-chip-wrap:focus-within .qmr-rabt-hover-card{
+    transform:translateY(0) scale(1) !important;
+  }
+}.qmr-vocab-v3-entry-count{
+  margin:2px 0 10px;
+  font-size:11px;
+  font-weight:800;
+  color:var(--qmr-v15-muted,#718078);
+}.qmr-vocab-v3-entry-number{
+  display:inline-flex;
+  width:max-content;
+  margin-bottom:7px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 68%,white);
+  color:var(--qmr-v15-green,#174f34);
+  font-size:10px;
+  font-weight:900;
+}.qmr-vocab-v3-chapter{
+  display:grid;
+  gap:3px;
+  margin:8px 0 12px;
+  padding:10px 12px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 11%,transparent);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 30%,white);
+}.qmr-vocab-v3-chapter>strong{
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:18px;
+  line-height:1.7;
+}.qmr-vocab-v3-chapter>small{
+  color:var(--qmr-v15-muted,#718078);
+}.qmr-vocab-v3-section-meaning{
+  margin-top:12px;
+  border-top:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+  padding-top:10px;
+}.qmr-vocab-v3-section-meaning summary{
+  cursor:pointer;
+  color:var(--qmr-v15-green,#174f34);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:17px;
+  font-weight:800;
+}.qmr-irab-panel{display:grid;gap:14px}.qmr-irab-editor{gap:18px}.qmr-irab-editor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.qmr-irab-editor-head>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.qmr-irab-editor-head button,.qmr-irab-opinion-tabs button,.qmr-irab-field button{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);background:var(--qmr-v15-surface,#fff);color:inherit;border-radius:9px;padding:7px 9px;font:inherit;cursor:pointer}.qmr-irab-editor-head button:disabled{opacity:.45;cursor:not-allowed}.qmr-irab-danger-link{color:#8a3e39!important}.qmr-irab-editor-section{display:grid;gap:12px;padding:13px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);border-radius:14px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 20%,white)}.qmr-irab-editor-section h4{margin:0;font-size:14px}.qmr-irab-form-grid,.qmr-irab-bilingual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.qmr-irab-field{display:grid;gap:5px;min-width:0}.qmr-irab-field>span{font-size:11px;font-weight:800;color:var(--qmr-v15-muted,#718078)}.qmr-irab-field input,.qmr-irab-field textarea,.qmr-irab-field select{width:100%;box-sizing:border-box;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 15%,transparent);border-radius:10px;padding:9px 10px;background:var(--qmr-v15-surface,#fff);color:inherit;font:inherit}.qmr-irab-field textarea{resize:vertical;min-height:84px;line-height:1.65}.qmr-irab-field [dir=rtl]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:17px}.qmr-irab-opinion-tabs{display:flex;gap:7px;flex-wrap:wrap}.qmr-irab-opinion-tabs button{font-size:12px;font-weight:800}.qmr-irab-opinion-tabs button.is-active{background:var(--qmr-v15-green,#174f34);color:#fff;border-color:var(--qmr-v15-green,#174f34)}.qmr-irab-opinion-editor{display:grid;gap:13px;padding-top:4px}.qmr-irab-facts{display:flex;gap:7px;flex-wrap:wrap}.qmr-irab-fact{display:flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 52%,white);border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent)}.qmr-irab-fact span{font-size:10px;color:var(--qmr-v15-muted,#718078);font-weight:800}.qmr-irab-fact strong{font-size:12px}.qmr-irab-conclusion,.qmr-irab-agreed,.qmr-irab-detail-card,.qmr-irab-explanation{display:grid;gap:7px}.qmr-irab-conclusion{padding:13px 14px;border-radius:14px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 42%,white)}.qmr-irab-conclusion p,.qmr-irab-agreed p,.qmr-irab-detail-card p,.qmr-irab-explanation p,.qmr-irab-taqdir p,.qmr-irab-notes p{margin:0;line-height:1.8}.qmr-irab-conclusion [dir=rtl],.qmr-irab-agreed [dir=rtl],.qmr-irab-detail-card [dir=rtl],.qmr-irab-explanation [dir=rtl],.qmr-irab-taqdir [dir=rtl],.qmr-irab-notes [dir=rtl]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:18px}.qmr-irab-agreed{padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent)}.qmr-irab-opinion-display{display:grid;gap:13px}.qmr-irab-opinion-title{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.qmr-irab-opinion-title>div{display:grid;gap:2px}.qmr-irab-opinion-title strong[dir=rtl]{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:21px}.qmr-irab-opinion-title span{font-size:12px;color:var(--qmr-v15-muted,#718078)}.qmr-irab-school{border-radius:999px;padding:4px 8px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 52%,white);font-weight:800}.qmr-irab-attribution{display:flex;gap:8px;flex-wrap:wrap;margin:0;color:var(--qmr-v15-muted,#718078);font-size:12px}.qmr-irab-taqdir{display:grid;gap:6px;padding:12px 14px;border-inline-start:3px solid color-mix(in srgb,var(--qmr-v15-gold,#bd8b2e) 70%,transparent);background:color-mix(in srgb,var(--qmr-v15-gold,#bd8b2e) 7%,white);border-radius:10px}.qmr-irab-taqdir-editor{padding:12px}.qmr-irab-advanced{border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);border-radius:12px;padding:10px 12px}.qmr-irab-advanced summary,.qmr-irab-notes summary{cursor:pointer;font-weight:800}.qmr-irab-advanced[open] summary{margin-bottom:10px}.qmr-irab-sources{display:grid;gap:9px}.qmr-irab-source-row{display:grid;grid-template-columns:1.3fr .8fr 1fr 1fr auto;gap:8px;align-items:end;padding:10px;border-radius:12px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 20%,white)}.qmr-irab-source-list{display:grid;gap:5px}.qmr-irab-source-list>div{display:flex;gap:8px;flex-wrap:wrap;font-size:12px}@media(max-width:760px){
+.qmr-irab-form-grid,.qmr-irab-bilingual-grid{grid-template-columns:1fr}.qmr-irab-source-row{grid-template-columns:1fr}.qmr-irab-opinion-title{display:grid}
+}.qmr-irab-shape-editor{display:grid;gap:12px}.qmr-irab-conditional-fields{padding:10px;border-radius:12px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 22%,white)}.qmr-irab-classification-editor{display:grid;gap:10px;padding:11px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);border-radius:12px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 12%,white)}.qmr-irab-classification-row{display:grid;grid-template-columns:1fr 1fr 1.2fr 1.2fr auto;gap:8px;align-items:end}.qmr-irab-classification-display{display:grid;gap:6px}.qmr-irab-classification-display>div{display:grid;grid-template-columns:minmax(90px,.55fr) 1fr;gap:4px 10px;align-items:baseline;padding:7px 9px;border-radius:10px;background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 27%,white)}.qmr-irab-classification-display span{font-size:10px;font-weight:800;color:var(--qmr-v15-muted,#718078)}.qmr-irab-classification-display strong{font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:17px}.qmr-irab-classification-display small{grid-column:2;color:var(--qmr-v15-muted,#718078)}@media(max-width:900px){
+.qmr-irab-classification-row{grid-template-columns:1fr 1fr}.qmr-irab-classification-row>button{grid-column:1/-1;justify-self:start}
+}@media(max-width:620px){
+.qmr-irab-classification-row{grid-template-columns:1fr}.qmr-irab-classification-display>div{grid-template-columns:1fr}.qmr-irab-classification-display small{grid-column:1}
+}.qmr-irab-simple-editor,
+.qmr-irab-simple-display{
+  display:grid;
+  gap:14px;
+}.qmr-irab-simple-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}.qmr-irab-simple-head>div:first-child{
+  display:grid;
+  gap:3px;
+}.qmr-irab-simple-head strong[dir=rtl]{
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:24px;
+}.qmr-irab-simple-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}.qmr-irab-simple-remove{
+  border:1px solid color-mix(in srgb,#8a3e39 22%,transparent);
+  background:transparent;
+  color:#8a3e39;
+  border-radius:10px;
+  padding:8px 11px;
+  cursor:pointer;
+}.qmr-irab-simple-field{
+  display:grid;
+  gap:6px;
+}.qmr-irab-simple-field>span{
+  font-size:12px;
+  font-weight:800;
+  color:var(--qmr-v15-muted,#718078);
+}.qmr-irab-simple-field textarea{
+  width:100%;
+  box-sizing:border-box;
+  resize:vertical;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);
+  border-radius:14px;
+  padding:13px 14px;
+  background:var(--qmr-v15-surface,#fff);
+  color:inherit;
+  font:inherit;
+  line-height:1.75;
+}.qmr-irab-simple-arabic textarea{
+  min-height:180px;
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:20px;
+  line-height:2;
+}.qmr-irab-simple-note{
+  margin:0;
+  font-size:11px;
+  color:var(--qmr-v15-muted,#718078);
+}.qmr-irab-simple-arabic-display{
+  padding:18px 20px;
+  border-radius:16px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 36%,white);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:22px;
+  line-height:2;
+  white-space:pre-wrap;
+}.qmr-irab-simple-english-display{
+  padding:14px 16px;
+  border-top:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+  line-height:1.75;
+  white-space:pre-wrap;
+}.qmr-irab-simple-head{
+  min-height:44px;
+  padding:0 0 4px;
+}.qmr-irab-simple-head>div:first-child{
+  display:flex;
+  align-items:center;
+  min-height:40px;
+}.qmr-irab-simple-head>div:first-child>strong[dir="rtl"]{
+  display:none!important;
+}.qmr-irab-simple-save{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:9px 16px!important;
+  border:1px solid var(--qmr-v15-green,#174f34)!important;
+  border-radius:12px!important;
+  background:var(--qmr-v15-green,#174f34)!important;
+  color:#fff!important;
+  font:inherit;
+  font-size:14px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  white-space:nowrap;
+  cursor:pointer;
+  box-shadow:none!important;
+  text-decoration:none!important;
+}.qmr-irab-simple-save:hover:not(:disabled){
+  filter:brightness(.96);
+}.qmr-irab-simple-save:focus-visible{
+  outline:3px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 22%,transparent);
+  outline-offset:2px;
+}.qmr-irab-simple-save:disabled{
+  opacity:.58;
+  cursor:not-allowed;
+}.qmr-irab-simple-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex-wrap:wrap;
+}@media(max-width:620px){
+.qmr-irab-simple-head{
+    align-items:stretch;
+  }.qmr-irab-simple-head,
+  .qmr-irab-simple-actions{
+    width:100%;
+  }.qmr-irab-simple-actions{
+    justify-content:flex-end;
+  }
+}.qmr-study-word-hover-card{
+  position:fixed;
+  z-index:1800;
+  box-sizing:border-box;
+  width:min(250px,calc(100vw - 24px));
+  max-height:calc(100vh - 24px);
+  overflow:auto;
+  display:grid;
+  gap:3px;
+  padding:15px 16px 12px;
+  border:1px solid rgba(18,65,44,.16);
+  border-radius:18px;
+  background:#0c3525;
+  box-shadow:0 18px 46px rgba(9,38,27,.24);
+  color:#fff;
+  direction:ltr;
+  text-align:center;
+  overscroll-behavior:contain;
+}.qmr-study-word-hover-meaning{display:block;font-size:17px;line-height:1.25;font-weight:850;overflow-wrap:anywhere}.qmr-study-word-hover-transliteration{display:block;font-size:16px;line-height:1.25;font-weight:750;opacity:.95;overflow-wrap:anywhere}.qmr-study-word-hover-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.18)}.qmr-study-word-hover-actions button{appearance:none;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.10);color:#fff;padding:6px 10px;font:inherit;font-size:11px;line-height:1.15;font-weight:850;cursor:pointer}.qmr-study-word-hover-actions button:hover,.qmr-study-word-hover-actions button:focus-visible{background:#fff;color:#174831;outline:none}.qmr-study-word-all{cursor:pointer}.qmr-translation-annotation-hover-card{
+  position:fixed;
+  z-index:1850;
+  box-sizing:border-box;
+  width:min(540px,calc(100vw - 24px));
+  max-height:calc(100vh - 24px);
+  overflow:auto;
+  display:grid;
+  gap:11px;
+  padding:16px 17px;
+  border:1px solid rgba(23,72,49,.16);
+  border-radius:17px;
+  background:rgba(255,255,255,.99);
+  box-shadow:0 20px 55px rgba(18,55,39,.20);
+  color:#173c2b;
+  overscroll-behavior:contain;
+}.qmr-translation-annotation-hover-title{display:block;color:#174831;font-size:13px;line-height:1.3;font-weight:900}.qmr-translation-annotation-hover-en{white-space:pre-wrap;overflow-wrap:anywhere;text-align:left;font-size:14px;line-height:1.62}.qmr-translation-annotation-hover-ar{white-space:pre-wrap;overflow-wrap:anywhere;text-align:right;font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:18px;line-height:1.95}.qmr-translation-annotation-hover-en + .qmr-translation-annotation-hover-ar{padding-top:10px;border-top:1px solid rgba(23,72,49,.10)}.qmr-translation-annotation-hover-hint{display:block;padding-top:7px;border-top:1px solid rgba(23,72,49,.08);color:#7a887f;font-size:11px;font-weight:800}@media(max-width:700px){
+.qmr-study-word-hover-card{width:min(230px,calc(100vw - 20px));padding:13px 14px 11px}.qmr-translation-annotation-hover-card{width:calc(100vw - 20px);max-height:calc(100vh - 20px);padding:14px 15px}
+}body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view){
+  display:flex!important;
+  flex-direction:column!important;
+  max-height:min(78dvh,760px)!important;
+  overflow:hidden!important;
+}body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view)
+.qmr-study-dialog-head{
+  flex:0 0 auto!important;
+}.qmr-study-dialog-body.qmr-study-dialog-body--rabt-view{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  height:auto!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  padding-bottom:30px!important;
+  box-sizing:border-box!important;
+  overscroll-behavior:contain;
+}.qmr-study-dialog-body--rabt-view .qmr-feature-tabs-wrap,
+.qmr-study-dialog-body--rabt-view .qmr-study-dialog-sections{
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}.qmr-study-dialog-body--rabt-view > :last-child{
+  margin-bottom:2px!important;
+}body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view){
+  width:min(860px,calc(100vw - 28px))!important;
+  height:auto!important;
+  max-height:calc(100dvh - 24px)!important;
+  overflow:hidden!important;
+}body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view)
+.qmr-study-dialog-body.qmr-study-dialog-body--rabt-view{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:calc(100dvh - 106px)!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  padding:20px 20px 34px!important;
+  scrollbar-gutter:stable;
+}.qmr-study-dialog-body--rabt-view
+.qmr-feature-tabs-wrap{
+  display:grid!important;
+  gap:14px!important;
+  min-height:max-content!important;
+  overflow:visible!important;
+}.qmr-study-dialog-body--rabt-view
+.qmr-bilingual-display{
+  min-height:max-content!important;
+  overflow:visible!important;
+}.qmr-study-dialog-body--rabt-view
+.qmr-bilingual-display:last-child{
+  margin-bottom:6px!important;
+}@media(max-width:680px){
+body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view){
+    width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 16px)!important;
+  }body > .qmr-study-dialog:has(.qmr-study-dialog-body--rabt-view)
+  .qmr-study-dialog-body.qmr-study-dialog-body--rabt-view{
+    max-height:calc(100dvh - 96px)!important;
+    padding:16px 14px 28px!important;
+  }
+}.qmr-rabt-portal-card{
+  position:fixed;
+  z-index:10050;
+  box-sizing:border-box;
+  width:min(680px,calc(100vw - 24px));
+  max-height:calc(100dvh - 24px);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:16px 17px 13px;
+  border:1px solid rgba(23,72,49,.16);
+  border-radius:18px;
+  background:rgba(255,255,255,.995);
+  box-shadow:0 22px 60px rgba(18,55,39,.22);
+  color:#173c2b;
+}.qmr-rabt-portal-title{
+  flex:0 0 auto;
+  color:#78887f;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}.qmr-rabt-portal-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  display:grid;
+  gap:14px;
+  padding-inline-end:4px;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}.qmr-rabt-portal-item{
+  display:grid;
+  gap:9px;
+}.qmr-rabt-portal-item + .qmr-rabt-portal-item{
+  padding-top:13px;
+  border-top:1px solid rgba(23,72,49,.10);
+}.qmr-rabt-portal-en{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  text-align:left;
+  font-size:14px;
+  line-height:1.7;
+}.qmr-rabt-portal-ar{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  text-align:right;
+  font-family:"Talweeh Naskh","Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:21px;
+  line-height:2;
+}.qmr-rabt-portal-open{
+  flex:0 0 auto;
+  align-self:flex-start;
+  appearance:none;
+  border:1px solid rgba(23,72,49,.18);
+  border-radius:999px;
+  background:#174831;
+  color:#fff;
+  padding:7px 12px;
+  font:inherit;
+  font-size:11px;
+  font-weight:850;
+  cursor:pointer;
+}.qmr-rabt-portal-open:hover,
+.qmr-rabt-portal-open:focus-visible{
+  filter:brightness(.96);
+  outline:none;
+}.qmr-rabt-chip-wrap--portal{
+  display:inline-flex;
+}.qmr-rabt-chip-wrap--portal::after{
+  content:none!important;
+}@media(max-width:700px){
+.qmr-rabt-portal-card{
+    width:calc(100vw - 20px);
+    max-height:calc(100dvh - 20px);
+    padding:14px 14px 12px;
+  }.qmr-rabt-portal-ar{
+    font-size:18px;
+  }
+}.qmr-rabt-portal-card.qmr-rabt-portal-card--compact{
+  width:min(420px,calc(100vw - 24px))!important;
+  max-height:min(56dvh,520px)!important;
+  padding:12px 13px 10px!important;
+}.qmr-rabt-portal-card--compact .qmr-rabt-portal-ar{
+  font-size:17px!important;
+  line-height:1.85!important;
+}.qmr-rabt-portal-card--compact .qmr-rabt-portal-en{
+  font-size:12.5px!important;
+  line-height:1.55!important;
+}.qmr-rabt-portal-card.qmr-rabt-portal-card--standard{
+  width:min(540px,calc(100vw - 24px))!important;
+  max-height:min(70dvh,640px)!important;
+  padding:14px 15px 12px!important;
+}.qmr-rabt-portal-card--standard .qmr-rabt-portal-ar{
+  font-size:19px!important;
+  line-height:1.92!important;
+}.qmr-rabt-portal-card--standard .qmr-rabt-portal-en{
+  font-size:13.5px!important;
+  line-height:1.62!important;
+}.qmr-rabt-portal-card.qmr-rabt-portal-card--large{
+  width:min(680px,calc(100vw - 24px))!important;
+  max-height:calc(100dvh - 24px)!important;
+}.qmr-rabt-hover-settings{
+  width:100%;
+  box-sizing:border-box;
+  display:grid;
+  gap:12px;
+  margin:0 0 18px;
+  padding:13px;
+  border:1px solid #dbe4da;
+  border-radius:13px;
+  background:#f8faf7;
+}.qmr-rabt-hover-setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}.qmr-rabt-hover-setting-row>span{
+  min-width:0;
+  display:grid;
+  gap:3px;
+}.qmr-rabt-hover-setting-row strong{
+  color:#193524;
+  font-size:13px;
+}.qmr-rabt-hover-setting-row small{
+  color:#78867d;
+  font-size:10.5px;
+  line-height:1.4;
+}.qmr-rabt-hover-toggle{
+  flex:0 0 auto;
+  min-width:54px;
+  min-height:34px;
+  border:1px solid #ccd8cc;
+  border-radius:999px;
+  background:#fff;
+  color:#5f6f65;
+  font:inherit;
+  font-size:11px;
+  font-weight:850;
+  cursor:pointer;
+}.qmr-rabt-hover-toggle.is-on{
+  border-color:#174831;
+  background:#174831;
+  color:#fff;
+}.qmr-rabt-hover-size-options{
+  flex:0 0 auto;
+  display:flex;
+  gap:5px;
+  padding:3px;
+  border:1px solid #d5dfd5;
+  border-radius:10px;
+  background:#fff;
+}.qmr-rabt-hover-size-options button{
+  appearance:none;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:#67766d;
+  padding:6px 8px;
+  font:inherit;
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
+}.qmr-rabt-hover-size-options button.is-active{
+  background:#174831;
+  color:#fff;
+}@media(max-width:600px){
+.qmr-rabt-hover-setting-row{
+    align-items:flex-start;
+    flex-direction:column;
+  }.qmr-rabt-hover-size-options{
+    width:100%;
+    box-sizing:border-box;
+  }.qmr-rabt-hover-size-options button{
+    flex:1;
+  }.qmr-rabt-portal-card.qmr-rabt-portal-card--compact,
+  .qmr-rabt-portal-card.qmr-rabt-portal-card--standard,
+  .qmr-rabt-portal-card.qmr-rabt-portal-card--large{
+    width:calc(100vw - 20px)!important;
+    max-height:calc(100dvh - 20px)!important;
+  }
+}.qmr-vocab-v4-dictionary-picker{
+  display:grid;
+  gap:8px;
+}.qmr-vocab-v4-dictionary-options{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}.qmr-vocab-v4-dictionary-option{
+  min-width:0;
+  min-height:74px;
+  display:grid;
+  align-content:center;
+  gap:3px;
+  padding:10px 12px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);
+  border-radius:13px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 30%,var(--qmr-v15-surface,#fff));
+  color:var(--qmr-v15-text-strong,#173c2b);
+  text-align:center;
+  font:inherit;
+  cursor:pointer;
+  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease,transform .16s ease;
+}.qmr-vocab-v4-dictionary-option:hover{
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 34%,transparent);
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 58%,var(--qmr-v15-surface,#fff));
+}.qmr-vocab-v4-dictionary-option:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 52%,transparent);
+  outline-offset:2px;
+}.qmr-vocab-v4-dictionary-option.is-selected{
+  border-color:var(--qmr-v15-green,#174f34);
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 84%,var(--qmr-v15-surface,#fff));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);
+}.qmr-vocab-v4-dictionary-arabic{
+  overflow-wrap:anywhere;
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:18px;
+  font-weight:850;
+  line-height:1.45;
+}.qmr-vocab-v4-dictionary-option small{
+  display:block;
+  overflow-wrap:anywhere;
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10.5px;
+  font-weight:750;
+  line-height:1.35;
+}.qmr-vocab-v4-dictionary-option.is-selected small{
+  color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 72%,var(--qmr-v15-muted,#718078));
+}@media(max-width:820px){
+.qmr-vocab-v4-dictionary-options{grid-template-columns:1fr}.qmr-vocab-v4-dictionary-option{min-height:60px;text-align:start}.qmr-vocab-v4-dictionary-arabic{text-align:right}
+}.qmr-vocab-v4-dictionary-picker{
+  display:grid;
+  gap:6px;
+}.qmr-vocab-v4-dictionary-options{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+}.qmr-vocab-v4-dictionary-option{
+  width:auto;
+  min-width:0;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:6px 11px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 20%,var(--qmr-v15-surface,#fff));
+  color:var(--qmr-v15-text-strong,#173c2b);
+  text-align:center;
+  font:inherit;
+  cursor:pointer;
+  box-shadow:none;
+  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
+}.qmr-vocab-v4-dictionary-option:hover{
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 38%,transparent);
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 48%,var(--qmr-v15-surface,#fff));
+}.qmr-vocab-v4-dictionary-option:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 48%,transparent);
+  outline-offset:2px;
+}.qmr-vocab-v4-dictionary-option.is-selected{
+  border-color:var(--qmr-v15-green,#174f34);
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 72%,var(--qmr-v15-surface,#fff));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);
+}.qmr-vocab-v4-dictionary-arabic{
+  overflow-wrap:normal;
+  white-space:nowrap;
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:15px;
+  font-weight:850;
+  line-height:1.25;
+}.qmr-vocab-v4-dictionary-option small{
+  display:block;
+  white-space:nowrap;
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10px;
+  font-weight:750;
+  line-height:1.2;
+}.qmr-vocab-v4-dictionary-option.is-selected small{
+  color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 72%,var(--qmr-v15-muted,#718078));
+}@media(max-width:640px){
+.qmr-vocab-v4-dictionary-options{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding-bottom:2px;
+    scrollbar-width:thin;
+  }.qmr-vocab-v4-dictionary-option{
+    flex:0 0 auto;
+    min-height:40px;
+    padding:6px 10px;
+  }.qmr-vocab-v4-dictionary-arabic{font-size:14px}.qmr-vocab-v4-dictionary-option small{font-size:9.5px}
+}.qmr-study-surah-button.is-add{
+  border-style:dashed;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 62%,var(--qmr-v15-surface,#fff));
+}.qmr-study-dialog-save{
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);
+  background:var(--qmr-v15-green,#174f34);
+  color:#fff;
+  border-radius:10px;
+  padding:8px 13px;
+  font:inherit;
+  font-weight:850;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(23,79,52,.13);
+}.qmr-study-dialog-save:hover:not(:disabled){filter:brightness(.97)}.qmr-study-dialog-save:disabled{opacity:.58;cursor:default}@media(max-width:680px){
+.qmr-study-dialog-save{padding:7px 10px}
+}.qmr-tafsir-introduction,
+.qmr-tafsir-ayah-commentary{
+  display:grid;
+  gap:10px;
+}.qmr-tafsir-introduction{
+  padding:12px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 22%,transparent);
+}.qmr-tafsir-ayah-commentary{
+  padding-top:2px;
+}.qmr-tafsir-section-label{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  flex-wrap:wrap;
+}.qmr-tafsir-section-label strong{
+  color:var(--qmr-v15-green,#174f34);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:16px;
+}.qmr-tafsir-section-label span{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.01em;
+}@media (min-width:701px){
+.qmr-study-dialog-head{
+    cursor:grab;
+    touch-action:none;
+  }.qmr-study-dialog-head button,
+  .qmr-study-dialog-head a,
+  .qmr-study-dialog-head input,
+  .qmr-study-dialog-head select{
+    cursor:pointer;
+  }body > .qmr-study-dialog.qmr-study-dialog--floating{
+    left:var(--qmr-study-dialog-left)!important;
+    top:var(--qmr-study-dialog-top)!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:var(--qmr-study-dialog-width)!important;
+    height:var(--qmr-study-dialog-height)!important;
+    max-width:calc(100vw - 24px)!important;
+    max-height:calc(100dvh - 24px)!important;
+    transform:none!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }body > .qmr-study-dialog.qmr-study-dialog--floating .qmr-study-dialog-head{
+    flex:0 0 auto!important;
+  }body > .qmr-study-dialog.qmr-study-dialog--floating .qmr-study-dialog-body,
+  body > .qmr-study-dialog.qmr-study-dialog--floating .qmr-study-dialog-body.qmr-study-dialog-body--rabt-view{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }.qmr-study-dialog--dragging .qmr-study-dialog-head{
+    cursor:grabbing;
+    user-select:none;
+  }.qmr-study-dialog--resizing{
+    user-select:none;
+  }.qmr-study-dialog-resize-handle{
+    position:absolute;
+    right:4px;
+    bottom:4px;
+    z-index:8;
+    width:32px;
+    height:32px;
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:0;
+    border-radius:8px;
+    background:transparent;
+    color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 58%,transparent);
+    cursor:nwse-resize;
+    touch-action:none;
+  }.qmr-study-dialog-resize-handle:hover,
+  .qmr-study-dialog-resize-handle:focus-visible{
+    background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 72%,transparent);
+    outline:none;
+  }.qmr-study-dialog-resize-handle:focus-visible{
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--qmr-v15-green,#174f34) 28%,transparent);
+  }.qmr-study-dialog-resize-handle > span{
+    position:relative;
+    width:13px;
+    height:13px;
+    border-right:2px solid currentColor;
+    border-bottom:2px solid currentColor;
+    border-radius:0 0 2px 0;
+  }.qmr-study-dialog-resize-handle > span::after{
+    content:"";
+    position:absolute;
+    right:3px;
+    bottom:3px;
+    width:5px;
+    height:5px;
+    border-right:2px solid currentColor;
+    border-bottom:2px solid currentColor;
+  }
+}@media (max-width:700px){
+.qmr-study-dialog-resize-handle{
+    display:none!important;
+  }.qmr-study-dialog-head{
+    cursor:default;
+    touch-action:auto;
+  }
+}.qmr-feature-tabs-wrap > .qmr-linked-source-section{order:20!important}.qmr-study-dialog-fullscreen{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);border-radius:10px;background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-green,#174f34);font:inherit;font-size:23px;font-weight:800;line-height:1;cursor:pointer}.qmr-study-dialog-fullscreen:hover,.qmr-study-dialog-fullscreen:focus-visible{background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 7%,var(--qmr-v15-surface,#fff));outline:none}.qmr-study-dialog--fullscreen{left:12px!important;right:12px!important;top:12px!important;bottom:12px!important;width:auto!important;height:auto!important;max-width:none!important;max-height:none!important;transform:none!important;display:flex!important;flex-direction:column!important}.qmr-study-dialog--fullscreen .qmr-study-dialog-body{flex:1 1 auto!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:auto!important}.qmr-study-word-all{margin-inline:0!important;letter-spacing:normal!important}@media(max-width:700px){
+.qmr-study-dialog--fullscreen{inset:0!important;width:100%!important;height:100svh!important;max-height:100svh!important;border-radius:0!important;transform:none!important}.qmr-study-dialog--fullscreen .qmr-study-dialog-body{max-height:none!important}
+}.qmr-study-dialog-fullscreen{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;min-width:0!important;min-height:42px;padding:0 13px;border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);border-radius:11px;background:var(--qmr-v15-surface,#fff);color:var(--qmr-v15-green,#174f34);font:inherit;font-size:12px!important;font-weight:850;line-height:1;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px rgba(9,49,34,.04);transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease}.qmr-study-dialog-fullscreen svg{width:17px;height:17px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.qmr-study-dialog-fullscreen:hover{background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 7%,var(--qmr-v15-surface,#fff));border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 30%,transparent);box-shadow:0 5px 14px rgba(9,49,34,.08);transform:translateY(-1px)}.qmr-study-dialog-fullscreen:focus-visible{background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 7%,var(--qmr-v15-surface,#fff));outline:3px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 20%,transparent);outline-offset:2px}.qmr-study-dialog-fullscreen[aria-pressed="true"]{background:color-mix(in srgb,var(--qmr-v15-green-soft,#eef6ef) 78%,white);border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 26%,transparent)}@media(max-width:700px){
+.qmr-study-dialog-fullscreen{min-width:42px!important;padding:0 11px}.qmr-study-dialog-fullscreen span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+}.qmr-study-dialog-head > .qmr-study-dialog-head-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:nowrap;
+  gap:8px;
+}.qmr-study-dialog-head-actions .qmr-study-dialog-close{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);
+  border-radius:11px;
+  background:var(--qmr-v15-surface,#fff);
+  color:var(--qmr-v15-green,#174f34);
+  font-size:25px;
+  font-weight:500;
+  box-shadow:0 1px 2px rgba(9,49,34,.04);
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}.qmr-study-dialog-head-actions .qmr-study-dialog-close:hover{
+  background:color-mix(in srgb,#a3433d 7%,var(--qmr-v15-surface,#fff));
+  border-color:color-mix(in srgb,#a3433d 28%,transparent);
+  color:#873b36;
+  box-shadow:0 5px 14px rgba(80,30,26,.08);
+  transform:translateY(-1px);
+}.qmr-study-dialog-head-actions .qmr-study-dialog-close:focus-visible{
+  outline:3px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 20%,transparent);
+  outline-offset:2px;
+}
+/* ========================================================================
+   Public reader V7.5 — Reader | Study | Sources
+   ======================================================================== */
+.qmr-reader-mode-switch,
+.qmr-study-language-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:3px;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);
+  border-radius:14px;
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 3%,#fff);
+  flex:0 0 auto;
+}
+.qmr-reader-mode-switch button,
+.qmr-study-language-switch button{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--qmr-v15-muted,#718078);
+  border-radius:10px;
+  min-height:34px;
+  padding:0 11px;
+  font:inherit;
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.qmr-reader-mode-switch button:hover,
+.qmr-study-language-switch button:hover{
+  color:var(--qmr-v15-green,#174f34);
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 6%,transparent);
+}
+.qmr-reader-mode-switch button.is-active,
+.qmr-study-language-switch button.is-active{
+  color:#fff;
+  background:var(--qmr-v15-green,#174f34);
+  box-shadow:0 3px 12px color-mix(in srgb,var(--qmr-v15-green,#174f34) 20%,transparent);
+}
+.qmr-study-language-switch{
+  border-radius:999px;
+  padding:2px;
+}
+.qmr-study-language-switch button{
+  border-radius:999px;
+  min-height:30px;
+  padding:0 9px;
+  font-size:11px;
+}
+.qmr-settings-mode-toggle,
+.qmr-settings-language-toggle,
+.qmr-hover-size-toggle{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.qmr-source-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:11px;
+}
+.qmr-source-chip{
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 18%,transparent);
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 4%,#fff);
+}
+
+/* Sources open contextually from the ayah. Books are never dumped below the reader. */
+.qmr-source-reader-dialog{
+  position:fixed;
+  z-index:10001;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(1040px,calc(100vw - 32px));
+  max-height:min(86vh,900px);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 14%,transparent);
+  border-radius:24px;
+  background:var(--qmr-v15-surface,#fff);
+  color:var(--qmr-v15-text,#1c3326);
+  box-shadow:0 28px 80px rgba(12,39,27,.24);
+}
+.qmr-source-reader-dialog .qmr-study-dialog-head{
+  flex:0 0 auto;
+}
+.qmr-source-reader-body{
+  min-height:0;
+  overflow:auto;
+  display:grid;
+  grid-template-columns:minmax(180px,240px) minmax(0,1fr);
+  gap:0;
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 1.5%,#fff);
+}
+.qmr-source-reader-tabs{
+  padding:18px 12px;
+  border-right:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+  display:grid;
+  align-content:start;
+  gap:8px;
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 3%,#fff);
+}
+.qmr-source-reader-tabs button{
+  appearance:none;
+  border:1px solid transparent;
+  border-radius:13px;
+  background:transparent;
+  color:inherit;
+  text-align:left;
+  display:grid;
+  gap:3px;
+  padding:11px 12px;
+  cursor:pointer;
+}
+.qmr-source-reader-tabs button:hover{
+  background:rgba(255,255,255,.72);
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}
+.qmr-source-reader-tabs button.is-active{
+  background:#fff;
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 20%,transparent);
+  color:var(--qmr-v15-green,#174f34);
+  box-shadow:0 5px 16px rgba(22,65,44,.08);
+}
+.qmr-source-reader-tabs strong{font-size:12px;line-height:1.35}
+.qmr-source-reader-tabs small{font-size:10px;color:var(--qmr-v15-muted,#718078);text-transform:capitalize}
+.qmr-source-reader-passage{
+  padding:24px clamp(20px,4vw,46px) 40px;
+  min-width:0;
+}
+.qmr-source-reader-meta{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:22px;
+  padding-bottom:16px;
+  border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}
+.qmr-source-reader-meta>div{display:grid;gap:4px}
+.qmr-source-reader-meta strong{
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  color:var(--qmr-v15-green,#174f34);
+  font-size:22px;
+  line-height:1.5;
+}
+.qmr-source-reader-meta span{font-weight:700;font-size:13px}
+.qmr-source-reader-meta small{color:var(--qmr-v15-muted,#718078);font-size:11px;white-space:nowrap}
+.qmr-source-reader-arabic,
+.qmr-source-reader-english{display:grid;gap:12px}
+.qmr-source-reader-arabic{
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:calc(var(--qmr-vocab-arabic-size,22px) + 2px);
+  line-height:2;
+}
+.qmr-source-reader-arabic h4,
+.qmr-source-reader-arabic h5{margin:8px 0 0;color:var(--qmr-v15-green,#174f34);line-height:1.65}
+.qmr-source-reader-arabic p,
+.qmr-source-reader-arabic blockquote,
+.qmr-source-reader-english p{margin:0;white-space:pre-wrap}
+.qmr-source-reader-arabic blockquote{
+  padding:10px 16px;
+  border-right:3px solid color-mix(in srgb,var(--qmr-v15-gold,#b48a3a) 55%,transparent);
+  background:color-mix(in srgb,var(--qmr-v15-gold,#b48a3a) 5%,transparent);
+  border-radius:10px;
+}
+.qmr-source-reader-english{
+  margin-top:22px;
+  padding-top:20px;
+  border-top:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 9%,transparent);
+  line-height:1.8;
+}
+.qmr-source-reader-english h4{margin:0;color:var(--qmr-v15-green,#174f34)}
+
+/* Language selector filters authored Study content, while the Qur'an text itself stays visible. */
+[data-qmr-study-language="english"] .qmr-bilingual-display>.qmr-study-arabic,
+[data-qmr-study-language="english"] .qmr-bilingual-display>.qmr-study-reference-list,
+[data-qmr-study-language="english"] .qmr-tafsir-source-section .qmr-source-blocks,
+[data-qmr-study-language="english"] .qmr-tafsir-introduction .qmr-source-blocks,
+[data-qmr-study-language="english"] .qmr-source-reader-arabic{
+  display:none!important;
+}
+[data-qmr-study-language="arabic"] .qmr-bilingual-english,
+[data-qmr-study-language="arabic"] .qmr-inline-english,
+[data-qmr-study-language="arabic"] .qmr-study-prose:not([dir="rtl"]),
+[data-qmr-study-language="arabic"] .qmr-source-reader-english{
+  display:none!important;
+}
+
+/* Two Talweeh translations retain the Reader's normal translation position. */
+.qmr-study-translation-stack{display:grid;gap:8px}
+.qmr-study-translation-secondary{
+  opacity:.9;
+  padding-top:8px;
+  border-top:1px dashed color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+}
+
+/* Public read-only dialogs must never surface authoring controls even if portal CSS changes. */
+.qmr-shell .qmr-study-dialog .qmr-source-save,
+.qmr-shell .qmr-study-dialog .qmr-source-reset,
+.qmr-shell .qmr-study-dialog .qmr-inline-editor-actions,
+.qmr-shell .qmr-study-dialog .qmr-study-dialog-edit,
+.qmr-shell .qmr-study-dialog .qmr-study-dialog-save{
+  display:none!important;
+}
+
+@media(max-width:1180px){
+  .qmr-subbar-right:has(.qmr-reader-mode-switch){flex-wrap:wrap;justify-content:flex-end}
+  .qmr-reader-mode-switch{order:10}
+  .qmr-study-language-switch{order:11}
+  .qmr-reader-mode-switch button{padding-inline:8px}
+}
+@media(max-width:760px){
+  .qmr-reader-mode-switch,
+  .qmr-study-language-switch{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .qmr-reader-mode-switch{order:20}
+  .qmr-study-language-switch{order:21}
+  .qmr-reader-mode-switch button,
+  .qmr-study-language-switch button{min-width:0;padding-inline:5px}
+  .qmr-source-reader-dialog{
+    top:auto;
+    bottom:0;
+    left:0;
+    transform:none;
+    width:100vw;
+    max-height:90svh;
+    border-radius:22px 22px 0 0;
+  }
+  .qmr-source-reader-body{grid-template-columns:1fr}
+  .qmr-source-reader-tabs{
+    grid-auto-flow:column;
+    grid-auto-columns:minmax(150px,70%);
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+  }
+  .qmr-source-reader-passage{padding:20px 18px 34px}
+}
+
+
+/* V7.6 — Sources are feature-specific actions, not one generic Sources button. */
+.qmr-source-actions{
+  flex-wrap:wrap;
+  align-items:center;
+}
+.qmr-source-chip{
+  white-space:nowrap;
+}
+.qmr-source-reader-empty{
+  padding:28px clamp(20px,4vw,46px);
+}
+.qmr-source-dictionary-entry + .qmr-source-dictionary-entry{
+  margin-top:22px;
+  padding-top:20px;
+  border-top:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}
+.qmr-source-dictionary-locator{
+  display:block;
+  margin-top:8px;
+  color:var(--qmr-v15-muted,#718078);
+  font-family:inherit;
+  font-size:11px;
+  direction:rtl;
+  text-align:right;
+}
+
+
+/* V7.7 — snapshot-aware parity, source layout, root-first dictionaries, draggable audio */
+
+/* One mapped book must use the full source-dialog width. V7.6 left the passage
+   in the first 240px grid column when the source navigation was omitted. */
+.qmr-source-reader-body--single{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+.qmr-source-reader-body--single>.qmr-source-reader-passage{
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+
+/* Dictionaries are selected by Arabic root first, then by dictionary. */
+.qmr-source-reader-body--dictionary{
+  grid-template-columns:minmax(150px,210px) minmax(0,1fr);
+  overflow:hidden;
+}
+.qmr-source-root-tabs{
+  min-width:0;
+  padding:18px 12px;
+  border-right:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+  display:grid;
+  align-content:start;
+  gap:8px;
+  overflow:auto;
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 3%,#fff);
+}
+.qmr-source-nav-label{
+  padding:0 8px 4px;
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.qmr-source-root-tabs button{
+  appearance:none;
+  border:1px solid transparent;
+  border-radius:13px;
+  background:transparent;
+  color:inherit;
+  display:grid;
+  gap:3px;
+  padding:10px 12px;
+  text-align:left;
+  cursor:pointer;
+}
+.qmr-source-root-tabs button:hover{
+  background:rgba(255,255,255,.72);
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}
+.qmr-source-root-tabs button.is-active{
+  background:#fff;
+  border-color:color-mix(in srgb,var(--qmr-v15-green,#174f34) 20%,transparent);
+  box-shadow:0 5px 16px rgba(22,65,44,.08);
+}
+.qmr-source-root-tabs strong{
+  color:var(--qmr-v15-green,#174f34);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:20px;
+  line-height:1.35;
+  text-align:right;
+}
+.qmr-source-root-tabs small{
+  overflow:hidden;
+  color:var(--qmr-v15-muted,#718078);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:12px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.qmr-source-reader-stage{
+  min-width:0;
+  overflow:auto;
+  background:color-mix(in srgb,var(--qmr-v15-green,#174f34) 1.5%,#fff);
+}
+.qmr-source-root-heading{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:18px clamp(20px,4vw,46px) 8px;
+}
+.qmr-source-root-heading span{
+  color:var(--qmr-v15-muted,#718078);
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.qmr-source-root-heading strong{
+  color:var(--qmr-v15-green,#174f34);
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:25px;
+}
+.qmr-source-dictionary-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:4px clamp(20px,4vw,46px) 14px;
+  border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 10%,transparent);
+}
+.qmr-source-dictionary-tabs button{
+  appearance:none;
+  border:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 16%,transparent);
+  border-radius:999px;
+  background:#fff;
+  color:var(--qmr-v15-text,#1c3326);
+  padding:8px 12px;
+  font:inherit;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+}
+.qmr-source-dictionary-tabs button:hover,
+.qmr-source-dictionary-tabs button.is-active{
+  border-color:var(--qmr-v15-green,#174f34);
+  background:var(--qmr-v15-green,#174f34);
+  color:#fff;
+}
+.qmr-source-reader-stage>.qmr-source-reader-passage{
+  padding-top:18px;
+}
+
+/* The compact Qur'an audio player can be dragged from its header in Reader,
+   Study, and Sources. Interactive controls within the header still click normally. */
+.qmr-player--dragged:not(.qmr-player-error-only){
+  left:var(--qmr-player-drag-left)!important;
+  top:var(--qmr-player-drag-top)!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+}
+.qmr-player-drag-handle{
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+}
+.qmr-player-drag-handle:active{cursor:grabbing}
+.qmr-player-drag-handle button,
+.qmr-player-drag-handle input,
+.qmr-player-drag-handle select,
+.qmr-player-drag-handle label,
+.qmr-player-drag-handle a{cursor:auto}
+
+@media(max-width:760px){
+  .qmr-source-reader-body--dictionary{grid-template-columns:1fr}
+  .qmr-source-root-tabs{
+    grid-auto-flow:column;
+    grid-auto-columns:minmax(110px,42%);
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid color-mix(in srgb,var(--qmr-v15-green,#174f34) 12%,transparent);
+  }
+  .qmr-source-nav-label{display:none}
+}
