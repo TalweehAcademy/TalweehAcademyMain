@@ -15,10 +15,10 @@
 .hadith-overview{display:grid;grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:72px}.hadith-section-heading h2{font-size:clamp(32px,3.6vw,50px);line-height:1.08;letter-spacing:-.035em;color:var(--tw-heading-strong,#294936);margin:14px 0 0}.hadith-overview-copy{columns:2;column-gap:36px}.hadith-overview-copy p{font-size:17px;line-height:1.8;color:var(--tw-text-muted,#68746c);break-inside:avoid}
 .hadith-instructors{display:grid;grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:72px}.hadith-instructor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.hadith-instructor-grid article{display:grid;grid-template-columns:46px 1fr;gap:15px;padding:24px;border:1px solid var(--tw-line-strong,#cbd5cd);border-radius:16px;background:color-mix(in srgb,var(--tw-surface,#fff) 88%,transparent)}.hadith-instructor-grid article>span{font:800 11px/1 Arial,sans-serif;letter-spacing:.08em;color:var(--tw-accent,#bca472);padding-top:5px}.hadith-instructor-grid h3{font-size:21px;line-height:1.25;color:var(--tw-heading,#294735);margin-bottom:8px}.hadith-instructor-grid p{font-size:14px;line-height:1.6;color:var(--tw-text-muted,#68746c);margin-bottom:0}
 .hadith-curriculum-head{display:flex;justify-content:space-between;gap:50px;align-items:flex-end;margin-bottom:28px}.hadith-curriculum-head>p{max-width:390px;font-size:15px;line-height:1.65;color:var(--tw-text-muted,#68746c);margin-bottom:3px}.hadith-year-switcher{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-bottom:24px;border-bottom:1px solid var(--tw-line,#e3e9e1)}.hadith-year-switcher button{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;padding:18px 20px;border:1px solid var(--tw-line-strong,#cbd5cd);border-radius:13px;background:var(--tw-surface,#fff);color:var(--tw-heading,#294735);font:inherit;cursor:pointer;transition:border-color .18s ease,background .18s ease,transform .18s ease}.hadith-year-switcher button:hover{transform:translateY(-1px);border-color:var(--tw-focus,#8fae81)}.hadith-year-switcher button.active{border-color:var(--tw-brand,#1e3d2e);background:var(--tw-surface-sage,#e4ecde)}.hadith-year-switcher button>span{font:800 10px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--tw-text-faint,#89958d)}.hadith-year-switcher strong{font-size:21px}.hadith-year-switcher small{font:700 11px/1.2 Arial,sans-serif;color:var(--tw-text-muted,#68746c)}
-.hadith-course-list{margin-top:18px;border-top:1px solid var(--tw-line,#e3e9e1)}.hadith-course-card{border-bottom:1px solid var(--tw-line,#e3e9e1);background:transparent}.hadith-course-card summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:16px;align-items:center;padding:21px 8px;cursor:pointer}.hadith-course-card summary::-webkit-details-marker{display:none}.hadith-course-number{font:800 11px/1 Arial,sans-serif;letter-spacing:.08em;color:var(--tw-accent,#bca472)}.hadith-course-heading{display:flex;flex-direction:column;gap:5px}.hadith-course-heading strong{font-size:20px;color:var(--tw-heading,#294735);font-weight:700}.hadith-course-heading small{font:500 12px/1.45 Arial,sans-serif;color:var(--tw-text-muted,#68746c)}.hadith-course-toggle{width:32px;height:32px;border:1px solid var(--tw-line-strong,#cbd5cd);border-radius:50%;display:grid;place-items:center;font:400 21px/1 Arial,sans-serif;color:var(--tw-heading,#294735);transition:transform .18s ease}.hadith-course-card[open] .hadith-course-toggle{transform:rotate(45deg)}.hadith-course-card[open] summary{background:color-mix(in srgb,var(--tw-surface-sage,#e4ecde) 52%,transparent)}.hadith-course-details{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:34px;padding:8px 54px 30px 22px}.hadith-course-details>div>span{font:800 10px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:.13em;color:var(--tw-text-faint,#89958d)}.hadith-course-overview p{font-size:15px;line-height:1.78;color:var(--tw-text-muted,#68746c);margin:10px 0 0}.hadith-course-note{padding:11px 13px;border-left:2px solid var(--tw-accent,#bca472);background:var(--tw-surface-subtle,#f7f8f6);font-size:12px!important}.hadith-course-outcomes ul{margin:10px 0 0;padding-left:18px}.hadith-course-outcomes li{font-size:13px;line-height:1.62;color:var(--tw-text-muted,#68746c);margin:0 0 6px}
+.hadith-course-list{margin-top:18px;border-top:1px solid var(--tw-line,#e3e9e1)}.hadith-course-card{border-bottom:1px solid var(--tw-line,#e3e9e1);background:transparent}.hadith-course-card > summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:16px;align-items:center;padding:21px 8px;cursor:pointer}.hadith-course-card > summary::-webkit-details-marker{display:none}.hadith-course-number{font:800 11px/1 Arial,sans-serif;letter-spacing:.08em;color:var(--tw-accent,#bca472)}.hadith-course-heading{display:flex;flex-direction:column;gap:5px}.hadith-course-heading strong{font-size:20px;color:var(--tw-heading,#294735);font-weight:700}.hadith-course-heading small{font:500 12px/1.45 Arial,sans-serif;color:var(--tw-text-muted,#68746c)}.hadith-course-toggle{width:32px;height:32px;border:1px solid var(--tw-line-strong,#cbd5cd);border-radius:50%;display:grid;place-items:center;font:400 21px/1 Arial,sans-serif;color:var(--tw-heading,#294735);transition:transform .18s ease}.hadith-course-card[open] .hadith-course-toggle{transform:rotate(45deg)}.hadith-course-card[open] > summary{background:color-mix(in srgb,var(--tw-surface-sage,#e4ecde) 52%,transparent)}.hadith-course-details{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:34px;padding:8px 54px 30px 22px}.hadith-course-details>div>span{font:800 10px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:.13em;color:var(--tw-text-faint,#89958d)}.hadith-course-overview p{font-size:15px;line-height:1.78;color:var(--tw-text-muted,#68746c);margin:10px 0 0}.hadith-course-note{padding:11px 13px;border-left:2px solid var(--tw-accent,#bca472);background:var(--tw-surface-subtle,#f7f8f6);font-size:12px!important}.hadith-course-outcomes ul{margin:10px 0 0;padding-left:18px}.hadith-course-outcomes li{font-size:13px;line-height:1.62;color:var(--tw-text-muted,#68746c);margin:0 0 6px}
 .hadith-enrollment-cta{max-width:1372px;margin:28px auto 78px;padding:38px 42px;border-radius:20px;background:var(--tw-brand,#1e3d2e);color:var(--tw-on-brand,#fff);display:flex;justify-content:space-between;align-items:center;gap:30px}.hadith-enrollment-cta .hadith-eyebrow{color:color-mix(in srgb,var(--tw-on-brand,#fff) 70%,transparent)}.hadith-enrollment-cta h2{font-size:31px;line-height:1.15;color:var(--tw-on-brand,#fff);margin:10px 0}.hadith-enrollment-cta p{margin:0;color:color-mix(in srgb,var(--tw-on-brand,#fff) 78%,transparent)}.hadith-enrollment-cta .hadith-button{background:var(--tw-on-brand,#fff);border-color:var(--tw-on-brand,#fff);color:var(--tw-brand,#1e3d2e)!important;white-space:nowrap}
 @media(max-width:1050px){.hadith-hero{grid-template-columns:1fr;gap:42px}.hadith-manuscript{max-width:720px}.hadith-overview,.hadith-instructors{grid-template-columns:1fr;gap:32px}.hadith-overview-copy{columns:1}.hadith-curriculum-head{align-items:flex-start;flex-direction:column;gap:18px}}
-@media(max-width:760px){.hadith-hero,.hadith-overview,.hadith-instructors,.hadith-curriculum{padding-left:22px;padding-right:22px}.hadith-hero{padding-top:54px}.hadith-hero h1{font-size:46px}.hadith-lead{font-size:16px}.hadith-facts{gap:7px}.hadith-manuscript figcaption{flex-direction:column;gap:5px}.hadith-manuscript figcaption strong{text-align:left}.hadith-instructor-grid,.hadith-year-switcher{grid-template-columns:1fr}.hadith-course-card summary{grid-template-columns:minmax(0,1fr) 34px;gap:10px;padding:18px 2px}.hadith-course-heading strong{font-size:18px}.hadith-course-details{grid-template-columns:1fr;padding:6px 10px 28px 10px;gap:22px}.hadith-enrollment-cta{margin:20px 16px 54px;padding:28px 24px;align-items:flex-start;flex-direction:column}.hadith-enrollment-cta .hadith-button{width:100%}}
+@media(max-width:760px){.hadith-hero,.hadith-overview,.hadith-instructors,.hadith-curriculum{padding-left:22px;padding-right:22px}.hadith-hero{padding-top:54px}.hadith-hero h1{font-size:46px}.hadith-lead{font-size:16px}.hadith-facts{gap:7px}.hadith-manuscript figcaption{flex-direction:column;gap:5px}.hadith-manuscript figcaption strong{text-align:left}.hadith-instructor-grid,.hadith-year-switcher{grid-template-columns:1fr}.hadith-course-card > summary{grid-template-columns:minmax(0,1fr) 34px;gap:10px;padding:18px 2px}.hadith-course-heading strong{font-size:18px}.hadith-course-details{grid-template-columns:1fr;padding:6px 10px 28px 10px;gap:22px}.hadith-enrollment-cta{margin:20px 16px 54px;padding:28px 24px;align-items:flex-start;flex-direction:column}.hadith-enrollment-cta .hadith-button{width:100%}}
 
 /* PUBLIC SITE UPDATE 2026-09-07 — linked faculty + public course catalog integration */
 .hadith-instructor-card {
@@ -469,7 +469,7 @@
 
 /* Remove curriculum sequence numbers; the year already provides structure. */
 .hadith-course-number { display:none !important; }
-.hadith-course-card summary {
+.hadith-course-card > summary {
   grid-template-columns:minmax(0,1fr) 38px !important;
   padding-left:16px !important;
 }
@@ -531,7 +531,7 @@
 [data-theme="dark"] .hadith-page .hadith-course-overview p,
 [data-theme="dark"] .hadith-page .hadith-course-outcomes li,
 [data-theme="dark"] .hadith-page .hadith-instructor-grid p { color:var(--tw-text-muted); }
-[data-theme="dark"] .hadith-page .hadith-course-card[open] summary,
+[data-theme="dark"] .hadith-page .hadith-course-card[open] > summary,
 [data-theme="dark"] .hadith-page .hadith-year-switcher button.active { background:var(--tw-surface-sage); }
 [data-theme="dark"] .hadith-page .hadith-catalog-panel,
 [data-theme="dark"] .hadith-page .hadith-instructor-card,
@@ -541,7 +541,74 @@
 }
 
 @media(max-width:760px){
-  .hadith-course-card summary{grid-template-columns:minmax(0,1fr) 34px!important;padding-left:4px!important}
+  .hadith-course-card > summary{grid-template-columns:minmax(0,1fr) 34px!important;padding-left:4px!important}
   .hadith-course-details{padding-left:8px!important}
   .hadith-catalog-link{width:100%;min-width:0}
 }
+
+/* HADITH SPECIALIZATION V1.5 — nested lesson accordion layout fix */
+/* Outer course accordion rules must never leak into nested standalone lesson rows. */
+.hadith-page .hadith-catalog-lessons,
+.hadith-page .hadith-catalog-lessons ol,
+.hadith-page .hadith-catalog-lessons li,
+.hadith-page .hadith-catalog-lesson,
+.hadith-page .hadith-catalog-lesson-static {
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+
+.hadith-page .hadith-catalog-lesson > summary {
+  display:grid !important;
+  grid-template-columns:38px minmax(0,1fr) 26px !important;
+  gap:11px !important;
+  align-items:center !important;
+  width:100%;
+  min-width:0;
+  min-height:48px !important;
+  padding:9px 4px !important;
+  list-style:none;
+  background:transparent;
+}
+
+.hadith-page .hadith-catalog-lesson > summary > span,
+.hadith-page .hadith-catalog-lesson-static > span {
+  min-width:0;
+}
+
+.hadith-page .hadith-catalog-lesson > summary > strong,
+.hadith-page .hadith-catalog-lesson-static > strong {
+  display:block;
+  min-width:0;
+  width:auto;
+  white-space:normal;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+.hadith-page .hadith-catalog-lesson > summary > i {
+  justify-self:end;
+}
+
+.hadith-page .hadith-catalog-lesson-static {
+  display:grid !important;
+  grid-template-columns:38px minmax(0,1fr) !important;
+  gap:11px !important;
+  align-items:center !important;
+  min-height:48px !important;
+  padding:9px 4px !important;
+}
+
+@media(max-width:760px){
+  .hadith-page .hadith-catalog-lesson > summary {
+    grid-template-columns:32px minmax(0,1fr) 26px !important;
+    gap:9px !important;
+    padding:9px 2px !important;
+  }
+  .hadith-page .hadith-catalog-lesson-static {
+    grid-template-columns:32px minmax(0,1fr) !important;
+    gap:9px !important;
+    padding:9px 2px !important;
+  }
+}
+
