@@ -2,8 +2,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
-import { PUBLIC_COURSES } from '../data/publicCourseIndex'
+import { PUBLIC_COURSES, PUBLIC_COURSE_CATEGORIES } from '../data/publicCourseIndex'
 import { loadPublicCourse } from '../data/publicCourseDetails'
+import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCommerceCatalog, mergeCourseWithLive } from '../data/liveCommerceCatalog'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 
 const PAID_ENROLLMENT_URL = 'https://talweehacademy.com/course/'
@@ -32,15 +33,7 @@ function plainText(value = '') {
 }
 
 function formatPrice(course) {
-  if (course.free) return 'Free'
-  const cents = Number(course.priceCents)
-  if (!Number.isFinite(cents) || cents <= 0) return 'Enrollment required'
-  try {
-    const amount = new Intl.NumberFormat('en-US', { style: 'currency', currency: course.currency || 'USD', maximumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents / 100)
-    return `${amount} ${course.currency || 'USD'}`
-  } catch {
-    return `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)} ${course.currency || 'USD'}`
-  }
+  return formatCommercePrice(course)
 }
 
 function formatLevel(value = '') {
@@ -80,6 +73,7 @@ export default function CourseLandingPage() {
   const { slug } = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
   const [course, setCourse] = useState(null)
+  const [catalogCourses, setCatalogCourses] = useState(PUBLIC_COURSES)
   const [courseLoading, setCourseLoading] = useState(true)
   const [showAll, setShowAll] = useState(false)
   const [expandedLessons, setExpandedLessons] = useState({})
@@ -90,39 +84,72 @@ export default function CourseLandingPage() {
 
   useEffect(() => {
     let active = true
+    const controller = new AbortController()
     setCourseLoading(true)
     setCourse(null)
     setShowAll(false)
     setExpandedLessons({})
 
-    loadPublicCourse(slug)
-      .then((nextCourse) => {
-        if (active) setCourse(nextCourse)
-      })
-      .catch(() => {
-        if (active) setCourse(null)
-      })
-      .finally(() => {
-        if (active) setCourseLoading(false)
-      })
+    const staticPromise = loadPublicCourse(slug).catch(() => null)
+
+    staticPromise.then((staticCourse) => {
+      if (!active) return
+      if (staticCourse) {
+        setCourse(staticCourse)
+        setCourseLoading(false)
+      }
+
+      fetchLiveCommerceCatalog({ signal: controller.signal })
+        .then((payload) => {
+          if (!active) return
+          const mergedCatalog = mergeCommerceCatalog(
+            PUBLIC_COURSES,
+            PUBLIC_COURSE_CATEGORIES,
+            payload,
+          )
+          setCatalogCourses(mergedCatalog.courses)
+
+          const liveCourse = findLiveCourse(payload, slug, staticCourse)
+          const mergedCourse = mergeCourseWithLive(staticCourse, liveCourse)
+          setCourse(mergedCourse)
+        })
+        .catch((error) => {
+          if (!active || error?.name === 'AbortError') return
+          console.warn('Using bundled Talweeh course detail fallback', error)
+          if (!staticCourse) setCourse(null)
+        })
+        .finally(() => {
+          if (active) setCourseLoading(false)
+        })
+    })
 
     return () => {
       active = false
+      controller.abort()
     }
   }, [slug])
 
-  const related = useMemo(() => course ? PUBLIC_COURSES.filter((item) => item.category === course.category && item.slug !== course.slug).slice(0,3) : [], [course])
+  const related = useMemo(
+    () => course
+      ? catalogCourses
+          .filter((item) => item.category === course.category && item.slug !== course.slug)
+          .slice(0, 3)
+      : [],
+    [catalogCourses, course],
+  )
 
   if (courseLoading) return <div className="page-shell public-catalog-shell"><PageHeader /><main className="public-course-not-found"><span className="public-catalog-eyebrow">Courses</span><h1>Loading course…</h1></main><PageFooter /></div>
 
   if (!course) return <div className="page-shell public-catalog-shell"><PageHeader /><main className="public-course-not-found"><span className="public-catalog-eyebrow">Courses</span><h1>Course not found</h1><p>This public course page is unavailable.</p><Link to="/courses">Return to all courses</Link></main><PageFooter /></div>
 
-  const previewCount = Math.min(16, course.lessons.length)
-  const lessons = showAll ? course.lessons : course.lessons.slice(0, previewCount)
-  const playableIndexes = course.free ? course.lessons.map((lesson, index) => getYouTubeVideoId(lessonVideo(lesson)) ? index : -1).filter((index) => index >= 0) : []
+  const courseLessons = Array.isArray(course.lessons) ? course.lessons : []
+  const canPaidEnroll = !course.free && course.checkoutAvailable !== false
+  const previewCount = Math.min(16, courseLessons.length)
+  const lessons = showAll ? courseLessons : courseLessons.slice(0, previewCount)
+  const playableIndexes = course.free ? courseLessons.map((lesson, index) => getYouTubeVideoId(lessonVideo(lesson)) ? index : -1).filter((index) => index >= 0) : []
   const requestedLesson = Math.max(0, Number.parseInt(searchParams.get('lesson') || '', 10) - 1)
   const activeLessonIndex = playableIndexes.includes(requestedLesson) ? requestedLesson : (playableIndexes[0] ?? -1)
-  const activeLesson = activeLessonIndex >= 0 ? course.lessons[activeLessonIndex] : null
+  const activeLesson = activeLessonIndex >= 0 ? courseLessons[activeLessonIndex] : null
   const activeVideoId = activeLesson ? getYouTubeVideoId(lessonVideo(activeLesson)) : null
   const activePlayablePosition = playableIndexes.indexOf(activeLessonIndex)
   const previousPlayableIndex = activePlayablePosition > 0 ? playableIndexes[activePlayablePosition - 1] : null
@@ -164,7 +191,9 @@ export default function CourseLandingPage() {
             <div className="public-course-hero-actions">
               {course.free
                 ? <a className="public-course-primary" href={playableIndexes.length ? '#free-lessons' : '#curriculum'}>{playableIndexes.length ? 'Start watching' : 'View free curriculum'} <PlayIcon /></a>
-                : <a className="public-course-primary" href={PAID_ENROLLMENT_URL}>Enroll in course <ArrowIcon /></a>}
+                : canPaidEnroll
+                  ? <a className="public-course-primary" href={PAID_ENROLLMENT_URL}>Enroll in course <ArrowIcon /></a>
+                  : null}
               <a className="public-course-secondary" href="#curriculum">View curriculum</a>
             </div>
           </div>
@@ -236,21 +265,24 @@ export default function CourseLandingPage() {
                     : <span className="public-course-lesson-access"><LockIcon /><em>Student Portal</em></span>}
                 </div>
               })}
+              {!lessons.length && course.lessonCount > 0 && <div className="public-catalog-empty"><BookIcon /><h3>{course.lessonCount} curriculum lessons</h3><p>Curriculum details are managed in Talweeh Academy and will appear here when included in the public course export.</p></div>}
             </div>
-            {!showAll && course.lessons.length > previewCount && <button className="public-course-showall" type="button" onClick={() => setShowAll(true)}>Show entire curriculum <span>{course.lessons.length - previewCount} more lessons</span></button>}
-            {showAll && course.lessons.length > previewCount && <button className="public-course-showall" type="button" onClick={() => setShowAll(false)}>Collapse curriculum</button>}
+            {!showAll && courseLessons.length > previewCount && <button className="public-course-showall" type="button" onClick={() => setShowAll(true)}>Show entire curriculum <span>{courseLessons.length - previewCount} more lessons</span></button>}
+            {showAll && courseLessons.length > previewCount && <button className="public-course-showall" type="button" onClick={() => setShowAll(false)}>Collapse curriculum</button>}
           </section>
         </div>
 
         <aside className={`public-course-enroll-card ${course.free ? 'free' : ''}`}>
           <span className="public-catalog-eyebrow">Course access</span>
-          <h2>{course.free ? 'Start this course for free.' : `Enroll for ${formatPrice(course)}.`}</h2>
-          <p>{course.free ? 'No paid enrollment is required. Watch the available lessons directly from this public course page.' : 'Review the curriculum here, then continue to Talweeh enrollment. Paid videos remain inside the Student Portal after access is granted.'}</p>
+          <h2>{course.free ? 'Start this course for free.' : canPaidEnroll ? `Enroll for ${formatPrice(course)}.` : 'Enrollment is currently unavailable.'}</h2>
+          <p>{course.free ? 'No paid enrollment is required. Watch the available lessons directly from this public course page.' : canPaidEnroll ? 'Review the curriculum here, then continue to Talweeh enrollment. Paid videos remain inside the Student Portal after access is granted.' : 'This course remains visible for information, but there is no active public purchase option at this time.'}</p>
           <ul>{course.free ? <><li>Free lesson playback</li><li>Full public curriculum</li><li>No paid enrollment required</li><li>Account progress can be added later</li></> : <><li>Protected video lesson access</li><li>Quizzes and exercises</li><li>Progress tracking</li><li>Lesson notes and learning tools</li></>}</ul>
           {course.free
             ? <a href={playableIndexes.length ? '#free-lessons' : '#curriculum'}>{playableIndexes.length ? 'Start watching' : 'View curriculum'} <PlayIcon /></a>
-            : <a href={PAID_ENROLLMENT_URL}>Continue to enrollment <ArrowIcon /></a>}
-          <small>{course.free ? 'Free videos are intentionally allowed in the public export.' : 'Paid lesson video URLs are never included in the public export.'}</small>
+            : canPaidEnroll
+              ? <a href={PAID_ENROLLMENT_URL}>Continue to enrollment <ArrowIcon /></a>
+              : null}
+          <small>{course.free ? 'Free videos are intentionally allowed in the public export.' : canPaidEnroll ? 'Paid lesson video URLs are never included in the public export.' : 'Enrollment can be enabled again from the Talweeh Admin Commerce page.'}</small>
         </aside>
       </section>
 
