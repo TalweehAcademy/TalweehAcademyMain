@@ -4,10 +4,11 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
 import { PUBLIC_COURSES, PUBLIC_COURSE_CATEGORIES } from '../data/publicCourseIndex'
 import { loadPublicCourse } from '../data/publicCourseDetails'
-import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCommerceCatalog, mergeCourseWithLive } from '../data/liveCommerceCatalog'
+import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCommerceCatalog, mergeCourseWithLive, primaryPurchaseOption } from '../data/liveCommerceCatalog'
+import { addCommerceCartOption } from '../data/commerceCart'
+import { money, optionBillingLabel } from '../data/commerceCheckout'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 
-const PAID_ENROLLMENT_URL = 'https://talweehacademy.com/course/'
 
 function BookIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3-.8 5.5-.2 8 1.5v12c-2.5-1.7-5-2.3-8-1.5v-12Zm16 0c-3-.8-5.5-.2-8 1.5v12c2.5-1.7 5-2.3 8-1.5v-12Z"/></svg> }
 function UserIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.6-4 2.8-6 6.5-6s5.9 2 6.5 6"/></svg> }
@@ -77,6 +78,8 @@ export default function CourseLandingPage() {
   const [courseLoading, setCourseLoading] = useState(true)
   const [showAll, setShowAll] = useState(false)
   const [expandedLessons, setExpandedLessons] = useState({})
+  const [selectedOptionId, setSelectedOptionId] = useState('')
+  const [cartNotice, setCartNotice] = useState('')
   const playerRef = useRef(null)
 
   // Re-runs when the course resolves, overriding the static route metadata.
@@ -138,12 +141,33 @@ export default function CourseLandingPage() {
     [catalogCourses, course],
   )
 
+  useEffect(() => {
+    if (!course || course.free) {
+      setSelectedOptionId('')
+      setCartNotice('')
+      return
+    }
+    const primary = primaryPurchaseOption(course)
+    setSelectedOptionId(primary?.id ? String(primary.id) : '')
+    setCartNotice('')
+  }, [course?.slug, course?.liveUpdatedAt])
+
   if (courseLoading) return <div className="page-shell public-catalog-shell"><PageHeader /><main className="public-course-not-found"><span className="public-catalog-eyebrow">Courses</span><h1>Loading course…</h1></main><PageFooter /></div>
 
   if (!course) return <div className="page-shell public-catalog-shell"><PageHeader /><main className="public-course-not-found"><span className="public-catalog-eyebrow">Courses</span><h1>Course not found</h1><p>This public course page is unavailable.</p><Link to="/courses">Return to all courses</Link></main><PageFooter /></div>
 
   const courseLessons = Array.isArray(course.lessons) ? course.lessons : []
-  const canPaidEnroll = !course.free && course.checkoutAvailable !== false
+  const purchaseOptions = Array.isArray(course.purchaseOptions) ? course.purchaseOptions : []
+  const selectedOption = purchaseOptions.find((option) => String(option.id) === selectedOptionId) || primaryPurchaseOption(course)
+  const canPaidEnroll = !course.free && course.checkoutAvailable !== false && Boolean(selectedOption?.id)
+  const checkoutHref = selectedOption?.id ? `/checkout?options=${encodeURIComponent(selectedOption.id)}` : '/checkout'
+
+  function addSelectedToCart() {
+    if (!selectedOption?.id) return
+    addCommerceCartOption(selectedOption.id, course.checkoutSlug || course.slug)
+    setCartNotice('Added to your enrollment cart.')
+  }
+
   const previewCount = Math.min(16, courseLessons.length)
   const lessons = showAll ? courseLessons : courseLessons.slice(0, previewCount)
   const playableIndexes = course.free ? courseLessons.map((lesson, index) => getYouTubeVideoId(lessonVideo(lesson)) ? index : -1).filter((index) => index >= 0) : []
@@ -192,7 +216,7 @@ export default function CourseLandingPage() {
               {course.free
                 ? <a className="public-course-primary" href={playableIndexes.length ? '#free-lessons' : '#curriculum'}>{playableIndexes.length ? 'Start watching' : 'View free curriculum'} <PlayIcon /></a>
                 : canPaidEnroll
-                  ? <a className="public-course-primary" href={PAID_ENROLLMENT_URL}>Enroll in course <ArrowIcon /></a>
+                  ? <Link className="public-course-primary" to={checkoutHref}>Enroll now <ArrowIcon /></Link>
                   : null}
               <a className="public-course-secondary" href="#curriculum">View curriculum</a>
             </div>
@@ -275,13 +299,29 @@ export default function CourseLandingPage() {
         <aside className={`public-course-enroll-card ${course.free ? 'free' : ''}`}>
           <span className="public-catalog-eyebrow">Course access</span>
           <h2>{course.free ? 'Start this course for free.' : canPaidEnroll ? `Enroll for ${formatPrice(course)}.` : 'Enrollment is currently unavailable.'}</h2>
-          <p>{course.free ? 'No paid enrollment is required. Watch the available lessons directly from this public course page.' : canPaidEnroll ? 'Review the curriculum here, then continue to Talweeh enrollment. Paid videos remain inside the Student Portal after access is granted.' : 'This course remains visible for information, but there is no active public purchase option at this time.'}</p>
+          <p>{course.free ? 'No paid enrollment is required. Watch the available lessons directly from this public course page.' : canPaidEnroll ? 'Choose your access option, then pay securely through Talweeh Checkout. Paid videos remain inside the Student Portal after access is granted.' : 'This course remains visible for information, but there is no active public purchase option at this time.'}</p>
+          {!course.free && canPaidEnroll && purchaseOptions.length > 0 && (
+            <div className="public-course-plan-picker">
+              <span>{purchaseOptions.length > 1 ? 'Choose an enrollment option' : 'Enrollment option'}</span>
+              {purchaseOptions.map((option) => {
+                const selected = String(option.id) === String(selectedOption?.id)
+                return (
+                  <label className={`public-course-plan-option ${selected ? 'is-selected' : ''}`} key={option.id}>
+                    <input type="radio" name={`course-plan-${course.slug}`} value={option.id} checked={selected} onChange={() => { setSelectedOptionId(String(option.id)); setCartNotice('') }} />
+                    <span><strong>{option.display_name || 'Course access'}</strong><small>{optionBillingLabel(option)}</small></span>
+                    <b>{money(option.amount_cents, option.currency)}</b>
+                  </label>
+                )
+              })}
+            </div>
+          )}
           <ul>{course.free ? <><li>Free lesson playback</li><li>Full public curriculum</li><li>No paid enrollment required</li><li>Account progress can be added later</li></> : <><li>Protected video lesson access</li><li>Quizzes and exercises</li><li>Progress tracking</li><li>Lesson notes and learning tools</li></>}</ul>
           {course.free
             ? <a href={playableIndexes.length ? '#free-lessons' : '#curriculum'}>{playableIndexes.length ? 'Start watching' : 'View curriculum'} <PlayIcon /></a>
             : canPaidEnroll
-              ? <a href={PAID_ENROLLMENT_URL}>Continue to enrollment <ArrowIcon /></a>
+              ? <div className="public-course-commerce-actions"><Link to={checkoutHref}>Enroll now <ArrowIcon /></Link><button type="button" onClick={addSelectedToCart}>Add to cart</button></div>
               : null}
+          {cartNotice && <span className="public-course-cart-notice">{cartNotice} <Link to="/cart">View cart</Link></span>}
           <small>{course.free ? 'Free videos are intentionally allowed in the public export.' : canPaidEnroll ? 'Paid lesson video URLs are never included in the public export.' : 'Enrollment can be enabled again from the Talweeh Admin Commerce page.'}</small>
         </aside>
       </section>

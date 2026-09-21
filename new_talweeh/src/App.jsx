@@ -3,6 +3,7 @@ import { lazy as talweehProgramLazy } from 'react'
 import { lazy, Suspense, useState, useEffect, useRef } from 'react'
 import './App.css'
 import './public-theme.css'
+import './commerce-checkout.css'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { RouteMeta } from './hooks/useDocumentMeta'
 import CourseCard from './components/CourseCard'
@@ -17,6 +18,8 @@ const AboutUsPage = lazy(() => import('./pages/about-us'))
 const TermsConditionsPage = lazy(() => import('./pages/terms-conditions'))
 const ContactUsPage = lazy(() => import('./pages/contact-us'))
 const CourseLandingPage = lazy(() => import('./pages/course-landing'))
+const CommerceCartPage = lazy(() => import('./pages/cart'))
+const CommerceCheckoutPage = lazy(() => import('./pages/checkout'))
 const QuranPage = lazy(() => import('./pages/quran'))
 const ArabicPage = lazy(() => import('./pages/arabic'))
 const ArabicProgramPage = lazy(() => import('./pages/arabic-program'))
@@ -562,6 +565,8 @@ function AppInner() {
         <Route path="/instructors/:slug" element={<InstructorDetailV2Page />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/courses/:slug" element={<CourseLandingPage />} />
+        <Route path="/cart" element={<CommerceCartPage />} />
+        <Route path="/checkout" element={<CommerceCheckoutPage />} />
         <Route path="/quran" element={<QuranPage />} />
         <Route path="/arabic" element={<ArabicPage />} />
         <Route path="/arabic/program" element={<ArabicProgramPage />} />

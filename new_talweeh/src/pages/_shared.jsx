@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ASSET } from '../constants/assets'
 import { useContent } from '../hooks/useContent'
 import { Editable } from '../components/ContentEditor'
+import CommerceCartLink from '../components/CommerceCartLink'
 
 const preview = (label) => ({ label, to: `/navigation-preview/${encodeURIComponent(label)}` })
 const courseCategoryLink = (label, slug) => ({ label, to: `/courses?category=${encodeURIComponent(slug)}` })
@@ -203,9 +204,11 @@ export function PageHeader() {
           {navLinks.map(item => item.groups
             ? <NavigationDropdown key={item.label} item={item} closeMenu={() => setMenuOpen(false)} />
             : <Link to={item.to} key={item.label} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
+          <CommerceCartLink className="academy-cart-mobile" onNavigate={() => setMenuOpen(false)} />
           <Link className="academy-portal-mobile" to="/navigation-preview/Student%20Portal" onClick={() => setMenuOpen(false)}>Student Portal</Link>
         </div>
         <div className="nav-actions">
+          <CommerceCartLink />
           <Link className="journey-button" to="/navigation-preview/Student%20Portal">Student Portal</Link>
         </div>
       </nav>
