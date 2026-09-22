@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Riwāq — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* Riwāq — light editorial. Cream is the page, green is the ink, gold is the accent. */
+:root{
+  --paper:#fbfaf6; --cream:#f3e8d3; --sand:#ebe0c8; --line:#e2dccd;
+  --green:#1e3d2e; --green-2:#173827; --moss:#2f5a43; --soft:#eaf0e6;
+  --gold:#b8894c; --gold-2:#d7b373; --bronze:#80683f; --text:#405448; --muted:#6f7c72;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html{overflow-x:clip}
+body{background:var(--paper);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;color:var(--green);font-weight:600;letter-spacing:-.01em}
+
+/* floating pill nav */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;width:min(1120px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(251,250,246,.72);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(30,61,46,.1);box-shadow:0 10px 40px rgba(23,56,39,.08)}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:21px;color:var(--green)}
+.brand img{width:36px;height:36px}
+.links{display:flex;gap:4px;font-size:14px;font-weight:500}
+.links a{padding:9px 16px;border-radius:999px;transition:background .2s,color .2s}
+.links a:hover{background:var(--soft);color:var(--green)}
+.cta{display:inline-flex;align-items:center;gap:10px;padding:11px 20px;border-radius:999px;background:var(--green);color:var(--paper);font-size:14px;font-weight:600;transition:.25s}
+.cta:hover{background:var(--green-2);gap:14px}
+.cta i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--gold-2);color:var(--green);display:grid;place-items:center;font-size:12px}
+
+/* hero with inline image pills */
+.hero{padding:170px clamp(16px,4vw,48px) 60px;max-width:1240px;margin:0 auto;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;inset:40px -200px auto;height:600px;z-index:-1;background:url('../../public/brand/talweeh-pattern-light.png') center/560px;opacity:.35;mask-image:radial-gradient(ellipse at 50% 40%,#000 10%,transparent 65%);-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 10%,transparent 65%)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--text);box-shadow:0 4px 14px rgba(23,56,39,.05)}
+.eyebrow b{padding:3px 10px;border-radius:999px;background:var(--green);color:var(--cream);font-size:11px;letter-spacing:.06em}
+.hero h1{font-size:clamp(46px,7.4vw,112px);line-height:1.02;margin:28px auto 0;max-width:13ch;letter-spacing:-.025em}
+.hero h1 .pill{display:inline-block;width:1.7em;height:.82em;border-radius:999px;overflow:hidden;vertical-align:-.06em;margin:0 .06em;border:3px solid #fff;box-shadow:0 10px 30px rgba(23,56,39,.18);transform:rotate(-3deg) scale(.4);opacity:0;animation:pop .9s cubic-bezier(.3,1.6,.5,1) forwards}
+.hero h1 .pill:nth-of-type(2){transform:rotate(4deg) scale(.4);animation-delay:.2s}
+.hero h1 .pill img{width:100%;height:100%;object-fit:cover}
+@keyframes pop{to{transform:rotate(var(--r,-3deg)) scale(1);opacity:1}}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{max-width:560px;margin:26px auto 34px;font-size:17px;color:var(--muted)}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+.ghost{display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--green);transition:.2s}
+.ghost:hover{border-color:var(--green)}
+.ar-float{position:absolute;font-family:Amiri,serif;color:var(--gold);opacity:.8;font-size:28px;animation:float 7s ease-in-out infinite}
+.ar-float.a{left:4%;top:230px}.ar-float.b{right:5%;top:360px;animation-delay:-3s;font-size:24px}
+@keyframes float{50%{transform:translateY(-14px)}}
+
+/* marquee */
+.marquee{background:var(--green);color:var(--cream);padding:18px 0;overflow:hidden;transform:rotate(-1.4deg);margin:50px -20px 0;box-shadow:0 20px 40px rgba(23,56,39,.18)}
+.marquee .row{display:flex;gap:40px;width:max-content;animation:scroll 40s linear infinite}
+.marquee span{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:40px}
+.marquee span::after{content:'✦';color:var(--gold-2);font-size:16px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* bento */
+.section{max-width:1240px;margin:0 auto;padding:clamp(70px,9vw,120px) clamp(16px,4vw,48px)}
+.shead{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:40px}
+.label{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.label::before{content:'';width:22px;height:1px;background:var(--gold)}
+.shead h2{font-size:clamp(36px,4.6vw,60px);line-height:1.02;max-width:16ch}
+.shead p{max-width:36ch;color:var(--muted)}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:16px}
+.tile{position:relative;border-radius:26px;overflow:hidden;padding:28px;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.tile:hover{transform:translateY(-5px);box-shadow:0 26px 50px rgba(23,56,39,.14)}
+.t-arabic{grid-column:span 2;grid-row:span 2;background:var(--green);color:var(--cream);justify-content:flex-end}
+.t-arabic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;filter:grayscale(1) contrast(1.1);z-index:0;transition:transform 1s,opacity .5s}
+.t-arabic:hover img{transform:scale(1.06);opacity:.45}
+.t-arabic::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,var(--green-2) 25%,rgba(23,56,39,.4) 70%,rgba(23,56,39,.15))}
+.t-arabic>*{position:relative;z-index:2}
+.t-arabic h3{color:#fff;font-size:44px;line-height:1}
+.t-arabic .ar{font-family:Amiri,serif;font-size:26px;color:var(--gold-2)}
+.t-arabic p{color:rgba(243,232,211,.78);max-width:40ch;margin:10px 0 18px}
+.t-stat{background:var(--gold-2);color:var(--green)}
+.t-stat b{font-family:'Cormorant Garamond',serif;font-size:80px;line-height:.9;font-weight:700}
+.t-stat span{margin-top:auto;font-weight:600;font-size:14px}
+.t-alim{grid-row:span 2;background:#fff;border:1px solid var(--line)}
+.t-alim .img{flex:1;border-radius:18px;overflow:hidden;margin:-12px -12px 20px}
+.t-alim .img img{width:100%;height:100%;object-fit:cover;transition:transform 1s}
+.t-alim:hover .img img{transform:scale(1.06)}
+.t-alim h3{font-size:32px;line-height:1}
+.t-free{background:var(--cream);position:relative}
+.t-free::before{content:'';position:absolute;inset:0;background:url('../../public/brand/talweeh-pattern-light.png') center/300px;opacity:.5}
+.t-free>*{position:relative}
+.t-free h4{font-size:26px;line-height:1.05}
+.t-free span{margin-top:auto;font-size:13px;font-weight:600;color:var(--bronze)}
+.t-hadith{grid-column:span 2;background:var(--green-2);color:var(--cream);flex-direction:row;gap:24px;align-items:center}
+.t-hadith img{width:38%;height:calc(100% + 56px);margin:-28px 0 -28px -28px;object-fit:cover}
+.t-hadith h3{color:#fff;font-size:34px;line-height:1}
+.t-hadith p{color:rgba(243,232,211,.7);font-size:14px;margin-top:8px}
+.t-teacher{grid-column:span 2;background:#fff;border:1px solid var(--line);flex-direction:row;align-items:center;gap:22px}
+.t-teacher .ph{width:120px;height:120px;border-radius:50%;overflow:hidden;flex-shrink:0;border:4px solid var(--soft)}
+.t-teacher .ph img{width:100%;height:100%;object-fit:cover}
+.t-teacher q{quotes:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.3;color:var(--green)}
+.t-teacher small{display:block;margin-top:10px;font-size:13px;font-weight:600;color:var(--bronze)}
+.go{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.go::after{content:'→';transition:transform .25s}
+.tile:hover .go::after{transform:translateX(5px)}
+
+/* courses w/ filter chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font:500 14px Inter,sans-serif;color:var(--text);cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--green)}
+.chip.on{background:var(--green);border-color:var(--green);color:var(--cream)}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:10px;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,opacity .35s;transform-style:preserve-3d;will-change:transform}
+.card:hover{box-shadow:0 30px 50px rgba(23,56,39,.14)}
+.card.hide{display:none}
+.card .img{aspect-ratio:4/5;border-radius:15px;overflow:hidden;position:relative}
+.card .img img{width:100%;height:100%;object-fit:cover}
+.card .badge{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:999px;background:rgba(251,250,246,.85);backdrop-filter:blur(6px);font-size:11px;font-weight:600;color:var(--green)}
+.card .badge.free{background:var(--gold-2)}
+.card .info{padding:14px 8px 8px}
+.card h4{font-size:21px;line-height:1.15}
+.card span{font-size:13px;color:var(--muted)}
+
+/* sticky stacking steps */
+.steps{background:var(--green);color:var(--cream);border-radius:40px;margin:0 clamp(8px,2vw,24px);padding:clamp(60px,8vw,110px) clamp(16px,4vw,48px)}
+.steps .inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+.steps .intro{position:sticky;top:130px;align-self:start}
+.steps h2{color:#fff;font-size:clamp(38px,4.4vw,58px);line-height:1.02}
+.steps h2 em{color:var(--gold-2)}
+.steps .intro p{color:rgba(243,232,211,.7);margin-top:18px;max-width:38ch}
+.steps .label{color:var(--gold-2)}
+.stack{display:flex;flex-direction:column;gap:24px}
+.step{position:sticky;background:var(--paper);color:var(--text);border-radius:26px;padding:34px;min-height:250px;box-shadow:0 -10px 40px rgba(0,0,0,.18);display:flex;flex-direction:column}
+.step:nth-child(1){top:120px}.step:nth-child(2){top:140px;background:var(--cream)}.step:nth-child(3){top:160px;background:var(--sand)}.step:nth-child(4){top:180px;background:var(--gold-2)}
+.step .n{font-family:'Cormorant Garamond',serif;font-size:62px;line-height:1;color:var(--gold);font-weight:700}
+.step:nth-child(4) .n{color:var(--green)}
+.step h3{font-size:30px;margin:8px 0 6px}
+.step p{max-width:44ch}
+
+/* testimonial */
+.quote{text-align:center;max-width:900px;margin:0 auto}
+.quote .mark{font-family:'Cormorant Garamond',serif;font-size:120px;line-height:.5;color:var(--gold-2)}
+.quote blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.2;color:var(--green);font-weight:500}
+.quote blockquote em{background:linear-gradient(transparent 62%,rgba(215,179,115,.45) 62%);font-style:italic}
+.quote cite{display:block;margin-top:22px;font-style:normal;font-size:14px;font-weight:600;color:var(--bronze)}
+
+/* CTA w/ animated border */
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+.join{position:relative;max-width:1180px;margin:0 auto 80px;border-radius:34px;padding:2px;background:conic-gradient(from var(--ang),var(--gold),transparent 30%,var(--gold-2) 50%,transparent 80%,var(--gold));animation:turn 6s linear infinite}
+@keyframes turn{to{--ang:360deg}}
+.join .in{border-radius:32px;background:radial-gradient(circle at 85% 20%,rgba(215,179,115,.25),transparent 45%),var(--green-2);padding:clamp(40px,6vw,80px);display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;overflow:hidden;position:relative}
+.join h2{color:#fff;font-size:clamp(36px,4vw,54px);line-height:1.02}
+.join p{color:rgba(243,232,211,.72);margin-top:14px}
+.join form{display:flex;gap:8px;padding:6px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.join input{flex:1;min-width:0;background:none;border:0;padding:0 16px;color:#fff;font:15px Inter,sans-serif}
+.join input::placeholder{color:rgba(243,232,211,.5)}
+.join input:focus{outline:none}
+.join button{border:0;padding:13px 22px;border-radius:999px;background:var(--gold-2);color:var(--green);font:600 14px Inter,sans-serif;cursor:pointer}
+.join small{display:block;margin-top:12px;color:rgba(243,232,211,.5);font-size:12px}
+
+footer{border-top:1px solid var(--line);padding:50px clamp(16px,4vw,48px);max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;font-size:14px;color:var(--muted)}
+footer nav{display:flex;flex-wrap:wrap;gap:24px}
+footer a:hover{color:var(--green)}
+
+.r{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.r.in{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .links{display:none}
+  .bento{grid-template-columns:1fr 1fr;grid-auto-rows:200px}
+  .t-alim{grid-row:span 2}
+  .cgrid{grid-template-columns:1fr 1fr}
+  .steps .inner{grid-template-columns:1fr;gap:30px}.steps .intro{position:static}
+  .join .in{grid-template-columns:1fr}
+  .shead{flex-direction:column;align-items:start}
+  .ar-float{display:none}
+}
+@media(max-width:600px){
+  .hero{padding-top:130px}
+  .bento{grid-template-columns:1fr;grid-auto-rows:auto}
+  .tile{min-height:200px}.t-arabic,.t-alim{grid-row:auto;min-height:380px}.t-arabic,.t-hadith,.t-teacher{grid-column:auto}
+  .t-hadith{flex-direction:column;align-items:start}.t-hadith img{width:calc(100% + 56px);height:160px;margin:-28px -28px 0}
+  .t-teacher{flex-direction:column;align-items:start}
+  .cgrid{grid-template-columns:1fr 1fr;gap:12px}.card h4{font-size:17px}
+  .step{top:90px!important}
+  .join form{flex-direction:column;border-radius:20px}.join input{padding:12px 16px}
+  .nav .cta span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none}.hero h1 .pill{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="#"><img src="../../public/brand/talweeh-logo-transparent.png" alt="" />Talweeh</a>
+  <div class="links"><a href="#programs">Programs</a><a href="#courses">Courses</a><a href="#how">How it works</a><a href="#">Articles</a><a href="#">Qur'an</a></div>
+  <a class="cta" href="#join"><span>Start learning</span><i>→</i></a>
+</nav>
+
+<header class="hero">
+  <span class="ar-float a">رَبِّ زِدْنِي عِلْمًا</span><span class="ar-float b">العلم نور</span>
+  <span class="eyebrow r"><b>New</b> The 2-Year Arabic Program is enrolling</span>
+  <h1>Seek <span class="pill" style="--r:-3deg"><img src="../../public/brand/program-hadith-books.webp" alt="" /></span> knowledge from <em>its people</em> <span class="pill" style="--r:4deg"><img src="../../public/images/about-mosque.webp" alt="" /></span></h1>
+  <p class="r">Talweeh Academy teaches the Islamic sciences through instructors with ijāzāt, combining traditional and academic methods for laypeople, students and scholars.</p>
+  <div class="actions r"><a class="cta" href="#programs"><span>Explore programs</span><i>→</i></a><a class="ghost" href="#courses">Watch a free lesson</a></div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="row">
+  <span>Arabic Language</span><span>Ḥadīth Sciences</span><span>Ḥanafī Fiqh</span><span>Uṣūl al-Fiqh</span><span>Qurʾān & Tafsīr</span><span>Tajwīd</span><span>ʿAqīdah</span><span>Sīrah & Shamāʾil</span>
+  <span>Arabic Language</span><span>Ḥadīth Sciences</span><span>Ḥanafī Fiqh</span><span>Uṣūl al-Fiqh</span><span>Qurʾān & Tafsīr</span><span>Tajwīd</span><span>ʿAqīdah</span><span>Sīrah & Shamāʾil</span>
+</div></div>
+
+<section class="section" id="programs">
+  <div class="shead r"><div><div class="label">Programs</div><h2>Every path starts with a single text.</h2></div><p>Choose a structured program, or build your own path from the on-demand library.</p></div>
+  <div class="bento">
+    <a class="tile t-arabic r" href="#"><img src="../../public/brand/program-arabic-manuscript.webp" alt="" /><span class="ar">اللغة العربية</span><h3>Arabic Program</h3><p>A step-by-step two-year program to read and understand classical Arabic.</p><span class="go">Explore the program</span></a>
+    <div class="tile t-stat r"><b>400+</b><span>hours of on-demand video lessons</span></div>
+    <a class="tile t-alim r" href="#"><div class="img"><img src="../../public/brand/program-alimiyyah.webp" alt="" /></div><div class="label" style="margin:0 0 6px">Flagship</div><h3>ʿĀlimiyyah</h3><span class="go" style="margin-top:12px">Learn more</span></a>
+    <a class="tile t-free r" href="#"><h4>Talweeh Society: free weekly lessons</h4><span>Join on Telegram →</span></a>
+    <a class="tile t-hadith r" href="#"><img src="../../public/brand/hadith-specialization-manuscript.webp" alt="" /><div><div class="label" style="color:var(--gold-2)">Advanced</div><h3>Ḥadīth Specialization</h3><p>Takhrīj, narrator criticism and the study of asānīd.</p></div></a>
+    <div class="tile t-teacher r"><div class="ph"><img src="../../public/instructors/sheikh-omer-khurshid.png" alt="" /></div><div><q>Learn directly from teachers who hold ijāzāt in the texts they teach.</q><small>Meet the instructors →</small></div></div>
+  </div>
+</section>
+
+<section class="section" id="courses" style="padding-top:0">
+  <div class="shead r"><div><div class="label">On-demand</div><h2>Featured courses</h2></div><a class="ghost" href="#">Browse all 33 →</a></div>
+  <div class="chips r" id="chips">
+    <button class="chip on" data-f="all">All</button><button class="chip" data-f="hadith">Ḥadīth</button><button class="chip" data-f="fiqh">Fiqh</button><button class="chip" data-f="arabic">Arabic</button><button class="chip" data-f="quran">Qurʾān</button>
+  </div>
+  <div class="cgrid">
+    <a class="card r" data-c="hadith" href="#"><div class="img"><img src="../../public/catalog-posters/nukhbat-al-fikr.webp" alt="" /><span class="badge">Ḥadīth Sciences</span></div><div class="info"><h4>Nukhbat al-Fikar</h4><span>Sh. Omer Khurshid</span></div></a>
+    <a class="card r" data-c="hadith" href="#"><div class="img"><img src="../../public/catalog-posters/muwatta-muhammad.webp" alt="" /><span class="badge free">Free</span></div><div class="info"><h4>Muwaṭṭaʾ Muḥammad</h4><span>Sh. Omer Khurshid</span></div></a>
+    <a class="card r" data-c="fiqh" href="#"><div class="img"><img src="../../public/catalog-posters/nur-al-idah.webp" alt="" /><span class="badge">Fiqh</span></div><div class="info"><h4>Nūr al-Īḍāḥ</h4><span>Sh. Omer Khurshid</span></div></a>
+    <a class="card r" data-c="arabic" href="#"><div class="img"><img src="../../public/catalog-posters/arabic-crash-course.webp" alt="" /><span class="badge free">Free</span></div><div class="info"><h4>Arabic Crash Course</h4><span>Mufti Mohammad Daud Khurshid</span></div></a>
+    <a class="card r" data-c="quran" href="#"><div class="img"><img src="../../public/catalog-posters/tafsir-of-juz-amma.webp" alt="" /><span class="badge free">Free</span></div><div class="info"><h4>Tafsīr of Juzʾ ʿAmma</h4><span>Sh. Omer Khurshid</span></div></a>
+    <a class="card r" data-c="fiqh" href="#"><div class="img"><img src="../../public/catalog-posters/mukhtasar-al-quduri-qism-al-ibadat.webp" alt="" /><span class="badge">Fiqh</span></div><div class="info"><h4>Mukhtaṣar al-Qudūrī 1</h4><span>Mufti Mohammad Daud Khurshid</span></div></a>
+    <a class="card r" data-c="arabic" href="#"><div class="img"><img src="../../public/catalog-posters/mutammimah-al-ajurrumiyyah.webp" alt="" /><span class="badge">Naḥw</span></div><div class="info"><h4>Mutammimah al-Ājurrūmiyyah</h4><span>Mufti Mohammad Daud Khurshid</span></div></a>
+    <a class="card r" data-c="hadith" href="#"><div class="img"><img src="../../public/catalog-posters/tadrib-al-rawi.webp" alt="" /><span class="badge">Ḥadīth Sciences</span></div><div class="info"><h4>Tadrīb al-Rāwī</h4><span>Sh. Omer Khurshid</span></div></a>
+  </div>
+</section>
+
+<section class="steps" id="how">
+  <div class="inner">
+    <div class="intro"><div class="label">How it works</div><h2>From your first lesson to <em>your ijāzah.</em></h2><p>Study at your own pace online, with teachers available for questions and support at every step.</p></div>
+    <div class="stack">
+      <div class="step"><span class="n">01</span><h3>Pick a text</h3><p>Start with a free course or placement into a structured program.</p></div>
+      <div class="step"><span class="n">02</span><h3>Study on demand</h3><p>Watch lessons whenever suits you, with notes and readings alongside each one.</p></div>
+      <div class="step"><span class="n">03</span><h3>Ask your teacher</h3><p>Authorized instructors answer your questions online.</p></div>
+      <div class="step"><span class="n">04</span><h3>Advance your path</h3><p>Move from introductory texts to specialization.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quote r"><div class="mark">“</div><blockquote>The lessons made classical texts <em>finally feel within reach</em>. I read my first page of Arabic without a translation.</blockquote><cite>A student in the Arabic Program</cite></div>
+</section>
+
+<div class="join r" id="join"><div class="in">
+  <div><div class="label" style="color:var(--gold-2)">Talweeh Society</div><h2>Free courses and weekly lessons, delivered to you.</h2><p>Join the community and get the first few lessons of every course free.</p></div>
+  <div><form onsubmit="event.preventDefault()"><input type="email" placeholder="Your email address" aria-label="Email" /><button>Join free</button></form><small>Or follow us on Telegram @talweeh_academy</small></div>
+</div></div>
+
+<footer><span>© 2026 Talweeh Academy</span><nav><a href="#">About</a><a href="#">Instructors</a><a href="#">Media</a><a href="#">Contact</a><a href="#">Terms</a></nav></footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.r').forEach((el,i)=>{el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)});
+// filter chips
+document.getElementById('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===b));document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.c!==b.dataset.f))});
+// 3D tilt on course cards
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transitionDelay='0ms';c.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-6px)`});
+    c.addEventListener('mouseleave',()=>c.style.transform='');
+  });
+}
+</script>
+</body>
+</html>
