@@ -1,4 +1,4 @@
-const PRODUCTION_PORTAL_BASE = 'https://alimiyyah.talweehacademy.com'
+const PRODUCTION_PORTAL_BASE = 'https://legacy.talweehacademy.com'
 const MEMORY_CACHE_MS = 15000
 
 let cachedPayload = null

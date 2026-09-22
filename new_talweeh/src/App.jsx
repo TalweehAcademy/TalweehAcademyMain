@@ -456,7 +456,7 @@ function LandingPage() {
           </div>
           <div className="academy-final-cta-actions">
             <Link className="hero-cta-btn" to="/courses">Explore courses <span aria-hidden="true">→</span></Link>
-            <a className="academy-secondary-button" href="https://alimiyyah.talweehacademy.com" rel="noopener">Student Portal</a>
+            <a className="academy-secondary-button" href="https://legacy.talweehacademy.com" rel="noopener">Student Portal</a>
           </div>
         </section>
 
