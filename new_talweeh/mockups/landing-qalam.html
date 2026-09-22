@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qalam — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;overflow-x:clip;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+.ar{font-family:'Amiri',serif;direction:rtl}
+.ico-svg{width:1em;height:1em;fill:currentColor}
+.mock-bar{position:relative;z-index:200;font:500 13px/1.4 system-ui,sans-serif;padding:9px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mock-bar a{font-weight:700}
+:root{--ease:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.34,1.56,.64,1)}
+/* reveal on scroll */
+[data-r]{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease),clip-path 1.1s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--d,0) * 1ms)}
+[data-r=left]{transform:translateX(-46px)}
+[data-r=right]{transform:translateX(46px)}
+[data-r=scale]{transform:scale(.92)}
+[data-r=blur]{filter:blur(12px);transform:translateY(12px)}
+[data-r=clip]{opacity:1;transform:none;clip-path:inset(100% 0 0 0)}
+[data-r].in{opacity:1;transform:none;filter:none;clip-path:inset(0 0 0 0)}
+[data-stagger]>*{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
+[data-stagger].in>*{opacity:1;transform:none}
+.hero-dot{border:0;cursor:pointer;padding:0;background:none}
+/* YouTube hqdefault thumbnails are letterboxed 4:3; scale crops the bars */
+.thumb img{scale:1.12}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}[data-r],[data-stagger]>*{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}}
+
+:root{--g:#1e3d2e;--g2:#173827;--g3:#2f5a43;--cel:#e3eee4;--sage:#a9c2a6;--saff:#c9973f;--gold2:#d7b373;--paper:#fbfaf6;--white:#fff;--ink:#14201a;--mut:#58665d;--rule:#1e3d2e22}
+body{font-family:'Instrument Sans',system-ui,sans-serif;color:var(--ink);background:url('../public/brand/talweeh-pattern-light.png') repeat top center/720px auto fixed,var(--paper)}
+h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:.95;color:var(--g)}
+.mock-bar{background:var(--ink);color:#cfd8d2}.mock-bar b,.mock-bar a{color:var(--gold2)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 28px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.topbar{border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:38px}
+.topbar a{color:var(--g)}
+.topbar .tr{display:flex;gap:14px;align-items:center;color:var(--mut)}
+.socials{display:flex;gap:4px}
+.socials a{width:28px;height:28px;display:grid;place-items:center;font-size:11px;border:1px solid var(--rule);color:var(--g);transition:.25s}
+.socials a:hover{background:var(--g);color:var(--gold2)}
+.site-head{position:sticky;top:0;z-index:100;background:rgba(251,250,246,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.site-head .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Instrument Serif',serif;font-size:28px;color:var(--g)}
+.brand img{width:36px;height:36px}
+.nav{display:flex;gap:4px;justify-content:center}
+.nav a{font-size:14px;font-weight:500;padding:8px 12px;position:relative;overflow:hidden}
+.nav a span.caret{color:var(--saff);font-size:9px}
+.nav a::after{content:attr(data-t);position:absolute;left:12px;top:100%;color:var(--saff);transition:top .35s var(--ease)}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:15px 22px;font-weight:600;font-size:14px;border:1px solid var(--g);transition:background .3s,color .3s,gap .3s;cursor:pointer;background:transparent;color:var(--g)}
+.btn:hover{background:var(--g);color:var(--paper);gap:18px}
+.btn.solid{background:var(--g);color:var(--paper)}
+.btn.solid:hover{background:var(--saff);border-color:var(--saff);color:var(--ink)}
+.btn.light{border-color:rgba(251,250,246,.5);color:var(--paper)}
+.btn.light:hover{background:var(--paper);color:var(--g)}
+.btn.saff{background:var(--saff);border-color:var(--saff);color:var(--ink)}
+.btn.saff:hover{background:var(--paper);border-color:var(--paper)}
+/* hero: kinetic headline on a 12-col grid */
+.hero{border-bottom:1px solid var(--rule)}
+.hero .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;padding:40px 0 0}
+.hero .meta{grid-column:1/-1;display:flex;justify-content:space-between;color:var(--mut);padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.hero .meta b{color:var(--saff);font-weight:500}
+.hero h1{grid-column:1/-1;font-size:calc(clamp(64px,11.5vw,190px) * (1 - var(--p,0) * .35));line-height:.9;padding:30px 0 26px;min-height:2.05em;transform-origin:left top}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.hero h1 .w>span{display:inline-block}
+.hero h1.swap .w>span{animation:rise .9s var(--ease) both;animation-delay:calc(var(--k) * 70ms)}
+@keyframes rise{from{transform:translateY(105%) rotate(4deg)}to{transform:none}}
+.hero h1 .w:last-child{font-style:italic;color:var(--saff)}
+.hero .col-a{grid-column:1/5;border-top:1px solid var(--rule);padding:22px 0}
+.hero .col-a .ar{font-size:40px;color:var(--g);text-align:left}
+.hero .col-b{grid-column:5/9;border-top:1px solid var(--rule);padding:22px 0;color:var(--mut);font-size:17px}
+.hero .col-c{grid-column:9/13;border-top:1px solid var(--rule);padding:22px 0;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.hero .strip{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;border-top:1px solid var(--rule);margin-top:10px}
+.hero .img{height:420px;background:url('../public/brand/dashboard-books.webp') center/cover;filter:grayscale(1) contrast(1.05);transition:filter 1.2s var(--ease);position:relative}
+.hero .img::after{content:'';position:absolute;inset:0;background:var(--g);mix-blend-mode:color;opacity:.85;transition:opacity 1.2s}
+.hero .img:hover{filter:none}.hero .img:hover::after{opacity:0}
+.hero .side{width:300px;border-left:1px solid var(--rule);display:flex;flex-direction:column}
+.hero .side .row{flex:1;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid var(--rule);font-weight:600;color:var(--g)}
+.hero .side .row:last-child{border-bottom:0}
+.hero .side .row i{font-style:normal;color:var(--saff)}
+.hero .ctrl{display:flex;align-items:center;gap:12px;padding:0 22px;border-bottom:1px solid var(--rule);flex:1}
+.hero .ctrl button.a{width:40px;height:40px;border:1px solid var(--rule);background:none;cursor:pointer;font-size:16px;transition:.25s}
+.hero .ctrl button.a:hover{background:var(--g);color:var(--paper)}
+.hero .ctrl .num{font-family:'Instrument Serif',serif;font-size:34px;color:var(--g);margin-left:auto}
+.hero-dots{display:flex;gap:4px}
+.hero-dot{width:16px;height:3px;background:var(--rule)!important}
+.hero-dot.active{background:var(--saff)!important;width:30px}
+/* index label */
+.lbl{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding:14px 0;color:var(--mut)}
+.lbl b{color:var(--saff);font-weight:500}
+section.s{padding:90px 0}
+.h2row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin:34px 0 40px;align-items:end}
+.h2row h2{grid-column:1/8;font-size:clamp(52px,7vw,112px)}
+.h2row p{grid-column:9/13;color:var(--mut);font-size:16px}
+/* highlights as three ruled columns with hover underline fill */
+.hls{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
+.hl{padding:34px 28px 38px;border-left:1px solid var(--rule);position:relative;transition:background .4s}
+.hl:first-child{border-left:0;padding-left:0}
+.hl::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--saff);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.hl:hover::after{transform:scaleX(1)}
+.hl .ic{font-size:40px;color:var(--g);font-family:Amiri,serif;height:46px;display:flex;align-items:center}
+.hl h3{font-size:40px;margin:20px 0 8px}
+.hl p{color:var(--mut)}
+/* programs: full-bleed green band, rows with cursor preview */
+.band{background:url('../public/brand/talweeh-pattern-dark.png') repeat top center/720px auto,var(--g);color:var(--paper)}
+.band h2,.band h3{color:var(--paper)}
+.band .lbl{border-color:rgba(251,250,246,.16);color:rgba(251,250,246,.6)}
+.band .h2row p{color:rgba(251,250,246,.7)}
+.band .lbl b{color:var(--gold2)}
+.rows{border-top:1px solid rgba(251,250,246,.16)}
+.prow{display:grid;grid-template-columns:80px 1fr 1.2fr auto;gap:24px;align-items:center;padding:30px 0;border-bottom:1px solid rgba(251,250,246,.16);position:relative;transition:padding .45s var(--ease),color .3s}
+.prow::before{content:'';position:absolute;inset:0 -28px;background:var(--gold2);transform:scaleY(0);transform-origin:bottom;transition:transform .5s var(--ease);z-index:0}
+.prow>*{position:relative;z-index:1}
+.prow:hover{padding-left:24px;color:var(--ink)}
+.prow:hover::before{transform:scaleY(1)}
+.prow:hover h3{color:var(--g)}
+.prow .n{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2)}
+.prow:hover .n{color:var(--g)}
+.prow h3{font-size:clamp(42px,5vw,76px);transition:color .3s}
+.prow p{color:rgba(251,250,246,.72);font-size:15px;transition:color .3s}
+.prow:hover p{color:var(--g2)}
+.prow .ar{font-size:36px;color:var(--gold2);transition:color .3s}
+.prow:hover .ar{color:var(--g)}
+.preview{position:fixed;left:0;top:0;z-index:90;width:300px;height:220px;pointer-events:none;background-size:cover;background-position:center;opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(-4deg);transition:opacity .3s,transform .45s var(--ease);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.preview.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+/* featured: numbered ruled grid, hover reveals green */
+.paths{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.path{padding:30px 26px 34px;border-left:1px solid var(--rule);min-height:300px;display:flex;flex-direction:column;position:relative;overflow:hidden;isolation:isolate}
+.path:first-child{border-left:0}
+.path::before{content:'';position:absolute;inset:0;z-index:-1;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,var(--g);clip-path:inset(100% 0 0 0);transition:clip-path .6s var(--ease)}
+.path:hover::before{clip-path:inset(0 0 0 0)}
+.path .n{font-family:'Instrument Serif',serif;font-size:120px;line-height:.8;color:var(--cel);transition:color .4s,transform .6s var(--ease)}
+.path:hover .n{color:var(--gold2);transform:translateY(-8px)}
+.path strong{margin-top:auto;font-family:'Instrument Serif',serif;font-size:38px;font-weight:400;color:var(--g);transition:color .4s}
+.path small{color:var(--mut);transition:color .4s}
+.path:hover strong{color:var(--paper)}.path:hover small{color:rgba(251,250,246,.7)}
+.center{display:flex;justify-content:flex-end;margin-top:28px}
+/* articles: newspaper columns */
+.arts{display:grid;grid-template-columns:2fr 1fr 1fr;border-top:1px solid var(--rule)}
+.art{padding:28px 26px 30px;border-left:1px solid var(--rule);display:flex;flex-direction:column}
+.art:first-child{border-left:0;padding-left:0}
+.art .mono{color:var(--saff)}
+.art h3{font-size:34px;margin:16px 0 14px;line-height:1.02}
+.art:first-child h3{font-size:clamp(40px,4.4vw,62px)}
+.art p{color:var(--mut)}
+.art:first-child p{font-size:17px;column-count:2;column-gap:26px}
+.art a{margin-top:auto;padding-top:20px;font-weight:600;color:var(--g);display:inline-flex;gap:8px}
+.art a span{display:inline-block;transition:transform .35s var(--ease)}
+.art:hover a span{transform:translateX(8px)}
+.art h3{background:linear-gradient(var(--saff),var(--saff)) 0 92%/0 3px no-repeat;transition:background-size .6s var(--ease)}
+.art:hover h3{background-size:100% 3px}
+/* about/why: celadon split with a pull quote */
+.aw{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;border-top:1px solid var(--rule);padding-top:40px}
+.aw .q{grid-column:1/8;font-family:'Instrument Serif',serif;font-size:clamp(34px,3.6vw,54px);line-height:1.08;color:var(--g)}
+.aw .q{border-left:3px solid var(--saff);padding-left:28px}
+.aw .side{grid-column:9/13;background:var(--cel);padding:30px;align-self:start}
+.aw .side h3{font-size:38px;margin-bottom:14px}
+.aw .side p{color:var(--mut);margin-bottom:18px}
+.aw .side ol{list-style:none;counter-reset:c;margin-bottom:22px;border-top:1px solid var(--rule)}
+.aw .side li{counter-increment:c;display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule);font-weight:600;color:var(--g)}
+.aw .side li::before{content:'0' counter(c);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--saff);padding-top:3px}
+.aw .acts{grid-column:1/8;display:flex;gap:12px}
+/* media: big marquee title + video grid */
+.mq{overflow:hidden;white-space:nowrap;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 0;margin-bottom:40px}
+.mq span{display:inline-block;font-family:'Instrument Serif',serif;font-size:clamp(60px,8vw,130px);line-height:1;color:var(--g);animation:mq 26s linear infinite;padding-right:40px}
+.mq span i{font-style:italic;color:var(--saff)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.vid .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--g)}
+.vid .thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .6s,transform .8s var(--ease)}
+.vid:hover .thumb img{filter:none;transform:scale(1.05)}
+.play{position:absolute;inset:0;display:grid;place-items:center}
+.play span{width:66px;height:66px;display:grid;place-items:center;background:var(--saff);color:var(--ink);border-radius:50%;transform:scale(0);transition:transform .45s var(--spring)}
+.vid:hover .play span{transform:scale(1)}
+.vmeta{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--rule)}
+.vmeta span{display:block;font-weight:600}.vmeta small{color:var(--mut);font-size:13px}
+.vmeta strong{font-family:'Instrument Serif',serif;font-size:34px;font-weight:400;color:var(--saff)}
+/* society + final: two inverted bands */
+.soc{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center;padding:60px 0}
+.soc .ic{width:110px;height:110px;border:1px solid rgba(251,250,246,.3);border-radius:50%;display:grid;place-items:center;font-size:48px;color:var(--gold2);animation:spin 18s linear infinite}
+.soc .ic .ico-svg{animation:spin 18s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.soc h3{font-size:clamp(46px,5.4vw,84px)}
+.soc p{color:rgba(251,250,246,.72);max-width:56ch;margin-top:10px}
+.final{background:var(--gold2);color:var(--ink);padding:110px 0}
+.final .inner{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.final h2{grid-column:1/9;font-size:clamp(56px,7.6vw,128px);color:var(--g2)}
+.final h2 em{color:var(--paper)}
+.final .rt{grid-column:9/13}
+.final p{margin-bottom:24px;color:var(--g2)}
+.final .acts{display:flex;gap:10px;flex-wrap:wrap}
+.final .btn{border-color:var(--g2);color:var(--g2)}
+.final .btn:hover{background:var(--g2);color:var(--gold2)}
+.final .btn.solid{background:var(--g2);color:var(--gold2)}
+/* testimonials: 3 columns scrolling at different speeds */
+.tcols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;height:600px;overflow:hidden;mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
+.tcol{display:flex;flex-direction:column;gap:24px;will-change:transform}
+.tcol:nth-child(1){transform:translateY(calc(var(--p,0) * -160px))}
+.tcol:nth-child(2){transform:translateY(calc(-180px + var(--p,0) * 160px))}
+.tcol:nth-child(3){transform:translateY(calc(var(--p,0) * -240px + 20px))}
+.tq{border-top:3px solid var(--g);padding:22px 0 10px;background:transparent;transition:border-color .3s}
+.tq:hover{border-color:var(--saff)}
+.tq p{font-family:'Instrument Serif',serif;font-size:24px;line-height:1.22;color:var(--g)}
+.tq .who{display:flex;gap:10px;align-items:center;margin-top:18px}
+.tq .av{width:38px;height:38px;display:grid;place-items:center;background:var(--g);color:var(--gold2);font-family:'JetBrains Mono',monospace;font-size:11px}
+.tq h4{font-size:14px}.tq small{color:var(--mut);font-size:12px}
+footer{background:var(--ink);color:rgba(251,250,246,.62);padding:70px 0 26px}
+footer .big{font-family:'Instrument Serif',serif;font-size:clamp(70px,13vw,220px);line-height:.8;color:var(--g3);border-bottom:1px solid rgba(251,250,246,.12);padding-bottom:30px;margin-bottom:40px;white-space:nowrap;overflow:hidden}
+footer .big em{color:var(--gold2)}
+.fg{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:30px}
+.fb{display:flex;gap:14px}.fb img{width:72px;height:72px;border-radius:50%}
+.fb strong{display:block;font-family:'Instrument Serif',serif;font-size:26px;font-weight:400;color:var(--paper)}
+.fb span{display:block;color:var(--gold2);margin:4px 0 8px}
+.fcol h5{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px;font-weight:500}
+.fcol a{display:block;padding:4px 0;font-size:14px;transition:color .2s,padding .3s}.fcol a:hover{color:var(--paper);padding-left:6px}
+footer .socials a{border-color:rgba(251,250,246,.16);color:var(--gold2)}
+.fbot{display:flex;justify-content:space-between;align-items:center;margin-top:44px;padding-top:20px;border-top:1px solid rgba(251,250,246,.12);font-size:13px}
+.totop{width:42px;height:42px;border:1px solid rgba(251,250,246,.3);background:none;color:var(--gold2);cursor:pointer}
+@media(max-width:980px){
+  .nav{display:none}.site-head .wrap{grid-template-columns:auto 1fr auto}
+  .hero .col-a,.hero .col-b,.hero .col-c{grid-column:1/-1}
+  .hero .strip{grid-template-columns:1fr}.hero .side{width:auto;border-left:0}.hero .side .row,.hero .ctrl{min-height:56px}
+  .hls,.paths,.arts,.vg,.tcols{grid-template-columns:1fr}.hl,.path,.art{border-left:0;padding-left:0;border-top:1px solid var(--rule)}
+  .h2row h2,.h2row p,.aw .q,.aw .side,.aw .acts,.final h2,.final .rt{grid-column:1/-1}
+  .prow{grid-template-columns:50px 1fr}.prow p,.prow .ar{grid-column:2}
+  .art:first-child p{column-count:1}
+  .soc{grid-template-columns:1fr}
+  .tcols{height:auto;mask-image:none;-webkit-mask-image:none}.tcol{transform:none!important}
+  .fg{grid-template-columns:1fr 1fr}
+  .preview{display:none}
+}
+@media(max-width:560px){.topbar .tr span{display:none}.hero .img{height:260px}.site-head .btn span{display:none}.site-head .btn{padding:12px 16px}.site-head .wrap{display:flex;justify-content:space-between}}
+</style>
+</head>
+<body>
+<div class="mock-bar"><span>New 4 — <b>Qalam</b> · Swiss editorial: white &amp; ruled, full-bleed green bands, saffron &amp; celadon</span><a href="index.html">← Back to all designs</a></div>
+
+<div class="topbar mono"><div class="wrap"><a href="#">↗ Student Portal</a><div class="tr"><span>Connect</span><div class="socials"><a href="#" aria-label="X / Twitter">𝕏</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">◉</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="WhatsApp">☎</a></div></div></div></div>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="#"><img src="../public/brand/talweeh-logo-transparent.png" alt="" />Talweeh</a>
+  <nav class="nav"><a href="#">Quran</a><a href="#">Courses <span class="caret">▾</span></a><a href="#">Media <span class="caret">▾</span></a><a href="#">Arabic</a><a href="#">Hadith Specialization</a><a href="#">About <span class="caret">▾</span></a></nav>
+  <a class="btn solid" href="#"><span>Student Portal</span> ↗</a>
+</div></header>
+
+<main>
+<section class="hero" id="hero" data-sp><div class="wrap"><div class="grid">
+  <div class="meta mono"><span>Talweeh Academy · Learn with purpose</span><span><b>Vol. 01</b> — Structured Islamic Academia</span></div>
+  <h1 id="heroHeading">2 Year Arabic Program</h1>
+  <div class="col-a"><div class="ar">رَبِّ زِدْنِي عِلْمًا</div></div>
+  <div class="col-b">Explore the Islamic sciences through structured programs, guided study, and beneficial knowledge for every stage of your journey.</div>
+  <div class="col-c"><a class="btn solid" id="heroCta" href="#"><span>Explore Arabic Program</span> →</a><a class="btn" href="#programs">Explore our programs ↓</a></div>
+  <div class="strip"><div class="img" role="img" aria-label="A Qur'an resting on a carved stand"></div>
+    <div class="side"><div class="ctrl"><button class="a" id="heroPrev" aria-label="Previous slide">←</button><button class="a" id="heroNext" aria-label="Next slide">→</button><div class="hero-dots" id="heroDots"><button class="hero-dot active" type="button" aria-label="Slide 1"><i></i></button><button class="hero-dot" type="button" aria-label="Slide 2"><i></i></button><button class="hero-dot" type="button" aria-label="Slide 3"><i></i></button></div><span class="num" id="heroNum">01</span></div><div class="row"><span>Structured curricula</span><i class="mono">01</i></div><div class="row"><span>Traditional texts</span><i class="mono">02</i></div><div class="row"><span>Live &amp; on-demand study</span><i class="mono">03</i></div></div></div>
+</div></div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap"><div class="hls" data-stagger><a class="hl" href="#"><div class="ic">ض</div><h3>Arabic Program</h3><p>A step by step 2 year program to learn the Arabic language.</p></a><a class="hl" href="#"><div class="ic"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6c1 6-6 9-6 16h12c0-7-7-10-6-16z"/><rect x="10" y="34" width="6" height="22" rx="1"/><rect x="48" y="34" width="6" height="22" rx="1"/><path d="M13 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8zM51 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8z"/><path d="M18 40c0-8 8-10 14-16 6 6 14 8 14 16v16H36v-8a4 4 0 0 0-8 0v8H18V40z"/></svg></div><h3>Talweeh Society</h3><p>Get access to our free courses and weekly lessons.</p></a><a class="hl" href="#"><div class="ic"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="24" r="8"/><path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z"/><circle cx="45" cy="22" r="6.5"/><path d="M40 37.5c1.6-.7 3.3-1 5-1 7 0 12 4.4 12 12.4V50H40.6a19 19 0 0 0-.6-12.5z"/></svg></div><h3>Authorized Instructors</h3><p>Qualified instructors navigating your path.</p></a></div></div></section>
+
+<section class="s band" id="programs"><div class="wrap">
+  <div class="lbl mono" data-r><span><b>§01</b> — A path to deeper understanding</span><span>Programs · 3</span></div>
+  <div class="h2row" data-r><h2>Find your next chapter.</h2><p>Build your foundations. Deepen your study. Choose a program that meets your goals.</p></div>
+  <div class="rows"><a class="prow" href="#" data-img="../public/brand/program-arabic-manuscript.webp"><span class="n">01</span><h3>Arabic</h3><p>Language &amp; understanding — A step-by-step, two-year program designed to build lasting understanding of the Arabic language.</p><span class="ar">العربية</span></a><a class="prow" href="#" data-img="../public/brand/program-alimiyyah.webp"><span class="n">02</span><h3>Alimiyyah</h3><p>Islamic scholarship — Explore a guided path through the Islamic sciences with structured progression and serious study.</p><span class="ar">العالمية</span></a><a class="prow" href="#" data-img="../public/brand/program-hadith-books.webp"><span class="n">03</span><h3>Hadith Specialization</h3><p>Specialized study — Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.</p><span class="ar">الحديث</span></a></div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <div class="lbl mono" data-r><span><b>§02</b> — Continue your study</span><span>Formats · 4</span></div>
+  <div class="h2row" data-r><h2>Featured Courses</h2><p>Choose the format and subject that best fits your current stage of learning.</p></div>
+  <div class="paths" data-stagger><a class="path" href="#"><span class="n">1</span><strong>Live</strong><small>Join guided classes with scheduled instruction</small></a><a class="path" href="#"><span class="n">2</span><strong>On Demand</strong><small>Study structured lessons at your own pace</small></a><a class="path" href="#"><span class="n">3</span><strong>Free</strong><small>Begin with accessible courses and resources</small></a><a class="path" href="#"><span class="n">4</span><strong>Specialization</strong><small>Advance into focused study through dedicated specialist pathways</small></a></div>
+  <div class="center" data-r><a class="btn solid" href="#">Load all Courses →</a></div>
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap">
+  <div class="lbl mono" data-r><span><b>§03</b> — From the Talweeh library</span><span>Reading · 3</span></div>
+  <div class="h2row" data-r><h2>Latest Articles</h2><p>Short academic benefits and reflections to support continued reading beyond the classroom.</p></div>
+  <div class="arts" data-stagger><article class="art"><span class="mono">January 8, 2026 · 6 Minutes</span><h3>Taḥsīn &amp; Taqbīḥ: Reason, Revelation, and the Foundations of Islamic Morality</h3><p>Before delving into the primary evidences of Islamic law, classical scholars of uṣūl al-fiqh established a series of foundational discussions known as mabādiʾ.</p><a href="#">Read More..... <span>→</span></a></article><article class="art"><span class="mono">October 30, 2025 · 8 Minutes</span><h3>The Legacy of Mukhtasar al-Qudūrī</h3><p>In this section, we will cover the century-long legacy of the Mukhtaṣar, discovering the most famous works that stem from it.</p><a href="#">Read More..... <span>→</span></a></article><article class="art"><span class="mono">October 11, 2024 · 18 Minutes</span><h3>The Nature of Islamic Finance</h3><p>Islamic jurisprudence has demonstrated over the centuries its ability to adapt to any time or place, meet any challenge, and overcome any obstacle.</p><a href="#">Read More..... <span>→</span></a></article></div>
+  <div class="center" data-r><a class="btn" href="#">View Articles →</a></div>
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap">
+  <div class="lbl mono" data-r><span><b>§04</b> — Why Talweeh</span><span>About Talweeh Academy</span></div>
+  <div class="aw"><p class="q" data-r>At Talweeh Academy, our mission is to elevate academic awareness across all levels, offering comprehensive programs tailored for laypersons, students, and scholars. Our curriculum spans a broad range of Islamic academic disciplines.</p>
+    <aside class="side" data-r="right"><h3>Why Talweeh Academy</h3><p>Our instructors possess authorizations (ijāzāt) from esteemed scholars worldwide and have uniquely integrated traditional and academic methods in their quest for knowledge. Join us and check out the first few lessons of our courses for free.</p><ol><li>Structured progression</li><li>Qualified instruction</li><li>Purposeful learning</li></ol><a class="btn solid" href="#">Sign UP →</a></aside>
+    <div class="acts" data-r><a class="btn" href="#">About Us →</a></div></div>
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap"><div class="lbl mono" data-r><span><b>§05</b> — Talweeh Media</span><span>Selected lessons, academic benefits, and discussions from Talweeh Academy.</span></div></div>
+  <div class="mq" aria-hidden="true"><span>Youtube <i>Videos</i> ✦ Talweeh Media ✦ Youtube <i>Videos</i> ✦ Talweeh Media ✦ Youtube <i>Videos</i> ✦ Talweeh Media ✦ Youtube <i>Videos</i> ✦ Talweeh Media ✦ </span></div>
+  <div class="wrap"><div class="vg" data-stagger><article class="vid" data-tilt><div class="thumb"><img src="https://i.ytimg.com/vi/T4-h_N8VN_A/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span>▶</span></span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>01</strong></div></article>
+<article class="vid" data-tilt><div class="thumb"><img src="https://i.ytimg.com/vi/SQmeAQ6wZ1U/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span>▶</span></span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>02</strong></div></article>
+<article class="vid" data-tilt><div class="thumb"><img src="https://i.ytimg.com/vi/mmXvxdH9mAs/hqdefault.jpg" alt="" loading="lazy" /><span class="play"><span>▶</span></span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>03</strong></div></article></div><div class="center" data-r><a class="btn" href="#">▶ Subscribe to our YouTube</a></div></div>
+</section>
+
+<section class="band"><div class="wrap"><div class="soc" data-r><span class="ic"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="24" r="8"/><path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z"/><circle cx="45" cy="22" r="6.5"/><path d="M40 37.5c1.6-.7 3.3-1 5-1 7 0 12 4.4 12 12.4V50H40.6a19 19 0 0 0-.6-12.5z"/></svg></span><div><span class="mono" style="color:var(--gold2)">Community · continued learning</span><h3>Join Talweeh Society</h3><p>Join us as we share uplifting reminders and insights from various texts, along with access to our free weekly lessons.</p></div><a class="btn saff" href="#" data-magnet>Join Us →</a></div></div></section>
+
+<section class="final"><div class="wrap"><div class="lbl mono" style="border-color:rgba(23,56,39,.2);color:var(--g2)"><span>§06 — Begin your next chapter</span><span>Begin</span></div>
+  <div class="inner" style="margin-top:40px"><h2 data-r>Study with clarity, structure, and <em>purpose.</em></h2><div class="rt" data-r="right"><p>Explore Talweeh Academy's programs and courses, then continue your learning through your student portal.</p><div class="acts"><a class="btn solid" href="#" data-magnet>Explore courses →</a><a class="btn" href="#">Student Portal ↗</a></div></div></div></div></section>
+
+<section class="s" data-sp><div class="wrap">
+  <div class="lbl mono" data-r><span><b>§07</b> — Student experiences</span><span>Voices · 5</span></div>
+  <div class="h2row" data-r><h2>What our students say</h2><p>Reflections from learners studying with Talweeh Academy around the world.</p></div>
+  <div class="tcols"><div class="tcol"><article class="tq"><p>“Learning Arabic has been a transformative experience, especially under the guidance of my respected teachers Shaykh Daud and Shaykh Omer. Their dedication to teaching not only helped me in grasping the language but also enriched my appreciation for the Ulama of the past, and respect for all seekers of knowledge.”</p><div class="who"><span class="av">MK</span><div><h4>Mustafa Khan</h4><small>Toronto, Canada</small></div></div></article><article class="tq"><p>“Having studied with Mufti Dawud for over a year, I have benefitted greatly from his teaching. His way of teaching has been easy to understand, and he challenges us to push ourselves. As a convert, I found studying with him to be very inclusive and helpful.”</p><div class="who"><span class="av">AG</span><div><h4>Aldo Gjataj</h4><small>Ashford, England</small></div></div></article></div><div class="tcol"><article class="tq"><p>“Mashallah, this academy changed the way I look at online courses. The level of sharpness of the instructors is unreal. They do not shy away from mentioning nuances, grammar benefits, and differences in opinions over any text.”</p><div class="who"><span class="av">MI</span><div><h4>Muhammed Ince</h4><small>Turkey</small></div></div></article><article class="tq"><p>“What I really love about the way Sheikh teaches is that whenever we learn a new rule, we immediately apply it. The practicality in his teaching method brings life to the theory which many students find difficult to grasp.”</p><div class="who"><span class="av">MP</span><div><h4>Muhammad Patel</h4><small>Botswana</small></div></div></article></div><div class="tcol"><article class="tq"><p>“Studying with Sheikh Omer really opened my mind to see how the Islamic sciences work in tandem. I have not had a better teacher in explaining the details and intricacies of all the sciences especially in fiqh and usool ul fiqh.”</p><div class="who"><span class="av">MK</span><div><h4>Mohammed Kaleelurrahman</h4><small>Dallas, USA</small></div></div></article><article class="tq"><p>“Learning Arabic has been a transformative experience, especially under the guidance of my respected teachers Shaykh Daud and Shaykh Omer. Their dedication to teaching not only helped me in grasping the language but also enriched my appreciation for the Ulama of the past, and respect for all seekers of knowledge.”</p><div class="who"><span class="av">MK</span><div><h4>Mustafa Khan</h4><small>Toronto, Canada</small></div></div></article></div></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="big">Talweeh <em>Academy</em></div>
+  <div class="fg"><div class="fb"><img src="../public/brand/talweeh-footer-seal.webp" alt="Talweeh Academy seal" /><div><strong>Talweeh Academy</strong><span class="mono">Structured Islamic Academia</span><p>Study with clarity, structure, and purpose.</p></div></div><div class="fcol"><h5>Explore</h5><a href="#">Courses</a><a href="#">Arabic</a><a href="#">Quran</a><a href="#">Alimiyyah</a></div>
+<div class="fcol"><h5>Academy</h5><a href="#">About Us</a><a href="#">Instructors</a><a href="#">Articles</a></div>
+<div class="fcol"><h5>Student</h5><a href="#">Student Portal</a><a href="#">Contact</a><a href="#">Terms &amp; Conditions</a></div><div class="fcol"><h5>Follow Talweeh</h5><div class="socials"><a href="#" aria-label="X / Twitter">𝕏</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">◉</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="WhatsApp">☎</a></div></div></div>
+  <div class="fbot"><span>© All rights reserved by Talweeh Academy 2025</span><button class="totop" onclick="scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button></div>
+</div></footer>
+<div class="preview" id="preview"></div>
+<script>
+
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* reveals */
+$$('[data-stagger]').forEach(p => [...p.children].forEach((c, i) => c.style.setProperty('--i', i)));
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+$$('[data-r],[data-stagger]').forEach(el => io.observe(el));
+
+/* scroll-linked: --sp on :root (page progress), --p on each [data-sp] (0 entering → 1 leaving) */
+const sps = $$('[data-sp]'), header = $('.site-head');
+let ticking = false;
+const onScroll = () => {
+  ticking = false;
+  const h = document.documentElement, vh = innerHeight;
+  h.style.setProperty('--sp', (scrollY / Math.max(1, h.scrollHeight - vh)).toFixed(4));
+  header && header.classList.toggle('scrolled', scrollY > 40);
+  for (const el of sps) {
+    const r = el.getBoundingClientRect();
+    const mode = el.dataset.sp;
+    let p = mode === 'pin' ? -r.top / Math.max(1, r.height - vh) : (vh - r.top) / (vh + r.height);
+    el.style.setProperty('--p', Math.min(1, Math.max(0, p)).toFixed(4));
+  }
+  window.onScrollExtra && window.onScrollExtra();
+};
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener('resize', onScroll); onScroll();
+
+/* hero carousel — the live homepage's three slides, every 5s */
+(() => {
+  const slides = [{"heading":"2 Year Arabic Program","cta":"Explore Arabic Program"},{"heading":"Discover! Enlighten! Empower!","cta":"Start your Journey"},{"heading":"Revolutionizing your experience with Islamic Academia","cta":"Start your Journey"}];
+  const hero = $('#hero'), h = $('#heroHeading'); if (!h) return;
+  const cta = $('#heroCta span'), num = $('#heroNum'), ds = $$('#heroDots .hero-dot');
+  let i = 0, t;
+  const paint = () => {
+    const s = slides[i];
+    h.innerHTML = s.heading.split(' ').map((w, k) => '<span class="w"><span style="--k:' + k + '">' + w + '</span></span>').join(' ');
+    if (cta) cta.textContent = s.cta;
+    if (num) num.textContent = String(i + 1).padStart(2, '0');
+    ds.forEach((d, j) => d.classList.toggle('active', j === i));
+    if (hero) hero.dataset.slide = i;
+    h.classList.remove('swap'); void h.offsetWidth; h.classList.add('swap');
+  };
+  const go = n => { i = (n + slides.length) % slides.length; paint(); restart(); };
+  const restart = () => { clearInterval(t); if (!reduced) t = setInterval(() => { i = (i + 1) % slides.length; paint(); }, 5000); };
+  ds.forEach((d, j) => d.addEventListener('click', () => go(j)));
+  $('#heroPrev')?.addEventListener('click', () => go(i - 1));
+  $('#heroNext')?.addEventListener('click', () => go(i + 1));
+  paint(); restart();
+})();
+
+/* video rail arrows */
+(() => {
+  const row = $('#vidRow'); if (!row) return;
+  const step = () => (row.firstElementChild?.getBoundingClientRect().width || 300) + 20;
+  $('#vidPrev')?.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: 'smooth' }));
+  $('#vidNext')?.addEventListener('click', () => row.scrollBy({ left: step(), behavior: 'smooth' }));
+})();
+
+if (!reduced && matchMedia('(hover: hover)').matches) {
+  /* 3D tilt */
+  $$('[data-tilt]').forEach(c => {
+    c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; c.style.transform = 'perspective(900px) rotateY(' + x * 9 + 'deg) rotateX(' + y * -9 + 'deg) translateY(-4px)'; });
+    c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+  });
+  /* cursor spotlight: sets --mx/--my inside the element */
+  $$('[data-spot]').forEach(c => c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', e.clientX - r.left + 'px'); c.style.setProperty('--my', e.clientY - r.top + 'px'); }));
+  /* magnetic buttons */
+  $$('[data-magnet]').forEach(b => {
+    b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); b.style.transform = 'translate(' + (e.clientX - r.left - r.width / 2) * .25 + 'px,' + (e.clientY - r.top - r.height / 2) * .3 + 'px)'; });
+    b.addEventListener('mouseleave', () => { b.style.transform = ''; });
+  });
+}
+
+
+/* cursor-following preview on program rows (lerped) */
+const pv = $('#preview'); let tx = 0, ty = 0, cx = 0, cy = 0;
+$$('.prow').forEach(r => { r.addEventListener('mouseenter', () => { pv.style.backgroundImage = "url('" + r.dataset.img + "')"; pv.classList.add('on'); }); r.addEventListener('mouseleave', () => pv.classList.remove('on')); });
+addEventListener('mousemove', e => { tx = e.clientX + 170; ty = e.clientY; }, { passive: true });
+(function loop() { cx += (tx - cx) * .15; cy += (ty - cy) * .15; pv.style.left = cx + 'px'; pv.style.top = cy + 'px'; requestAnimationFrame(loop); })();
+
+</script>
+</body>
+</html>
