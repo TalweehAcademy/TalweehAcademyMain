@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
+import TalweehMediaPlayer from '../components/TalweehMediaPlayer'
 import { PUBLIC_COURSES, PUBLIC_COURSE_CATEGORIES } from '../data/publicCourseIndex'
 import { loadPublicCourse } from '../data/publicCourseDetails'
 import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCommerceCatalog, mergeCourseWithLive, primaryPurchaseOption } from '../data/liveCommerceCatalog'
@@ -238,13 +239,11 @@ export default function CourseLandingPage() {
           <Link to="/courses?free=1">Browse free courses</Link>
         </div>
         <div className="public-free-course-video-wrap">
-          <iframe
+          <TalweehMediaPlayer
             key={activeVideoId}
-            src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?rel=0&modestbranding=1`}
+            videoId={activeVideoId}
             title={`${course.title} — ${lessonTitle(activeLesson)}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
+            thumbnail={`https://i.ytimg.com/vi/${activeVideoId}/maxresdefault.jpg`}
           />
         </div>
         {lessonOverview(activeLesson) && <p className="public-free-course-current-overview">{lessonOverview(activeLesson)}</p>}
