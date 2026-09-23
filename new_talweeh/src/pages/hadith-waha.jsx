@@ -68,6 +68,7 @@ function Chart({ onOpen }) {
   return (
     <div className="hw-chart wh-glass" onMouseLeave={() => setHover(null)}>
       <span className="cw-kicker">The program as an isnād</span>
+      <div className="scroll">
       <div className="plot" ref={plotRef}>
         <svg aria-hidden="true">{paths.map((p) => <path key={`${p.a}>${p.b}`} d={p.d} className={hover && (p.a === hover || p.b === hover) ? 'lit' : ''} />)}</svg>
         {ROWS.map((row, i) => (
@@ -85,6 +86,7 @@ function Chart({ onOpen }) {
             })}
           </div>
         ))}
+      </div>
       </div>
       <p className="hint">Hover a course to follow what it builds on and leads to · click to read it</p>
     </div>

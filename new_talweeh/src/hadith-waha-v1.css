@@ -117,6 +117,6 @@
 .hw-stand .less li.more{display:block;border:0}
 .hw-stand .less li.more a{font-weight:700;color:var(--p-gold)}
 
-@media (max-width:1100px){.hw-hero,.hw-ovw{grid-template-columns:1fr}.hw-hero{gap:30px}}
+@media (max-width:1100px){.hw-hero,.hw-ovw{grid-template-columns:minmax(0,1fr)}.hw-chart{min-width:0}.hw-hero{gap:30px}}
 @media (max-width:760px){.hw-inst{grid-template-columns:1fr}}
-@media (max-width:640px){.hw-hero .facts{grid-template-columns:1fr 1fr;width:100%}.hw-hero .facts span:nth-child(2){border-right:0}.hw-hero .facts span:nth-child(-n+2){border-bottom:1px solid var(--p-line)}.hw-chart{padding:20px 6px 14px}.hw-chart .node{width:calc(100% / 6 - 4px);padding:6px 2px}.hw-chart .node small{display:none}.hw-chart .node .ar{font-size:12px}.hw-chart .row{height:52px}.hw-hero .triad small{display:none}}
+@media (max-width:640px){.hw-hero .facts{grid-template-columns:1fr 1fr;width:100%}.hw-hero .facts span:nth-child(2){border-right:0}.hw-hero .facts span:nth-child(-n+2){border-bottom:1px solid var(--p-line)}.hw-chart{padding:20px 0 14px}.hw-chart .plot{min-width:600px;margin:0 14px}.hw-chart .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.hw-chart .hint::before{content:'Swipe sideways to see the whole chain · '}.hw-hero .triad small{display:none}}

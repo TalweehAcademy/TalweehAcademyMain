@@ -330,3 +330,24 @@
 @keyframes wh-spin{to{transform:rotate(360deg)}}
 @keyframes wh-fade-in{to{opacity:1}}
 .wh-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── phones ── */
+@media(max-width:560px){
+  /* the header must fit brand + theme + menu inside ~360px: the brand yields, the buttons don't */
+  .wh-brand{min-width:0;flex:1 1 auto;gap:8px}
+  .wh-wordmark small{font-size:8.5px;letter-spacing:1.1px}
+  .wh-head .wh-bar{padding:8px 8px 8px 10px;gap:8px}
+  .wh-theme-btn,.wh-burger{width:40px;height:40px}
+  .wh-topbar .wh-wrap{padding:0 14px}
+  .wh-wrap{padding:0 16px}
+}
+@media(max-width:400px){
+  .wh-brand img{width:36px;height:36px}
+  .wh-wordmark strong{font-size:16px}
+  .wh-wordmark small{display:none}
+}
+@media(max-width:560px){
+  /* testimonial carousel: the neighbouring cards stay off-screen on phones */
+  .wh-tcar{overflow:hidden;margin:0 -16px}
+  .wh-tc{padding:26px 22px}
+}

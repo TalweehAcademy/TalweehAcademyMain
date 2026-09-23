@@ -164,12 +164,12 @@ allowlisted in the CSP.
 
 ## Deployment
 
-- `vercel.json` — SPA rewrite plus security headers including a strict CSP.
-- `public/_headers` and `public/_redirects` — the Netlify/Cloudflare Pages equivalents,
-  carrying the same CSP. Both sets exist; only one platform's will apply. **Keep the CSP in
-  `vercel.json` and `public/_headers` in sync**, or fix on one platform and delete the other.
+- The site deploys on **Netlify** from the `umar-public-site` branch (beta.talweehacademy.com).
+  Build settings live in the Netlify dashboard; there is no `netlify.toml`.
+- `public/_redirects` (SPA fallback) and `public/_headers` (security headers, including a strict
+  CSP) are the only deploy config. There is no `vercel.json` any more.
 - Adding any new external script, frame, image, font, or fetch origin means editing the CSP in
-  *both* places.
+  `public/_headers`.
 - `public/robots.txt` disallows `/navigation-preview/`, which is a live internal design-preview
   route (`/navigation-preview/:section`).
 

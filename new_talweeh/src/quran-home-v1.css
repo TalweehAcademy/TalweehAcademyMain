@@ -114,3 +114,5 @@
 
 @media(max-width:900px){.qh-row2{grid-template-columns:1fr}}
 @media(max-width:560px){.qh-feats{grid-template-columns:1fr}.qh-cont-ar{font-size:52px}.qh-filter input{width:120px}.qh-search{padding-left:14px}.qh-search .wh-btn{padding:12px 14px}}
+/* phones: the Arabic surah name sits above the title instead of over it */
+@media(max-width:560px){.qh-cont{padding:24px 22px}.qh-cont-ar{position:static;align-self:flex-end;font-size:46px;line-height:1.2;margin:-6px 0 -18px}.wh-home .qh-cont h3{font-size:28px}}

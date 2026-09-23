@@ -531,3 +531,15 @@
 .qp-step span{min-width:30px;text-align:center;font-weight:700;color:var(--c-head)}
 @media(max-width:860px){.qp-tb span.lb{display:none}.qp-subbar{top:86px}.qp-player select{max-width:130px}}
 @media(max-width:560px){.qp-rayah{grid-template-columns:1fr;padding:20px}.qp-rayah .qp-qt{font-size:calc(var(--ar,34px) - 6px)}.qp-ssel small{display:none}.qp-player select{display:none}}
+
+/* ── phones ── */
+@media(max-width:640px){
+  /* the display panel opens as a sheet above the bottom edge instead of off the left of the screen */
+  .qp-dock{position:fixed;left:12px;right:12px;top:auto;bottom:12px;width:auto;max-height:72vh;overflow-y:auto;z-index:400}
+  .qp-dock-f{flex-direction:column;align-items:flex-start}
+  .qp-turn{width:40px;height:40px;font-size:17px}
+  .qp-turn.l{left:4px}.qp-turn.r{right:4px}
+  /* reciter carousel: side cards stay inside the screen */
+  .qp-cover{overflow:hidden;margin:0 -16px;padding:0 16px}
+  .qp-rsearch .qp-search{min-width:0}
+}

@@ -187,7 +187,9 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 .cw-vp:fullscreen .cw-vp-bar{padding:10px 16px}
 .cw-vp:fullscreen::before{display:none}
 @container (max-width:680px){.cw-vp-vol input{display:none}.cw-vp-bar{gap:6px}.cw-vp-bar .b{min-width:34px;height:34px;padding:0 8px}.cw-vp-bar .b.pp{width:40px;height:40px}.cw-vp-prog{min-width:90px}}
-@container (max-width:460px){.cw-vp-time,.cw-vp-vol{display:none}}
+@container (max-width:460px){.cw-vp-time,.cw-vp-vol{display:none}.cw-vp-bar{flex-wrap:nowrap;gap:5px}.cw-vp-bar .b{min-width:32px;height:32px;padding:0 6px}.cw-vp-bar .b.skip span{display:none}.cw-vp-bar .b.pp{width:38px;height:38px}.cw-vp-prog{min-width:40px}.cw-vp-poster .big{width:58px;height:58px;box-shadow:0 0 0 6px rgba(215,179,115,.18)}.cw-vp-poster .big svg{width:22px;height:22px}.cw-vp-poster .cap{left:14px;right:14px;bottom:12px}.cw-vp-poster .cap strong{font-size:16px}.cw-vp-poster .cap small{font-size:9.5px}}
+/* phones: the frame's own padding eats width, so trim it */
+@media (max-width:560px){.cw-vp{padding:8px;border-radius:22px}.cw-vp::before{inset:3px;border-radius:19px}.cw-vp-screen{border-radius:14px}}
 
 /* ── study list: header pill + pop-up (every Wāḥa page) ── */
 .cw-sl-pill{display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 14px;border-radius:999px;border:1px solid var(--c-line);background:var(--c-in);color:var(--cream);cursor:pointer;font:inherit;font-size:13px;font-weight:700;white-space:nowrap;transition:.25s}
@@ -226,3 +228,7 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 @media(max-width:1280px){.wh-home .wh-bar>.cw-sl-pill{display:none}.wh-home .wh-nav.open>.cw-sl-pill.wh-nav-mobile{display:inline-flex;align-self:flex-start;margin:6px 0 0 8px}}
 @media(max-width:1000px){.cw-fx{grid-template-columns:1fr}.cw-side{position:relative;top:0;max-height:none}.cw-paths{grid-template-columns:1fr 1fr}.cw-mhero{grid-template-columns:1fr}.cw-mhero img,.cw-mhero .ph{max-width:260px}}
 @media(max-width:640px){.cw-row{grid-template-columns:80px minmax(0,1fr)}.cw-row img,.cw-row .ph{width:80px;height:100px}.cw-row .end{grid-column:1/-1;text-align:left}.cw-paths{grid-template-columns:1fr}.cw-band{margin:-84px -16px 8px;padding:84px 16px 12px}}
+
+@media (hover:none),(max-width:640px){.cw-keys{display:none}}
+/* small frames (phones): the caption would sit under the play button, so the poster shows the play button alone */
+@container (max-width:380px){.cw-vp-poster .cap{display:none}}

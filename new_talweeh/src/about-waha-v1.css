@@ -154,3 +154,16 @@
 
 @media (max-width:1000px){.aw-intro,.aw-ends,.aw-cwrap,.aw-bio,.aw-legal{grid-template-columns:1fr}.aw-sciences,.aw-proud,.aw-meet{grid-template-columns:1fr 1fr}.aw-ilist{grid-template-columns:1fr}.aw-bio aside,.aw-legal nav{position:static}.aw-bio .port{max-width:320px}.aw-also{grid-template-columns:1fr}.aw-band .seal{width:84px;height:84px}}
 @media (max-width:620px){.aw-band{padding:28px 18px 0;border-radius:26px}.aw-band .top{gap:16px}.aw-band .seal{width:64px;height:64px}.aw-sciences,.aw-pillars,.aw-proud,.aw-meet{grid-template-columns:1fr}.aw-icard{grid-template-columns:1fr}.aw-icard img{min-height:0;aspect-ratio:4/3}.aw-doc{padding:26px 20px}.aw-tabs a{padding:12px 14px 14px;font-size:13.5px}}
+
+@media (max-width:620px){
+  .aw-band .top{grid-template-columns:auto minmax(0,1fr)}
+  .wh-home .aw-band h1{font-size:30px}
+  .wh-home .aw-band .sub{font-size:14.5px}
+  .aw-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;overflow:visible;margin-top:20px}
+  .aw-tabs a{text-align:center;border-radius:14px 14px 0 0;padding:11px 8px;font-size:13px;white-space:normal}
+  .aw-tabs a:nth-child(-n+2){border-radius:14px}
+  .aw-tabs a:nth-child(-n+2).on{border-radius:14px}
+  .aw-room{padding-top:30px}
+  .aw-blk{margin-top:60px}
+  .aw-invite,.aw-tcard,.aw-ccard{padding:28px 22px}
+}
