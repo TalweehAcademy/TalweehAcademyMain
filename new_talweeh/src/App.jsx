@@ -4,53 +4,56 @@ import { lazy, Suspense, useState, useEffect, useRef } from 'react'
 import './App.css'
 import './public-theme.css'
 import './commerce-checkout.css'
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { RouteMeta } from './hooks/useDocumentMeta'
-import CourseCard from './components/CourseCard'
-import VideoFacade from './components/VideoFacade'
-const CoursesPage = lazy(() => import('./pages/courses'))
-const ArticlesPage = lazy(() => import('./pages/articles'))
+import { extractVideoId } from './utils/youtube'
+import WahaVideoPlayer from './courses/WahaVideoPlayer'
+import { LEGACY_PORTAL } from './constants/links'
+const CoursesPage = lazy(() => import('./pages/courses-waha'))
+const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
-const MediaPage = lazy(() => import('./pages/media'))
-const MediaDetailPage = lazy(() => import('./pages/media-detail'))
-const ArticleDetailPage = lazy(() => import('./pages/article-detail'))
-const AboutUsPage = lazy(() => import('./pages/about-us'))
-const TermsConditionsPage = lazy(() => import('./pages/terms-conditions'))
-const ContactUsPage = lazy(() => import('./pages/contact-us'))
-const CourseLandingPage = lazy(() => import('./pages/course-landing'))
-const CommerceCartPage = lazy(() => import('./pages/cart'))
-const CommerceCheckoutPage = lazy(() => import('./pages/checkout'))
-const QuranPage = lazy(() => import('./pages/quran'))
-const ArabicPage = lazy(() => import('./pages/arabic'))
+const MediaPage = lazy(() => import('./pages/media-waha'))
+const MediaDetailPage = lazy(() => import('./pages/media-watch-waha'))
+const ArticleDetailPage = lazy(() => import('./pages/article-waha'))
+const AboutWahaPage = lazy(() => import('./pages/about-waha'))
+const CourseLandingPage = lazy(() => import('./pages/course-waha'))
+const CommerceCartPage = lazy(() => import('./pages/cart-waha'))
+const CommerceCheckoutPage = lazy(() => import('./pages/checkout-waha'))
+const QuranReaderPage = lazy(() => import('./pages/quran-reader'))
+const QuranHomePage = lazy(() => import('./pages/quran-home'))
+const QuranReadPage = lazy(() => import('./pages/quran-read'))
+const QuranStudyPage = lazy(() => import('./pages/quran-study'))
+const QuranListenPage = lazy(() => import('./pages/quran-listen'))
+const ArabicPage = lazy(() => import('./pages/arabic-waha'))
 const ArabicProgramPage = lazy(() => import('./pages/arabic-program'))
 const ArabicFaqPage = lazy(() => import('./pages/arabic-faq'))
 const ArabicAboutPage = lazy(() => import('./pages/arabic-about'))
-import { PageHeader, PageFooter } from './pages/_shared'
 import { useContent } from './hooks/useContent'
 import { EditModeProvider, EditModeToggle, Editable } from './components/ContentEditor'
-import PublicCorePageRefinement from './components/PublicCorePageRefinement'
-const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith-specialization'))
-const InstructorsV2Page = lazy(() => import('./pages/instructors-v2'))
-const InstructorDetailV2Page = lazy(() => import('./pages/instructor-detail-v2'))
-const AlimiyyahPage = lazy(() => import('./pages/alimiyyah'))
+import { LOGO, SmartLink, WahaHeader, WahaFooter, WahaPage, prefersReducedMotion, useWahaMotion } from './components/WahaShell'
+const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith-waha'))
+const AlimiyyahPage = lazy(() => import('./pages/alimiyyah-waha'))
 const NavigationPreviewPage = lazy(() => import('./pages/navigation-preview'))
 
-// Red section icons (match the WP site's Elementor icon widgets).
-function MasjidIcon() {
-  return (
-    <svg className="hl-icon" viewBox="0 0 64 64" aria-hidden="true">
-      <path d="M32 6c1 6-6 9-6 16h12c0-7-7-10-6-16z" />
-      <rect x="10" y="34" width="6" height="22" rx="1" />
-      <rect x="48" y="34" width="6" height="22" rx="1" />
-      <path d="M13 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8zM51 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8z" />
-      <path d="M18 40c0-8 8-10 14-16 6 6 14 8 14 16v16H36v-8a4 4 0 0 0-8 0v8H18V40z" />
-    </svg>
-  )
-}
+// ═══ Homepage — Wāḥa Forest design (mockups/landing-waha-forest.html) ═══
+// Styles live in home-waha-v1.css, every class prefixed `wh-`.
 
-function PeopleIcon() {
+const PROGRAMS = [
+  { to: '/arabic', image: '/brand/program-arabic-manuscript.webp', arabic: 'العربية', kicker: 'Language & understanding', title: 'Arabic', text: 'A step-by-step, two-year program designed to build lasting understanding of the Arabic language.' },
+  { to: '/alimiyyah', image: '/brand/program-alimiyyah.webp', arabic: 'العالمية', kicker: 'Islamic scholarship', title: 'Alimiyyah', text: 'Explore a guided path through the Islamic sciences with structured progression and serious study.' },
+  { to: '/hadith-specialization', image: '/brand/program-hadith-books.webp', arabic: 'الحديث', kicker: 'Specialized study', title: 'Hadith Specialization', text: 'Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.' },
+]
+
+const FORMATS = [
+  { arabic: 'مباشر', title: 'Live', text: 'Join guided classes with scheduled instruction.', to: '/alimiyyah' },
+  { arabic: 'حسب الطلب', title: 'On Demand', text: 'Study structured lessons at your own pace.', to: '/courses' },
+  { arabic: 'مجاني', title: 'Free', text: 'Begin with accessible courses and resources.', to: '/courses?free=1' },
+  { arabic: 'تخصص', title: 'Specialization', text: 'Advance into focused study through dedicated specialist pathways.', to: '/hadith-specialization' },
+]
+
+function PeopleIcon({ className }) {
   return (
-    <svg className="hl-icon" viewBox="0 0 64 64" aria-hidden="true">
+    <svg className={className} viewBox="0 0 64 64" aria-hidden="true">
       <circle cx="22" cy="24" r="8" />
       <path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z" />
       <circle cx="45" cy="22" r="6.5" />
@@ -59,126 +62,124 @@ function PeopleIcon() {
   )
 }
 
-function BookButtonIcon() {
-  return (
-    <svg className="academy-button-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4.5 5.5c2.7-.7 5-.2 7.5 1.4v11.6c-2.5-1.6-4.8-2.1-7.5-1.4V5.5Zm15 0c-2.7-.7-5-.2-7.5 1.4v11.6c2.5-1.6 4.8-2.1 7.5-1.4V5.5Z" />
-    </svg>
-  )
-}
-
-function ProgramsButtonIcon() {
-  return (
-    <svg className="academy-button-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="4" y="4" width="6" height="6" rx="1.2" />
-      <rect x="14" y="4" width="6" height="6" rx="1.2" />
-      <rect x="4" y="14" width="6" height="6" rx="1.2" />
-      <rect x="14" y="14" width="6" height="6" rx="1.2" />
-    </svg>
-  )
-}
-
-// One row of 4 cards that auto-scrolls through all courses; pauses while the
-// user hovers or touches it.
-function FeaturedCourseCarousel({ courses }) {
-  const trackRef = useRef(null)
-  const pausedRef = useRef(false)
-
+function useNarrow(breakpoint = 700) {
+  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.innerWidth < breakpoint)
   useEffect(() => {
-    if (courses.length <= 4) return
-    const timer = setInterval(() => {
-      const track = trackRef.current
-      if (!track || pausedRef.current) return
-      const card = track.querySelector('.course-card')
-      if (!card) return
-      const step = card.offsetWidth + 22
-      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - step / 2
-      track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + step, behavior: 'smooth' })
-    }, 3500)
-    return () => clearInterval(timer)
-  }, [courses.length])
+    const onResize = () => setNarrow(window.innerWidth < breakpoint)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [breakpoint])
+  return narrow
+}
 
+// 3D carousel layout: side items rotate back, blur and fade; items two or more away are hidden.
+function carouselStyle(index, current, count, { spread, rot, depth, side, sideFilter }) {
+  let offset = index - current
+  if (offset > count / 2) offset -= count
+  if (offset < -count / 2) offset += count
+  const distance = Math.abs(offset)
+  return {
+    transform: `translateX(${offset * spread}px) translateZ(${-distance * depth}px) rotateY(${-offset * rot}deg)`,
+    opacity: distance > 1 ? 0 : distance ? side : 1,
+    filter: distance ? sideFilter : 'none',
+    zIndex: 10 - distance,
+    pointerEvents: distance > 1 ? 'none' : undefined,
+  }
+}
+
+function SectionHeading({ title, text }) {
   return (
-    <div
-      className="landing-featured-carousel"
-      ref={trackRef}
-      onMouseEnter={() => { pausedRef.current = true }}
-      onMouseLeave={() => { pausedRef.current = false }}
-      onTouchStart={() => { pausedRef.current = true }}
-      onTouchEnd={() => { pausedRef.current = false }}
-    >
-      {courses.map((course) => (
-        <CourseCard key={course.id} course={course} showCategory />
-      ))}
+    <div className="wh-sh" data-r>
+      <div className="wh-divider" aria-hidden="true"><img src={LOGO} alt="" /></div>
+      <h2>{title}</h2>
+      <p>{text}</p>
     </div>
   )
 }
 
-function YouTubeCarousel({ videos }) {
-  const visibleVideos = (videos || []).filter(Boolean).slice(0, 7)
-  const trackRef = useRef(null)
-  const pausedRef = useRef(false)
-
-  const move = (direction = 1) => {
-    const track = trackRef.current
-    if (!track) return
-    const card = track.querySelector('.academy-video-card')
-    if (!card) return
-    const gap = Number.parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '18') || 18
-    const step = card.getBoundingClientRect().width + gap
-    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth)
-    const next = track.scrollLeft + (step * direction)
-
-    if (direction > 0 && next >= maxScroll - step * .3) {
-      track.scrollTo({ left: maxScroll <= step ? maxScroll : next, behavior: 'smooth' })
-      if (track.scrollLeft >= maxScroll - step * .6) {
-        window.setTimeout(() => track.scrollTo({ left: 0, behavior: 'smooth' }), 700)
-      }
-      return
-    }
-    if (direction < 0 && next <= 0) {
-      track.scrollTo({ left: 0, behavior: 'smooth' })
-      return
-    }
-    track.scrollTo({ left: Math.max(0, Math.min(maxScroll, next)), behavior: 'smooth' })
-  }
-
-  useEffect(() => {
-    if (visibleVideos.length <= 3) return undefined
-    const timer = window.setInterval(() => {
-      if (!pausedRef.current) move(1)
-    }, 4800)
-    return () => window.clearInterval(timer)
-  }, [visibleVideos.length])
-
-  if (!visibleVideos.length) return null
+function ProgramCoverflow() {
+  const [current, setCurrent] = useState(0)
+  const narrow = useNarrow()
+  const layout = { spread: narrow ? 60 : 300, rot: 30, depth: 180, side: .3, sideFilter: 'blur(5px) saturate(.5)' }
+  const go = (step) => setCurrent((c) => (c + step + PROGRAMS.length) % PROGRAMS.length)
 
   return (
-    <div className="academy-youtube-carousel">
-      <button type="button" className="academy-media-arrow academy-media-arrow-prev" aria-label="Previous videos" onClick={() => move(-1)}>‹</button>
-      <div
-        className="youtube-row"
-        ref={trackRef}
-        onMouseEnter={() => { pausedRef.current = true }}
-        onMouseLeave={() => { pausedRef.current = false }}
-        onTouchStart={() => { pausedRef.current = true }}
-        onTouchEnd={() => { pausedRef.current = false }}
-      >
-        {visibleVideos.map((src, index) => (
-          <article className="academy-video-card" key={`${src}-${index}`}>
-            <VideoFacade src={src} title={`Talweeh Academy featured lecture ${index + 1}`} />
-            <div className="academy-video-card-meta">
-              <div>
-                <span>Featured lecture</span>
-                <small>Talweeh Academy Media</small>
-              </div>
-              <strong>{String(index + 1).padStart(2, '0')}</strong>
+    <>
+      <div className="wh-cover" data-r="blur">
+        {PROGRAMS.map((program, i) => (
+          <article key={program.title} className={`wh-cv${i === current ? ' on' : ''}`}
+            style={carouselStyle(i, current, PROGRAMS.length, layout)}
+            onClick={() => { if (i !== current) setCurrent(i) }}>
+            <div className="wh-img" style={{ backgroundImage: `url('${program.image}')` }} />
+            <span className="wh-n wh-glass">{String(i + 1).padStart(2, '0')}</span>
+            <div className="wh-bd">
+              <div className="wh-ar">{program.arabic}</div>
+              <small>{program.kicker}</small>
+              <h3>{program.title}</h3>
+              <p>{program.text}</p>
+              <Link className="wh-btn wh-btn-cream" to={program.to} tabIndex={i === current ? 0 : -1}
+                onClick={(event) => { if (i !== current) event.preventDefault() }}>
+                Explore the program →
+              </Link>
             </div>
           </article>
         ))}
       </div>
-      <button type="button" className="academy-media-arrow academy-media-arrow-next" aria-label="Next videos" onClick={() => move(1)}>›</button>
-    </div>
+      <div className="wh-cv-ctl">
+        <button type="button" className="wh-glass" aria-label="Previous program" onClick={() => go(-1)}>‹</button>
+        <button type="button" className="wh-glass" aria-label="Next program" onClick={() => go(1)}>›</button>
+      </div>
+    </>
+  )
+}
+
+function TestimonialCarousel({ testimonials }) {
+  const [current, setCurrent] = useState(0)
+  const narrow = useNarrow()
+  const count = testimonials.length
+  const layout = { spread: narrow ? 40 : 360, rot: 0, depth: 120, side: .6, sideFilter: 'blur(3px) saturate(.7)' }
+  const go = (step) => setCurrent((c) => (c + step + count) % count)
+
+  useEffect(() => {
+    if (count < 2 || prefersReducedMotion()) return undefined
+    const timer = window.setTimeout(() => setCurrent((c) => (c + 1) % count), 6500)
+    return () => window.clearTimeout(timer)
+  }, [current, count])
+
+  if (!count) return null
+  return (
+    <>
+      <div className="wh-tcar" data-r>
+        {testimonials.map((item, i) => {
+          const initials = item.name.split(/\s+/).filter(Boolean)
+          return (
+            <article key={item.name} className="wh-tc wh-glass" style={carouselStyle(i, current, count, layout)}
+              onClick={() => { if (i !== current) setCurrent(i) }}>
+              <div className="wh-q">“</div>
+              <p>{item.quote}</p>
+              <div className="wh-who">
+                <span className="wh-av">{(initials[0]?.[0] || '') + (initials.length > 1 ? initials[initials.length - 1][0] : '')}</span>
+                <div><h4>{item.name}</h4><small>{item.location}</small></div>
+              </div>
+            </article>
+          )
+        })}
+      </div>
+      <div className="wh-tcar-ctl">
+        <button type="button" className="wh-glass" aria-label="Previous testimonial" onClick={() => go(-1)}>‹</button>
+        <button type="button" className="wh-glass" aria-label="Next testimonial" onClick={() => go(1)}>›</button>
+      </div>
+    </>
+  )
+}
+
+function VideoCard({ src, index }) {
+  const id = extractVideoId(src)
+  if (!id) return null
+  return (
+    <article className="wh-vid">
+      <WahaVideoPlayer videoId={id} title={`Talweeh Academy featured lecture ${index + 1}`} kicker="Talweeh Media" />
+    </article>
   )
 }
 
@@ -189,320 +190,212 @@ function formatLandingDate(date) {
 
 function LandingPage() {
   const { content: c } = useContent('landing')
+  const { content: g } = useContent('global')
   const [slide, setSlide] = useState(0)
-  const [testimonialPage, setTestimonialPage] = useState(0)
-  const [courses, setCourses] = useState([])
+  const rootRef = useRef(null)
   const latestArticles = ARTICLES.slice(0, 3)
+  const videos = (c.youtube.videos || []).filter(Boolean).slice(0, 6)
 
   const heroSlides = c.heroSlides
   const currentSlide = heroSlides[slide % heroSlides.length] || heroSlides[0]
-  const TESTIMONIALS_PER_PAGE = 3
-  const testimonialPages = Math.max(1, Math.ceil(c.testimonials.length / TESTIMONIALS_PER_PAGE))
-  const visibleTestimonials = c.testimonials.slice(
-    (testimonialPage % testimonialPages) * TESTIMONIALS_PER_PAGE,
-    (testimonialPage % testimonialPages) * TESTIMONIALS_PER_PAGE + TESTIMONIALS_PER_PAGE
-  )
 
-  useEffect(() => {
-    const t = setInterval(() => setSlide((s) => (s + 1) % heroSlides.length), 5000)
-    return () => clearInterval(t)
-  }, [heroSlides.length])
+  useWahaMotion(rootRef)
 
+  // Restarts on every change, so a manual pick gets a full 5s before auto-advancing.
   useEffect(() => {
-  }, [])
+    if (heroSlides.length < 2 || prefersReducedMotion()) return undefined
+    const t = setTimeout(() => setSlide((s) => (s + 1) % heroSlides.length), 5000)
+    return () => clearTimeout(t)
+  }, [slide, heroSlides.length])
 
   return (
-    <div className="landing-shell academy-home">
-      <PageHeader />
+    <div className="wh-home" ref={rootRef}>
+      <div className="wh-aurora" aria-hidden="true"><i /><i /></div>
+      <WahaHeader social={g.footer.social} />
 
       <main>
-        {/* ── Hero Carousel ─────────────────────────── */}
+        {/* ── Hero ─────────────────────────────────── */}
         <Editable page="landing" sectionKey="heroSlides">
-          <section
-            className="landing-hero"
-            style={currentSlide.imageUrl ? {
-              backgroundImage: `linear-gradient(170deg, rgba(14, 24, 17, 0.72) 0%, rgba(30, 50, 36, 0.62) 100%), url("${currentSlide.imageUrl.startsWith('/wp-content/') ? '/brand/dashboard-books.webp' : currentSlide.imageUrl}")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            } : undefined}
-          >
-            <div className="landing-hero-inner">
-              <p className="academy-eyebrow">Talweeh Academy · Learn with purpose</p>
-              <h1 key={slide} className="hero-heading">
-                {currentSlide.heading}
-              </h1>
-              <p className="academy-hero-description">Explore the Islamic sciences through structured programs, guided study, and beneficial knowledge for every stage of your journey.</p>
-              <div className="academy-hero-actions">
-                <a className="hero-cta-btn" href={currentSlide.ctaHref && currentSlide.ctaHref !== '#' ? currentSlide.ctaHref : '/arabic'}>
-                  <BookButtonIcon />
-                  <span>{currentSlide.cta}</span>
-                </a>
-                <a className="academy-secondary-button" href="#academy-programs">
-                  <ProgramsButtonIcon />
-                  <span>Explore our programs</span>
-                </a>
+          <section className="wh-hero" id="hero">
+            <div className="wh-wrap">
+              <div className="wh-ar" data-r>{c.hero?.arabic || 'رَبِّ زِدْنِي عِلْمًا'}</div>
+              <h1 key={slide}>{currentSlide.heading}</h1>
+              <p className="wh-lead" data-r>Explore the Islamic sciences through structured programs, guided study, and beneficial knowledge for every stage of your journey.</p>
+              <div className="wh-acts" data-r>
+                <SmartLink className="wh-btn wh-btn-g" to={currentSlide.ctaHref && currentSlide.ctaHref !== '#' ? currentSlide.ctaHref : '/arabic'} data-magnet>
+                  <span>{currentSlide.cta}</span> →
+                </SmartLink>
+                <a className="wh-btn wh-btn-glass" href="#programs">Explore our programs</a>
               </div>
-              <div className="academy-hero-proof" aria-label="Talweeh study features">
-                <span>Structured curricula</span>
-                <span>Traditional texts</span>
-                <span>Live &amp; on-demand study</span>
-              </div>
-            </div>
-            <button
-              type="button"
-              className="hero-arrow hero-arrow-prev"
-              aria-label="Previous slide"
-              onClick={() => setSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length)}
-            >
-              ‹
-            </button>
-            <button
-              type="button"
-              className="hero-arrow hero-arrow-next"
-              aria-label="Next slide"
-              onClick={() => setSlide((s) => (s + 1) % heroSlides.length)}
-            >
-              ›
-            </button>
-            <div className="hero-dots">
-              {heroSlides.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className={`hero-dot${i === slide ? ' active' : ''}`}
-                  onClick={() => setSlide(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
+              <div className="wh-feats" data-r><span>Structured curricula</span><span>Traditional texts</span><span>Live &amp; on-demand study</span></div>
+              {heroSlides.length > 1 && (
+                <div data-r>
+                  <div className="wh-ctl wh-glass">
+                    <button type="button" className="wh-a" aria-label="Previous slide" onClick={() => setSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length)}>‹</button>
+                    <div className="wh-dots">
+                      {heroSlides.map((_, i) => (
+                        <button key={i} type="button" className={`wh-dot${i === slide ? ' active' : ''}`} aria-label={`Slide ${i + 1}`} onClick={() => setSlide(i)} />
+                      ))}
+                    </div>
+                    <button type="button" className="wh-a" aria-label="Next slide" onClick={() => setSlide((s) => (s + 1) % heroSlides.length)}>›</button>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         </Editable>
 
-        {/* ── Feature Highlights ───────────────────── */}
-        <Editable page="landing" sectionKey="highlights">
-          <section className="landing-highlights">
-            {c.highlights.map((h, i) => {
-              const icon = i === 0 ? <span className="hl-icon hl-icon-arabic" title="Arabic language" aria-label="Arabic language">ض</span> : i === 1 ? <MasjidIcon /> : <PeopleIcon />
-              const body = (
-                <>
-                  {icon}
-                  <h3>{h.title}</h3>
-                  <p>{h.text}</p>
-                </>
-              )
-              const href = h.href || '#'
-              const isExternal = /^https?:\/\//.test(href)
-              return (
-                <article key={h.title}>
-                  {isExternal
-                    ? <a className="highlight-link" href={href} target="_blank" rel="noreferrer">{body}</a>
-                    : <Link className="highlight-link" to={href}>{body}</Link>}
-                </article>
-              )
-            })}
-          </section>
-        </Editable>
-
-        <section className="academy-programs" id="academy-programs">
-          <div className="academy-section-heading"><div><p className="academy-eyebrow">A path to deeper understanding</p><h2>Find your next chapter.</h2></div><p>Build your foundations. Deepen your study.<br />Choose a program that meets your goals.</p></div>
-          <div className="academy-program-grid">
-            <Link to="/arabic" className="academy-program-card academy-program-arabic">
-              <div className="academy-program-media" aria-hidden="true"><span>01</span></div>
-              <div className="academy-program-copy"><span className="academy-program-number">Language &amp; understanding</span><h3>Arabic</h3><p>A step-by-step, two-year program designed to build lasting understanding of the Arabic language.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
-            </Link>
-            <Link to="/alimiyyah" className="academy-program-card academy-program-alimiyyah">
-              <div className="academy-program-media" aria-hidden="true"><span>02</span></div>
-              <div className="academy-program-copy"><span className="academy-program-number">Islamic scholarship</span><h3>Alimiyyah</h3><p>Explore a guided path through the Islamic sciences with structured progression and serious study.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
-            </Link>
-            <Link to="/hadith-specialization" className="academy-program-card academy-program-hadith">
-              <div className="academy-program-media" aria-hidden="true"><span>03</span></div>
-              <div className="academy-program-copy"><span className="academy-program-number">Specialized study</span><h3>Hadith Specialization</h3><p>Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.</p><span className="academy-card-link">Explore the program <span aria-hidden="true">→</span></span></div>
-            </Link>
+        {/* ── Programs ─────────────────────────────── */}
+        <section className="wh-s" id="programs">
+          <div className="wh-wrap">
+            <SectionHeading title="Find your next chapter." text="Build your foundations. Deepen your study. Choose a program that meets your goals." />
+            <ProgramCoverflow />
           </div>
         </section>
 
-        {/* ── Featured Courses ─────────────────────── */}
+        {/* ── Flexible Studies ─────────────────────── */}
         <Editable page="landing" sectionKey="featured">
-          <section className="landing-featured">
-            <div className="academy-home-section-intro">
-              <div><p className="academy-eyebrow">Continue your study</p><h2>{c.featured.heading}</h2></div>
-              <p>Choose the format and subject that best fits your current stage of learning.</p>
-            </div>
-            <span className="academy-divider" aria-hidden="true" />
-            {courses.length > 0 ? <FeaturedCourseCarousel courses={courses} /> : (
-              <div className="academy-course-paths">
-                {[
-                  ['Live', 'Join guided classes with scheduled instruction', '/alimiyyah'],
-                  ['On Demand', 'Study structured lessons at your own pace', '/courses'],
-                  ['Free', 'Begin with accessible courses and resources', '/courses?free=1'],
-                  ['Specialization', 'Advance into focused study through dedicated specialist pathways', '/hadith-specialization'],
-                ].map(([label, text, destination], index) => (
-                  <Link key={label} to={destination}>
-                    <span className="academy-path-index">0{index + 1}</span>
-                    <strong>{label}</strong>
-                    <small>{text}</small>
+          <section className="wh-s">
+            <div className="wh-wrap">
+              <SectionHeading title="Flexible Studies" text="Choose the format and subject that best fits your current stage of learning." />
+              <div className="wh-formats wh-glass" data-r>
+                {FORMATS.map((format) => (
+                  <Link key={format.title} className="wh-fmt" to={format.to}>
+                    <div className="wh-ar">{format.arabic}</div>
+                    <span className="wh-rule" />
+                    <h3>{format.title}</h3>
+                    <p>{format.text}</p>
+                    <span className="wh-go">View courses →</span>
                   </Link>
                 ))}
               </div>
-            )}
-            <Link className="green-button" to="/courses">
-              {c.featured.buttonLabel}
-            </Link>
+              <div className="wh-center" data-r><Link className="wh-btn wh-btn-g" to="/courses" data-magnet>{c.featured.buttonLabel} →</Link></div>
+            </div>
           </section>
         </Editable>
 
         {/* ── Latest Articles ──────────────────────── */}
-        <Editable page="landing" sectionKey="latestArticles">
-        <section className="landing-articles">
-          <div className="academy-home-section-intro">
-            <div><p className="academy-eyebrow">From the Talweeh library</p><h2>{c.latestArticles.heading}</h2></div>
-            <p>Short academic benefits and reflections to support continued reading beyond the classroom.</p>
-          </div>
-          <span className="academy-divider" aria-hidden="true" />
-          {latestArticles.length === 0 && (
-            <div className="academy-empty-editorial">
-              <span className="academy-editorial-kicker">From the Talweeh library</span>
-              <h3>Study notes, reflections, and academic benefits.</h3>
-              <p>Explore concise writing designed to support serious students of the Islamic sciences and connect classroom study with continued reading.</p>
-              <div className="academy-editorial-topics" aria-label="Article topics">
-                <span>Fiqh</span><span>Hadith</span><span>Arabic</span><span>Student Benefits</span>
-              </div>
-            </div>
-          )}
-          <div className="landing-article-grid">
-            {latestArticles.map((article) => (
-              <article key={article.id}>
-                {article.imageUrl && (
-                  <Link className="landing-article-thumb" to={`/articles/${article.slug}`}>
-                    <img src={article.imageUrl} alt="" loading="lazy" />
-                  </Link>
-                )}
-                <div className="landing-article-body">
-                  <h3>{article.title}</h3>
-                  <div className="article-meta">
-                    <span>{formatLandingDate(article.publishedAt)}</span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  {article.excerpt && <p>{article.excerpt}</p>}
-                  <Link to={`/articles/${article.slug}`}>Read More.....</Link>
+        {latestArticles.length > 0 && (
+          <Editable page="landing" sectionKey="latestArticles">
+            <section className="wh-s">
+              <div className="wh-wrap">
+                <SectionHeading title={c.latestArticles.heading} text="Short academic benefits and reflections to support continued reading beyond the classroom." />
+                <div className="wh-arts" data-stagger>
+                  {latestArticles.map((article) => (
+                    <article key={article.id} className="wh-art wh-glass">
+                      <div className="wh-meta">
+                        <span>{formatLandingDate(article.publishedAt)}</span>
+                        {article.readTime && <span>{article.readTime}</span>}
+                      </div>
+                      <h3>{article.title}</h3>
+                      {article.excerpt && <p>{article.excerpt}</p>}
+                      <Link className="wh-more" to={`/articles/${article.slug}`}>Read More..... <i aria-hidden="true">→</i></Link>
+                    </article>
+                  ))}
                 </div>
-              </article>
-            ))}
-          </div>
-          <Link className="green-button" to="/articles">
-            {c.latestArticles.buttonLabel}
-          </Link>
-        </section>
-        </Editable>
+                <div className="wh-center" data-r><Link className="wh-btn wh-btn-glass" to="/articles">{c.latestArticles.buttonLabel} →</Link></div>
+              </div>
+            </section>
+          </Editable>
+        )}
 
         {/* ── About + Why ──────────────────────────── */}
         <Editable page="landing" sectionKey="aboutWhy">
-          <section className="landing-about-why academy-purpose-section">
-            <div className="academy-purpose-lead">
-              <p className="academy-eyebrow">Why Talweeh</p>
-              <h2>{c.aboutWhy.aboutHeading}</h2>
-              <p>{c.aboutWhy.aboutText}</p>
-              <Link className="academy-purpose-link" to="/about-us">{c.aboutWhy.aboutButtonLabel} <span aria-hidden="true">→</span></Link>
-            </div>
-            <div className="academy-purpose-panel">
-              <h3>{c.aboutWhy.whyHeading}</h3>
-              <p>{c.aboutWhy.whyText}</p>
-              <a className="academy-purpose-link" href={c.aboutWhy.whyButtonHref || '#'}>{c.aboutWhy.whyButtonLabel} <span aria-hidden="true">→</span></a>
-              <div className="academy-purpose-points" aria-label="Talweeh study approach">
-                <span>Structured progression</span><span>Qualified instruction</span><span>Purposeful learning</span>
+          <section className="wh-s">
+            <div className="wh-wrap wh-aw">
+              <div className="wh-about" data-r="left">
+                <span className="wh-pill">Why Talweeh</span>
+                <h2>{c.aboutWhy.aboutHeading}</h2>
+                <p>{c.aboutWhy.aboutText}</p>
+                <Link className="wh-btn wh-btn-g" to="/about-us">{c.aboutWhy.aboutButtonLabel} →</Link>
+              </div>
+              <div className="wh-why wh-glass" data-r="right">
+                <h3>{c.aboutWhy.whyHeading}</h3>
+                <p>{c.aboutWhy.whyText}</p>
+                <div className="wh-pts"><span>Structured progression</span><span>Qualified instruction</span><span>Purposeful learning</span></div>
+                <SmartLink className="wh-btn wh-btn-g" to={c.aboutWhy.whyButtonHref}>{c.aboutWhy.whyButtonLabel} →</SmartLink>
               </div>
             </div>
           </section>
         </Editable>
 
         {/* ── YouTube ──────────────────────────────── */}
-        <Editable page="landing" sectionKey="youtube">
-          <section className="landing-youtube">
-            <div className="academy-youtube-heading">
-              <p className="academy-eyebrow">Talweeh Media</p>
-              <h2>{c.youtube.heading}</h2>
-              <span className="academy-divider" aria-hidden="true" />
-              <p>Selected lessons, academic benefits, and discussions from Talweeh Academy.</p>
-            </div>
-            <YouTubeCarousel videos={c.youtube.videos || []} />
-            <a className="youtube-btn" href={c.youtube.url} target="_blank" rel="noreferrer">
-              {c.youtube.buttonLabel}
-            </a>
-          </section>
-        </Editable>
+        {videos.length > 0 && (
+          <Editable page="landing" sectionKey="youtube">
+            <section className="wh-s">
+              <div className="wh-wrap">
+                <SectionHeading title={c.youtube.heading} text="Selected lessons, academic benefits, and discussions from Talweeh Academy." />
+                <div className="wh-vg" data-stagger>
+                  {videos.map((src, i) => <VideoCard key={`${src}-${i}`} src={src} index={i} />)}
+                </div>
+                <div className="wh-center" data-r>
+                  <a className="wh-btn wh-btn-glass" href={c.youtube.url} target="_blank" rel="noreferrer">{c.youtube.buttonLabel}</a>
+                </div>
+              </div>
+            </section>
+          </Editable>
+        )}
 
         {/* ── Join Talweeh Society ─────────────────── */}
         <Editable page="landing" sectionKey="joinSociety">
-          <section className="landing-join-society">
-            <div className="join-society-inner">
-              <PeopleIcon />
-              <div className="join-society-text">
-                <span className="academy-society-kicker">Community · continued learning</span>
-                <h3>{c.joinSociety.heading}</h3>
-                <p>{c.joinSociety.text}</p>
+          <section className="wh-s">
+            <div className="wh-wrap">
+              <div className="wh-society" data-r="scale">
+                <div>
+                  <div className="wh-ic"><PeopleIcon className="wh-ico" /></div>
+                  <span className="wh-pill wh-glass">Community · continued learning</span>
+                  <h3>{c.joinSociety.heading}</h3>
+                  <p>{c.joinSociety.text}</p>
+                </div>
+                <SmartLink className="wh-btn wh-btn-g" to={c.joinSociety.buttonHref} data-magnet>{c.joinSociety.buttonLabel} →</SmartLink>
               </div>
-              <a className="red-button" href={c.joinSociety.buttonHref || '#'}>
-                {c.joinSociety.buttonLabel}
-              </a>
             </div>
           </section>
         </Editable>
 
-        <section className="academy-final-cta" aria-labelledby="academy-final-cta-heading">
-          <div>
-            <p className="academy-eyebrow">Begin your next chapter</p>
-            <h2 id="academy-final-cta-heading">Study with clarity, structure, and purpose.</h2>
-            <p>Explore Talweeh Academy&apos;s programs and courses, then continue your learning through your student portal.</p>
-          </div>
-          <div className="academy-final-cta-actions">
-            <Link className="hero-cta-btn" to="/courses">Explore courses <span aria-hidden="true">→</span></Link>
-            <a className="academy-secondary-button" href="https://alimiyyah.talweehacademy.com" rel="noopener">Student Portal</a>
+        {/* ── Final call to action ─────────────────── */}
+        <section className="wh-s" aria-labelledby="wh-final-heading">
+          <div className="wh-wrap">
+            <div className="wh-final wh-glass" data-r="scale">
+              <div className="wh-fimg" aria-hidden="true"><i /><i /></div>
+              <span className="wh-pill">Begin your next chapter</span>
+              <h2 id="wh-final-heading">Study with clarity, structure, and <em>purpose.</em></h2>
+              <p>Explore Talweeh Academy&apos;s programs and courses, then continue your learning through your student portal.</p>
+              <div className="wh-acts">
+                <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Explore courses →</Link>
+                <a className="wh-btn wh-btn-glass" href={LEGACY_PORTAL}>Legacy Portal</a>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* ── Testimonials ─────────────────────────── */}
         <Editable page="landing" sectionKey="testimonials">
-          <section className="landing-testimonials">
-            <div className="academy-testimonial-heading">
-              <p className="academy-eyebrow">Student experiences</p>
-              <h2>What our students say</h2>
-              <p>Reflections from learners studying with Talweeh Academy around the world.</p>
-            </div>
-            <span className="academy-divider" aria-hidden="true" />
-            <div className="testimonial-carousel">
-              <button
-                type="button"
-                className="testimonial-arrow"
-                aria-label="Previous testimonials"
-                onClick={() => setTestimonialPage((p) => (p - 1 + testimonialPages) % testimonialPages)}
-              >
-                ‹
-              </button>
-              <div className="landing-testimonial-grid">
-                {visibleTestimonials.map((item) => (
-                  <article key={item.name}>
-                    <p>&ldquo;{item.quote}&rdquo;</p>
-                    <h4>{item.name}</h4>
-                    <span>{item.location}</span>
-                  </article>
-                ))}
-              </div>
-              <button
-                type="button"
-                className="testimonial-arrow"
-                aria-label="Next testimonials"
-                onClick={() => setTestimonialPage((p) => (p + 1) % testimonialPages)}
-              >
-                ›
-              </button>
+          <section className="wh-s">
+            <div className="wh-wrap">
+              <SectionHeading title="What our students say" text="Reflections from learners studying with Talweeh Academy around the world." />
+              <TestimonialCarousel testimonials={c.testimonials} />
             </div>
           </section>
         </Editable>
       </main>
 
-      <PageFooter />
+      <WahaFooter social={g.footer.social} copyright={g.footer.copyright} />
     </div>
   )
+}
+
+// /quran is the Qurʾān home; /quran?surah=&ayah= is the reader. Links from the previous reader
+// (?mode=read, ?quranMode=study / ?study=1) are sent to the dedicated Read Mode and Study pages.
+function QuranRoute() {
+  const { search } = useLocation()
+  const params = new URLSearchParams(search)
+  const at = new URLSearchParams()
+  if (params.get('surah')) at.set('surah', params.get('surah'))
+  if (params.get('ayah')) at.set('ayah', params.get('ayah'))
+  if (params.get('mode') === 'read') return <Navigate replace to={`/quran/read?${at}`} />
+  if (['study', 'sources'].includes(params.get('quranMode')) || params.get('study') === '1') return <Navigate replace to={`/quran/study?${at}`} />
+  return params.has('surah') || params.has('ayah') ? <QuranReaderPage /> : <QuranHomePage />
 }
 
 function NotFoundPage() {
@@ -528,15 +421,17 @@ function ScrollToTop() {
   return null
 }
 
+// Shown while a page's code loads (first visit, or opening a link in a new tab). It uses the Wāḥa
+// header on an empty full-height page, so neither the old site's header/footer nor the footer
+// jumping up into view flashes before the page arrives.
 function RouteLoadingFallback() {
   return (
-    <div className="page-shell">
-      <PageHeader />
-      <main>
-        <p className="courses-status">Loading…</p>
-      </main>
-      <PageFooter />
-    </div>
+    <WahaPage className="wh-route-loading">
+      <div className="wh-wrap wh-route-loading-body" role="status" aria-live="polite">
+        <span className="wh-route-loading-mark" aria-hidden="true" />
+        <span className="wh-visually-hidden">Loading…</span>
+      </div>
+    </WahaPage>
   )
 }
 
@@ -544,7 +439,6 @@ function AppInner() {
   return (
     <EditModeProvider>
       <ScrollToTop />
-      <PublicCorePageRefinement />
       <EditModeToggle />
       <RouteMeta />
       <Suspense fallback={<RouteLoadingFallback />}>
@@ -560,19 +454,22 @@ function AppInner() {
         <Route path="/media/:slug" element={<MediaDetailPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/articles/:slug" element={<ArticleDetailPage />} />
-        <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/instructors" element={<InstructorsV2Page />} />
-        <Route path="/instructors/:slug" element={<InstructorDetailV2Page />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/about-us" element={<AboutWahaPage tab="talweeh" />} />
+        <Route path="/instructors" element={<AboutWahaPage tab="instructors" />} />
+        <Route path="/instructors/:slug" element={<AboutWahaPage tab="instructors" />} />
+        <Route path="/contact-us" element={<AboutWahaPage tab="contact" />} />
         <Route path="/courses/:slug" element={<CourseLandingPage />} />
         <Route path="/cart" element={<CommerceCartPage />} />
         <Route path="/checkout" element={<CommerceCheckoutPage />} />
-        <Route path="/quran" element={<QuranPage />} />
+        <Route path="/quran" element={<QuranRoute />} />
+        <Route path="/quran/read" element={<QuranReadPage />} />
+        <Route path="/quran/study" element={<QuranStudyPage />} />
+        <Route path="/quran/listen" element={<QuranListenPage />} />
         <Route path="/arabic" element={<ArabicPage />} />
         <Route path="/arabic/program" element={<ArabicProgramPage />} />
         <Route path="/arabic/faq" element={<ArabicFaqPage />} />
         <Route path="/arabic/about" element={<ArabicAboutPage />} />
-        <Route path="/p/terms-conditions" element={<TermsConditionsPage />} />
+        <Route path="/p/terms-conditions" element={<AboutWahaPage tab="terms" />} />
         <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

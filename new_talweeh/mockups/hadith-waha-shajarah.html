@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hadith Specialization · Shajarah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-hadith.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Hadith Specialization · Variation C — Shajarah (the branches) ═══
+   The page's promise — "each subject introduced in the early stages is revisited at greater
+   depth" — made visible. The seventeen courses are laid out as seven strands (history,
+   narrators, isnād, muṣṭalaḥ & ʿilal, sources, critique, applied readings) across Year 1 and
+   Year 2. Pick a strand to follow it; pick a course to read it in the panel alongside. */
+.sh{margin-top:40px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:36px;align-items:end;padding-bottom:30px;border-bottom:1px solid var(--p-line)}
+.sh .ar{font-size:clamp(34px,4vw,52px);color:var(--p-gold);line-height:1.4;text-align:left}
+.sh h1{font-size:clamp(40px,5.2vw,72px);line-height:1;margin:8px 0 12px}
+.sh h1 em{font-style:italic;color:var(--p-gold)}
+.sh .lead{color:var(--p-mut);line-height:1.75}
+.sh .sside{display:grid;gap:12px}
+.sh .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sh .stats span{padding:14px;border-radius:16px;background:var(--p-card);border:1px solid var(--p-line)}
+.sh .stats b{display:block;font-family:'Lora',serif;font-size:30px;color:var(--p-head);line-height:1}
+.sh .stats small{font-size:11.5px;color:var(--p-mut);font-weight:600}
+.sh .acts{display:flex;gap:10px;flex-wrap:wrap}
+.mapw{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:22px;margin-top:40px;align-items:start}
+.legend{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.legend button{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-mut);font-size:12.5px;font-weight:700;cursor:pointer;transition:.3s}
+.legend button i{width:9px;height:9px;border-radius:50%;background:var(--sc)}
+.legend button.on{background:var(--sc);border-color:var(--sc);color:#fff}
+.legend button.on i{background:#fff}
+.map{position:relative;border-radius:28px;padding:10px;background:var(--p-card);border:1px solid var(--p-line)}
+.map svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.map path{fill:none;stroke-width:2;stroke-dasharray:5 6;opacity:.7}
+.mrow{position:relative;display:grid;grid-template-columns:150px 1.75fr 1fr;gap:10px;align-items:center;padding:10px;border-radius:18px;transition:opacity .35s,background .35s}
+.mrow + .mrow{border-top:1px dashed var(--p-line)}
+.mrow.dim{opacity:.22}
+.mrow.hi{background:color-mix(in srgb,var(--sc) 7%,transparent)}
+.mrow .lab{display:flex;flex-direction:column}
+.mrow .lab .ar{font-size:22px;color:var(--sc);line-height:1.3;text-align:left}
+.mrow .lab strong{font-size:12.5px;color:var(--p-head)}
+.mrow .cell{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
+.cn{flex:1 1 150px;max-width:100%;position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;padding:9px 12px;border-radius:14px;background:var(--p-card);border:1px solid color-mix(in srgb,var(--sc) 45%,transparent);border-left:4px solid var(--sc);cursor:pointer;text-align:left;transition:transform .3s var(--spring),box-shadow .3s}
+.cn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(8,20,14,.12)}
+.cn.on{box-shadow:0 0 0 2px var(--sc)}
+.cn strong{font-family:'Lora',serif;font-size:14.5px;color:var(--p-head);font-weight:600}
+.cn small{font-size:11px;color:var(--p-mut)}
+.cn em{position:absolute;top:-8px;right:-6px;font-style:normal;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--gold);color:var(--g2)}
+.yhdr{display:grid;grid-template-columns:150px 1.75fr 1fr;gap:10px;padding:10px 10px 6px}
+.yhdr span{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.yhdr span b{font-family:'Lora',serif;font-size:20px;letter-spacing:0;text-transform:none;color:var(--p-head);margin-left:6px}
+.panel{position:sticky;top:110px;max-height:calc(100vh - 130px);overflow:auto;border-radius:28px;padding:24px}
+.panel .ar{font-family:'Amiri',serif;font-size:28px;color:var(--gold-b);line-height:1.4;text-align:left}
+.panel .kicker{color:var(--gold)}
+.panel h3{color:var(--c-head);font-size:26px;margin:4px 0 2px}
+.panel .sub{color:var(--c-mut);margin-bottom:14px}
+.panel .rel{margin-top:18px;padding-top:14px;border-top:1px solid var(--c-line)}
+.panel .rel small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:8px}
+.panel .rel button{display:block;width:100%;text-align:left;padding:8px 10px;border-radius:10px;border:0;background:var(--c-in);color:var(--c-head);margin-bottom:6px;cursor:pointer;font-family:'Lora',serif}
+.panel .rel button:hover{background:var(--c-hi)}
+.blk{margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.ovw{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.ovw p{font-size:16.5px;line-height:1.85;color:var(--p-text)}
+@media (max-width:1100px){.sh,.mapw{grid-template-columns:1fr}.panel{position:static;max-height:none}.mrow,.yhdr{grid-template-columns:110px 1fr 1fr}.ovw{grid-template-columns:1fr}}
+@media (max-width:640px){.mrow,.yhdr{grid-template-columns:1fr}.yhdr{display:none}.mrow .cell::before{content:attr(data-y);font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--p-gold);width:100%}}
+</style>
+</head>
+<body data-nav="Hadith Specialization" data-hadith="hadith-waha-shajarah.html">
+<div class="mock-bar"><span>Hadith Specialization · Variation C — <b>Shajarah</b> · the seventeen courses as seven strands across two years; follow a strand, read a course alongside</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/hadith-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-hadith.js"></script>
+<script>
+const { $, $$ } = Waha, K = WahaHadith, { H, esc } = K;
+let st = '', sel = H.COURSES.find((c) => c.title === 'Takwīn al-Isnād').n;
+// Year 1 → Year 2 continuations to draw across the map
+const PAIRS = [['Tadrīb al-Rāwī 1', 'Tadrīb al-Rāwī 2'], ['Takhrīj', 'Al-Nushakh wal-Taqyeed'], ['Manāhij al-Muḥaddithīn', 'ʿIlal al-Ḥadīth'], ['Makānat al-Sunnah', 'Orientalist Critique'], ['Dirāsat al-Asānīd', 'Ṣaḥīḥ al-Bukhārī'], ['Al-Athbāt wa al-Fahāris', 'Muwaṭṭaʾ Mālik']];
+$('#page').innerHTML = `
+  <section class="sh">
+    <div><div class="ar" data-r>التَّخَصُّصُ فِي الحَدِيث</div><span class="kicker" data-r>${esc(H.HERO.eyebrow)} · ${esc(H.HERO.name)}</span><h1 data-r>Hadith <em>Specialization</em></h1><p class="lead" data-r>${esc(H.HERO.lead)}</p></div>
+    <div class="sside" data-r><div class="stats"><span><b>2</b><small>years</small></span><span><b>${H.COURSES.length}</b><small>courses</small></span><span><b>${H.STRANDS.length}</b><small>strands</small></span><span><b>${K.standaloneCount}</b><small>standalone</small></span></div>
+      <div class="acts"><a class="btn btn-g" href="#map">Explore curriculum</a><a class="btn btn-glass" href="${H.ENROL}">For enrollment</a></div></div>
+  </section>
+
+  <section id="map" style="scroll-margin-top:100px">
+    <div class="mapw">
+      <div>
+        <div class="sec-h" style="margin-top:0"><div><span class="kicker">Hadith Specialization curriculum</span><h2 style="font-size:clamp(28px,3.4vw,42px)">Seventeen courses, seven strands</h2></div><p>Each subject introduced in the early stages is revisited at greater depth so that theory and application develop together.</p></div>
+        <div class="legend" id="legend"></div>
+        <div class="map" id="mapbox"><svg id="links"></svg>
+          <div class="yhdr"><span>Strand</span><span>Year 1<b>1st Year</b></span><span>Year 2<b>2nd Year</b></span></div>
+          ${H.STRANDS.map((s) => `<div class="mrow s-${s.k}" data-s="${s.k}"><div class="lab"><span class="ar">${s.ar}</span><strong>${esc(s.label)}</strong></div>${[1, 2].map((y) => `<div class="cell" data-y="YEAR ${y}">${K.year(y).filter((c) => c.strand === s.k).map((c) => `<button type="button" class="cn s-${c.strand}" data-c="${c.n}"><strong>${esc(c.title)}</strong><small>${esc(c.subtitle)}</small>${c.catalogSlug ? '<em>Standalone</em>' : ''}</button>`).join('')}</div>`).join('')}</div>`).join('')}
+        </div>
+      </div>
+      <aside class="panel glass" id="panel" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Program overview</span><h2>From preservation to critical analysis.</h2></div></div><div class="ovw">${K.overview()}</div></section>
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Instructors</span><h2>Guided by specialist study.</h2></div></div>${K.instructors()}</section>
+  ${K.cta()}`;
+
+const byT = (t) => H.COURSES.find((c) => c.title === t);
+function paint() {
+  $('#legend').innerHTML = `<button type="button" class="${!st ? 'on' : ''}" data-s="" style="--sc:var(--g)">All strands</button>` + H.STRANDS.map((s) => `<button type="button" class="s-${s.k}${st === s.k ? ' on' : ''}" data-s="${s.k}"><i></i>${esc(s.label)}</button>`).join('');
+  $$('.mrow').forEach((r) => { r.classList.toggle('dim', !!st && r.dataset.s !== st); r.classList.toggle('hi', r.dataset.s === st); });
+  $$('.cn').forEach((b) => b.classList.toggle('on', Number(b.dataset.c) === sel));
+  const c = H.COURSES[sel - 1], s = K.strand(c.strand);
+  const rel = PAIRS.filter((p) => p.includes(c.title)).map((p) => byT(p[0] === c.title ? p[1] : p[0])).concat(H.COURSES.filter((x) => x.strand === c.strand && x !== c)).filter((x, i, a) => a.indexOf(x) === i).slice(0, 4);
+  $('#panel').innerHTML = `<div class="ar">${c.ar}</div><span class="kicker">Year ${c.year} · ${esc(s.label)}</span><h3>${esc(c.title)}</h3><p class="sub">${esc(c.subtitle)}</p>${K.detail(c, { dark: true, lessonLimit: 5 })}
+    ${rel.length ? `<div class="rel"><small>Continues with / related</small>${rel.map((x) => `<button type="button" data-c="${x.n}">Year ${x.year} · ${esc(x.title)}</button>`).join('')}</div>` : ''}`;
+}
+function draw() {
+  const box = $('#mapbox').getBoundingClientRect();
+  $('#links').setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  $('#links').innerHTML = PAIRS.filter(([a, b]) => byT(a).strand === byT(b).strand).map(([a, b]) => {
+    const A = $(`.cn[data-c="${byT(a).n}"]`).getBoundingClientRect(), B = $(`.cn[data-c="${byT(b).n}"]`).getBoundingClientRect();
+    const x1 = A.right - box.left, y1 = A.top + A.height / 2 - box.top, x2 = B.left - box.left, y2 = B.top + B.height / 2 - box.top, mx = (x1 + x2) / 2;
+    return `<path class="s-${byT(a).strand}" style="stroke:var(--sc)" d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}"/>`;
+  }).join('');
+}
+document.addEventListener('click', (e) => {
+  const s = e.target.closest('#legend [data-s]'); if (s) { st = s.dataset.s; const first = H.COURSES.find((c) => c.strand === st); if (first) sel = first.n; paint(); return; }
+  const c = e.target.closest('[data-c]'); if (c) { sel = Number(c.dataset.c); paint(); if (innerWidth < 1100) $('#panel').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+});
+paint(); addEventListener('resize', draw); document.fonts.ready.then(draw); setTimeout(draw, 500); Waha.reveal();
+</script>
+</body>
+</html>

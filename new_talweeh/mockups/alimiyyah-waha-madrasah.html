@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ʿĀlimiyyah · Madrasah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-alim.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ ʿĀlimiyyah · Variation B — Madrasah (the courtyard) ═══
+   A full-bleed green hero with the program at a glance, the five foundations as a single
+   band, then the curriculum as a study hall: a ten-step year ladder, the chosen year's
+   texts arranged by discipline into columns, and a ring showing how the year is weighted. */
+.dh{position:relative;margin-top:22px;border-radius:38px;padding:60px 50px 44px;overflow:hidden;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,radial-gradient(120% 90% at 85% 10%,var(--g4),var(--g2) 60%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.dh .big{position:absolute;right:-10px;bottom:-60px;font-family:'Amiri',serif;font-size:clamp(160px,22vw,300px);line-height:1;color:rgba(215,179,115,.12);pointer-events:none}
+.dh .kicker{color:var(--gold)}
+.dh h1{color:var(--cream);font-size:clamp(38px,5.2vw,70px);line-height:1.04;margin:12px 0 16px;max-width:15ch}
+.dh h1 em{display:block;color:var(--gold-b);font-style:italic;font-size:.6em;margin-top:8px}
+.dh .lead{color:rgba(243,232,211,.8);font-size:17px;line-height:1.75;max-width:56ch}
+.dh .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:26px 0 30px}
+.dh .apill{background:rgba(243,232,211,.08);border-color:rgba(215,179,115,.3);color:var(--gold-b)}
+.glance{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;border-radius:22px;overflow:hidden;background:rgba(215,179,115,.22);border:1px solid rgba(215,179,115,.3)}
+.glance div{padding:16px 18px;background:rgba(10,24,17,.55);backdrop-filter:blur(6px)}
+.glance small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.glance b{font-family:'Lora',serif;font-size:21px;font-weight:600;color:var(--cream)}
+.vband{display:grid;grid-template-columns:repeat(5,1fr);margin-top:40px;border-radius:26px;overflow:hidden;border:1px solid var(--p-line);background:var(--p-card)}
+.vband article{padding:22px 20px;border-right:1px solid var(--p-line);transition:background .3s}
+.vband article:last-child{border-right:0}
+.vband article:hover{background:var(--p-soft)}
+.vband .va{font-family:'Amiri',serif;font-size:30px;color:var(--p-gold);line-height:1.4}
+.vband .vt{font-family:'Lora',serif;font-size:20px;color:var(--p-head);font-weight:600}
+.vband h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--p-mut);margin:3px 0 8px}
+.vband p{font-size:13.5px;color:var(--p-mut);line-height:1.6}
+.hall{margin-top:100px;scroll-margin-top:100px}
+.hall .sec-h h2{font-size:clamp(32px,4vw,52px)}
+.ladder{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:8px;border-radius:24px;margin-bottom:26px}
+.ladder button{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 4px 10px;border-radius:16px;border:1px solid transparent;background:none;color:var(--c-mut);cursor:pointer;transition:background .3s,color .3s}
+.ladder button b{font-family:'Lora',serif;font-size:24px;color:var(--c-head);line-height:1}
+.ladder button span{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.ladder button i{position:absolute;left:10px;right:10px;bottom:4px;height:3px;border-radius:3px;background:var(--c-line);font-style:normal;overflow:hidden}
+.ladder button i::after{content:'';position:absolute;inset:0;width:var(--w);background:var(--gold)}
+.ladder button:hover{background:var(--c-in)}
+.ladder button.on{background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2)}
+.ladder button.on b{color:var(--g2)}
+.ladder button.on i{background:rgba(16,37,28,.2)}.ladder button.on i::after{background:var(--g2)}
+.yhead{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:30px;align-items:center;margin-bottom:26px}
+.yhead .ar{font-size:28px;color:var(--p-gold);line-height:1.4;text-align:left}
+.yhead h3{font-size:clamp(26px,3vw,40px);margin:2px 0 10px}
+.yhead p{color:var(--p-mut);line-height:1.75;max-width:66ch}
+.yhead .ynav{display:flex;gap:8px;margin-top:14px}
+.ring{position:relative;width:200px;height:200px;margin-left:auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:18;transition:stroke-dasharray .6s var(--ease),stroke-dashoffset .6s var(--ease)}
+.ring .c{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .c b{display:block;font-family:'Lora',serif;font-size:44px;color:var(--p-head);line-height:1}
+.ring .c small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--p-mut)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:start}
+.col{border-radius:24px;padding:16px;background:var(--p-soft);border:1px solid var(--p-line)}
+.col h4{display:flex;align-items:center;gap:8px;font-size:17px;margin:2px 4px 12px}
+.col h4 i{width:10px;height:10px;border-radius:50%;background:var(--fc)}
+.col h4 .ar{margin-left:auto;font-size:17px;color:var(--p-gold);font-weight:400}
+.col .asub{grid-template-columns:1fr}
+.col .adisc{justify-self:start}
+.swap{animation:swap .5s var(--ease)}
+@keyframes swap{from{opacity:0;transform:translateY(12px)}}
+@media (max-width:1000px){.glance{grid-template-columns:1fr 1fr}.vband{grid-template-columns:1fr 1fr}.vband article{border-bottom:1px solid var(--p-line)}.ladder{grid-template-columns:repeat(5,1fr)}.yhead{grid-template-columns:1fr}.ring{margin:0}.dh{padding:40px 22px 26px}}
+</style>
+</head>
+<body data-nav="Alimiyyah" data-alim="alimiyyah-waha-madrasah.html">
+<div class="mock-bar"><span>ʿĀlimiyyah · Variation B — <b>Madrasah</b> · a green hero with the program at a glance, then a year ladder and each year's texts arranged by discipline</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/alimiyyah-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-alim.js"></script>
+<script>
+const { $, $$ } = Waha, W = WahaAlim, { A, esc } = W;
+let year = Number(new URLSearchParams(location.search).get('year')) || 1;
+$('#page').innerHTML = `
+  <section class="dh">
+    <div class="big" aria-hidden="true">عالم</div>
+    <span class="kicker">Talweeh Academy · Online Seminary · Part-Time Online ʿĀlimiyyah Seminary</span>
+    <h1>Rooted in tradition.<em>Knowledge for a life of service.</em></h1>
+    <p class="lead">A comprehensive, structured path through traditional Islamic education—designed for students balancing work, family, and the pursuit of sacred knowledge.</p>
+    <div class="acts"><a class="btn btn-g" href="${A.APPLY}" target="_blank" rel="noreferrer">Apply to the seminary →</a><a class="btn btn-glass" href="#hall">Explore the curriculum</a><a class="btn btn-glass" href="${A.ENROL}">For enrollment</a><span class="apill">Applications are open</span></div>
+    <div class="glance">${W.facts.map(([k, v]) => `<div><small>${k}</small><b>${v}</b></div>`).join('')}<div><small>Curriculum</small><b>10 years</b></div><div><small>Texts studied</small><b>${W.total}</b></div></div>
+  </section>
+  ${W.benefits()}
+  <section class="vband" aria-label="The five foundations of our approach" data-stagger>${A.VALUES.map((v) => `<article><div class="va">${W.VAL_AR[v.term]}</div><p class="vt">${esc(v.term)}</p><h3>${esc(v.title)}</h3><p>${esc(v.body)}</p></article>`).join('')}</section>
+  ${W.mission()}
+  <section class="hall" id="hall">
+    <div class="sec-h"><div><span class="kicker">A structured journey through the Islamic sciences</span><h2>Explore your curriculum</h2></div><p>Explore the texts and subjects across Talweeh Academy’s ten-year part-time ʿĀlimiyyah curriculum.</p></div>
+    <div class="ladder glass" role="tablist" aria-label="Curriculum year" id="ladder"></div>
+    <div id="year"></div>
+  </section>
+  ${W.apply()}`;
+
+const max = Math.max(...A.YEARS.map((y) => y.subjects.length));
+function paint() {
+  const y = A.YEARS[year - 1];
+  $('#ladder').innerHTML = A.YEARS.map((x) => `<button type="button" role="tab" aria-selected="${x.n === year}" class="${x.n === year ? 'on' : ''}" data-y="${x.n}"><b>${x.n}</b><span>Year</span><i style="--w:${(x.subjects.length / max) * 100}%"></i></button>`).join('');
+  // ring: the year's subjects by family
+  const R = 80, C = 2 * Math.PI * R; let off = 0;
+  const arcs = A.FAMILIES.map((f) => { const n = W.famCount(y, f.k); if (!n) return ''; const len = (n / y.subjects.length) * C; const s = `<circle class="f-${f.k}" r="${R}" cx="100" cy="100" style="stroke:var(--fc)" stroke-dasharray="${len - 3} ${C}" stroke-dashoffset="${-off}"><title>${esc(f.label)} · ${n}</title></circle>`; off += len; return s; }).join('');
+  const groups = A.FAMILIES.filter((f) => W.famCount(y, f.k));
+  $('#year').innerHTML = `<div class="swap">
+    <div class="yhead"><div><div class="ar">${W.yearAr(y.n)}</div><span class="kicker">${y.label} · ${y.subjects.length} subjects</span><h3>${esc(y.subtitle)}</h3><p>${esc(y.intro)}</p>
+      <div class="ynav"><button class="btn btn-glass btn-sm" type="button" data-step="-1" ${year === 1 ? 'disabled' : ''}>‹ ${year > 1 ? A.YEARS[year - 2].label : ''}</button><button class="btn btn-g btn-sm" type="button" data-step="1" ${year === 10 ? 'disabled' : ''}>${year < 10 ? A.YEARS[year].label : ''} ›</button></div></div>
+      <div class="ring"><svg viewBox="0 0 200 200"><circle r="${R}" cx="100" cy="100" style="stroke:var(--p-soft)"></circle>${arcs}</svg><div class="c"><div><b>${y.subjects.length}</b><small>subjects</small></div></div></div></div>
+    <div class="cols">${groups.map((f) => `<div class="col f-${f.k}"><h4><i></i>${esc(f.label)}<span class="ar">${f.ar}</span></h4><ol class="asubs">${y.subjects.filter((s) => s.fam === f.k).map((s) => W.subject(s)).join('')}</ol></div>`).join('')}</div></div>`;
+  history.replaceState(null, '', '?year=' + year);
+}
+$('#hall').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-y],[data-step]'); if (!b) return;
+  year = b.dataset.y ? Number(b.dataset.y) : Math.min(10, Math.max(1, year + Number(b.dataset.step)));
+  paint();
+});
+$('#ladder').addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { year = Math.min(10, Math.max(1, year + (e.key === 'ArrowRight' ? 1 : -1))); paint(); $('#ladder .on').focus(); } });
+paint(); Waha.reveal();
+</script>
+</body>
+</html>

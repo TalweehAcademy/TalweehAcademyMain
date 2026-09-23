@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hadith Specialization · Ṭarīq — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-hadith.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Hadith Specialization · Variation E — Ṭarīq (the path to research) ═══
+   Outcomes first. The hero sets the page's three words — text, transmission, verification.
+   Then "what you will be able to do": every course's learning outcomes gathered by strand,
+   each tagged with the course it comes from. Then the standalone courses you can begin now,
+   and the full curriculum as a compact two-year list. */
+.th{margin-top:40px;text-align:center}
+.triad{display:flex;justify-content:center;align-items:center;gap:clamp(14px,3vw,40px);margin-bottom:18px}
+.triad div{display:flex;flex-direction:column;align-items:center}
+.triad .ar{font-size:clamp(34px,4.4vw,58px);color:var(--p-gold);line-height:1.4}
+.triad small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--p-mut)}
+.triad i{width:8px;height:8px;border-radius:50%;background:var(--gold);transform:rotate(45deg)}
+.th h1{font-size:clamp(42px,6vw,84px);line-height:1;margin:4px 0 10px}
+.th h1 em{font-style:italic;color:var(--p-gold)}
+.th .name{font-family:'Lora',serif;font-style:italic;font-size:19px;color:var(--p-head);margin-bottom:14px}
+.th .lead{color:var(--p-mut);line-height:1.8;max-width:70ch;margin:0 auto}
+.th .facts{display:inline-flex;gap:0;margin:24px 0;border-radius:18px;overflow:hidden;border:1px solid var(--p-line);background:var(--p-card)}
+.th .facts span{padding:12px 22px;border-right:1px solid var(--p-line)}
+.th .facts span:last-child{border:0}
+.th .facts small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.th .facts b{font-family:'Lora',serif;font-size:21px;color:var(--p-head);font-weight:600}
+.th .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.blk{margin-top:100px;scroll-margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
+.sk{padding:22px;border-radius:26px;background:var(--p-card);border:1px solid var(--p-line);border-top:4px solid var(--sc);transition:transform .4s var(--spring)}
+.sk:hover{transform:translateY(-4px)}
+.sk .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.sk .ar{font-size:26px;color:var(--sc);line-height:1.3}
+.sk h3{font-size:20px}
+.sk small.n{font-size:12px;color:var(--p-mut);font-weight:700}
+.sk ul{list-style:none;display:grid;gap:10px}
+.sk li{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--p-text);line-height:1.55;font-size:14.5px}
+.sk li[hidden]{display:none}
+.sk li::before{content:'';width:8px;height:8px;margin-top:7px;border-radius:50%;background:var(--sc)}
+.sk li em{display:block;font-style:normal;font-size:11.5px;font-weight:700;color:var(--p-mut);margin-top:2px}
+.sk .more2{margin-top:12px;background:none;border:0;color:var(--sc);font-weight:800;font-size:13px;cursor:pointer;padding:0}
+.solo{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sc2{display:grid;grid-template-columns:86px 1fr;gap:14px;padding:14px;border-radius:22px;align-items:center;transition:transform .4s var(--spring),border-color .3s}
+.sc2:hover{transform:translateY(-4px);border-color:var(--gold)}
+.sc2 img{width:86px;height:108px;object-fit:cover;border-radius:12px}
+.sc2 strong{display:block;font-family:'Lora',serif;font-size:17px;color:var(--p-head);line-height:1.25}
+.sc2 small{display:block;color:var(--p-mut);font-size:12.5px;margin:3px 0 8px}
+.sc2 b{font-size:13px;color:var(--p-gold)}
+.sc2 span.y{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--p-mut);margin-bottom:4px}
+.twoy{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.twoy h3{font-size:26px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline}
+.twoy h3 small{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--p-mut)}
+.cd{border-radius:18px;background:var(--p-card);border:1px solid var(--p-line);margin-bottom:8px;transition:border-color .3s}
+.cd[open]{border-color:var(--gold)}
+.cd summary{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;list-style:none}
+.cd summary::-webkit-details-marker{display:none}
+.cd summary b{font-family:'Lora',serif;color:var(--p-gold)}
+.cd summary strong{display:block;font-family:'Lora',serif;font-size:17px;color:var(--p-head)}
+.cd summary small{color:var(--p-mut);font-size:12.5px}
+.cd summary i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--p-line);color:var(--p-gold);transition:transform .35s var(--spring)}
+.cd[open] summary i{transform:rotate(45deg);background:var(--gold);color:var(--g2);border-color:var(--gold)}
+.cd .in{padding:0 18px 18px}
+.ovw{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px}
+.ovw p{font-size:17px;line-height:1.85;color:var(--p-text);margin-bottom:12px}
+@media (max-width:900px){.twoy,.ovw{grid-template-columns:1fr}.triad small{display:none}.skills{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Hadith Specialization" data-hadith="hadith-waha-tariq.html">
+<div class="mock-bar"><span>Hadith Specialization · Variation E — <b>Ṭarīq</b> · outcomes first: what you will be able to do, the courses you can start now, then the full two-year list</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/hadith-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-hadith.js"></script>
+<script>
+const { $, $$ } = Waha, K = WahaHadith, { H, esc } = K;
+const solo = [...new Map(H.COURSES.filter((c) => c.catalogSlug).map((c) => [c.catalogSlug, c])).values()];
+const LIMIT = 4;
+$('#page').innerHTML = `
+  <section class="th">
+    <div class="triad" data-r><div><span class="ar">النَّصّ</span><small>Text</small></div><i></i><div><span class="ar">الرِّوَايَة</span><small>Transmission</small></div><i></i><div><span class="ar">التَّحْقِيق</span><small>Verification</small></div></div>
+    <span class="kicker" data-r>${esc(H.HERO.eyebrow)}</span>
+    <h1 data-r>Hadith <em>Specialization</em></h1>
+    <p class="name" data-r>${esc(H.HERO.name)} — a tradition studied through its sources.</p>
+    <p class="lead" data-r>${esc(H.HERO.lead)}</p>
+    <div class="facts" data-r>${K.facts.map(([k, v]) => `<span><small>${k}</small><b>${v}</b></span>`).join('')}<span><small>Standalone now</small><b>${solo.length} courses</b></span></div>
+    <div class="acts" data-r><a class="btn btn-g" href="#skills">What you will learn</a><a class="btn btn-glass" href="${H.ENROL}">For enrollment</a></div>
+  </section>
+
+  <section class="blk" id="skills">
+    <div class="sec-h"><div><span class="kicker">Learning outcomes</span><h2>What you will be able to do</h2></div><p>Every learning outcome across the seventeen courses, gathered by strand — each marked with the course it comes from.</p></div>
+    <div class="skills" data-stagger>${H.STRANDS.map((s) => { const list = H.COURSES.filter((c) => c.strand === s.k).flatMap((c) => c.outcomes.map((o) => ({ o, c }))).filter((x, i, a) => a.findIndex((y) => y.o === x.o) === i);
+      return `<article class="sk s-${s.k}" data-s="${s.k}"><div class="top"><div><span class="ar">${s.ar}</span><h3>${esc(s.label)}</h3></div><small class="n">${list.length} outcomes</small></div>
+        <ul>${list.map(({ o, c }, i) => `<li ${i >= LIMIT ? 'hidden' : ''}><span>${esc(o)}<em>${esc(c.title)} · Year ${c.year}</em></span></li>`).join('')}</ul>
+        ${list.length > LIMIT ? `<button class="more2" type="button">Show all ${list.length} ▾</button>` : ''}</article>`; }).join('')}</div>
+  </section>
+
+  <section class="blk">
+    <div class="sec-h"><div><span class="kicker">Begin now</span><h2>Start with a standalone course</h2></div><p>${solo.length} courses of the specialization are also offered on their own — study them now, in your own time.</p></div>
+    <div class="solo" data-stagger>${solo.map((c) => { const x = K.catalog(c), L = K.lessons(c); return `<a class="sc2 card" href="${K.courseUrl(x)}"><img src="${esc(x.poster)}" alt="" loading="lazy" /><div><span class="y">Year ${c.year} of the specialization</span><strong>${esc(x.title)}</strong><small>${esc(x.instructor)}${L.length ? ` · ${L.length} lessons` : ''}</small><b>${K.money(x)} →</b></div></a>`; }).join('')}</div>
+  </section>
+
+  <section class="blk" id="curriculum">
+    <div class="sec-h"><div><span class="kicker">Hadith Specialization curriculum</span><h2>Seventeen courses across two years.</h2></div><p>Open any course to read its overview and learning outcomes.</p></div>
+    <div class="twoy">${[1, 2].map((y) => `<div><h3>${y === 1 ? '1st Year' : '2nd Year'}<small>${K.year(y).length} courses</small></h3>${K.year(y).map((c) => `<details class="cd s-${c.strand}" data-c="${c.n}"><summary><b>${String(c.i).padStart(2, '0')}</b><span><strong>${esc(c.title)}</strong><small>${esc(c.subtitle)}</small></span><i>+</i></summary><div class="in"></div></details>`).join('')}</div>`).join('')}</div>
+  </section>
+
+  <section class="blk ovw"><div><span class="kicker">Program overview</span><h2 style="font-size:clamp(32px,4vw,52px);margin-top:6px">From preservation to critical analysis.</h2></div><div>${K.overview()}</div></section>
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Instructors</span><h2>Guided by specialist study.</h2></div></div>${K.instructors()}</section>
+  ${K.cta()}`;
+
+$$('.more2').forEach((b) => b.addEventListener('click', () => { const on = b.dataset.on !== '1'; b.dataset.on = on ? '1' : ''; b.parentElement.querySelectorAll('li').forEach((li, i) => { li.hidden = !on && i >= LIMIT; }); b.textContent = on ? 'Show fewer ▴' : `Show all ${b.parentElement.querySelectorAll('li').length} ▾`; }));
+$$('.cd').forEach((d) => d.addEventListener('toggle', () => { if (d.open) { const inner = d.querySelector('.in'); if (!inner.innerHTML) inner.innerHTML = K.detail(H.COURSES[d.dataset.c - 1], { lessonLimit: 6 }); } }));
+Waha.reveal();
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qurʾān · Fihris — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Variation 2 — Fihris: the Qurʾān home ═══
+   Hero with one big search, a "continue reading" strip, then the full index of
+   114 surahs / 30 juz as a filterable grid. Picking one opens the reader. */
+.hero{text-align:center;padding:64px 0 40px}
+.hero-logo{width:clamp(96px,9vw,128px);margin:0 auto -14px}
+.hero .ar{font-size:clamp(34px,4vw,54px);color:var(--p-gold);margin-top:18px}
+.hero h1{font-size:clamp(44px,6vw,84px);margin:4px auto 0;max-width:14ch;-webkit-text-stroke:.5px rgba(184,137,76,.5)}
+.hero p.lead{max-width:56ch;margin:18px auto 28px;color:var(--p-mut);font-size:17px}
+.bigsearch{max-width:700px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 22px;border-radius:22px}
+.bigsearch svg{width:22px;height:22px;flex:none;fill:none;stroke:var(--gold);stroke-width:2}
+.bigsearch input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:16px;padding:12px 0;color:var(--c-head)}
+.bigsearch input::placeholder{color:var(--c-mut)}
+.quick{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}
+.quick a{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700;background:var(--p-card);border:1px solid var(--p-line);color:var(--p-head);transition:.3s var(--spring)}
+.quick a:hover{border-color:var(--gold);color:var(--p-gold);transform:translateY(-2px)}
+.quick a span{font-family:'Amiri',serif;color:var(--p-gold);margin-left:6px}
+.sres{max-width:700px;margin:12px auto 0;text-align:left;display:none;padding:14px;border-radius:22px}
+.sres.on{display:block}
+.sres .res{margin:0}
+
+/* continue + features */
+.row2{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin:26px 0 70px}
+/* commonly read */
+.ft{border-width:1px;text-align:left;cursor:pointer;font:inherit}
+.cm-ov{position:fixed;inset:0;z-index:180;background:rgba(6,16,11,.45);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s}
+.cm-ov.open{opacity:1;pointer-events:auto}
+.cm{position:fixed;left:50%;top:50%;z-index:190;width:min(860px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow-y:auto;border-radius:28px;padding:22px;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:.35s var(--spring)}
+.cm.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+.cm-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.cm-h h3{font-size:26px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.cc{position:relative;display:flex;flex-direction:column;gap:2px;padding:18px 18px 16px;border-radius:22px;overflow:hidden;min-height:140px;background:var(--c-in);border:1px solid var(--c-line);transition:transform .35s var(--spring),border-color .3s}
+.cc::after{content:'';position:absolute;right:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;border:1px solid rgba(215,179,115,.25);transition:transform .5s var(--ease)}
+.cc:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 16px 36px rgba(184,137,76,.18)}
+.cc:hover::after{transform:scale(1.25)}
+.cc .ar{font-size:30px;line-height:1.5;color:var(--gold-b);text-align:right}
+.cc strong{font-size:16px;color:var(--c-head);margin-top:auto}
+.cc small{font-size:12px;color:var(--c-mut)}
+.cc .tag{position:absolute;left:16px;top:16px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--gold);color:var(--g2)}
+.cc.pass{background:rgba(215,179,115,.1);border-color:rgba(215,179,115,.35)}
+.cc.pass .ar{color:var(--gold-b)}.cc.pass strong{color:var(--cream)}.cc.pass small{color:rgba(243,232,211,.7)}
+.cont{position:relative;border-radius:28px;padding:30px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:250px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(145deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.cont small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.cont h3{font-size:34px;color:var(--cream);margin:6px 0 2px}
+.cont .ar-big{position:absolute;right:26px;top:14px;font-family:'Amiri',serif;font-size:74px;color:rgba(240,220,180,.9);line-height:1.4}
+.cont .meta{color:rgba(243,232,211,.7);font-size:14px}
+.cont .prog{height:6px;border-radius:6px;background:rgba(243,232,211,.12);margin:22px 0 18px;overflow:hidden}
+.cont .prog i{display:block;height:100%;width:38%;background:linear-gradient(90deg,var(--gold-d),var(--gold-b));border-radius:6px}
+.cont .acts{display:flex;gap:10px;flex-wrap:wrap}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ft{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px;transition:transform .4s var(--spring)}
+.ft:hover{transform:translateY(-4px)}
+.ft .i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--gold);color:var(--g2)}
+.ft .i svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ft h4{font-size:18px;margin-top:6px}
+.ft p{font-size:13px;color:var(--c-mut);line-height:1.5}
+
+/* index */
+.ih{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.ih h2{font-size:clamp(34px,4vw,52px)}
+.ih p{color:var(--p-mut)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tabs{display:inline-flex;padding:4px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line)}
+.tabs button{border:0;background:none;cursor:pointer;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--p-mut);transition:.25s}
+.tabs button.on{background:var(--c-solid);color:var(--gold-b)}
+.filter{display:flex;align-items:center;gap:8px;padding:0 14px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line)}
+.filter svg{width:16px;height:16px;fill:none;stroke:var(--p-gold);stroke-width:2}
+.filter input{border:0;background:none;outline:0;padding:11px 0;width:180px;color:var(--p-head)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.sc{display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:14px;padding:16px 18px 16px 14px;border-radius:20px;cursor:pointer}
+.sc:hover{border-color:var(--gold);box-shadow:0 14px 34px rgba(184,137,76,.16);transform:translateY(-3px)}
+.sc .dia{width:40px;height:40px;display:grid;place-items:center;position:relative;font-size:13px;font-weight:800;color:var(--p-head);transition:color .3s}
+.sc .dia::before{content:'';position:absolute;inset:4px;border-radius:9px;background:var(--p-soft);border:1px solid var(--p-line);transform:rotate(45deg);transition:.4s var(--spring)}
+.sc:hover .dia::before{background:var(--gold);border-color:var(--gold);transform:rotate(135deg)}
+.sc:hover .dia{color:var(--g2)}
+.sc .dia b{position:relative}
+.sc strong{display:block;font-size:15px;color:var(--p-head)}
+.sc small{font-size:12px;color:var(--p-mut)}
+.sc .r{text-align:right}
+.sc .r .ar{display:block;font-size:22px;line-height:1.4;color:var(--p-gold)}
+.sc .r small{font-size:11px}
+.sc .tag{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;background:var(--sage);vertical-align:middle}
+.sc .tag.m{background:var(--clay)}
+.jz{border-radius:20px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.jz:hover{border-color:var(--gold);transform:translateY(-3px)}
+.jz b{font-family:'Lora',serif;font-size:24px;color:var(--p-head)}
+.jz small{font-size:12.5px;color:var(--p-mut)}
+.jz .ar{font-size:18px;color:var(--p-gold)}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--p-mut)}
+@media(max-width:900px){.row2{grid-template-columns:1fr}}
+@media(max-width:560px){.feats{grid-template-columns:1fr}.cont .ar-big{font-size:52px}.filter input{width:120px}}
+</style>
+</head>
+<body>
+<div class="mock-bar"><span>Qurʾān · Variation 2 — <b>Fihris</b> · Qurʾān home: big search, continue reading, a “Commonly read” pop-up, and the full index of 114 surahs &amp; 30 juz</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<main><div class="wrap">
+  <section class="hero">
+    <img class="hero-logo" data-r src="../public/brand/talweeh-arabic-gold-ui.webp" alt="" />
+    <div class="ar" data-r>ٱلْقُرْءَانُ ٱلْكَرِيمُ</div>
+    <h1 data-r>The Noble Qurʾān</h1>
+    <p class="lead" data-r>Read, listen and study with seventeen English translations, word-by-word meanings, a choice of reciters, and Talweeh study notes.</p>
+    <form class="bigsearch glass" data-r id="bigForm"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="bigQ" placeholder="Search Arabic, translation, or enter 2:255" autocomplete="off" /><button class="btn btn-g" type="submit">Search</button></form>
+    <div class="sres glass" id="sres"><div class="res" id="res"></div></div>
+  </section>
+
+  <div class="row2">
+    <div class="cont" data-r="scale">
+      <div class="ar-big">الملك</div>
+      <div><small>Continue reading</small><h3>Surah Al-Mulk</h3><div class="meta">The Sovereignty · Ayah 12 of 30</div></div>
+      <div><div class="prog"><i></i></div><div class="acts"><a class="btn btn-g" href="quran-waha-reader.html">Continue →</a><a class="btn btn-glass" href="quran-waha-mushaf.html">Open in Read Mode</a></div></div>
+    </div>
+    <div class="feats" data-stagger>
+      <a class="ft glass" href="quran-waha-mushaf.html"><span class="i"><svg viewBox="0 0 24 24"><path d="M3 5.5C5.7 4.8 8 5.3 11 7v12c-3-1.7-5.3-2.2-8-1.5zM21 5.5c-2.7-.7-5-.2-8 1.5v12c3-1.7 5.3-2.2 8-1.5z"/></svg></span><h4>Read Mode</h4><p>Madinah &amp; IndoPak muṣḥaf styles, five riwāyāt.</p></a>
+      <a class="ft glass" href="quran-waha-study.html"><span class="i"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg></span><h4>Study &amp; Sources</h4><p>Iʿrāb, tafsīr, dictionaries and qirāʾāt per ayah.</p></a>
+      <a class="ft glass" href="quran-waha-listen.html"><span class="i"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14h3v6H4zM17 14h3v6h-3z"/></svg></span><h4>Listen</h4><p>Ayah-by-ayah recitation with range repeat.</p></a>
+      <button class="ft glass" type="button" id="commonBtn" aria-haspopup="dialog"><span class="i"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></span><h4>Commonly read</h4><p>Al-Kahf, Yāsīn, Al-Mulk, Āyat al-Kursī and more.</p></button>
+    </div>
+  </div>
+
+  <section id="index">
+    <div class="ih" data-r>
+      <div><div class="pill" style="padding-left:0">Fihris · Index</div><h2>Browse the Qurʾān</h2></div>
+      <div class="tools">
+        <div class="tabs" role="tablist"><button class="on" type="button" data-tab="surah">Surah</button><button type="button" data-tab="juz">Juz</button></div>
+        <div class="tabs" id="rev"><button class="on" type="button" data-rev="">All</button><button type="button" data-rev="Meccan">Meccan</button><button type="button" data-rev="Medinan">Medinan</button></div>
+        <label class="filter"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="f" placeholder="Filter surahs" /></label>
+      </div>
+    </div>
+    <div class="grid" id="grid" data-stagger></div>
+  </section>
+</div></main>
+
+<div class="cm-ov" id="cmOv"></div>
+<div class="cm glass" id="cm" role="dialog" aria-label="Commonly read">
+  <div class="cm-h"><div><div class="pill" style="padding:0">Commonly read</div><h3>Surahs &amp; passages</h3></div><button class="ib" type="button" id="cmClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="cgrid" id="cgrid"></div>
+</div>
+<div id="waha-foot"></div>
+
+<script src="assets/quran-sample-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script>
+const { $, $$, esc, surah } = Waha;
+let tab = 'surah', rev = '';
+function draw() {
+  const q = $('#f').value.trim().toLowerCase(), g = $('#grid');
+  $('#rev').style.display = tab === 'surah' ? '' : 'none';
+  $('#f').placeholder = tab === 'surah' ? 'Filter surahs' : 'Filter juz';
+  let html;
+  if (tab === 'surah') {
+    const rows = window.QURAN_SURAHS.filter((s) => (!rev || s[5] === rev) && (!q || String(s[0]) === q || s[2].toLowerCase().includes(q) || s[3].toLowerCase().includes(q)));
+    html = rows.map((s) => `<a class="sc card" href="quran-waha-reader.html"><span class="dia"><b>${s[0]}</b></span><span><strong>${s[2]}</strong><small>${esc(s[3])}</small></span><span class="r"><span class="ar">${s[1]}</span><small><i class="tag${s[5] === 'Medinan' ? ' m' : ''}"></i>${s[4]} ayahs</small></span></a>`).join('');
+  } else {
+    html = window.QURAN_JUZ.filter(([j]) => !q || String(j) === q).map(([j, c, a]) => { const s = surah(c); return `<a class="jz card" href="quran-waha-mushaf.html"><small>Juz</small><b>${j}</b><span class="ar">${s.ar}</span><small>Starts at ${s.en} ${c}:${a}</small></a>`; }).join('');
+  }
+  g.classList.remove('in');
+  g.innerHTML = html || '<p class="empty">Nothing matches that filter.</p>';
+  requestAnimationFrame(() => Waha.reveal());
+}
+$$('[data-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; $$('[data-tab]').forEach((x) => x.classList.toggle('on', x === b)); draw(); }));
+$$('[data-rev]').forEach((b) => b.addEventListener('click', () => { rev = b.dataset.rev; $$('[data-rev]').forEach((x) => x.classList.toggle('on', x === b)); draw(); }));
+$('#f').addEventListener('input', draw);
+
+/* hero search over the sample text + reference jump */
+const SAMPLE = { 1: window.QURAN_FATIHA, 2: window.QURAN_BAQARA_OPENING, 67: window.QURAN_MULK };
+function search() {
+  const q = $('#bigQ').value.trim(), box = $('#sres');
+  if (!q) { box.classList.remove('on'); return; }
+  const ref = q.match(/^(\d{1,3}):(\d{1,3})$/);
+  let html = '';
+  if (ref && window.QURAN_SURAHS[ref[1] - 1]) html = `<a href="quran-waha-reader.html"><small>${ref[1]}:${ref[2]} · ${surah(+ref[1]).en}</small><p>Jump directly to this ayah</p></a>`;
+  else {
+    const hits = [];
+    window.QURAN_SURAHS.forEach((s) => { if (s[2].toLowerCase().includes(q.toLowerCase())) hits.push(`<a href="quran-waha-reader.html"><small>Surah ${s[0]}</small><p style="color:var(--c-head);font-weight:700">${s[2]} · ${esc(s[3])}</p></a>`); });
+    for (const [n, rows] of Object.entries(SAMPLE)) rows.forEach(([a, ar, tr]) => { if (tr.toLowerCase().includes(q.toLowerCase()) || ar.includes(q)) hits.push(`<a href="quran-waha-reader.html"><small>${n}:${a} · ${surah(+n).en}</small><span class="qt">${ar}</span><p>${esc(tr)}</p></a>`); });
+    html = hits.slice(0, 6).join('') || '<p class="hint">No matches in the sample text. Try “merciful”, “Kahf” or 2:255.</p>';
+  }
+  $('#res').innerHTML = html; box.classList.add('on');
+}
+$('#bigQ').addEventListener('input', search);
+$('#bigForm').addEventListener('submit', (e) => { e.preventDefault(); search(); });
+
+/* commonly read — surahs and well-known passages */
+const COMMON = [
+  { s: 1, label: 'The Opening', ref: '7 āyāt' },
+  { s: 18, tag: 'Friday', ref: '110 āyāt' },
+  { s: 36, ref: '83 āyāt' },
+  { s: 55, ref: '78 āyāt' },
+  { s: 56, ref: '96 āyāt' },
+  { s: 67, tag: 'Nightly', ref: '30 āyāt' },
+  { pass: true, ar: 'آية الكرسي', en: 'Āyat al-Kursī', ref: 'Al-Baqarah 2:255' },
+  { pass: true, ar: 'خواتيم البقرة', en: 'Closing āyāt of Al-Baqarah', ref: 'Al-Baqarah 2:285–286' },
+  { pass: true, ar: 'المعوذات', en: 'Al-Ikhlāṣ, Al-Falaq, An-Nās', ref: 'Surahs 112–114' },
+];
+$('#cgrid').innerHTML = COMMON.map((c) => {
+  if (c.pass) return `<a class="cc pass" href="quran-waha-reader.html"><span class="ar">${c.ar}</span><strong>${c.en}</strong><small>${c.ref}</small></a>`;
+  const s = surah(c.s);
+  return `<a class="cc" href="quran-waha-reader.html">${c.tag ? `<span class="tag">${c.tag}</span>` : ''}<span class="ar">${s.ar}</span><strong>${s.n}. ${s.en}</strong><small>${esc(s.meaning)} · ${s.ayahs} āyāt</small></a>`;
+}).join('');
+const openCm = (o) => { $('#cm').classList.toggle('open', o); $('#cmOv').classList.toggle('open', o); };
+$('#commonBtn').addEventListener('click', () => openCm(true));
+$('#cmClose').addEventListener('click', () => openCm(false));
+$('#cmOv').addEventListener('click', () => openCm(false));
+addEventListener('keydown', (e) => { if (e.key === 'Escape') openCm(false); });
+
+draw();
+Waha.reveal();
+</script>
+</body>
+</html>

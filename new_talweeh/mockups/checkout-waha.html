@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Secure checkout — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-commerce.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Checkout · payment (/checkout) ═══
+   Step 2 of enrolment. Left: the order on paper — the courses, multi-course savings with a
+   meter to the next tier, a promo code, and the totals. Right: the payment panel, where the live
+   site mounts Stripe's embedded checkout (this mockup draws a stand-in with the same fields).
+   Paying shows step 3, the confirmation (#confirmed opens it directly). Mockup promo codes: TALWEEH10, RAMADAN. */
+.cgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:26px;align-items:start;margin-top:30px}
+.order{border-radius:30px;padding:28px;background:var(--paper);border:1px solid var(--p-line);color:var(--ink)}
+.order .ph{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:14px}
+.order h2{font-size:26px;margin-top:2px}
+.order .ph a{font-weight:700;font-size:13.5px;color:var(--p-gold)}
+.orow{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--p-line)}
+.orow img{width:62px;aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+.orow strong{display:block;font-family:'Lora',serif;font-size:17px;color:var(--p-head);line-height:1.25}
+.orow small{display:block;font-size:12.5px;color:var(--p-mut);margin-top:2px}
+.orow .end{text-align:right}
+.orow .end b{display:block;font-family:'Lora',serif;font-size:19px;color:var(--p-head)}
+.orow .end button{background:none;border:0;padding:0;font:inherit;font-size:12px;font-weight:700;color:var(--p-mut);cursor:pointer}
+.orow .end button:hover{color:#b0654a}
+.save{margin-top:14px;display:grid;gap:10px}
+.promo{border-radius:18px;background:var(--p-card);border:1px solid var(--p-line)}
+.promo summary{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none}
+.promo summary::-webkit-details-marker{display:none}
+.promo summary small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.promo summary strong{font-size:14.5px;color:var(--p-head)}
+.promo summary em{font-style:normal;font-size:13px;font-weight:700;color:var(--p-gold)}
+.promo[open]{border-color:var(--gold)}
+.promo.ok{border-color:#4fa27a}
+.promo form{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;padding:0 16px 14px}
+.promo p{padding:0 16px 10px;font-size:13px;color:var(--p-mut);line-height:1.55}
+.promo p.msg-ok{color:#2f7a58;font-weight:700}.promo p.msg-bad{color:#b0654a;font-weight:700}
+.fld{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--p-line);background:var(--bg);color:var(--p-text);font:inherit;font-size:14px;outline:0}
+.fld:focus{border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 25%,transparent)}
+.totals{margin-top:18px;padding-top:14px;border-top:1px solid var(--p-line);display:grid;gap:8px}
+.totals div{display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.totals .sv{color:#2f7a58}
+[data-theme="dark"] .totals .sv{color:#9fd8b8}
+.totals .tt{padding-top:10px;margin-top:4px;border-top:1px dashed var(--p-line);align-items:baseline}
+.totals .tt span{font-weight:800}
+.totals .tt strong{font-family:'Lora',serif;font-size:30px;color:var(--p-head)}
+.totals small{font-size:12px;color:var(--p-mut);line-height:1.55}
+
+/* payment panel with a stand-in for Stripe's embedded checkout */
+.pay{position:sticky;top:110px;border-radius:30px;padding:24px;display:grid;gap:16px}
+.pay .kicker{color:var(--gold)}
+.pay h2{color:var(--c-head);font-size:26px;margin-top:2px}
+.stripe{border-radius:20px;background:#fff;color:#30313d;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.stripe .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.stripe .sh b{font-size:15px}
+.stripe .sh span{font-size:11px;color:#6d6e78;display:inline-flex;gap:5px;align-items:center}
+.stripe label{display:block;font-size:13px;color:#30313d;margin:12px 0 5px}
+.stripe .in{display:flex;align-items:center;gap:8px;padding:11px 12px;border:1px solid #e0e0e6;border-radius:8px;background:#fff;font-size:15px;color:#30313d}
+.stripe .in input{flex:1;min-width:0;border:0;outline:0;font:inherit;color:inherit;background:none}
+.stripe .in:focus-within{border-color:#635bff;box-shadow:0 0 0 3px rgba(99,91,255,.18)}
+.stripe .cards{display:flex;gap:4px}
+.stripe .cards i{width:26px;height:17px;border-radius:3px;background:#eef0f4;font-style:normal;font-size:8px;font-weight:800;display:grid;place-items:center;color:#6d6e78}
+.stripe .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stripe .grp{border:1px solid #e0e0e6;border-radius:8px;overflow:hidden}
+.stripe .grp .in{border:0;border-radius:0}
+.stripe .grp .r2{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e0e0e6}
+.stripe .grp .r2 .in + .in{border-left:1px solid #e0e0e6}
+.stripe select{width:100%;padding:11px 12px;border:1px solid #e0e0e6;border-radius:8px;font:inherit;font-size:15px;color:#30313d;background:#fff}
+.stripe .paybtn{width:100%;margin-top:18px;padding:14px;border:0;border-radius:8px;background:#1e3d2e;color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:background .2s}
+.stripe .paybtn:hover{background:#173827}
+.stripe .paybtn:disabled{opacity:.7;cursor:progress}
+.stripe .fine{margin-top:12px;font-size:11.5px;color:#6d6e78;text-align:center;line-height:1.5}
+.stripe .pw{margin-top:14px;text-align:center;font-size:11.5px;color:#6d6e78}
+.stripe .pw b{color:#635bff}
+.stand-in{font-size:11.5px;color:var(--c-mut);text-align:center;margin-top:-6px}
+.secure{display:grid;gap:8px}
+.secure span{display:flex;gap:10px;font-size:13px;color:var(--c-mut);line-height:1.5}
+.secure span b{color:var(--gold);font-weight:800}
+
+/* step 3: confirmation */
+.fin{max-width:760px;margin:40px auto 0;text-align:center}
+.fin .seal{width:96px;height:96px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);font-size:44px;box-shadow:0 20px 50px rgba(184,137,76,.35);animation:pop .6s var(--spring)}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.fin h1{font-size:clamp(34px,4.4vw,56px);margin:10px 0}
+.fin > p{color:var(--p-mut);line-height:1.75;max-width:56ch;margin:0 auto}
+.receipt{margin:28px auto 0;border-radius:26px;padding:22px 24px;background:var(--paper);border:1px solid var(--p-line);text-align:left}
+.receipt .orow:first-of-type{border-top:0}
+.next{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px;text-align:left}
+.next div{padding:18px;border-radius:20px;background:var(--p-card);border:1px solid var(--p-line)}
+.next b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--c-solid);color:var(--gold);font-size:13px;margin-bottom:8px}
+.next strong{display:block;font-family:'Lora',serif;font-size:17px;color:var(--p-head)}
+.next span{font-size:13px;color:var(--p-mut);line-height:1.55}
+.fin .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+@media (max-width:1000px){.cgrid{grid-template-columns:1fr}.pay{position:static}.next{grid-template-columns:1fr}}
+@media (max-width:640px){.promo form{grid-template-columns:1fr}.order{padding:20px}.orow{grid-template-columns:52px minmax(0,1fr) auto}.orow img{width:52px}}
+</style>
+</head>
+<body data-nav="Courses" data-catalog="courses-waha-combined.html">
+<div class="mock-bar"><span>Checkout — <b>Secure payment</b> · step 2: order, savings &amp; promo code beside Stripe’s payment form (drawn as a stand-in) · promo codes to try: TALWEEH10, RAMADAN</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-commerce.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaCommerce, { esc } = M;
+let list = M.items(), coupon = null, couponMsg = '', email = '', recShown = 3, paid = null;
+
+function sums() {
+  const sub = list.reduce((s, c) => s + M.option(c).cents, 0), b = M.bundle(list.length);
+  // the better of the bundle saving and the promo code applies, as on the live checkout
+  const pct = Math.max(b.pct, coupon ? coupon.pct : 0), src = coupon && coupon.pct >= b.pct ? 'coupon' : 'bundle';
+  const save = Math.round(sub * pct / 100);
+  return { sub, b, pct, src, save, total: sub - save };
+}
+
+function paint() {
+  if (paid) return paintDone();
+  const crumbs = `<p class="crumbs"><a href="courses-waha-combined.html">Courses</a> / <a href="cart-waha.html">Study list</a> / Secure checkout</p>`;
+  if (!list.length) {
+    $('#page').innerHTML = crumbs + `<section class="cempty"><h2>No courses selected</h2><p>Choose a course or review your study list before opening checkout.</p><a class="btn btn-g" href="courses-waha-combined.html">Browse courses →</a></section>`;
+    return;
+  }
+  const s = sums();
+  $('#page').innerHTML = crumbs + `
+    <section class="chead"><div><span class="kicker">Secure enrollment</span><h1>Complete your enrollment</h1><p>Course savings are calculated by Talweeh; your payment details go directly to Stripe.</p></div>${M.steps(1)}</section>
+    <section class="cgrid">
+      <div class="order">
+        <div class="ph"><div><span class="kicker">Your courses</span><h2>Order summary</h2></div><a href="cart-waha.html">Edit study list</a></div>
+        ${list.map((c) => { const o = M.option(c); return `<div class="orow"><img src="${esc(c.poster)}" alt="" /><div><strong>${esc(c.title)}</strong><small>${esc(c.instructor)} · ${esc(o.label)} · ${esc(o.billing)}</small></div><div class="end"><b>${M.short(o.cents)}</b>${list.length > 1 ? `<button type="button" data-rm="${esc(c.slug)}">Remove</button>` : ''}</div></div>`; }).join('')}
+        <div class="save">
+          <div class="nudge"><i>%</i><div><strong>${s.b.pct ? (s.b.next ? `${s.b.pct}% multi-course saving applied — add ${s.b.need} more to save ${s.b.next.pct}%` : `${s.b.pct}% multi-course saving applied`) : `Add ${s.b.need} more course${s.b.need === 1 ? '' : 's'} to save ${s.b.next.pct}%`}</strong><span>Enrolling in several courses at once is discounted automatically.</span><div class="meter">${[1, 2, 3, 4, 5].map((k) => `<b class="${k <= list.length ? 'on' : ''}"></b>`).join('')}</div></div></div>
+          <details class="promo${coupon ? ' ok' : ''}" ${couponMsg ? 'open' : ''}>
+            <summary><div><small>Promo code</small><strong>${coupon ? `${esc(coupon.code)} applied` : 'Have a promo code?'}</strong></div><em>${coupon ? `${coupon.pct}% off` : 'Add code ⌄'}</em></summary>
+            <p class="${couponMsg ? (coupon ? 'msg-ok' : 'msg-bad') : ''}">${couponMsg || 'Enter a Talweeh promo code. Student-restricted codes may also need the matching account email.'}</p>
+            <form id="promo"><input class="fld" type="email" id="em" placeholder="Student email (optional)" value="${esc(email)}" autocomplete="email" /><input class="fld" id="code" placeholder="Promo code" maxlength="40" value="${coupon ? esc(coupon.code) : ''}" /><button class="btn btn-g btn-sm" type="submit">Apply</button></form>
+          </details>
+        </div>
+        <div class="totals">
+          <div><span>Subtotal</span><strong>${M.money(s.sub)}</strong></div>
+          ${s.pct ? `<div class="sv"><span>${s.src === 'coupon' ? `Promotion · ${esc(coupon.code)}` : 'Multi-course saving'} · ${s.pct}%</span><strong>−${M.money(s.save)}</strong></div>` : ''}
+          <div class="tt"><span>Total due today</span><strong>${M.short(s.total)}</strong></div>
+          <small>Stripe shows the final payment amount. Talweeh confirms your savings again when the payment session is created.</small>
+        </div>
+      </div>
+      <aside class="pay glass" aria-label="Payment">
+        <div><span class="kicker">Payment</span><h2>Pay securely</h2></div>
+        <form class="stripe" id="stripe">
+          <div class="sh"><b>Pay ${M.money(s.total)}</b><span>🔒 Secure checkout</span></div>
+          <label for="se">Email</label><div class="in"><input id="se" type="email" placeholder="you@example.com" value="${esc(email)}" required /></div>
+          <label>Card information</label>
+          <div class="grp"><div class="in"><input placeholder="1234 1234 1234 1234" inputmode="numeric" required /><span class="cards"><i>VISA</i><i>MC</i><i>AMEX</i></span></div><div class="r2"><div class="in"><input placeholder="MM / YY" required /></div><div class="in"><input placeholder="CVC" required /></div></div></div>
+          <label for="sn">Cardholder name</label><div class="in"><input id="sn" placeholder="Full name on card" required /></div>
+          <label for="sc">Country or region</label><select id="sc"><option>Canada</option><option>United States</option><option>United Kingdom</option><option>Other</option></select>
+          <button class="paybtn" type="submit">Pay ${M.short(s.total)}</button>
+          <p class="fine">By paying you agree to Talweeh Academy’s <a href="about-waha-dar.html#terms" style="color:#1e3d2e;font-weight:600">Terms &amp; Conditions</a>.</p>
+          <p class="pw">Powered by <b>stripe</b></p>
+        </form>
+        <p class="stand-in">Mockup stand-in — the live page shows Stripe’s own embedded form here.</p>
+        <div class="secure"><span><b>✓</b>Your card details go directly to Stripe; Talweeh never sees them.</span><span><b>✓</b>After payment, continue to your Talweeh portal account to begin studying.</span></div>
+      </aside>
+    </section>` + recs();
+  bind();
+}
+
+function recs() {
+  const pool = M.related(list, 12), s = sums();
+  if (!pool.length) return '';
+  return `<section class="recs"><div class="sec-h"><div><span class="kicker">Add courses &amp; save</span><h2>${s.b.next ? `Add another course and save ${s.b.next.pct}%` : 'Continue building your studies'}</h2></div><p>Enroll in related courses together and the multi-course saving is recalculated automatically.</p></div>
+    <div class="rgrid">${pool.slice(0, recShown).map((c) => M.recCard(c, { label: 'Add to checkout' })).join('')}</div>
+    ${recShown < pool.length ? `<div class="more-row"><button type="button" class="btn btn-glass btn-sm" id="moreRecs">Load more courses</button><span>Showing ${recShown} of ${pool.length} recommended courses</span></div>` : ''}</section>`;
+}
+
+function bind() {
+  $$('[data-rm]').forEach((b) => b.addEventListener('click', () => { list = list.filter((c) => c.slug !== b.dataset.rm); M.write(list.map((c) => c.slug)); paint(); }));
+  $$('[data-addrec]').forEach((b) => b.addEventListener('click', () => { list = [...list, M.bySlug(b.dataset.addrec)]; M.write(list.map((c) => c.slug)); paint(); }));
+  $('#moreRecs')?.addEventListener('click', () => { recShown += 3; paint(); });
+  $('#promo').addEventListener('submit', (e) => {
+    e.preventDefault();
+    email = $('#em').value.trim().toLowerCase();
+    const code = $('#code').value.trim().toUpperCase();
+    if (!code) { coupon = null; couponMsg = ''; }
+    else if (M.COUPONS[code]) { coupon = { code, pct: M.COUPONS[code] }; couponMsg = `${code} gives ${coupon.pct}% off.${coupon.pct < M.bundle(list.length).pct ? ' Your multi-course saving is larger, so it applies instead.' : ''}`; }
+    else { coupon = null; couponMsg = `“${code}” isn’t a valid promo code.`; }
+    paint();
+  });
+  $('#code').addEventListener('input', (e) => { e.target.value = e.target.value.toUpperCase(); });
+  $('#stripe').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('.paybtn'); btn.disabled = true; btn.textContent = 'Processing…';
+    setTimeout(() => { paid = { items: list, ...sums(), email: $('#se').value }; M.write([]); window.scrollTo({ top: 0, behavior: 'smooth' }); paint(); }, 1100);
+  });
+}
+
+function paintDone() {
+  const p = paid;
+  $('#page').innerHTML = `
+    <section class="chead" style="justify-content:flex-end">${M.steps(2)}</section>
+    <section class="fin">
+      <div class="seal">✓</div>
+      <span class="kicker">Enrollment confirmed</span>
+      <h1>Welcome to your studies.</h1>
+      <p>Your payment was successful and a receipt is on its way to <b>${esc(p.email || 'your email')}</b>. Your course${p.items.length === 1 ? ' is' : 's are'} activated through your Talweeh portal account.</p>
+      <div class="receipt">${p.items.map((c) => `<div class="orow"><img src="${esc(c.poster)}" alt="" /><div><strong>${esc(c.title)}</strong><small>${esc(c.instructor)} · ${esc(M.option(c).billing)}</small></div><div class="end"><b>${M.short(M.option(c).cents)}</b></div></div>`).join('')}
+        <div class="totals">${p.pct ? `<div class="sv"><span>${p.src === 'coupon' ? 'Promotion' : 'Multi-course saving'} · ${p.pct}%</span><strong>−${M.money(p.save)}</strong></div>` : ''}<div class="tt"><span>Paid</span><strong>${M.short(p.total)}</strong></div></div></div>
+      <div class="next"><div><b>1</b><strong>Check your email</strong><span>Your Stripe receipt and enrollment details.</span></div><div><b>2</b><strong>Open your portal</strong><span>Sign in to your Talweeh portal account to activate access.</span></div><div><b>3</b><strong>Begin the first lesson</strong><span>Your courses wait on your dashboard.</span></div></div>
+      <div class="acts"><a class="btn btn-g" href="#" onclick="return false">Continue to your portal →</a><a class="btn btn-glass" href="courses-waha-combined.html">Browse more courses</a></div>
+    </section>`;
+}
+
+WahaCourses.bindStudyList?.();
+// #confirmed opens straight on step 3 (for reviewing the confirmation design)
+if (location.hash === '#confirmed' && list.length) paid = { items: list, ...sums(), email: 'student@example.com' };
+paint(); Waha.reveal();
+</script>
+</body>
+</html>

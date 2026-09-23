@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ʿĀlimiyyah · Silsilah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-alim.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ ʿĀlimiyyah · Variation C — Silsilah (the chain) ═══
+   For the student who wants to see the whole syllabus at once. The hero shows one chain — the
+   Ḥadīth texts from the first year to Ṣaḥīḥ al-Bukhārī. The curriculum is a matrix: disciplines
+   down the side (grouped by family), years across the top, each text in its cell. Pick a row to
+   read its chain from start to finish, or a year to read that year. */
+.sh{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:40px}
+.chain li.gap{grid-template-columns:36px 1fr}.chain li.gap i{background:none;border-style:dashed;color:var(--c-mut)}.chain li.gap span{color:var(--c-mut);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-style:italic}
+.sh .ar{font-size:clamp(34px,4vw,48px);color:var(--p-gold);line-height:1.4;text-align:left}
+.sh h1{font-size:clamp(38px,5vw,66px);line-height:1.04;margin:10px 0 16px}
+.sh h1 em{display:block;font-style:italic;color:var(--p-gold);font-size:.6em;margin-top:8px}
+.sh .lead{color:var(--p-mut);font-size:17px;line-height:1.75;max-width:54ch}
+.sh .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:24px 0 16px}
+.sh .facts{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--p-line)}
+.sh .facts small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.sh .facts b{font-weight:700;color:var(--p-head)}
+.chain{position:relative;border-radius:30px;padding:26px 26px 20px}
+.chain .kicker{color:var(--gold)}
+.chain h3{color:var(--c-head);font-size:22px;margin:4px 0 16px}
+.chain ol{list-style:none;position:relative;display:grid;gap:6px}
+.chain ol::before{content:'';position:absolute;left:17px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(var(--gold) 0 6px,transparent 6px 11px);opacity:.7}
+.chain li{position:relative;display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;padding:4px 0;opacity:0;transform:translateX(-10px);animation:link .5s var(--ease) forwards;animation-delay:calc(var(--i) * 70ms + .2s)}
+@keyframes link{to{opacity:1;transform:none}}
+.chain li i{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;background:var(--c-solid);border:1.5px solid var(--gold);color:var(--gold-b);z-index:1}
+.chain li:last-child i{background:var(--gold);color:var(--g2)}
+.chain li span{color:var(--c-head);font-family:'Lora',serif;font-size:15.5px}
+.chain li small{color:var(--c-mut);font-size:11.5px;font-weight:700;white-space:nowrap}
+.chain .sel{margin-top:14px}
+.mx{margin-top:100px;scroll-margin-top:100px}
+.mx .sec-h h2{font-size:clamp(32px,4vw,52px)}
+.mx .chips{margin-bottom:14px}
+.mxw{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+.grid-wrap{overflow:auto;max-height:78vh;border-radius:24px;border:1px solid var(--p-line);background:var(--p-card)}
+table{border-collapse:separate;border-spacing:0;min-width:1500px;width:100%;font-size:12.5px}
+th,td{border-bottom:1px solid var(--p-line);border-right:1px solid var(--p-line);vertical-align:top;text-align:left}
+thead th{position:sticky;top:0;z-index:3;background:var(--c-solid);color:var(--c-head);padding:12px 10px;font-weight:700;cursor:pointer}
+thead th small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800}
+thead th:hover,thead th.on{background:var(--c-hi)}
+thead th.on{box-shadow:inset 0 -3px 0 var(--gold)}
+tbody th{position:sticky;left:0;z-index:2;background:var(--p-card);padding:10px 12px;min-width:170px;font-weight:700;color:var(--p-head);cursor:pointer;box-shadow:inset -1px 0 0 var(--p-line)}
+tbody th::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--fc);margin-right:8px}
+tbody tr:hover th,tbody tr.on th{background:var(--p-soft)}
+thead th:first-child{left:0;z-index:4}
+tr.fam td{position:sticky;left:0;padding:14px 12px 6px;background:var(--p-card);font-family:'Lora',serif;font-size:15px;color:var(--p-gold);border-right:0}
+td{padding:8px;min-width:128px}
+td .t{display:block;padding:7px 9px;border-radius:10px;background:color-mix(in srgb,var(--fc) 11%,transparent);border-left:3px solid var(--fc);color:var(--p-head);line-height:1.35;margin-bottom:5px;font-weight:600}
+td .t:last-child{margin-bottom:0}
+tr.on td,td.col{background:color-mix(in srgb,var(--gold) 7%,transparent)}
+tr.on td .t{box-shadow:0 0 0 1.5px var(--fc)}
+.read{position:sticky;top:110px;border-radius:26px;padding:20px;max-height:78vh;overflow:auto}
+.read .kicker{color:var(--gold)}
+.read h3{color:var(--c-head);font-size:24px;margin:4px 0 8px}
+.read p{color:var(--c-mut);font-size:14px;line-height:1.65;margin-bottom:14px}
+.read ol{list-style:none;display:grid;gap:8px}
+.read li{padding:10px 12px;border-radius:14px;background:var(--c-in);border:1px solid var(--c-line);border-left:3px solid var(--fc)}
+.read li small{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.read li strong{color:var(--c-head);font-family:'Lora',serif;font-size:15px;font-weight:600}
+.read li em{display:block;font-style:normal;color:var(--c-mut);font-size:12px;margin-top:2px}
+.read .hint{color:var(--c-mut);font-size:13px}
+@media (max-width:1100px){.sh{grid-template-columns:1fr}.mxw{grid-template-columns:1fr}.read{position:static;max-height:none}}
+</style>
+</head>
+<body data-nav="Alimiyyah" data-alim="alimiyyah-waha-silsilah.html">
+<div class="mock-bar"><span>ʿĀlimiyyah · Variation C — <b>Silsilah</b> · the whole ten-year syllabus as one matrix; follow a discipline's chain of texts or read a single year</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/alimiyyah-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-alim.js"></script>
+<script>
+const { $, $$ } = Waha, W = WahaAlim, { A, esc } = W;
+// disciplines, in family order, with the texts studied each year
+const DISCS = [];
+A.FAMILIES.forEach((f) => { const seen = []; A.YEARS.forEach((y) => y.subjects.forEach((s) => { if (s.fam === f.k && !seen.includes(s.disc)) seen.push(s.disc); })); seen.forEach((d) => DISCS.push({ d, fam: f.k })); });
+const cell = (d, y) => y.subjects.filter((s) => s.disc === d);
+const chainOf = (d) => A.YEARS.flatMap((y) => cell(d, y).map((s) => ({ y, s })));
+let fam = '', row = '', col = 0;
+
+$('#page').innerHTML = `
+  <section class="sh">
+    <div>
+      <div class="ar" data-r>السِّلْسِلَة</div>
+      <span class="kicker" data-r>Talweeh Academy · Online Seminary</span>
+      <h1 data-r>Rooted in tradition.<em>Knowledge for a life of service.</em></h1>
+      <p class="lead" data-r>A comprehensive, structured path through traditional Islamic education—designed for students balancing work, family, and the pursuit of sacred knowledge.</p>
+      <div class="acts" data-r><a class="btn btn-g" href="${A.APPLY}" target="_blank" rel="noreferrer">Apply to the seminary →</a><a class="btn btn-glass" href="#mx">See the whole syllabus</a><span class="apill">Applications are open</span></div>
+      <div class="facts" data-r>${W.facts.map(([k, v]) => `<span><small>${k}</small><b>${v}</b></span>`).join('')}<span><small>Syllabus</small><b>${DISCS.length} disciplines · ${W.total} texts</b></span></div>
+    </div>
+    <aside class="chain glass" data-r><span class="kicker">One chain, first year to last</span><h3 id="chT"></h3><ol id="chL"></ol>
+      <select class="sel" id="chS" aria-label="Show the chain of">${DISCS.filter((x) => chainOf(x.d).length > 2).map((x) => `<option>${esc(x.d)}</option>`).join('')}</select></aside>
+  </section>
+  ${W.benefits()}
+  ${W.mission()}
+  ${W.values()}
+  <section class="mx" id="mx">
+    <div class="sec-h"><div><span class="kicker">A structured journey through the Islamic sciences</span><h2>The whole syllabus</h2></div><p>Every text of the ten-year part-time ʿĀlimiyyah curriculum. Pick a discipline to follow its chain, or a year to read it.</p></div>
+    <div class="chips" id="fams"></div>
+    <div class="mxw"><div class="grid-wrap"><table id="tbl"></table></div><aside class="read glass" id="read"></aside></div>
+  </section>
+  ${W.apply()}`;
+
+// hero chain
+function heroChain(d) {
+  const c = chainOf(d);
+  $('#chT').textContent = `${d} · ${c.length} texts`;
+  const li = ({ y, s }, i, k) => `<li style="--i:${k}"><i>${i + 1}</i><span>${esc(s.t)}</span><small>Year ${y.n}</small></li>`;
+  // long chains: the opening links, a gap, and the final links
+  $('#chL').innerHTML = c.length <= 9 ? c.map((x, i) => li(x, i, i)).join('')
+    : c.slice(0, 3).map((x, i) => li(x, i, i)).join('') + `<li class="gap" style="--i:3"><i>⋮</i><span>${c.length - 7} more texts through years ${c[3].y.n}–${c[c.length - 5].y.n}</span></li>` + c.slice(-4).map((x, j) => li(x, c.length - 4 + j, 4 + j)).join('');
+}
+$('#chS').value = 'Ḥadīth'; heroChain('Ḥadīth');
+$('#chS').addEventListener('change', (e) => heroChain(e.target.value));
+
+function paint() {
+  $('#fams').innerHTML = W.famChips(fam);
+  const rows = DISCS.filter((x) => !fam || x.fam === fam);
+  let lastFam = '';
+  $('#tbl').innerHTML = `<thead><tr><th>Discipline</th>${A.YEARS.map((y) => `<th data-col="${y.n}" class="${col === y.n ? 'on' : ''}"><small>Year ${y.n}</small>${esc(y.subtitle.split(' ').slice(0, 3).join(' '))}…</th>`).join('')}</tr></thead>
+    <tbody>${rows.map((x) => { const f = W.fam(x.fam); const head = x.fam !== lastFam ? `<tr class="fam"><td colspan="11">${esc(f.label)} <span style="font-family:Amiri;margin-left:8px">${f.ar}</span></td></tr>` : ''; lastFam = x.fam;
+      return head + `<tr class="f-${x.fam}${row === x.d ? ' on' : ''}" data-row="${esc(x.d)}"><th>${esc(x.d)}</th>${A.YEARS.map((y) => `<td class="${col === y.n ? 'col' : ''}">${cell(x.d, y).map((s) => `<span class="t" title="${esc(s.d)}">${esc(s.t)}</span>`).join('')}</td>`).join('')}</tr>`; }).join('')}</tbody>`;
+  // reading panel
+  if (row) {
+    const x = DISCS.find((d) => d.d === row), c = chainOf(row);
+    $('#read').innerHTML = `<span class="kicker">${esc(W.fam(x.fam).label)}</span><h3>${esc(row)}</h3><p>${c.length} text${c.length === 1 ? '' : 's'} across ${new Set(c.map((z) => z.y.n)).size} years, in the order they are studied.</p><ol>${c.map(({ y, s }) => `<li class="f-${s.fam}"><small>${y.label}</small><strong>${esc(s.t)}</strong>${s.d ? `<em>${esc(s.d)}</em>` : ''}</li>`).join('')}</ol>`;
+  } else if (col) {
+    const y = A.YEARS[col - 1];
+    $('#read').innerHTML = `<span class="kicker">${y.label} · ${y.subjects.length} subjects</span><div class="ar" style="color:var(--gold-b);font-size:22px;text-align:left">${W.yearAr(y.n)}</div><h3>${esc(y.subtitle)}</h3><p>${esc(y.intro)}</p><ol>${y.subjects.map((s) => `<li class="f-${s.fam}"><small>${esc(s.disc)}</small><strong>${esc(s.t)}</strong>${s.d ? `<em>${esc(s.d)}</em>` : ''}</li>`).join('')}</ol>`;
+  } else {
+    $('#read').innerHTML = `<span class="kicker">Reading panel</span><h3>Choose a row or a year</h3><p class="hint">Click a discipline on the left of the table to follow its texts from the first year to the last, or a year across the top to read that year with its introduction.</p>`;
+  }
+}
+$('#mx').addEventListener('click', (e) => {
+  const f = e.target.closest('[data-fam]'); if (f) { fam = f.dataset.fam; row = ''; paint(); return; }
+  const c = e.target.closest('[data-col]'); if (c) { col = col === Number(c.dataset.col) ? 0 : Number(c.dataset.col); row = ''; paint(); return; }
+  const r = e.target.closest('tr[data-row]'); if (r) { row = row === r.dataset.row ? '' : r.dataset.row; col = 0; paint(); }
+});
+paint(); Waha.reveal();
+</script>
+</body>
+</html>

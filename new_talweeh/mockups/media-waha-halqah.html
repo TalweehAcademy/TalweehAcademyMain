@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Media · Ḥalqah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-media.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Media · Variation E — Ḥalqah (the study circle) ═══
+   A mosaic per topic — one large tile with its overview, the rest as picture tiles — and a
+   player docked in the corner that keeps playing while you browse, filter or search. Tiles
+   can Play now or be added to a queue ("Play all" queues a whole topic); the dock expands to a
+   large centred view with the overview, and shrinks back. */
+.hh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:30px;align-items:center;margin-top:34px}
+.hh .ar{font-size:clamp(70px,9vw,120px);color:var(--p-gold);line-height:1}
+.hh h1{font-size:clamp(32px,4vw,52px)}
+.hh p{color:var(--p-mut);margin-top:8px;max-width:56ch;line-height:1.7}
+.tabs{position:sticky;top:96px;z-index:40;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:34px 0 0;padding:10px;border-radius:22px}
+.tabs .seg{flex-wrap:wrap}
+.tabs .seg button{white-space:nowrap}
+.tabs .msearch{background:var(--c-in);border-color:var(--c-line);flex:0 1 300px}
+.tabs .msearch input{color:var(--c-text)}
+.topic{margin-top:54px;scroll-margin-top:190px}
+.topic-h{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.topic-h .ar{font-size:28px;color:var(--p-gold);line-height:1.2;text-align:left}
+.topic-h h2{font-size:clamp(26px,2.8vw,36px)}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:250px;gap:14px}
+.tile{position:relative;display:flex;flex-direction:column;border-radius:22px;overflow:hidden;background:var(--c-grad,var(--c-solid));border:1px solid var(--c-line);color:var(--c-text);transition:transform .4s var(--spring),box-shadow .3s}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tile .im{position:relative;flex:none;aspect-ratio:16/9;overflow:hidden;background:#0a1811}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.tile:hover img{transform:scale(1.06)}
+.tile .tx{flex:1;min-height:0;padding:12px 15px;display:flex;flex-direction:column;gap:3px;border-top:1px solid var(--c-line)}
+.tile small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.tile strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:'Lora',serif;font-size:15.5px;line-height:1.28;color:var(--c-head)}
+.tile .ov{display:none;color:var(--c-mut);font-size:13.5px;line-height:1.55;margin-top:6px;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tile.big{grid-column:span 2;grid-row:span 2}
+.tile.big .tx{padding:18px 22px;gap:5px}
+.tile.big strong{font-size:clamp(20px,2vw,26px)}
+.tile.big .ov{display:-webkit-box}
+.tile .acts{position:absolute;top:12px;right:12px;z-index:2;display:flex;gap:6px;opacity:0;transform:translateY(-6px);transition:.35s var(--spring)}
+.tile:hover .acts,.tile:focus-within .acts{opacity:1;transform:none}
+.tile .acts button{height:36px;padding:0 13px;border-radius:999px;border:1px solid rgba(215,179,115,.5);background:rgba(16,37,28,.82);color:var(--gold-b);font-size:12.5px;font-weight:700;cursor:pointer;backdrop-filter:blur(8px)}
+.tile .acts button.go{background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);border-color:transparent}
+.tile.on{outline:2px solid var(--gold);outline-offset:3px}
+.tile .eq{position:absolute;left:12px;top:12px;z-index:2;display:none;padding:5px 10px;border-radius:999px;background:var(--gold);color:var(--g2);font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.tile.on .eq{display:block}
+.tile .hit{position:absolute;inset:0;z-index:1;background:none;border:0;cursor:pointer}
+/* the dock */
+.dock{position:fixed;right:18px;bottom:18px;z-index:250;width:400px;border-radius:26px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.45);transform:translateY(140%);transition:transform .5s var(--spring),width .45s var(--ease),right .45s var(--ease),bottom .45s var(--ease)}
+.dock.show{transform:none}
+.dock .dh{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:0 4px}
+.dock .dh span{flex:1;min-width:0}
+.dock .dh small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.dock .dh strong{display:block;font-size:13.5px;color:var(--c-head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .ib{width:34px;height:34px;font-size:14px}
+.dock .vp{border-radius:18px;padding:8px}
+.dock .vp-screen{border-radius:12px}
+.dock .ext{display:none}
+.dock .q{display:none;margin-top:10px;max-height:220px;overflow:auto;gap:4px}
+.dock.qopen .q{display:grid}
+.dock .q button{display:grid;grid-template-columns:20px 72px 1fr 26px;gap:8px;align-items:center;padding:5px;border-radius:10px;border:0;background:none;color:var(--c-text);text-align:left;cursor:pointer;font-size:12.5px}
+.dock .q button:hover{background:var(--c-in)}
+.dock .q button.on{background:var(--c-hi);color:var(--gold-b)}
+.dock .q img{width:72px;aspect-ratio:16/9;object-fit:cover;border-radius:6px}
+.dock .q i{font-style:normal;color:var(--c-mut);text-align:center}
+.dock .q .rm{color:var(--c-mut)}
+.dock.big{right:50%;bottom:50%;width:min(1000px,calc(100vw - 36px));transform:translate(50%,50%);max-height:calc(100vh - 36px);overflow:auto}
+.dock.big .ext{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start;margin-top:14px;padding:0 6px 6px}
+.dock.big .ext .mov p{color:var(--c-text)}
+.dock.big .ext .mcta{background:var(--c-in);border-color:var(--c-line)}
+.dock.big .ext .mcta strong{color:var(--c-head)}
+.shade{position:fixed;inset:0;z-index:240;background:rgba(5,14,10,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s}
+.shade.on{opacity:1;pointer-events:auto}
+@media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}.hh{grid-template-columns:1fr}.hh .ar{display:none}}
+@media (max-width:560px){.bento{grid-auto-rows:auto}.tile.big{grid-row:auto}.tile.big{grid-column:span 2}.dock{left:10px;right:10px;width:auto;bottom:10px}.tabs{top:84px}}
+</style>
+</head>
+<body data-nav="Media" data-media="media-waha-halqah.html">
+<div class="mock-bar"><span>Media · Variation E — <b>Ḥalqah</b> · a mosaic per topic and a docked player that keeps playing while you browse · Play now, Queue, or Play all</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap">
+  <section class="hh">
+    <div class="ar" data-r>حَلْقَة</div>
+    <div data-r><span class="kicker">Talweeh Academy Media</span><h1>Beneficial knowledge, freely accessible.</h1><p>Sit in on short lessons and reminders from our teachers. Start one, keep browsing — it plays on in the corner — and queue what you want to hear next.</p></div>
+    <div data-r style="display:grid;gap:10px"><button class="btn btn-g" type="button" id="playAll">▶ Play everything</button><span id="subTop"></span></div>
+  </section>
+  <div class="tabs glass" id="tabs"><div class="seg" id="seg" role="tablist"></div><label class="msearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search the ḥalqah" aria-label="Search media" /></label></div>
+  <div id="topics"></div>
+</div></main>
+<div id="waha-foot"></div>
+
+<div class="shade" id="shade"></div>
+<aside class="dock glass" id="dock" aria-label="Now playing">
+  <div class="dh">
+    <span><small id="dk">Now playing</small><strong id="dt"></strong></span>
+    <button class="ib" type="button" id="dPrev" aria-label="Previous in queue" title="Previous">⏮</button>
+    <button class="ib" type="button" id="dNext" aria-label="Next in queue" title="Next">⏭</button>
+    <button class="ib" type="button" id="dQ" aria-label="Show the queue" title="Queue">☰</button>
+    <button class="ib" type="button" id="dBig" aria-label="Expand" title="Expand / shrink">⤢</button>
+    <button class="ib" type="button" id="dX" aria-label="Close player" title="Close">✕</button>
+  </div>
+  <div id="player"></div>
+  <div class="q" id="queue"></div>
+  <div class="ext"><div><div id="dCta"></div><div class="mov" id="dOv" style="margin-top:12px"></div></div><span id="dSub"></span></div>
+</aside>
+
+<script src="assets/media-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-media.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaMedia, { esc } = M;
+const params = new URLSearchParams(location.search);
+const TOPICS = M.CATS.filter((c) => M.count(c.slug));
+let tab = TOPICS.some((c) => c.slug === params.get('cat')) ? params.get('cat') : 'all', q = '';
+let queue = [], qi = -1;
+
+$('#subTop').innerHTML = M.subscribe;
+function paintTabs() {
+  $('#seg').innerHTML = [{ slug: 'all', label: 'All' }, ...TOPICS].map((c) => `<button type="button" role="tab" class="${tab === c.slug ? 'on' : ''}" data-t="${c.slug}">${esc(c.label)}</button>`).join('');
+}
+function tile(m, big) {
+  return `<article class="tile${big ? ' big' : ''}${queue[qi] === m ? ' on' : ''}" data-v="${esc(m.slug)}">
+    <span class="im"><img src="${M.thumb(m.id)}" alt="" loading="lazy" /></span><button class="hit" type="button" data-play aria-label="Play ${esc(m.title)}"></button>
+    <span class="eq">Playing</span>
+    <span class="acts"><button type="button" data-queue>+ Queue</button><button type="button" class="go" data-play>▶ Play</button></span>
+    <span class="tx"><small>${esc(m.speaker)}</small><strong>${esc(m.title)}</strong>${big ? `<span class="ov">${esc(m.short)}</span>` : ''}</span>
+  </article>`;
+}
+function paint() {
+  paintTabs();
+  const show = TOPICS.filter((c) => tab === 'all' || c.slug === tab);
+  $('#topics').innerHTML = show.map((c) => {
+    const list = M.MEDIA.filter((m) => M.match(m, { cat: c.slug, q }));
+    if (!list.length) return '';
+    return `<section class="topic" id="t-${c.slug}"><div class="topic-h"><div><div class="ar">${c.ar}</div><h2>${esc(c.label)}</h2></div><button class="btn btn-glass btn-sm" type="button" data-all="${c.slug}">▶ Play all ${list.length}</button></div>
+      <div class="bento" data-stagger>${list.map((m, i) => tile(m, i === 0 && list.length > 2)).join('')}</div></section>`;
+  }).join('') || '<p class="empty" style="margin-top:40px">Nothing in the ḥalqah matches that search.</p>';
+  Waha.reveal();
+}
+$('#seg').addEventListener('click', (e) => { const b = e.target.closest('[data-t]'); if (!b) return; tab = b.dataset.t; paint(); scrollTo({ top: $('#tabs').offsetTop - 80, behavior: 'smooth' }); });
+$('#q').addEventListener('input', (e) => { q = e.target.value; paint(); });
+
+// the dock
+const player = new WahaCourses.WahaPlayer($('#player'), { onEnded: () => { if (qi < queue.length - 1) go(qi + 1); } });
+function go(i) {
+  qi = i; const m = queue[qi];
+  player.load(m.id, { title: m.title, kicker: m.speaker, autoplay: true });
+  $('#dt').textContent = m.title; $('#dk').textContent = queue.length > 1 ? `Now playing · ${qi + 1} of ${queue.length}` : 'Now playing';
+  $('#dCta').innerHTML = M.courseCta(m); $('#dOv').innerHTML = M.paras(m.overview);
+  $('#dock').classList.add('show');
+  $('#dPrev').disabled = qi <= 0; $('#dNext').disabled = qi >= queue.length - 1;
+  $$('.tile').forEach((t) => t.classList.toggle('on', t.dataset.v === m.slug));
+  paintQueue();
+}
+function paintQueue() {
+  $('#queue').innerHTML = queue.map((m, i) => `<button type="button" data-qi="${i}" class="${i === qi ? 'on' : ''}"><i>${i === qi ? '▶' : i + 1}</i><img src="${M.thumb(m.id)}" alt="" /><span>${esc(m.title)}</span><i class="rm" data-rm="${i}" title="Remove">✕</i></button>`).join('');
+  $('#dQ').textContent = queue.length > 1 ? `☰` : '☰';
+  $('#dQ').title = `Queue · ${queue.length}`;
+}
+function toast(text) { $('#dk').textContent = text; setTimeout(() => { if (queue[qi]) $('#dk').textContent = queue.length > 1 ? `Now playing · ${qi + 1} of ${queue.length}` : 'Now playing'; }, 1400); }
+$('#topics').addEventListener('click', (e) => {
+  const all = e.target.closest('[data-all]');
+  if (all) { queue = M.MEDIA.filter((m) => M.match(m, { cat: all.dataset.all, q })); go(0); return; }
+  const t = e.target.closest('.tile'); if (!t) return;
+  const m = M.bySlug(t.dataset.v);
+  if (e.target.closest('[data-queue]')) {
+    if (!queue.includes(m)) queue.push(m);
+    if (qi < 0) go(queue.length - 1); else { paintQueue(); $('#dNext').disabled = qi >= queue.length - 1; toast(`Queued · ${queue.length} in queue`); }
+    return;
+  }
+  if (e.target.closest('[data-play]')) { const at = queue.indexOf(m); if (at >= 0) go(at); else { queue.splice(qi + 1, 0, m); go(qi + 1); } }
+});
+$('#playAll').addEventListener('click', () => { queue = M.MEDIA.slice(); go(0); });
+$('#dPrev').addEventListener('click', () => qi > 0 && go(qi - 1));
+$('#dNext').addEventListener('click', () => qi < queue.length - 1 && go(qi + 1));
+$('#dQ').addEventListener('click', () => $('#dock').classList.toggle('qopen'));
+$('#queue').addEventListener('click', (e) => {
+  const rm = e.target.closest('[data-rm]');
+  if (rm) { const i = Number(rm.dataset.rm); if (i === qi) return; queue.splice(i, 1); if (i < qi) qi--; paintQueue(); $('#dNext').disabled = qi >= queue.length - 1; return; }
+  const b = e.target.closest('[data-qi]'); if (b) go(Number(b.dataset.qi));
+});
+const setBig = (on) => { $('#dock').classList.toggle('big', on); $('#shade').classList.toggle('on', on); $('#dBig').textContent = on ? '⤡' : '⤢'; };
+$('#dBig').addEventListener('click', () => setBig(!$('#dock').classList.contains('big')));
+$('#shade').addEventListener('click', () => setBig(false));
+$('#dX').addEventListener('click', () => { player.pause(); setBig(false); $('#dock').classList.remove('show', 'qopen'); queue = []; qi = -1; $$('.tile.on').forEach((t) => t.classList.remove('on')); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape') setBig(false); });
+$('#dSub').innerHTML = M.subscribe;
+
+paint();
+if (params.get('cat')) setTimeout(() => scrollTo({ top: $('#tabs').offsetTop - 80 }), 60);
+</script>
+</body>
+</html>

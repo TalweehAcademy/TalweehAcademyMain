@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Courses · Maktabah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Courses · Variation 1 — Maktabah: the library ═══
+   Hero with live counts, four pathways (All / Free / Live / Specialization), a sticky glass
+   search + sort bar, subject chips with counts, and a poster grid. */
+.paths-wrap{margin-top:8px}
+</style>
+</head>
+<body data-nav="Courses" data-course-page="course-waha-theatre.html">
+<div class="mock-bar"><span>Courses · Variation 1 — <b>Maktabah</b> · the library: pathways, sticky search &amp; sort, subject chips, poster grid · click a course to open its page</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<main><div class="wrap">
+  <section class="c-hero">
+    <div class="ar" data-r>حَيَاةُ الْعِلْمِ مُذَاكَرَتُهُ</div>
+    <h1 data-r>Study the Islamic sciences at your own pace.</h1>
+    <p class="lead" data-r>Structured, self-paced courses taught by Talweeh instructors — free courses open right here, paid courses continue in the Student Portal.</p>
+    <div class="c-stats" data-r id="stats"></div>
+  </section>
+
+  <div class="paths paths-wrap" data-stagger>
+    <a class="path glass on" href="#" data-path="all"><small>Self-paced</small><strong>Course Library</strong><span>Every public course</span></a>
+    <a class="path glass" href="#" data-path="free"><small>Open access</small><strong>Free Courses</strong><span>Watch every lesson here</span></a>
+    <a class="path glass" href="#"><small>Scheduled</small><strong>Live · Alimiyyah</strong><span>Guided classes with instructors</span></a>
+    <a class="path glass" href="#"><small>Focused</small><strong>Specialization</strong><span>Ḥadīth Specialization pathway</span></a>
+  </div>
+
+  <section class="sec">
+    <div class="fbar glass">
+      <label class="search-in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search courses, instructors or subjects" autocomplete="off" /></label>
+      <select id="sort" aria-label="Sort courses"><option value="">Recommended</option><option value="free">Free first</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
+      <span class="cnt" id="cnt"></span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="sec-h" style="margin-top:0"><div><span class="kicker">Course Library</span><h2 id="title">All Courses</h2></div></div>
+    <div class="cgrid" id="grid"></div>
+  </section>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, card, counts, match } = WahaCourses;
+const C = window.COURSES, CATS = window.COURSE_CATEGORIES, N = counts();
+let cat = '', free = false;
+$('#stats').innerHTML = `<span><b>${C.length}</b> courses</span><span><b>${C.filter((c) => c.free).length}</b> free</span><span><b>${C.reduce((n, c) => n + c.lessons, 0)}</b> lessons</span><span><b>${CATS.filter((c) => N[c.slug]).length}</b> subjects</span>`;
+function chips() {
+  $('#chips').innerHTML = `<button class="chip${!cat && !free ? ' on' : ''}" data-c="">All <b>${C.length}</b></button><button class="chip free${free ? ' on' : ''}" data-free="1">Free <b>${C.filter((c) => c.free).length}</b></button>`
+    + CATS.filter((c) => N[c.slug]).map((c) => `<button class="chip${cat === c.slug ? ' on' : ''}" data-c="${c.slug}">${esc(c.label)} <b>${N[c.slug]}</b></button>`).join('');
+}
+function draw() {
+  const q = $('#q').value.trim(), sort = $('#sort').value;
+  let list = C.filter((c) => (!cat || c.cat === cat) && (!free || c.free) && match(c, q));
+  if (sort === 'free') list = [...list].sort((a, b) => b.free - a.free);
+  if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === 'price') list = [...list].sort((a, b) => a.price - b.price);
+  if (sort === 'lessons') list = [...list].sort((a, b) => b.lessons - a.lessons);
+  $('#title').textContent = free ? 'Free Courses' : cat ? CATS.find((c) => c.slug === cat).label : 'All Courses';
+  $('#cnt').textContent = `${list.length} of ${C.length}`;
+  $('#grid').innerHTML = list.map(card).join('') || `<p class="empty">No course matches “${esc(q)}”. Try another subject or clear the search.</p>`;
+  $$('.path').forEach((p) => p.classList.toggle('on', p.dataset.path === (free ? 'free' : !cat ? 'all' : '')));
+  chips();
+}
+$('#chips').addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (!b) return; if (b.dataset.free) { free = !free; cat = ''; } else { cat = b.dataset.c; free = false; } draw(); });
+$$('[data-path]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); free = a.dataset.path === 'free'; cat = ''; draw(); $('#grid').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+$('#q').addEventListener('input', draw); $('#sort').addEventListener('change', draw);
+draw(); WahaCourses.bindStudyList(); Waha.reveal();
+</script>
+</body>
+</html>

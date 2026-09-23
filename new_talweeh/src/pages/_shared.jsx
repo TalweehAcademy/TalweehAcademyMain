@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import SocialGlyph from '../components/SocialGlyph'
+import { LEGACY_PORTAL } from '../constants/links'
 import { ASSET } from '../constants/assets'
 import { useContent } from '../hooks/useContent'
 import { Editable } from '../components/ContentEditor'
@@ -8,7 +10,7 @@ import CommerceCartLink from '../components/CommerceCartLink'
 
 const preview = (label) => ({ label, to: `/navigation-preview/${encodeURIComponent(label)}` })
 const courseCategoryLink = (label, slug) => ({ label, to: `/courses?category=${encodeURIComponent(slug)}` })
-const navLinks = [
+export const navLinks = [
   { label: 'Quran', to: '/quran' },
   { label: 'Courses', groups: [
     { title: 'Browse courses', links: [
@@ -59,7 +61,7 @@ const navLinks = [
   ] }] },
 ]
 
-function NavigationDropdown({ item, closeMenu }) {
+export function NavigationDropdown({ item, closeMenu }) {
   const [open, setOpen] = useState(false)
   const container = useRef(null)
   const trigger = useRef(null)
@@ -97,7 +99,7 @@ function NavigationDropdown({ item, closeMenu }) {
   )
 }
 
-const footerLinks = {
+export const footerLinks = {
   Explore: [
     { label: 'Courses', to: '/courses' },
     { label: 'Arabic', to: '/arabic' },
@@ -110,7 +112,7 @@ const footerLinks = {
     { label: 'Articles', to: '/articles' },
   ],
   Student: [
-    { label: 'Student Portal', to: '/navigation-preview/Student%20Portal' },
+    { label: 'Legacy Portal', to: LEGACY_PORTAL },
     { label: 'Contact', to: '/contact-us' },
     { label: 'Terms & Conditions', to: '/p/terms-conditions' },
   ],
@@ -126,7 +128,7 @@ export function SocialIcons({ social, className = 'social-links' }) {
           aria-label={s.label}
           {...(s.href && s.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
         >
-          {s.icon}
+          <SocialGlyph label={s.label} fallback={s.icon} />
         </a>
       ))}
     </div>
@@ -167,8 +169,8 @@ export function PageHeader() {
     <header className="site-header academy-header">
       <div className="site-header-top">
         <div className="top-bar-links">
-          <a className="top-bar-btn" href="https://portal.talweehacademy.com">
-            Student Portal
+          <a className="top-bar-btn" href={LEGACY_PORTAL}>
+            Legacy Portal
           </a>
         </div>
         <div className="academy-top-tools">
@@ -205,11 +207,11 @@ export function PageHeader() {
             ? <NavigationDropdown key={item.label} item={item} closeMenu={() => setMenuOpen(false)} />
             : <Link to={item.to} key={item.label} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
           <CommerceCartLink className="academy-cart-mobile" onNavigate={() => setMenuOpen(false)} />
-          <Link className="academy-portal-mobile" to="/navigation-preview/Student%20Portal" onClick={() => setMenuOpen(false)}>Student Portal</Link>
+          <a className="academy-portal-mobile" href={LEGACY_PORTAL} onClick={() => setMenuOpen(false)}>Legacy Portal</a>
         </div>
         <div className="nav-actions">
           <CommerceCartLink />
-          <Link className="journey-button" to="/navigation-preview/Student%20Portal">Student Portal</Link>
+          <a className="journey-button" href={LEGACY_PORTAL}>Legacy Portal</a>
         </div>
       </nav>
     </header>
@@ -254,9 +256,9 @@ export function PageFooter() {
           {Object.entries(footerLinks).map(([heading, links]) => (
             <div className="footer-column" key={heading}>
               <h4>{heading}</h4>
-              {links.map(({ label, to }) => (
-                <Link to={to} key={label}>{label}</Link>
-              ))}
+              {links.map(({ label, to }) => (/^https?:\/\//.test(to)
+                ? <a href={to} key={label} target="_blank" rel="noreferrer">{label}</a>
+                : <Link to={to} key={label}>{label}</Link>))}
             </div>
           ))}
           <div className="footer-column">

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Media · Fihrist — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-media.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Media · Variation C — Fihrist (the index) ═══
+   A catalogue for looking things up: a search-first header, a sidebar of topics, speakers and
+   "from a course", and numbered rows with each video's overview. A row opens in place to play
+   the video in the framed player — one open at a time — without leaving the list. */
+.ihead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;margin-top:36px;padding-bottom:26px;border-bottom:1px solid var(--p-line)}
+.ihead .ar{font-size:30px;color:var(--p-gold);line-height:1.4;text-align:left}
+.ihead h1{font-size:clamp(34px,4.4vw,56px);margin:4px 0 16px}
+.ihead .msearch{flex:none;width:min(620px,100%);padding:15px 20px}
+.ihead .tally{display:flex;gap:26px}
+.ihead .tally span{font-size:12.5px;color:var(--p-mut);font-weight:600}
+.ihead .tally b{display:block;font-family:'Lora',serif;font-size:34px;color:var(--p-head);line-height:1}
+.ilay{display:grid;grid-template-columns:270px minmax(0,1fr);gap:26px;margin-top:28px;align-items:start}
+.iside{position:sticky;top:110px;border-radius:24px;padding:18px}
+.iside h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:14px 0 8px}
+.iside h4:first-child{margin-top:0}
+.iopt{white-space:nowrap;display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:9px 12px;border-radius:12px;border:1px solid transparent;background:none;color:var(--c-text);font-size:13.5px;font-weight:600;text-align:left;cursor:pointer;transition:background .25s}
+.iopt:hover:not(:disabled){background:var(--c-in)}
+.iopt.on{background:var(--c-hi);border-color:var(--c-line);color:var(--gold-b)}
+.iopt b{font-size:11px;color:var(--c-mut)}
+.iopt:disabled{opacity:.4;cursor:default}
+.iopt .ar{font-size:15px;color:var(--c-mut);margin-left:auto;margin-right:8px}
+.iside .only{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;font-size:13.5px;font-weight:600;color:var(--c-text)}
+.iside .clear{width:100%;margin-top:12px}
+.ibar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.ibar h2{font-size:clamp(24px,2.6vw,32px)}
+.ibar select{padding:9px 14px;border-radius:999px;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-text);font-weight:600}
+.irows{display:grid;gap:10px}
+.irow{border-radius:22px;background:var(--p-card);border:1px solid var(--p-line);transition:border-color .3s,box-shadow .3s}
+.irow:hover{border-color:rgba(215,179,115,.6)}
+.irow.open{border-color:var(--gold);box-shadow:var(--shadow)}
+.irow-h{display:grid;grid-template-columns:44px 200px minmax(0,1fr) 36px;gap:16px;align-items:center;width:100%;padding:12px;background:none;border:0;text-align:left;cursor:pointer;color:inherit}
+.irow-h .n{font-family:'Lora',serif;font-size:20px;color:var(--p-gold);text-align:center}
+.irow-h img{width:200px;aspect-ratio:16/9;object-fit:cover;border-radius:14px}
+.irow-h small{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.irow-h strong{display:block;font-family:'Lora',serif;font-size:19px;line-height:1.3;color:var(--p-head);margin:3px 0 5px}
+.irow-h p{font-size:13.5px;color:var(--p-mut);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.irow-h .mc-co{display:inline-block;margin-top:8px}
+.irow-h .chev{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--p-line);color:var(--p-gold);transition:transform .4s var(--spring),background .3s}
+.irow.open .chev{transform:rotate(180deg);background:var(--gold);color:var(--g2);border-color:var(--gold)}
+.irow-x{display:none;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;padding:4px 18px 20px}
+.irow.open .irow-x{display:grid}
+.irow.open .irow-h p{-webkit-line-clamp:unset;display:none}
+.irow-x .ix-side{display:grid;gap:12px;align-content:start}
+.irow-x .acts{display:flex;gap:8px;flex-wrap:wrap}
+.irow-x .mov{max-height:320px;overflow:auto;padding-right:6px}
+@media (max-width:1000px){.ilay{grid-template-columns:1fr}.iside{position:static}.irow-x{grid-template-columns:1fr}.ihead{grid-template-columns:1fr}}
+@media (max-width:700px){.irow-h{grid-template-columns:1fr 36px}.irow-h .n{display:none}.irow-h img{grid-column:1/-1;width:100%}}
+</style>
+</head>
+<body data-nav="Media" data-media="media-waha-fihrist.html">
+<div class="mock-bar"><span>Media · Variation C — <b>Fihrist</b> · search first, a sidebar of topics and speakers, and rows that open in place to play</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap">
+  <header class="ihead">
+    <div>
+      <div class="ar">فِهْرِسُ المَرْئِيَّات</div>
+      <h1>The media index</h1>
+      <label class="msearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search a title, a topic, a teacher or a book…" aria-label="Search media" /></label>
+    </div>
+    <div class="tally" id="tally"></div>
+  </header>
+  <div class="ilay">
+    <aside class="iside glass" id="side" aria-label="Filter media"></aside>
+    <section>
+      <div class="ibar"><h2 id="title"></h2>
+        <select id="sort" aria-label="Order"><option value="">Catalogue order</option><option value="az">Title A–Z</option><option value="course">Course excerpts first</option></select></div>
+      <div class="irows" id="rows"></div>
+    </section>
+  </div>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/media-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-media.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaMedia, { esc } = M;
+const params = new URLSearchParams(location.search);
+const st = { cat: M.CATS.some((c) => c.slug === params.get('cat')) ? params.get('cat') : 'all', speaker: '', course: false, q: '', sort: '' };
+let openSlug = params.get('v') || '', player = null;
+
+$('#tally').innerHTML = `<span><b>${M.MEDIA.length}</b>videos</span><span><b>${M.speakers.filter((s) => s !== "Talweeh Academy").length}</b>teachers</span><span><b>${new Set(M.MEDIA.filter((m) => m.course).map((m) => m.course.slug)).size}</b>courses quoted</span>`;
+
+function paintSide() {
+  const n = (over) => M.MEDIA.filter((m) => M.match(m, { ...st, ...over })).length;
+  $('#side').innerHTML = `
+    <h4>Topic</h4>
+    ${[{ slug: 'all', label: 'All media' }, ...M.CATS].map((c) => { const k = n({ cat: c.slug }); return `<button class="iopt${st.cat === c.slug ? ' on' : ''}" type="button" data-cat="${c.slug}" ${k || st.cat === c.slug ? '' : 'disabled'}>${esc(c.label)}${c.ar ? `<span class="ar">${c.ar}</span>` : ''}<b>${k}</b></button>`; }).join('')}
+    <h4>Teacher</h4>
+    ${['', ...M.speakers].map((s) => `<button class="iopt${st.speaker === s ? ' on' : ''}" type="button" data-sp="${esc(s)}">${esc(s || 'Every teacher')}<b>${n({ speaker: s })}</b></button>`).join('')}
+    <h4>Source</h4>
+    <div class="only">Only excerpts from our courses <button class="sw${st.course ? ' on' : ''}" type="button" data-only aria-label="Only course excerpts"></button></div>
+    <button class="btn btn-glass btn-sm clear" type="button" data-clear>Clear filters</button>`;
+}
+$('#side').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.cat) st.cat = b.dataset.cat;
+  else if ('sp' in b.dataset) st.speaker = b.dataset.sp;
+  else if ('only' in b.dataset) st.course = !st.course;
+  else if ('clear' in b.dataset) { Object.assign(st, { cat: 'all', speaker: '', course: false, q: '' }); $('#q').value = ''; }
+  paint();
+});
+
+function paint() {
+  paintSide();
+  let list = M.MEDIA.filter((m) => M.match(m, st));
+  if (st.sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+  if (st.sort === 'course') list = [...list].sort((a, b) => Number(!!b.course) - Number(!!a.course));
+  $('#title').textContent = `${st.cat === 'all' ? 'All media' : M.catLabel(st.cat)} · ${list.length}`;
+  if (player) { player.destroy(); player = null; }
+  $('#rows').innerHTML = list.map((m, i) => `
+    <article class="irow" data-v="${esc(m.slug)}">
+      <button class="irow-h" type="button" aria-expanded="false">
+        <span class="n">${String(i + 1).padStart(2, '0')}</span>
+        <img src="${M.thumb(m.id)}" alt="" loading="lazy" />
+        <span><small>${esc(M.catLabel(m.cats[0]))} · ${esc(m.speaker)}</small><strong>${esc(m.title)}</strong><p>${esc(m.short)}</p>${m.course ? `<span class="mc-co">From ${esc(m.course.title)}</span>` : ''}</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="irow-x"></div>
+    </article>`).join('') || '<p class="empty">Nothing in the index matches. Try another topic or clear the filters.</p>';
+  if (openSlug && list.some((m) => m.slug === openSlug)) toggle($(`.irow[data-v="${CSS.escape(openSlug)}"]`), false);
+}
+
+function toggle(row, autoplay = true) {
+  const was = row.classList.contains('open');
+  $$('.irow.open').forEach((r) => { r.classList.remove('open'); r.querySelector('.irow-h').setAttribute('aria-expanded', 'false'); r.querySelector('.irow-x').innerHTML = ''; });
+  if (player) { player.destroy(); player = null; }
+  if (was) { openSlug = ''; history.replaceState(null, '', location.pathname); return; }
+  const m = M.bySlug(row.dataset.v); openSlug = m.slug;
+  row.classList.add('open'); row.querySelector('.irow-h').setAttribute('aria-expanded', 'true');
+  const x = row.querySelector('.irow-x');
+  x.innerHTML = `<div><div class="pl"></div><p class="vp-keys"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed</p></div>
+    <div class="ix-side">${M.courseCta(m)}<div class="mov">${M.paras(m.overview)}</div>
+      <div class="acts"><a class="btn btn-g btn-sm" href="${M.watchUrl(m)}">Open the watch page →</a>${M.subscribe}</div></div>`;
+  player = new WahaCourses.WahaPlayer(x.querySelector('.pl'));
+  player.load(m.id, { title: m.title, kicker: m.speaker, autoplay });
+  history.replaceState(null, '', '?v=' + encodeURIComponent(m.slug));
+  requestAnimationFrame(() => row.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+}
+$('#rows').addEventListener('click', (e) => { const h = e.target.closest('.irow-h'); if (h) toggle(h.closest('.irow')); });
+$('#q').addEventListener('input', (e) => { st.q = e.target.value; paint(); });
+$('#sort').addEventListener('change', (e) => { st.sort = e.target.value; paint(); });
+document.documentElement.style.scrollPaddingTop = '110px';
+paint();
+</script>
+</body>
+</html>

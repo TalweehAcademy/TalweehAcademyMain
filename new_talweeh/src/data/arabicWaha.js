@@ -1,0 +1,509 @@
+// Arabic program data for the Wāḥa page (/arabic) — modules, objectives, FAQ, links and the intro video,
+// from src/content/arabicProgram.js. "format"/"hours" per module come from the FAQ answers; "track"
+// groups each text by discipline (Naḥw, Ṣarf, Adab, Qurʾān) for the ladder of texts.
+
+export const ARB = {
+  "LINKS": {
+    "membership": "https://talweeharabic.com/membership-pricing/",
+    "terms": "https://talweeharabic.com/terms-conditions/",
+    "calendarPdf": "/legacy-assets/talweeharabic/2026/03/Talweeh-Arabic-Calendar.pdf",
+    "signupVideo": "https://www.youtube.com/watch?v=f5vb0tnNQQA",
+    "telegram": "https://t.me/talweeh_academy"
+  },
+  "HERO": {
+    "heading": "Don’t just Recite the Qur’an — Understand it!",
+    "video": {
+      "src": "https://www.youtube.com/watch?v=kIMmDbpQt64",
+      "thumbnail": "/legacy-assets/talweeharabic/2026/03/kIMmDbpQt64-HD.webp"
+    }
+  },
+  "INTRO_VIDEO": "JB4WN6Dl1uI",
+  "OBJ_INTRO": "Our 2-Year Arabic course is meticulously designed, drawing from the rich Islamic tradition. In just 6 hours per week over the course of two years, students will confidently understand Quranic passages, navigate Arabic dictionaries, and read/translate unvowelized (without tashkīl) texts. The curriculum covers Nahw and Sarf sciences through multiple texts, with extensive reading practice. The program culminates in a detailed Tafsir of Juzz ‘Amma, introduction to Balaghah, and exploration of advanced Islamic sciences like Hadith, Fiqh, Aqeedah, and more.",
+  "OBJECTIVES": [
+    {
+      "title": "Reading and writing",
+      "text": "Students will develop foundational proficiency in the sciences of Naḥw and Ṣarf, enabling them to accurately read Arabic texts and construct grammatically sound sentences. Further exploration of these disciplines will follow."
+    },
+    {
+      "title": "Speaking",
+      "text": "Students will acquire the ability to engage in basic conversational Arabic, supported and reinforced through dedicated ḥiwār (dialogue) sessions."
+    },
+    {
+      "title": "Syntax (النحو)",
+      "text": "Develop the ability to identify grammatical roles (iʿrāb) of words within sentences with precision. Apply major syntactic rules to construct correct nominal and verbal sentences. Analyze complex sentence structures, including conditional phrases, relative clauses, and particles affecting case endings. Demonstrate proficiency in parsing (taʿrīb) and explaining grammatical reasoning in both classical and modern texts."
+    },
+    {
+      "title": "Morphology (الصرف)",
+      "text": "Master recognition of root letters and common verb patterns across triliteral and quadriliteral forms. Conjugate verbs accurately in all major tenses, voices, and forms, including irregular verbs. Derive nouns, adjectives, and verbal nouns from given roots using standard morphological principles. Understand and apply morphological patterns to determine meaning, form, and usage within sentences."
+    },
+    {
+      "title": "Rhetoric (البلاغة)",
+      "text": "Identify and analyze key rhetorical devices in Arabic, including imagery (bayān), eloquence (maʿānī), and embellishment (badīʿ). Distinguish between literal and figurative expressions, and interpret deeper layers of meaning in classical texts. Evaluate the effectiveness of rhetorical choices in conveying emphasis, clarity, and nuance."
+    },
+    {
+      "title": "Application in Adab and Tafsir",
+      "text": "Read and interpret selected prose and poetry, identifying themes, style, and linguistic features. Analyze literary works using grammatical, morphological, and rhetorical tools to uncover subtleties of meaning. Apply grammatical analysis (iʿrāb) to Qur’anic verses to understand variations in meaning and exegetical implications. Use morphology to interpret verb forms, noun patterns, and derived structures that influence tafsīr. Recognize rhetorical devices within Qur’anic discourse and understand their role in conveying emphasis, guidance, and persuasion. Integrate syntax, morphology, and rhetoric to arrive at a holistic linguistic understanding of Qur’anic verses."
+    }
+  ],
+  "MODULES": [
+    {
+      "n": 1,
+      "name": "Foundations",
+      "duration": "3 months",
+      "overview": "Module 1 marks the student’s formal entry into structured Arabic study, laying the essential foundations over three months. Students receive a detailed and systematic overview of the language, covering words, phrases, and sentence structures in a progressive manner. The foundational sciences of Ṣarf and Naḥw are introduced conceptually and practically, ensuring students understand not only definitions but function. Lessons are reinforced through consistent exercises and carefully selected examples from the Qur’an, cultivating analytical habits from the outset. Technical terminology becomes familiar, and students begin thinking structurally about language. By the end of the module, learners possess a clear grammatical framework, foundational vocabulary, and confidence in basic parsing, preparing them to transition into studying complete Arabic texts in Module 2.",
+      "texts": [
+        {
+          "t": "Arabic 101",
+          "code": "",
+          "note": "Prepared by the instructors at Talweeh Arabic",
+          "track": "found",
+          "raw": "Arabic 101 — Prepared by the instructors at Talweeh Arabic"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Learning Objectives",
+          "text": "Develop a structured understanding of Arabic at the level of words, phrases, and sentence structures, including foundational terminology in Ṣarf and Naḥw. Under the overview of the Arabic language, grammatical and morphological principles, through guided exercises and Qurʾānic examples. Build a solid analytical framework that prepares the student to begin reading complete Arabic texts in Module 2."
+        },
+        {
+          "title": "Foundational Concepts",
+          "text": "Explain the purpose and importance of studying Arabic, particularly in relation to Islamic sciences and the Qur’an. Describe what a “language” is and understand how Arabic, as a Semitic language, structures meaning."
+        },
+        {
+          "title": "Morphology Foundations (Ṣarf 101)",
+          "text": "Identify and classify verbs (fiʿl māḍī, fiʿl muḍāriʿ, fiʿl amr) and understand their basic functions. Conjugate regular past-tense verbs using the full fiʿl māḍī table and apply this in exercises. Use basic morphological patterns to infer meaning and construct simple word forms."
+        },
+        {
+          "title": "Syntax Foundations (Naḥw 101)",
+          "text": "Distinguish between the three categories of words: ism, fiʿl, harf. Classify nouns according to definiteness, number, and gender (maʿrifah/nākirah, singular/dual/plural, masculine/feminine). Identify types of particles, including ḥarf al-jarr, and construct basic phrases involving majrūr nouns. Form and analyze key phrase structures: Ḥarf + majrūr, Muḍāf–muḍāf ilayh, Mawṣūf–ṣifah. Understand the roles of musnad and musnad ilayhi and apply these concepts to basic sentence formation. Differentiate between jumlah ismiyyah and jumlah fiʿliyyah, and apply their fundamental grammatical rules. Begin recognizing the ʾiʿrāb states and signs, understanding the concept of syntactic “roles” and how these produce grammatical endings."
+        },
+        {
+          "title": "Text Analysis & Application (Tadreebāt)",
+          "text": "Perform beginner-level tarkīb by identifying word types, phrases, and simple sentence structures within short texts. Apply iʿrāb principles in guided examples, recognizing cases such as rafʿ, naṣb, and jarr in context. Translate and construct simple Arabic phrases using vocabulary introduced weekly (approximately 10 words per week). Practice identifying common Nahw and Ṣarf mistakes to develop sensitivity to correct grammatical form. Read short curated texts and apply newly learned concepts: fiʿl tables, phrase identification, plurals, nūn of emphasis, and verbal commands/prohibitions."
+        }
+      ],
+      "format": "Primarily live",
+      "hours": "3–4 hrs / week",
+      "months": 3
+    },
+    {
+      "n": 2,
+      "name": "Intermediate Development",
+      "duration": "6 months",
+      "overview": "Module 2 represents a significant advancement in the student’s journey. Over six months, previously learned theory is brought to life through Qaṣaṣ al-Nabiyyīn, which serves as the practical backbone of the module. Through sustained engagement with these narratives, students expand Qurʾānic vocabulary and master systematic tarkīb, progressing thereafter to structured iʿrāb for precise sentence breakdown. Building on Module 1, further concepts in Naḥw and Ṣarf are introduced through Abū Ḥayyān’s Al-Shadharat al-Dhahabiyyah and the morphology manual Binā al-Afʿāl. Each grammatical or morphological concept is immediately applied within the Qaṣaṣ, ensuring integration between theory and text. By completion, students demonstrate improved fluency, structural recognition, and the ability to analyze connected passages with clarity and growing independence.",
+      "texts": [
+        {
+          "t": "Qaṣaṣ al-Nabiyyīn",
+          "code": "Adab 101",
+          "note": "selected stories",
+          "track": "adab",
+          "raw": "Qaṣaṣ al-Nabiyyīn (Adab 101) — selected stories"
+        },
+        {
+          "t": "Al-Shadharat al-Dhahabiyyah by Abū Ḥayyān",
+          "code": "Naḥw 101",
+          "note": "",
+          "track": "nahw",
+          "raw": "Al-Shadharat al-Dhahabiyyah by Abū Ḥayyān (Naḥw 101)"
+        },
+        {
+          "t": "Bināʾ al-Afʿāl",
+          "code": "Ṣarf 101",
+          "note": "",
+          "track": "sarf",
+          "raw": "Bināʾ al-Afʿāl (Ṣarf 101)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Learning Objectives",
+          "text": "Apply foundational grammar and morphology directly within Qaṣaṣ al-Nabiyyīn, mastering systematic tarkīb and progressing to structured iʿrāb. Expand Qurʾānic vocabulary while integrating advanced concepts from Al-Shadharat al-Dhahabiyyah and Binā al-Afʿāl. Analyze connected narrative passages with fluency, demonstrating growing independence in sentence breakdown and translation."
+        },
+        {
+          "title": "Textual Mastery & Applied Tarkīb",
+          "text": "Students will be able to: read, translate, and explain selected stories from Qaṣaṣ al-Nabiyyīn with accuracy. Perform complete sentence breakdowns (tarkīb), identifying word types, phrase structures, mubtadaʾ–khabar relationships, verb–subject constructions, and dependent clauses. Apply iʿrāb recognition to real texts, identifying grammatical roles, case endings, and syntactic operators. At first, the tarkīb method will be applied, followed by the iʿrāb method. Build a structured vocabulary list and apply new words in translation, conversation, and writing tasks."
+        },
+        {
+          "title": "Syntax (Naḥw 102: Al-Shadharat al-Dhahabiyyah)",
+          "text": "Students will be able to: master the foundational chapters of Al-Shadharat al-Dhahabiyyah, including types of speech; signs of nouns, verbs, and particles; ḥurūf jarr, particles of emphasis, conjunctions, and exception tools; muʿrab and mabnī categories; marfūʿāt, manṣūbāt, and makhfūḍāt; rules of mafʿūl categories (bihi, maʿahu, ajlihi, mutlaq, etc.); followers: naʿt, ʿaṭf, tawkeed, badal; smaller and larger sentence structures; sentences that have a syntactic position (maḥall) and those that do not. Analyze and identify grammatical functions in real narrative passages. Apply the rules of jumla ismiyyah and jumla fiʿliyyah across numerous examples. Use particles such as إِنَّ، أَنْ، لَمَّا، لَا، لَامُ التَّعْلِيل accurately in context. Recognize and handle advanced concepts such as mustathnā minh, mafʿūl fīhi (ḥāl, tamyīz), mubtadaʾ–khabar transformations through agents such as كَانَ and its sisters, and iʿrāb of embedded clauses within narrative texts."
+        },
+        {
+          "title": "Morphology (Ṣarf 102: Bināʾ al-Afʿāl)",
+          "text": "Students will be able to: conjugate the thulāthī mujarrad verb system across all major abwāb, in māḍī, muḍāriʿ, and amr forms. Understand the major derivatives (mushtaqqāt) including ism al-fāʿil, ism al-mafʿūl, zarf, ism al-ālah, masdar patterns (from basic and extended forms), taṣghīr and mubālaghah, ism al-tafdīl and taʿajjub forms. Recognize and conjugate thulāthī mazīd fīhī verb families. Apply rules of iʿtilāl in mithāl, ajwaf, nāqiṣ and all related forms in both māḍī and muḍāriʿ. Practice conjugating weak verbs systematically across multiple abwāb. Understand verb-building principles deeply through the major chapters of Bināʾ al-Afʿāl."
+        },
+        {
+          "title": "Integrated Proficiency in Reading, Writing, and Speaking",
+          "text": "Students will be able to: develop conversational Arabic through weekly ḥiwār, focusing on everyday vocabulary and common structures. Strengthen written ability through supplementary writing exercises that reinforce grammar and vocabulary usage. Apply grammar and morphology in both structured and unstructured responses. Engage actively in weekly live sessions to review concepts, ask questions, and refine analytical skills."
+        }
+      ],
+      "format": "Primarily live",
+      "hours": "5–6 hrs / week",
+      "months": 6
+    },
+    {
+      "n": 3,
+      "name": "Advancement & Integration",
+      "duration": "3 months",
+      "overview": "Module 3 transitions students into the intermediate stage, emphasizing independent reading and applied analysis. Over three months, structured study combines grammar, refined morphology, ethics literature, and poetry. The core text, Min Ādāb al-Islām, provides sustained reading practice—an element often neglected—training students to read and translate unvowelled texts confidently. Grammar advances through Al-Tuḥfat al-Saniyyah, with strong emphasis on practical application and repetition. Poetry is introduced through Tā’iyyat al-Ilbīrī, cultivating literary sensitivity and thematic awareness. The ṣarf manual Taṣrīf al-ʿIzzī strengthens mastery of verb patterns and derivatives, sharpening recognition skills. By the end of the module, students can approach intermediate classical works with analytical clarity, confidence in parsing, and measurable independence in translation.",
+      "texts": [
+        {
+          "t": "Min Ādāb al-Islām",
+          "code": "Adab 102",
+          "note": "",
+          "track": "adab",
+          "raw": "Min Ādāb al-Islām (Adab 102)"
+        },
+        {
+          "t": "Al-Tuḥfah al-Saniyyah",
+          "code": "Naḥw 102",
+          "note": "",
+          "track": "nahw",
+          "raw": "Al-Tuḥfah al-Saniyyah (Naḥw 102)"
+        },
+        {
+          "t": "Taṣrīf al-ʿIzzī",
+          "code": "Ṣarf 102",
+          "note": "",
+          "track": "sarf",
+          "raw": "Taṣrīf al-ʿIzzī (Ṣarf 102)"
+        },
+        {
+          "t": "Tāʾiyyat al-Ilbīrī",
+          "code": "Adab 103",
+          "note": "",
+          "track": "adab",
+          "raw": "Tāʾiyyat al-Ilbīrī (Adab 103)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Learning Objectives",
+          "text": "Read and translate unvowelled intermediate texts confidently through sustained practice in Min Ādāb al-Islām. Strengthen grammatical precision through applied study of Al-Tuḥfat al-Saniyyah and refine morphology using Taṣrīf al-ʿIzzī. Develop literary awareness and analytical skills through engagement with Tā’iyyat al-Ilbīrī."
+        },
+        {
+          "title": "Textual Reading & Iʿrāb Analysis (Min Ādāb al-Islām)",
+          "text": "Students will be able to: read and translate passages from Min Ādāb al-Islām with accuracy and fluency. Perform full sentence analyses, including identifying word types and functions, marking case endings, and recognizing the overall state of a sentence, or the lack of it. Recognize thematic structure, moral lessons, and stylistic features of classical ethical literature. Build a strong intermediate vocabulary bank from recurring phrases and expressions. Reflect embedded clauses and complex grammatical constructions in their translations."
+        },
+        {
+          "title": "Intermediate Syntax (Naḥw 103: Al-Tuḥfat al-Saniyyah)",
+          "text": "Students will be able to: deepen mastery of al-Ājurrūmiyyah through the expanded explanations of Al-Tuḥfat al-Saniyyah, including detailed study of noun types, signs, and classifications; operators of the marfūʿāt (fāʿil, mubtadaʾ, khabar, nāʾib al-fāʿil, etc.); operators of the manṣūbāt (mafʿūl categories, ḥāl, tamyīz, istithnā, etc.); rules of the majrūrāt (ḥurūf jarr and their usage); types of phrases and their iʿrāb; the rules governing verbs and subjects, predicates, transitive/intransitive verbs; and the various “followers” (tawkeed, naʿt, badal, ʿaṭf) with examples from texts. Identify and explain grammatical disagreements, hidden elements, and elliptical constructions (maḥdhūf). Apply the concepts directly to reading texts, improving speed and confidence in parsing. Recognize subtle syntactic shifts, rhetorical emphasis, and structural variation in classical writing."
+        },
+        {
+          "title": "Applied Literature (Adab 101: Tā’iyyat al-Ilbīrī)",
+          "text": "Students will be able to: read, translate, and interpret selected verses from Tā’iyyat al-Ilbīrī. Perform basic iʿrāb of poetic lines, noting where syntax differs from prose. Develop sensitivity to how poets use structure and language to convey layered meanings."
+        },
+        {
+          "title": "Morphology (Ṣarf 103: Taṣrīf al-ʿIzzī)",
+          "text": "Students will be able to: conjugate sound and weak verbs with confidence across past, present, and command forms, thulāthī and mazīd patterns, and major morphological derivatives. Recognize and explain changes due to weak letters, stress assimilation, hamzah rules, and additional letters in verb forms. Identify patterns quickly when reading real texts, improving comprehension and retention. Use morphology to support iʿrāb and reading other books and poetry."
+        }
+      ],
+      "format": "Live + recorded",
+      "hours": "5–6 hrs / week",
+      "months": 3
+    },
+    {
+      "n": 4,
+      "name": "Mastery & Refinement",
+      "duration": "5 months",
+      "overview": "Module 4 marks the entry into advanced grammatical and literary study. Over five months, Mutammimah al-Ājurrūmiyyah deepens mastery of extended Nahw discussions, introduces variant grammatical views, and trains students to recognize and evaluate stronger positions. Complex syntactic structures and nuanced iʿrāb patterns are explored in depth. Ṣarf expands through Sawāṭiʿ al-Jumān, refining morphological precision and strengthening form recognition in advanced texts. Literary analysis is cultivated through Lāmiyyat Abī Ṭālib, where poetic structure, imagery, and thematic depth are examined alongside detailed parsing. By completion, students are prepared for linguistic Tafsīr, advanced Balāghah, and sustained engagement with sophisticated classical prose and poetry.",
+      "texts": [
+        {
+          "t": "Mutammimah al-Ājurrūmiyyah",
+          "code": "Naḥw 103",
+          "note": "",
+          "track": "nahw",
+          "raw": "Mutammimah al-Ājurrūmiyyah (Naḥw 103)"
+        },
+        {
+          "t": "Sawāṭiʿ al-Jumān",
+          "code": "Ṣarf 103",
+          "note": "",
+          "track": "sarf",
+          "raw": "Sawāṭiʿ al-Jumān (Ṣarf 103)"
+        },
+        {
+          "t": "Lāmiyyat Abī Ṭālib",
+          "code": "Adab 104",
+          "note": "",
+          "track": "adab",
+          "raw": "Lāmiyyat Abī Ṭālib (Adab 104)"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Learning Objectives",
+          "text": "Master advanced Nahw concepts and variant grammatical views through Mutammimah al-Ājurrūmiyyah, understanding the logic behind the language and grammar at an academic level. Refine morphological precision through Sawāṭiʿ al-Jumān. Analyze classical poetry in Lāmiyyat Abī Ṭālib, integrating syntactic depth with literary appreciation."
+        },
+        {
+          "title": "Advanced Syntax (Naḥw 104: Mutammimah al-Ājurrūmiyyah)",
+          "text": "Students will be able to: master the extended topics of Mutammimah al-Ājurrūmiyyah, including the full system of marfūʿāt, manṣūbāt, majrūrāt, and majzūmāt; expanded rules of mubtadaʾ/khabar with anomalous and irregular structures; operators acting on verbs and nouns, including uncommon particles; distinctions between grammatical schools (Baṣran, Kūfan) in select issues; rare iʿrāb patterns, dialectical variants, and classical exceptions; advanced discussions of naʿt, badal, tawkeed, and ʿaṭf; and complex compound structures (iḍāfāt, subordinate sentences, conditionality). Perform full, accurate iʿrāb on multi-layered classical sentences. Detect hidden elements (maḥdhūf), ellipsis, and implied operators with confidence. Evaluate competing grammatical analyses and articulate the stronger opinion based on rule hierarchy."
+        },
+        {
+          "title": "Advanced Morphology (Ṣarf 104: Sawāṭiʿ al-Jumān)",
+          "text": "Students will be able to: conjugate sound and weak verbs with confidence across past, present, and command forms, thulāthī and mazīd patterns, and major morphological derivatives. Recognize and explain changes due to weak letters, stress assimilation, hamzah rules, and additional letters in verb forms. Identify patterns quickly when reading real texts, improving comprehension and retention. Use morphology to support iʿrāb and tarkīb analysis."
+        },
+        {
+          "title": "Applied Literature (Adab 102: Lāmiyyat Abī Ṭālib)",
+          "text": "Students will be able to: read, translate, and interpret all lines of Lāmiyyat Abī Ṭālib, with attention to its emotional and historical background. Perform accurate iʿrāb of poetic lines. Recognize and analyze themes of loyalty, courage, family honor, and Qurashī ethics, along with rhetorical devices, imagery, and emotional tone."
+        }
+      ],
+      "format": "Live + recorded",
+      "hours": "5–6 hrs / week",
+      "months": 5
+    },
+    {
+      "n": 5,
+      "name": "Application & Specialization",
+      "duration": "Final stage",
+      "overview": "Module 5 represents the crux and culmination of all prior study. Grammar, morphology, and analysis converge in direct academic engagement with the Qur’an. Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb refines methodological parsing, training students to evaluate syntactic possibilities and understand how iʿrāb shapes tafsīr and translation. Linguistic Tafsīr of Juzʾ ʿAmma introduces sustained engagement with Ibn ʿĀshūr, Abū Ḥayyān, and Abū Suʿūd, exposing students to multiple tafāsīr, translations, and rhetorical nuances. The meanings lost within translations, rhetorical gems, and grammatical application will all be combined to provide a complete understanding of Juzʾ ʿAmma. Rhetorical insights are systematically gathered in Balāghah 101, and Intro to the Islamic Sciences situates their learning within the broader scholarly tradition, opening pathways for advanced specialization.",
+      "texts": [
+        {
+          "t": "Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb",
+          "code": "",
+          "note": "",
+          "track": "nahw",
+          "raw": "Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb"
+        },
+        {
+          "t": "Linguistic Tafsīr of Juzʾ ʿAmma",
+          "code": "",
+          "note": "",
+          "track": "quran",
+          "raw": "Linguistic Tafsīr of Juzʾ ʿAmma"
+        },
+        {
+          "t": "Introduction to Balāghah",
+          "code": "",
+          "note": "Miʾat al-Maʿānī wa al-Bayān",
+          "track": "quran",
+          "raw": "Introduction to Balāghah — Miʾat al-Maʿānī wa al-Bayān"
+        },
+        {
+          "t": "Introduction to the Core Islamic Sciences",
+          "code": "",
+          "note": "",
+          "track": "quran",
+          "raw": "Introduction to the Core Islamic Sciences"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Learning Objectives",
+          "text": "Apply methodological parsing from Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb to Qurʾānic verses, recognizing how iʿrāb shapes tafsīr and translation. Engage multiple tafāsīr in the Linguistic Tafsīr of Juzʾ ʿAmma, identifying linguistic nuances beyond surface translations, and understanding the Qur’an at a new level. Systematize rhetorical insights in Balāghah 101 and situate Qurʾānic study within the broader Islamic scholarly sciences."
+        },
+        {
+          "title": "Applied Iʿrāb (Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb)",
+          "text": "Students will be able to: understand and apply the methodological principles of accurate parsing, including determining possible grammatical roles for a word before assigning one and identifying contextual indicators that resolve syntactic ambiguity. Recognize the effect of iʿrāb on tafsir and translations of the Qur’an. Apply their understanding of each iʿrāb to their translations. Strengthen practical analysis through studying iʿrāb as a science in and of itself. Analyze compound sentences, embedded clauses, and grammatical “knots.” Cover the most famous agents in the language and their different usages along with examples from the Qur’an and Sunnah."
+        },
+        {
+          "title": "Linguistic Tafsir (Juzʾ ʿAmma)",
+          "text": "At this level, students are finally ready to access translations and different linguistic explanations of the Qur’an. Students are already expected to be able to pick up words, sentences, and even passages when reciting the Qur’an or standing in Salah. Now, they will be taught how to directly access linguistic Tafasir, referring back to Ibn ʿĀshūr, Abū Ḥayyān, Abū Suʿūd, and others. Students will also be given the thematic overview and connections between chapters in Juzʾ ʿAmma, as well as cover the linear autonomy of each Surah. Students will be able to understand and apply the methodological principles of accurate parsing to verses and translate accurately, strengthen practical analysis through applying it to the Qur’an itself, recognize linguistic nuances and differences in Tafsir and translations, and be introduced to Balaghah through practical application."
+        },
+        {
+          "title": "Balāghah 101",
+          "text": "This is the science that explains when and how each Arabic structure is to be used. It is due to the Qur’an’s absolute excellence in this field that the polytheists of Makkah were rendered speechless, many of them compelled to accept Islam, knowing very well that this speech can only descend from the heavens. The general discussions in this science will be scattered around in the Linguistic Tafsir classes, and then will be gathered together in an organized method to introduce students to this noble science."
+        },
+        {
+          "title": "Intro to the Islamic Sciences",
+          "text": "Students will receive 10 lessons introducing the main Islamic sciences, including Balaghah, Qira’aat, Tafsir, Usul al-Fiqh, Fiqh, Aqeedah, Mustalah, and Hadith amongst others. An overview of each science will be presented, along with the books a student should cover in order to master each science. Upon covering these lessons, students will have a clear picture of how to access and thereafter study any science. This will help them smoothly transition into other sciences and courses offered in Islamic Institutions."
+        }
+      ],
+      "format": "Primarily live",
+      "hours": "5–6 hrs / week",
+      "months": 0
+    }
+  ],
+  "CALENDAR": "Below is the program calendar outlining the structure of the two-year Arabic program, which is scheduled to commence in April 2026. The first two modules focus primarily on live, instructor-led classes, allowing students to develop a strong foundation in Arabic through direct instruction, guided practice, and real-time interaction with the instructor. The third and fourth modules introduce a balanced combination of live sessions and carefully structured pre-recorded lessons. This format allows students to engage with core material at their own pace while continuing to benefit from regular live instruction and clarification. The fifth module returns to a format that is primarily live, enabling students to refine their understanding, strengthen their analytical skills, and consolidate their ability to engage with Arabic texts. To support consistent progress and review, recordings of all classes will be made available through the student portal, allowing students to revisit lessons and reinforce their learning throughout the duration of the program.",
+  "FACTS": [
+    {
+      "label": "Next cohort",
+      "value": "April 2026"
+    },
+    {
+      "label": "Tuition",
+      "value": "$99 USD / month"
+    },
+    {
+      "label": "Weekly commitment",
+      "value": "3–6 hours"
+    },
+    {
+      "label": "Language of instruction",
+      "value": "English"
+    },
+    {
+      "label": "Format",
+      "value": "Live + recorded classes"
+    },
+    {
+      "label": "Instructors",
+      "value": "Shaykh Omer Khurshid & Mufti Dawood Khurshid"
+    }
+  ],
+  "INVITATION": "We warmly invite you to join us on this enriching journey of knowledge and growth. Together, we will raise the bar for Islamic education, benefiting individuals and communities alike. Through our collaborative efforts, we hope to cultivate a generation of informed, engaged, and empowered individuals who can contribute positively to society.",
+  "FAQ": [
+    {
+      "q": "What is the Talweeh 2-Year Arabic Program?",
+      "a": "The Talweeh 2-Year Arabic Program is a comprehensive and structured course designed to guide students from the foundations of Arabic toward the ability to confidently understand classical and Qurʾānic Arabic.\n\nThrough a carefully sequenced curriculum, students progressively develop proficiency in:\n- Arabic grammar (Naḥw)\n- Arabic morphology (Ṣarf)\n- Sentence analysis (Tarkīb)\n- Arabic rhetoric (Balāghah)\n- Reading and analyzing classical Arabic texts\n\nBy the end of the program, students gain the linguistic tools necessary to engage directly with Arabic texts and deepen their understanding of the language of the Qurʾān."
+    },
+    {
+      "q": "Who is this program designed for?",
+      "a": "This program is suitable for:\n\n- Beginners seeking a structured pathway to learning Arabic\n- Students who can recite the Qurʾān but wish to understand its meaning\n- Seekers of knowledge interested in Islamic scholarship\n- Individuals looking to build a strong linguistic foundation for studying Islamic sciences\n\nNo prior knowledge of Arabic grammar is required."
+    },
+    {
+      "q": "What will students learn during the program?",
+      "a": "Students gradually develop proficiency in several essential Arabic disciplines, including:\n\n**Arabic Grammar (Naḥw)**\nUnderstanding how Arabic sentences are structured and how grammatical roles influence meaning.\n\n**Arabic Morphology (Ṣarf)**\nStudying verb patterns, root systems, and word derivation.\n\n**Text Analysis (Tarkīb)**\nLearning how to break down and analyze Arabic sentences and texts.\n\n**Arabic Rhetoric (Balāghah)**\nExploring the eloquence and stylistic beauty of Arabic, particularly within the Qurʾān.\n\n**Applied Qurʾānic Language Analysis**\nStudents begin analyzing Qurʾānic verses linguistically to appreciate deeper layers of meaning."
+    },
+    {
+      "q": "How is the curriculum structured?",
+      "a": "The program is divided into sequential modules that gradually build mastery.\n\n**Module 1 – Foundations (3 months)**\nStudents are introduced to the fundamental building blocks of the Arabic language, including:\n- Types of words (noun, verb, particle)\n- Basic sentence structures\n- Introduction to Naḥw and Ṣarf\n- Foundational vocabulary and phrase construction\n- Introductory Balāghah\n\n**Module 2 – Applied Grammar & Reading (6 months)**\nStudents begin engaging with real Arabic texts while strengthening grammar and morphology.\nHighlights include:\n- Studying foundational Arabic grammar texts\n- Learning verb patterns and morphological systems\n- Reading classical narratives\n- Developing sentence analysis and reading comprehension skills\n\n**Advanced Modules**\nLater modules introduce students to:\n- Advanced syntax and grammatical theory\n- Sentence parsing (Iʿrāb)\n- Classical Arabic literature\n- Linguistic analysis of Qurʾānic passages\n- The science of Balāghah"
+    },
+    {
+      "q": "Will the program help me understand the Qurʾān?",
+      "a": "Yes. One of the central goals of the program is to equip students with the linguistic tools needed to access the meanings of the Qurʾān through the Arabic language itself. The last module will be a direct application upon the 30th Juz of the Qur’an using linguistic based Tafaseer.\n\nStudents will learn to:\n- Recognize grammatical structures in Qurʾānic verses\n- Understand how morphology and syntax affect meaning\n- Identify rhetorical features used within the Qurʾān\n- Analyze verses through linguistic principles\n\nThis allows students to move beyond translation and begin appreciating the depth and precision of Qurʾānic language."
+    },
+    {
+      "q": "What kind of Arabic will students study?",
+      "a": "Students study **classical Arabic**, the language used in:\n\n- The Qurʾān\n- Hadith literature\n- Classical Islamic scholarship\n- Traditional Arabic texts\n\nThis enables students to engage directly with the primary sources of Islamic knowledge."
+    },
+    {
+      "q": "Do I need prior knowledge of Arabic to enroll?",
+      "a": "Students should have a **basic ability to read Arabic script**, including recognizing letters and reading words with vowel markings (ḥarakāt).\n\nThe program then builds upon this foundation by developing a deeper understanding of grammar, vocabulary, and sentence structure."
+    },
+    {
+      "q": "When does the program begin?",
+      "a": "The next cohort of the Two-Year Arabic Program is scheduled to begin in:\n\n**April 2026**"
+    },
+    {
+      "q": "What are the program fees?",
+      "a": "The tuition fee for the program is:\n\n**$99 USD per month**\n\nA **30% Ramadan Early-Bird Discount** is currently available for students who register during the month of Ramadan.\n\nFull details regarding enrollment and payment are available on the program registration page."
+    },
+    {
+      "q": "What language will the program be taught in?",
+      "a": "The primary language of instruction is **English**.\n\nArabic terminology and texts will be gradually introduced throughout the program as students develop their language proficiency."
+    },
+    {
+      "q": "Who are the instructors?",
+      "a": "The program is taught by:\n\n**Shaykh Omer Khurshid**\n**Mufti Dawood Khurshid**\n\nBoth instructors completed advanced Islamic studies at the **Islamic University of Madinah** and have extensive experience teaching Arabic and Islamic sciences."
+    },
+    {
+      "q": "Are the classes live or recorded?",
+      "a": "The program combines **live instruction and pre-recorded lessons**, depending on the module.\n\n- **Module 1 & Module 2:** Primarily live classes\n- **Module 3 & Module 4:** Combination of recorded lessons and live sessions\n- **Module 5:** Primarily live classes\n\nAll live classes are recorded and uploaded to the student portal."
+    },
+    {
+      "q": "What time are the live classes held?",
+      "a": "Live sessions are typically scheduled at the following times:\n\n- **3:00 PM EST (Eastern Standard Time)**\n- **8:00 PM UK Time**\n- **9:00 PM Central European Time**\n- **11:00 PM Gulf Standard Time (UAE / Saudi Arabia)**\n- **12:30 AM Pakistan Standard Time**\n\nA detailed schedule is available in the **Program Calendar** on the program page.\nDaylight savings might affect the time.\nClass timings can potentially be updated based on the commitments of the instructors."
+    },
+    {
+      "q": "How many hours per week does the program require?",
+      "a": "The expected weekly commitment varies by module:\n\n- **Module 1:** Approximately 3–4 hours per week\n- **Modules 2–5:** Approximately 5–6 hours per week\n\nStudents are encouraged to complete recommended practice exercises to reinforce their learning."
+    },
+    {
+      "q": "Will I have access to class recordings?",
+      "a": "Yes. All live classes are recorded and uploaded to the **Talweeh Student Portal**, allowing students to review lessons at their convenience."
+    },
+    {
+      "q": "What if I miss a live class?",
+      "a": "If you are unable to attend a live session, you can watch the full recording through the student portal shortly after the class is completed."
+    },
+    {
+      "q": "How are classes accessed?",
+      "a": "All classes are delivered through an **online learning platform**.\n\nStudents will have access to:\n- Recorded lessons\n- Course materials\n- Class resources\n- Program announcements\n\nthrough the **Talweeh Student Portal**."
+    },
+    {
+      "q": "What will students be able to achieve after completing the program?",
+      "a": "By the end of the program, students will have developed:\n\n- A solid foundation in Arabic grammar and morphology\n- The ability to read and analyze Arabic texts\n- The linguistic tools to begin understanding Qurʾānic Arabic\n- A strong basis for pursuing further studies in Arabic and Islamic sciences"
+    }
+  ],
+  "ABOUT": [
+    {
+      "title": "About Talweeh Arabic",
+      "paragraphs": [
+        "Talweeh Arabic is a structured, multi-level Arabic language program designed to take students from beginner foundations to advanced proficiency in reading and analyzing classical texts. Built upon years of instructional experience and careful curriculum refinement, the program selects time-tested works in naḥw (syntax), ṣarf (morphology), balāghah (rhetoric), and applied literature to ensure steady and measurable growth. Each module builds upon the previous one, creating a cohesive academic journey rather than isolated language study.",
+        "Our approach combines traditional text-based learning with active application. Students do not simply memorize rules; they learn to perform iʿrāb (grammatical parsing), analyze sentence structures (tarkīb), translate accurately, and appreciate the rhetorical depth of Arabic expression. The result is not passive familiarity, but confident engagement with the language."
+      ]
+    },
+    {
+      "title": "Applied Learning",
+      "paragraphs": [
+        "Alongside technical mastery, Talweeh Arabic emphasizes practical language skills. Weekly ḥiwār (conversation) sessions develop spoken fluency, while structured writing exercises reinforce grammatical accuracy and vocabulary retention. Live sessions provide opportunities for clarification, discussion, and applied analysis, ensuring that learning remains interactive and accountable. Students graduate from the program not only able to read Arabic texts, but able to think through them—analyzing structures, evaluating interpretations, and articulating meaning with precision."
+      ]
+    },
+    {
+      "title": "Curriculum Structure",
+      "paragraphs": [
+        "The Talweeh curriculum is carefully sequenced across progressive modules that integrate grammar, morphology, literature, poetry, and linguistic tafsīr. Students begin with the essential building blocks of Arabic—word categories, sentence formation, and verb patterns—before advancing to detailed syntactic theory and complex morphological systems.",
+        "As they progress, learners study classical prose and poetry, strengthening their ability to detect subtle grammatical shifts, rhetorical emphasis, and layered meanings. Advanced modules introduce applied iʿrāb methodology, rare grammatical cases, and nuanced sentence analysis, preparing students to approach large classical works with independence and clarity."
+      ]
+    },
+    {
+      "title": "Scholarly Focus",
+      "paragraphs": [
+        "Talweeh Arabic treats language as the key to understanding revelation and scholarship. Through guided linguistic tafsīr and structured analysis of Qur’anic passages, students learn how grammar and morphology shape meaning. They become accustomed to consulting recognized classical exegetes and identifying how variations in structure affect interpretation.",
+        "By integrating syntax, morphology, and rhetoric, students develop a holistic understanding of Qur’anic discourse. This foundation prepares them to transition smoothly into the broader Islamic sciences, including tafsīr, ḥadīth, fiqh, uṣūl, and balāghah, all offered by Talweeh Academy."
+      ]
+    },
+    {
+      "title": "Mission Statement",
+      "paragraphs": [
+        "Talweeh Arabic exists to bridge classical tradition and structured modern pedagogy. Our mission is to produce students who approach the Arabic language with confidence, depth, and intellectual discipline. By the completion of the program, learners are equipped with the analytical tools necessary to engage advanced Islamic studies and classical literature independently."
+      ]
+    }
+  ],
+  "PROUD": [
+    {
+      "title": "Qur’an-Centered",
+      "text": "Talweeh Arabic is centered on equipping students with the linguistic tools needed to deepen their understanding of the Qur’an.",
+      "href": "/arabic#arabic-program-content"
+    },
+    {
+      "title": "Frequently Asked Questions",
+      "text": "Everything you need to know about joining Talweeh Arabic.",
+      "href": "/arabic/faq"
+    },
+    {
+      "title": "Talweeh Society",
+      "text": "Get access to our free courses and weekly lessons.",
+      "href": "https://t.me/talweeh_academy"
+    },
+    {
+      "title": "Authorized Instructors",
+      "text": "Expert instructors available for your online support.",
+      "href": "/instructors"
+    }
+  ],
+  "TIMES": [
+    "3:00 PM EST (Eastern Standard Time)",
+    "8:00 PM UK Time",
+    "9:00 PM Central European Time",
+    "11:00 PM Gulf Standard Time (UAE / Saudi Arabia)",
+    "12:30 AM Pakistan Standard Time"
+  ],
+  "TRACKS": [
+    {
+      "k": "found",
+      "label": "Foundations",
+      "ar": "الأُسُس"
+    },
+    {
+      "k": "nahw",
+      "label": "Naḥw · syntax",
+      "ar": "النَّحْو"
+    },
+    {
+      "k": "sarf",
+      "label": "Ṣarf · morphology",
+      "ar": "الصَّرْف"
+    },
+    {
+      "k": "adab",
+      "label": "Adab · reading & poetry",
+      "ar": "الأَدَب"
+    },
+    {
+      "k": "quran",
+      "label": "Qurʾān · Balāghah · sciences",
+      "ar": "القُرْآن وَالبَلَاغَة"
+    }
+  ]
+}

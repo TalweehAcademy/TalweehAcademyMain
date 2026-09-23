@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Course · Majlis — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Course page · Variation B — Majlis ═══
+   The course introduces itself first (green hero with poster), then a centred framed player
+   under a "now playing" heading, and the lessons as a grid of cards grouped by topic. */
+.mhero{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:center;margin-top:16px;border-radius:32px;padding:34px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.mhero .kicker{color:var(--gold)}
+.mhero h1{font-size:clamp(34px,4.4vw,58px);color:var(--cream);margin:8px 0 10px}
+.mhero .lead{color:rgba(243,232,211,.8);line-height:1.7;white-space:pre-line}
+.mhero .lead.clip{max-height:7em;overflow:hidden;-webkit-mask:linear-gradient(#000 55%,transparent);mask:linear-gradient(#000 55%,transparent)}
+.mhero .more{color:var(--gold-b)}
+.mhero .facts{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 18px}
+.mhero .facts span{padding:6px 12px;border-radius:999px;background:rgba(243,232,211,.08);border:1px solid rgba(215,179,115,.28);font-size:12.5px;font-weight:700}
+.mhero .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.mhero .pr{font-family:'Lora',serif;font-size:30px;color:var(--gold-b);margin-right:6px}
+.mhero img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:22px;border:1px solid rgba(215,179,115,.45);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.stage{max-width:1000px;margin:60px auto 0;text-align:center}
+.stage .now{display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:18px}
+.stage .now h2{font-size:clamp(26px,3vw,36px)}
+.stage .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;text-align:left}
+.stage .ov{max-width:760px;margin:16px auto 0;color:var(--p-text);line-height:1.75;white-space:pre-line;text-align:left}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.lc{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:start;padding:16px;border-radius:20px;text-align:left;cursor:default;transition:border-color .3s,transform .35s var(--spring),box-shadow .3s}
+.lc.play{cursor:pointer}
+.lc.play:hover{border-color:var(--gold);transform:translateY(-3px)}
+.lc.on{border-color:var(--gold);box-shadow:0 0 0 2px rgba(215,179,115,.4)}
+.lc .n{width:44px;height:44px;display:grid;place-items:center;position:relative;font-size:12.5px;font-weight:800;color:var(--p-head)}
+.lc .n::before{content:'';position:absolute;inset:5px;border-radius:9px;background:var(--p-soft);border:1px solid var(--p-line);transform:rotate(45deg);transition:.4s var(--spring)}
+.lc.play:hover .n::before,.lc.on .n::before{background:var(--gold);border-color:var(--gold);transform:rotate(135deg)}
+.lc.on .n,.lc.play:hover .n{color:var(--g2)}
+.lc .n b{position:relative}
+.lc strong{display:block;font-size:14.5px;color:var(--p-head);line-height:1.35}
+.lc small{display:block;font-size:12.5px;color:var(--p-mut);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lc .tag{display:inline-block;margin-top:8px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--p-gold)}
+.topic{grid-column:1/-1;font-family:'Lora',serif;font-size:20px;color:var(--p-head);margin:18px 0 2px;display:flex;align-items:center;gap:12px}
+.topic::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(184,137,76,.5),transparent)}
+@media(max-width:900px){.mhero{grid-template-columns:1fr}.mhero img{max-width:260px}}
+</style>
+</head>
+<body data-nav="Courses" data-catalog="courses-waha-rawd.html">
+<div class="mock-bar"><span>Course page · Variation B — <b>Majlis</b> · course first, then a centred framed player and lesson cards by topic · try <a href="?slug=tafsir-of-juz-amma" style="text-decoration:underline">a free course</a> or <a href="?slug=usul-al-shashi" style="text-decoration:underline">a paid one</a></span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, price, WahaPlayer } = WahaCourses;
+const params = new URLSearchParams(location.search);
+const slug = params.get('slug') || 'tafsir-of-juz-amma';
+const c = window.COURSES.find((x) => x.slug === slug) || window.COURSES[0], d = window.COURSE_DETAILS[c.slug] || { lessons: [] };
+const L = d.lessons, playable = L.map((l, i) => (l.v ? i : -1)).filter((i) => i >= 0), canWatch = c.free && playable.length > 0;
+document.title = `${c.title} — Talweeh Academy`;
+
+// lesson cards, grouped under their topic headings when the course has them
+function cards() {
+  let lastTopic = null, html = '';
+  L.forEach((l, i) => {
+    if (l.topic && l.topic !== lastTopic) { html += `<div class="topic">${esc(l.topic)}</div>`; lastTopic = l.topic; }
+    const play = canWatch && l.v;
+    html += `<div class="lc card${play ? ' play' : ''}" data-i="${i}" ${play ? 'role="button" tabindex="0"' : ''}><span class="n"><b>${i + 1}</b></span><span><strong>${esc(l.t)}</strong>${l.o ? `<small>${esc(l.o)}</small>` : ''}<span class="tag">${play ? '▶ Watch lesson' : c.free ? 'Video coming soon' : '🔒 Student Portal'}</span></span></div>`;
+  });
+  return html || '<p class="empty">The curriculum for this course will be listed soon.</p>';
+}
+
+$('#page').innerHTML = `
+  <p class="crumbs"><a href="courses-waha-rawd.html">Courses</a> / ${esc(c.catLabel)} / ${esc(c.title)}</p>
+  <section class="mhero">
+    <div><span class="kicker">${esc(c.catLabel)} · ${c.free ? 'Free course' : 'On-demand course'}</span><h1>${esc(c.title)}</h1>
+      <p class="lead clip" id="lead">${esc(c.desc)}</p><button class="more" id="more">Read more ▾</button>
+      <div class="facts"><span>${esc(c.instructor)}</span><span>${c.lessons || '—'} lessons</span><span>${esc(d.language || 'English')}</span></div>
+      <div class="acts">${canWatch ? '<a class="btn btn-g" href="#watch">▶ Start watching</a><a class="btn btn-glass" href="#lessons">All lessons</a>' : `<span class="pr">${price(c)}</span><button class="btn btn-g" type="button" data-add="${c.slug}">Add to study list</button>`}</div></div>
+    <img src="${esc(c.poster)}" alt="${esc(c.title)} poster" />
+  </section>
+  ${canWatch ? `<section class="stage" id="watch"><div class="now"><span class="kicker" id="lk"></span><h2 id="lt"></h2></div><div id="player"></div>
+    <div class="ctl"><button class="btn btn-glass btn-sm" id="prev">‹ Previous lesson</button><p class="vp-keys" style="margin:0"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen</p><button class="btn btn-g btn-sm" id="next">Next lesson ›</button></div>
+    <p class="ov" id="lo"></p></section>` : ''}
+  <section class="sec" id="lessons"><div class="sec-h"><div><span class="kicker">Curriculum</span><h2>${L.length ? L.length + ' lessons' : 'Curriculum'}</h2></div>${canWatch ? '' : '<p>Lessons for this course are delivered in the Talweeh Student Portal after enrolment.</p>'}</div><div class="lgrid">${cards()}</div></section>`;
+$('#more').addEventListener('click', (e) => { $('#lead').classList.remove('clip'); e.target.remove(); });
+
+if (canWatch) {
+  let cur = playable[0];
+  const player = new WahaPlayer($('#player'), { onEnded: () => { const n = playable[playable.indexOf(cur) + 1]; if (n != null) show(n, true); } });
+  function show(i, autoplay) {
+    cur = i; const l = L[i];
+    $('#lk').textContent = `Now playing · Lesson ${i + 1} of ${L.length}`; $('#lt').textContent = l.t; $('#lo').textContent = l.o;
+    $('#prev').disabled = playable.indexOf(i) <= 0; $('#next').disabled = playable.indexOf(i) >= playable.length - 1;
+    $$('.lc').forEach((x) => x.classList.toggle('on', Number(x.dataset.i) === i));
+    player.load(l.v, { title: l.t, kicker: `Lesson ${i + 1}`, autoplay });
+  }
+  const pick = (e) => { const b = e.target.closest('.lc.play'); if (!b) return; show(Number(b.dataset.i), true); $('#watch').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('.lgrid').addEventListener('click', pick);
+  $('.lgrid').addEventListener('keydown', (e) => { if (e.key === 'Enter') pick(e); });
+  $('#prev').addEventListener('click', () => show(playable[playable.indexOf(cur) - 1], true));
+  $('#next').addEventListener('click', () => show(playable[playable.indexOf(cur) + 1], true));
+  show(cur, false);
+}
+WahaCourses.bindStudyList();
+Waha.reveal();
+</script>
+</body>
+</html>

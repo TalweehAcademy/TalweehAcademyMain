@@ -1,0 +1,55 @@
+// Display data for the Mawḍūʿ media pages (/media, /media?category=…, /media/:slug), layered on
+// top of mediaCatalog.js: a clean title and the teacher split out of each YouTube title, and the
+// Talweeh course a video is an excerpt of (resolved against publicCourseIndex.js at render time).
+// Videos missing here fall back to splitting the YouTube title on "|".
+
+export const MEDIA_TOPIC_INFO = {
+  'usul-al-hadith': { label: 'Uṣūl al-Ḥadīth', arabic: 'أُصُولُ الحَدِيث', blurb: 'How the ḥadīth masters judged narrations: definitions, grading, and the reasoning behind the terms.' },
+  'usul-al-fiqh': { label: 'Uṣūl al-Fiqh', arabic: 'أُصُولُ الفِقْه', blurb: 'The principles jurists use to derive rulings from the Qurʾān and Sunnah.' },
+  fiqh: { label: 'Fiqh', arabic: 'الفِقْه', blurb: 'Rulings of worship and daily life, explained with their evidences and the positions of the schools.' },
+  arabic: { label: 'Arabic', arabic: 'العَرَبِيَّة', blurb: 'The language of revelation — grammar, morphology and how to keep going as a student.' },
+  'tips-for-students': { label: 'Tips for Students', arabic: 'نَصَائِح', blurb: 'Practical advice on studying, choosing texts, teachers and building a routine.' },
+  'general-naseeha': { label: 'General Naṣīḥah', arabic: 'نَصِيحَة', blurb: 'Reminders and counsel for the heart — short talks to return to.' },
+  podcasts: { label: 'Podcasts', arabic: 'مَجَالِس', blurb: 'Longer conversations with our teachers.' },
+}
+
+export const MEDIA_VIDEO_INFO = {
+  "al-hadith-al-hasan-according-to-al-khattabi-sh-omer-khurshid-lugj8v": { title: "Al-Ḥadīth Al-Ḥasan According to Al-Khaṭṭābī", speaker: "Sh. Omer Khurshid", course: "nukhbat-al-fikr" },
+  "al-hadith-al-hasan-according-to-imam-tirmidhi-sh-omer-khurshid-seoy2q": { title: "Al-Ḥadīth Al-Ḥasan According to Imām Tirmidhī", speaker: "Sh. Omer Khurshid", course: "nukhbat-al-fikr" },
+  "can-we-rely-on-weak-narrations-sh-omer-khurshid-_88mwa": { title: "Can we rely on weak narrations?", speaker: "Sh. Omer Khurshid", course: "al-shamail-al-muhammadiyyah" },
+  "do-had-non-mass-transmitted-reports-provide-certainty-ilm-sh-omer-khursh-i_tgtm": { title: "Do Āḥād (non-mass-transmitted) reports provide Certainty (ʿIlm)?", speaker: "Sh. Omer Khurshid", course: "nukhbat-al-fikr" },
+  "does-sahih-bukhari-have-weak-narrations-sh-omer-khurhsid-is05kj": { title: "Does Sahih Bukhari have weak narrations???", speaker: "Sh. Omer Khurshid", course: "al-shamail-al-muhammadiyyah" },
+  "is-piety-enough-for-the-transmission-of-ahadeeth-sh-omer-khurshid-pczpfj": { title: "Is Piety enough for the transmission of Ahadeeth?", speaker: "Sh. Omer Khurshid", course: "introduction-to-al-muwattayn" },
+  "the-importance-of-mughultai-s-islah-muqaddimat-ibn-al-salah-sh-omer-khur-3horqu": { title: "The Importance of Mughultāʾī's Iṣlāḥ Muqaddimat Ibn al-Ṣalāḥ", speaker: "Sh. Omer Khurshid" },
+  "the-most-authentic-book-after-the-qur-an-sh-omer-khurshid-ndvyq-": { title: "The Most Authentic book after the Qur'an", speaker: "Sh. Omer Khurshid", course: "nukhbat-al-fikr" },
+  "the-role-of-ibn-al-salah-in-usul-al-hadith-sh-omer-khurshid-oyhume": { title: "The Role of Ibn al-Ṣalāḥ in Uṣūl al-ḥadīth", speaker: "Sh. Omer Khurshid" },
+  "the-term-hasan-amongst-the-early-scholars-of-hadith-sh-omer-khurshid-1pw9yc": { title: "The Term Ḥasan amongst the early scholars of Ḥadīth", speaker: "Sh. Omer Khurshid", course: "nukhbat-al-fikr" },
+  "usul-insights-understanding-al-amr-lil-wujoob-t4-h_n": { title: "Usul Insights: Understanding al-Amr lil-Wujoob", speaker: "Talweeh Academy" },
+  "fiqh-insights-is-difficulty-overlooked-in-the-shariah-8radbl": { title: "Fiqh Insights: Is Difficulty Overlooked in the Shariah?", speaker: "Talweeh Academy" },
+  "fiqh-insights-is-washing-the-beard-fardh-mw45qy": { title: "Fiqh Insights: Is Washing the Beard Fardh?", speaker: "Talweeh Academy", course: "mukhtasar-al-quduri-qism-al-ibadat" },
+  "from-wafi-to-kanz-tracing-al-nasafi-s-legacy-mufti-daud-khurshid-jnkinw": { title: "From Wāfī to Kanz: Tracing al-Nasafī's Legacy", speaker: "Mufti Mohammad Daud Khurshid", course: "mukhtasar-al-quduri-qism-al-ibadat" },
+  "the-legacy-of-mukhtasar-al-quduri-mufti-mohammad-daud-khurshid-sqmeaq": { title: "The Legacy of Mukhtaṣar Al-Qudūrī", speaker: "Mufti Mohammad Daud Khurshid", course: "mukhtasar-al-quduri-qism-al-ibadat" },
+  "abu-talibs-praise-of-the-messenger-sh-omer-khurshid-rstdnl": { title: "Abu Talibs praise of the Messenger ﷺ", speaker: "Sh. Omer Khurshid" },
+  "how-i-rab-affects-tafsir-and-translations-al-irab-an-qawaid-al-irab-muft-vvrhat": { title: "How I'rab affects Tafsir and translations! | Al-I’rāb ‘an Qawā‘id al-I’rāb", speaker: "Mufti Mohammad Daud Khurshid" },
+  "is-alhamdulillah-an-informative-or-imperative-sentence-a-linguistic-anal-zsnens": { title: "Is \"Alhamdulillah\" an informative or imperative sentence? A linguistic analysis", speaker: "Sh. Omer Khurshid", course: "musallam-al-thubut" },
+  "the-etymology-of-the-word-taqwa-sh-omer-khurshid-41ybnd": { title: "The Etymology of the word Taqwa", speaker: "Sh. Omer Khurshid" },
+  "zarf-mustaqarr-and-zarf-laghw-mufti-mohammad-daud-khurshid-talweeh-acade-5i8ujp": { title: "Ẓarf Mustaqarr and Ẓarf Laghw", speaker: "Mufti Mohammad Daud Khurshid" },
+  "al-asmaee-and-the-grocer-sh-omer-khurshid-w1opfa": { title: "Al Asmaee and the Grocer", speaker: "Sh. Omer Khurshid", course: "taiyyah-of-al-ilbiri" },
+  "imam-malik-and-the-khalifa-abu-ja-far-sh-omer-khurshid-09cafm": { title: "Imam Malik and the Khalifa Abu Ja'far", speaker: "Sh. Omer Khurshid", course: "introduction-to-al-muwattayn" },
+  "the-advice-of-abu-hayyan-al-andulusi-sh-omer-khurshid--xxbrl": { title: "The Advice of Abu Hayyan Al Andulusi!", speaker: "Sh. Omer Khurshid" },
+  "the-donkey-of-hakeem-tumaa-sh-omer-khurshid-_va9gv": { title: "The Donkey of Hakeem Tumaa!!", speaker: "Sh. Omer Khurshid", course: "sharh-al-waraqat-of-al-mahalli" },
+  "the-pursuit-of-excellence-sh-omer-khurshid-k-fcdc": { title: "The Pursuit of Excellence", speaker: "Sh. Omer Khurshid", course: "taiyyah-of-al-ilbiri" },
+  "why-do-you-seek-knowledge-sh-omer-khurshid-_fcex9": { title: "Why do you seek Knowledge", speaker: "Sh. Omer Khurshid" },
+  "be-grateful-for-the-blessing-you-have-sh-omer-khurshid-txm9ud": { title: "Be Grateful for the Blessing you have!", speaker: "Sh. Omer Khurshid" },
+  "fate-or-choice-sh-omer-khurshid-yoyqod": { title: "Fate or Choice?", speaker: "Sh. Omer Khurshid" },
+  "great-words-of-wisdom-sh-omer-khurshid-l-qpds": { title: "Great Words of Wisdom!", speaker: "Sh. Omer Khurshid" },
+  "how-the-prophet-sat-while-eating-sh-omer-khurshid-mbwq24": { title: "How the Prophet ﷺ Sat While Eating", speaker: "Sh. Omer Khurshid", course: "al-adab-al-mufrad" },
+  "the-cousin-of-the-messenger-sh-omer-khurshid-swy4av": { title: "The Cousin of the Messenger ﷺ", speaker: "Sh. Omer Khurshid" },
+  "the-love-of-the-noble-companions-sh-omer-khurshid-y-kit_": { title: "The love of the Noble Companions", speaker: "Sh. Omer Khurshid", course: "al-shamail-al-muhammadiyyah" },
+  "the-mystery-of-ibn-sayyad-sh-omer-khurshid-gntkdv": { title: "The Mystery of Ibn Sayyad", speaker: "Sh. Omer Khurshid" },
+  "the-value-of-knowledge-has-decreased-sh-omer-khurshid-fsz4rp": { title: "The Value of Knowledge has decreased", speaker: "Sh. Omer Khurshid" },
+  "the-world-of-souls-what-happened-before-we-were-born-sh-omer-khurshid-h7y_g6": { title: "The World of Souls: What Happened Before We Were Born", speaker: "Sh. Omer Khurshid" },
+  "unlock-immense-reward-with-this-secret-sh-omer-khurshid-zfy_di": { title: "Unlock Immense Reward with this Secret!", speaker: "Sh. Omer Khurshid" },
+  "whats-the-evidence-for-etiquettes-sh-omer-khurshid-ww-5q_": { title: "Whats the Evidence for Etiquettes?", speaker: "Sh. Omer Khurshid" },
+  "worry-about-yourself-before-others-sh-omer-khurshid-pckvd6": { title: "Worry About Yourself before Others", speaker: "Sh. Omer Khurshid" },
+}

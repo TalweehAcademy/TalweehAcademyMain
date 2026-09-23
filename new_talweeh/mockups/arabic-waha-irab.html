@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arabic · Iʿrāb — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-arabic.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Arabic · Variation B — Iʿrāb (parsing) ═══
+   "Don't just recite — understand": the hero parses the Basmalah word by word, switching
+   between the three lenses the program trains (tarkīb, iʿrāb, ṣarf). Below, the curriculum is
+   a ladder — tracks (Naḥw, Ṣarf, Adab, Qurʾān) against the five modules — and any text opens
+   what the live page says students do with it. */
+.ih{margin-top:36px;padding:34px;border-radius:36px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.ih .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.ih .kicker{color:var(--gold)}
+.ih h1{color:var(--cream);font-size:clamp(34px,4.4vw,58px);line-height:1.05;margin:8px 0 0;max-width:17ch}
+.ih .seg{background:rgba(243,232,211,.06);border-color:rgba(215,179,115,.28)}
+.verse{direction:rtl;display:flex;justify-content:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;margin:40px 0 16px}
+.w{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 16px 12px;border-radius:20px;border:1px solid transparent;background:none;color:var(--cream);cursor:pointer;transition:background .3s,border-color .3s,transform .35s var(--spring)}
+.w:hover,.w.on{background:rgba(243,232,211,.06);border-color:rgba(215,179,115,.4);transform:translateY(-3px)}
+.w .q{font-family:'Amiri Quran','Amiri',serif;font-size:clamp(40px,5.4vw,70px);line-height:1.9;color:var(--gold-b)}
+.w .q b{color:#9fd8b8;font-weight:400}
+.w .tag{direction:ltr;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(215,179,115,.16);color:var(--gold-b);white-space:nowrap}
+.w .tag.alt{background:rgba(159,216,184,.14);color:#9fd8b8}
+.tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.brk{display:flex;justify-content:center;margin:-4px 0 6px;direction:rtl}
+.brk span{border:1.5px solid rgba(215,179,115,.5);border-top:0;border-radius:0 0 14px 14px;height:14px}
+.explain{max-width:760px;margin:10px auto 0;padding:18px 22px;border-radius:20px;background:rgba(10,24,17,.45);border:1px solid rgba(215,179,115,.25);min-height:96px}
+.explain small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.explain strong{font-family:'Lora',serif;font-size:21px;color:var(--cream)}
+.explain p{color:rgba(243,232,211,.8);line-height:1.7;margin-top:4px}
+.ih .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid rgba(215,179,115,.2)}
+.ih .foot p{color:rgba(243,232,211,.75);max-width:60ch;line-height:1.7}
+.ih .foot .acts{display:flex;gap:10px;flex-wrap:wrap}
+.blk{margin-top:100px;scroll-margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.ladder{display:grid;grid-template-columns:190px repeat(5,minmax(0,1fr));gap:8px}
+.ladder .hd{padding:12px;border-radius:16px;background:var(--c-solid);color:var(--c-head)}
+.ladder .hd small{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.ladder .hd strong{font-family:'Lora',serif;font-size:15px;font-weight:600}
+.ladder .hd span{display:block;font-size:11.5px;color:var(--c-mut)}
+.ladder .rh{display:flex;flex-direction:column;justify-content:center;padding:12px 14px;border-radius:16px;background:var(--p-soft);border:1px solid var(--p-line);border-left:4px solid var(--tc)}
+.ladder .rh .ar{font-size:20px;color:var(--tc);text-align:left;line-height:1.4}
+.ladder .rh strong{font-size:13px;color:var(--p-head)}
+.ladder .cell{display:grid;gap:6px;align-content:start;padding:6px;border-radius:16px;border:1px dashed var(--p-line);min-height:70px}
+.ladder .found{grid-row:span 4;display:grid;place-items:center;border-style:solid;background:linear-gradient(180deg,color-mix(in srgb,var(--tc) 14%,transparent),transparent)}
+.tx{width:100%;text-align:left;cursor:pointer;font:inherit;transition:transform .3s var(--spring),box-shadow .3s}
+.tx:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(8,20,14,.1)}
+.tx.on{box-shadow:0 0 0 2px var(--tc)}
+.detail{margin-top:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:26px;padding:26px;border-radius:28px;animation:in .45s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.detail .kicker{color:var(--gold)}
+.detail h3{color:var(--c-head);font-size:28px;margin:4px 0 10px}
+.detail .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.detail .meta span{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;background:var(--c-in);border:1px solid var(--c-line);color:var(--c-mut)}
+.detail .ov{color:var(--c-text);line-height:1.75;font-size:14.5px}
+.detail h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.detail .body p{color:var(--c-text);line-height:1.8}
+.objw{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:30px;align-items:start}
+.objw .intro{color:var(--p-mut);line-height:1.8;margin:10px 0 20px}
+.faq6{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+@media (max-width:1100px){.ladder{grid-template-columns:repeat(5,minmax(160px,1fr));overflow-x:auto}.ladder .corner,.ladder .rh{display:none}.ladder .found{grid-row:auto}.detail,.objw,.faq6{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Arabic" data-arabic="arabic-waha-irab.html">
+<div class="mock-bar"><span>Arabic · Variation B — <b>Iʿrāb</b> · a live parsing of the Basmalah in the hero, then the texts as a ladder of tracks × modules</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/arabic-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-arabic.js"></script>
+<script>
+const { $, $$ } = Waha, X = WahaArabic, { R, esc } = X;
+// The Basmalah, parsed three ways (standard analysis)
+const WORDS = [
+  { q: '<b>بِـ</b>سْمِ', tarkib: ['Ḥarf + majrūr', 'Muḍāf'], irab: ['Jārr + majrūr'], sarf: ['Root س م و'],
+    lens: { tarkib: ['Ḥarf al-jarr + majrūr noun', 'The particle bi- with the noun ism: a “ḥarf + majrūr” phrase, and ism is also the first half (muḍāf) of a construct with the next word.'],
+      irab: ['Jārr wa majrūr', 'Bi- is a preposition; ism is majrūr by it, the sign being the kasrah. The phrase attaches to an omitted verb or noun — “(I begin) with the name…”.'],
+      sarf: ['Ism · root s-m-w', 'Ism (name) goes back to the root س م و; its initial hamzat al-waṣl drops in writing here, after the bāʾ.'] } },
+  { q: 'اللَّهِ', tarkib: ['Muḍāf ilayh'], irab: ['Majrūr'], sarf: ['Proper name'],
+    lens: { tarkib: ['Muḍāf ilayh', 'Completes the construct: “the name of Allah” — a muḍāf–muḍāf ilayh phrase.'],
+      irab: ['Muḍāf ilayh, majrūr', 'The Divine Name is majrūr as the muḍāf ilayh, the sign being the kasrah.'],
+      sarf: ['Ism ʿalam', 'The proper name of the Divine, which takes no dual or plural.'] } },
+  { q: 'الرَّحْمَٰنِ', tarkib: ['Mawṣūf–ṣifah'], irab: ['Naʿt · majrūr'], sarf: ['فَعْلَان'],
+    lens: { tarkib: ['Ṣifah', 'An adjective describing the Divine Name: a mawṣūf–ṣifah phrase.'],
+      irab: ['Naʿt (first), majrūr', 'An adjective following the word it describes, so it too is majrūr, the sign being the kasrah.'],
+      sarf: ['Pattern faʿlān · root r-ḥ-m', 'From ر ح م on the pattern فَعْلَان, a form that conveys fullness and abundance of the quality.'] } },
+  { q: 'الرَّحِيمِ', tarkib: ['Ṣifah'], irab: ['Naʿt · majrūr'], sarf: ['فَعِيل'],
+    lens: { tarkib: ['Second ṣifah', 'A second adjective for the same Name.'],
+      irab: ['Naʿt (second), majrūr', 'A second adjective, majrūr, the sign being the kasrah.'],
+      sarf: ['Pattern faʿīl · root r-ḥ-m', 'From the same root on the pattern فَعِيل, a form that conveys a lasting, constant quality.'] } },
+];
+const LENS = [['tarkib', 'Tarkīb'], ['irab', 'Iʿrāb'], ['sarf', 'Ṣarf']];
+let lens = 'irab', word = 0, sel = null;
+
+$('#page').innerHTML = `
+  <section class="ih">
+    <div class="top"><div><span class="kicker">Talweeh Arabic · 2-Year Program</span><h1>Unlock the Language of the Qur’an Beyond Translation</h1></div>
+      <div class="seg" id="lens">${LENS.map(([k, l]) => `<button type="button" data-l="${k}">${l}</button>`).join('')}</div></div>
+    <div class="verse" id="verse"></div>
+    <div class="explain" id="explain" aria-live="polite"></div>
+    <div class="foot"><p>Don’t just Recite the Qur’an — Understand it! In just 6 hours per week over two years, students confidently understand Qur’anic passages, navigate Arabic dictionaries, and read unvowelized texts.</p><div class="acts">${X.member()}<a class="btn btn-glass" href="#ladder">See the texts</a></div></div>
+  </section>
+
+  <section class="blk" id="ladder">
+    <div class="sec-h"><div><span class="kicker">Module overviews</span><h2>The ladder of texts</h2></div><p>At Talweeh Arabic, we have curated the most effective texts into a comprehensive two-year curriculum designed to guide you from beginner to advanced proficiency. Choose any text.</p></div>
+    <div class="ladder" id="grid"></div>
+    <div id="detail"></div>
+  </section>
+
+  <section class="blk objw">
+    <div><span class="kicker">Learning objectives</span><h2 style="font-size:clamp(30px,3.8vw,46px);margin-top:6px">What you will be able to do</h2><p class="intro">${esc(R.OBJ_INTRO)}</p><div id="video"></div></div>
+    <div>${X.accordion(R.OBJECTIVES)}</div>
+  </section>
+
+  <section class="blk" data-r>${X.facts()}</section>
+
+  <section class="blk">
+    <div class="sec-h"><div><span class="kicker">Frequently asked questions</span><h2>Before you join</h2></div><a class="btn btn-glass btn-sm" href="arabic-waha-fihris.html#faq">All ${R.FAQ.length} questions →</a></div>
+    <div class="faq6"><div>${X.accordion(R.FAQ.slice(0, 4), { open: -1 })}</div><div>${X.accordion(R.FAQ.slice(6, 10), { open: -1 })}</div></div>
+  </section>
+  ${X.cta()}`;
+
+function paintVerse() {
+  $$('#lens button').forEach((b) => b.classList.toggle('on', b.dataset.l === lens));
+  $('#verse').innerHTML = WORDS.map((w, i) => `<button type="button" class="w${i === word ? ' on' : ''}" data-w="${i}"><span class="q">${w.q}</span><span class="tags">${w[lens].map((t, j) => `<span class="tag${j ? ' alt' : ''}">${esc(t)}</span>`).join('')}</span></button>`).join('');
+  const [h, p] = WORDS[word].lens[lens];
+  $('#explain').innerHTML = `<small>${LENS.find((l) => l[0] === lens)[1]} · word ${word + 1} of 4</small><strong>${esc(h)}</strong><p>${esc(p)}</p>`;
+}
+$('#lens').addEventListener('click', (e) => { const b = e.target.closest('[data-l]'); if (b) { lens = b.dataset.l; paintVerse(); } });
+$('#verse').addEventListener('click', (e) => { const b = e.target.closest('[data-w]'); if (b) { word = Number(b.dataset.w); paintVerse(); } });
+$('#verse').addEventListener('mouseover', (e) => { const b = e.target.closest('[data-w]'); if (b && Number(b.dataset.w) !== word) { word = Number(b.dataset.w); paintVerse(); } });
+
+// ladder: tracks × modules
+const TR = R.TRACKS.filter((t) => t.k !== 'found');
+function paintGrid() {
+  let html = `<div class="corner"></div>` + R.MODULES.map((m) => `<div class="hd"><small>Module ${m.n} · ${esc(m.duration)}</small><strong>${esc(m.name)}</strong><span>${esc(m.format)}</span></div>`).join('');
+  TR.forEach((t, r) => {
+    html += `<div class="rh t-${t.k}"><span class="ar">${t.ar}</span><strong>${esc(t.label)}</strong></div>`;
+    R.MODULES.forEach((m) => {
+      if (m.n === 1) { if (r === 0) { const f = m.texts[0]; html += `<div class="cell found t-found"><button type="button" class="rtext tx t-found${sel === '1:0' ? ' on' : ''}" data-t="1:0"><strong>${esc(f.t)}</strong><em>Naḥw + Ṣarf foundations</em><small>${esc(f.note)}</small></button></div>`; } return; }
+      const list = m.texts.map((x, i) => ({ x, i })).filter(({ x }) => x.track === t.k);
+      html += `<div class="cell">${list.map(({ x, i }) => `<button type="button" class="rtext tx t-${x.track}${sel === `${m.n}:${i}` ? ' on' : ''}" data-t="${m.n}:${i}"><strong>${esc(x.t)}</strong>${x.code ? `<em>${esc(x.code)}</em>` : ''}${x.note ? `<small>${esc(x.note)}</small>` : ''}</button>`).join('')}</div>`;
+    });
+  });
+  $('#grid').innerHTML = html;
+}
+// the live page's section that covers a text
+const key = (t) => t.replace(/^(Al-|Introduction to )/, '').split(/[\s—]/)[0].replace(/[ʾʿ’']/g, '').slice(0, 6).toLowerCase();
+function sectionFor(m, t) {
+  const k = key(t.t), norm = (s) => s.replace(/[ʾʿ’']/g, '').toLowerCase();
+  return m.sections.find((s) => s.title !== 'Learning Objectives' && norm(s.title).includes(k)) || m.sections.find((s) => s.title !== 'Learning Objectives' && norm(s.text).includes(k)) || m.sections[0];
+}
+function paintDetail() {
+  if (!sel) { $('#detail').innerHTML = ''; return; }
+  const [mn, ti] = sel.split(':').map(Number), m = R.MODULES[mn - 1], t = m.texts[ti], s = sectionFor(m, t);
+  $('#detail').innerHTML = `<div class="detail glass">
+    <div><span class="kicker">Module ${m.n} · ${esc(m.name)}</span><h3>${esc(t.t)}</h3><div class="meta">${t.code ? `<span>${esc(t.code)}</span>` : ''}<span>${esc(m.duration)}</span><span>${esc(m.format)}</span><span>${esc(m.hours)}</span></div><p class="ov">${esc(m.overview)}</p></div>
+    <div class="body"><h4>${esc(s.title)}</h4>${X.md(s.text)}</div></div>`;
+}
+$('#grid').addEventListener('click', (e) => { const b = e.target.closest('[data-t]'); if (!b) return; sel = sel === b.dataset.t ? null : b.dataset.t; paintGrid(); paintDetail(); if (sel) $('#detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); });
+
+X.player($('#video'), R.HERO.video.src.split('v=')[1], { title: 'About the 2-Year Arabic Program', kicker: 'Talweeh Arabic' });
+X.bindAccordions(); paintVerse(); paintGrid(); Waha.reveal();
+</script>
+</body>
+</html>

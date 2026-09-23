@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hadith Specialization · Isnād — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-hadith.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Hadith Specialization · Variation A — Isnād (the chain) ═══
+   The hero draws the program the way a muḥaddith draws a chain: the foundations at the top,
+   the disciplines that feed into each other, converging on Dirāsat al-Asānīd, ʿIlal and the
+   applied readings of al-Bukhārī and the Muwaṭṭaʾ. Hover a node to light its path; click it
+   to read the course. The curriculum below opens every course in a side drawer. */
+.ih{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center;margin-top:40px}
+.ih .ar{font-size:clamp(48px,6vw,80px);color:var(--p-gold);line-height:1.3;text-align:left}
+.ih h1{font-size:clamp(42px,5.6vw,78px);line-height:1;margin:8px 0 10px}
+.ih h1 em{font-style:italic;color:var(--p-gold)}
+.ih .name{font-family:'Lora',serif;font-style:italic;font-size:20px;color:var(--p-head);margin-bottom:14px}
+.ih .lead{color:var(--p-mut);line-height:1.75;font-size:16.5px}
+.ih .facts{display:flex;gap:26px;margin:22px 0}
+.ih .facts small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.ih .facts b{font-family:'Lora',serif;font-size:24px;color:var(--p-head);font-weight:600}
+.ih .acts{display:flex;gap:10px;flex-wrap:wrap}
+.ih .mail{display:block;margin-top:12px;font-size:12.5px;color:var(--p-mut)}
+.chart{position:relative;border-radius:32px;padding:26px 18px}
+.chart .kicker{color:var(--gold);text-align:center;display:block;margin-bottom:14px}
+.chart svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.chart path{fill:none;stroke:var(--c-line);stroke-width:1.5;transition:stroke .3s,stroke-width .3s}
+.chart path.lit{stroke:var(--gold);stroke-width:2.5}
+.tier{position:relative;display:flex;justify-content:center;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+.tier:last-child{margin-bottom:0}
+.node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:108px;max-width:150px;padding:8px 10px;border-radius:14px;background:var(--c-solid);border:1px solid var(--c-line);color:var(--c-head);cursor:pointer;text-align:center;transition:transform .35s var(--spring),border-color .3s,background .3s}
+.node .ar{font-family:'Amiri',serif;font-size:16px;color:var(--gold-b);line-height:1.4}
+.node small{font-size:10.5px;color:var(--c-mut);line-height:1.25}
+.node::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sc)}
+.node:hover,.node.lit{border-color:var(--gold);transform:translateY(-2px)}
+.node.lit{background:var(--c-hi)}
+.node.end{background:linear-gradient(135deg,var(--gold-b),var(--gold));border-color:transparent}
+.node.end .ar{color:var(--g2)}.node.end small{color:rgba(16,37,28,.75)}
+.chart .hint{text-align:center;font-size:12px;color:var(--c-mut);margin-top:14px}
+.blk{margin-top:100px;scroll-margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.ovw{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:start}
+.ovw h2{font-size:clamp(32px,4vw,52px);margin-top:6px}
+.ovw p{font-size:17px;line-height:1.85;color:var(--p-text);margin-bottom:14px}
+.yt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.yt button{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-radius:22px;border:1px solid var(--p-line);background:var(--p-card);cursor:pointer;text-align:left;transition:.3s}
+.yt button span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.yt button strong{display:block;font-family:'Lora',serif;font-size:26px;color:var(--p-head)}
+.yt button small{font-size:13px;color:var(--p-mut)}
+.yt button.on{background:var(--c-grad,var(--c-solid));border-color:var(--c-solid)}
+.yt button.on strong{color:var(--c-head)}.yt button.on span{color:var(--gold)}.yt button.on small{color:var(--c-mut)}
+.cgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.cc2{position:relative;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:18px;border-radius:22px;text-align:left;cursor:pointer;background:var(--p-card);border:1px solid var(--p-line);transition:transform .35s var(--spring),border-color .3s}
+.cc2:hover{transform:translateY(-3px);border-color:var(--gold)}
+.cc2 .n{font-family:'Lora',serif;font-size:28px;color:var(--p-gold);line-height:1}
+.cc2 .ar{font-family:'Amiri',serif;font-size:18px;color:var(--p-gold);line-height:1.4;direction:rtl;text-align:left}
+.cc2 strong{display:block;font-family:'Lora',serif;font-size:18px;color:var(--p-head)}
+.cc2 small{display:block;color:var(--p-mut);font-size:13px;margin:2px 0 10px}
+.cc2 .tags{display:flex;gap:6px;flex-wrap:wrap}
+.cc2 .solo{font-size:11px;font-weight:800;color:var(--p-gold);padding:4px 10px;border-radius:999px;border:1px dashed color-mix(in srgb,var(--gold) 60%,transparent)}
+/* drawer */
+.shade{position:fixed;inset:0;z-index:240;background:rgba(5,14,10,.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s}
+.shade.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:12px;right:12px;bottom:12px;z-index:250;width:min(560px,calc(100vw - 24px));border-radius:28px;padding:26px;overflow:auto;background:var(--bg);border:1px solid var(--c-line);box-shadow:0 30px 80px rgba(0,0,0,.4);transform:translateX(110%);transition:transform .5s var(--spring)}
+.dr.on{transform:none}
+.dr .x{position:sticky;top:0;float:right;width:40px;height:40px;border-radius:50%;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-head);cursor:pointer}
+.dr .ar{font-family:'Amiri',serif;font-size:30px;color:var(--p-gold);line-height:1.4;text-align:left}
+.dr h3{font-size:30px;margin:2px 0 4px}
+.dr .sub{color:var(--p-mut);margin-bottom:14px}
+.dr .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.dr .dnav{display:flex;justify-content:space-between;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--p-line)}
+@media (max-width:1000px){.ih,.ovw{grid-template-columns:1fr}.node{min-width:90px}.node small{display:none}}
+</style>
+</head>
+<body data-nav="Hadith Specialization" data-hadith="hadith-waha-isnad.html">
+<div class="mock-bar"><span>Hadith Specialization · Variation A — <b>Isnād</b> · the program drawn as a chain of transmission in the hero; every course opens in a side drawer</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+<div class="shade" id="shade"></div>
+<aside class="dr" id="dr" aria-label="Course details"></aside>
+
+<script src="assets/hadith-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-hadith.js"></script>
+<script>
+const { $, $$ } = Waha, K = WahaHadith, { H, esc } = K;
+const by = (t) => H.COURSES.find((c) => c.title === t);
+// the chart: tiers from foundations to application; each node feeds the tier below
+const TIERS = [
+  ['Tadwīn al-Sunnah', 'Makānat al-Sunnah'],
+  ['Ruwāt al-Ḥadīth — Part 1', 'Takwīn al-Isnād', 'Al-Jarḥ wa al-Taʿdīl', 'Manāhij al-Muḥaddithīn'],
+  ['Takhrīj', 'Tadrīb al-Rāwī 1', 'Al-Athbāt wa al-Fahāris', 'Ruwāt al-Ḥadīth — Part 2'],
+  ['Dirāsat al-Asānīd', 'Tadrīb al-Rāwī 2', 'Al-Nushakh wal-Taqyeed', 'Orientalist Critique'],
+  ['ʿIlal al-Ḥadīth'],
+  ['Ṣaḥīḥ al-Bukhārī', 'Muwaṭṭaʾ Mālik'],
+];
+// explicit links (from → to), following the page's own description of what builds on what
+const LINKS = [['Tadwīn al-Sunnah', 'Ruwāt al-Ḥadīth — Part 1'], ['Tadwīn al-Sunnah', 'Takwīn al-Isnād'], ['Makānat al-Sunnah', 'Manāhij al-Muḥaddithīn'], ['Makānat al-Sunnah', 'Al-Jarḥ wa al-Taʿdīl'],
+  ['Ruwāt al-Ḥadīth — Part 1', 'Ruwāt al-Ḥadīth — Part 2'], ['Takwīn al-Isnād', 'Takhrīj'], ['Takwīn al-Isnād', 'Al-Athbāt wa al-Fahāris'], ['Al-Jarḥ wa al-Taʿdīl', 'Ruwāt al-Ḥadīth — Part 2'], ['Manāhij al-Muḥaddithīn', 'Tadrīb al-Rāwī 1'],
+  ['Takhrīj', 'Dirāsat al-Asānīd'], ['Al-Jarḥ wa al-Taʿdīl', 'Dirāsat al-Asānīd'], ['Tadrīb al-Rāwī 1', 'Tadrīb al-Rāwī 2'], ['Al-Athbāt wa al-Fahāris', 'Al-Nushakh wal-Taqyeed'], ['Ruwāt al-Ḥadīth — Part 2', 'Dirāsat al-Asānīd'], ['Makānat al-Sunnah', 'Orientalist Critique'],
+  ['Dirāsat al-Asānīd', 'ʿIlal al-Ḥadīth'], ['Tadrīb al-Rāwī 2', 'ʿIlal al-Ḥadīth'], ['ʿIlal al-Ḥadīth', 'Ṣaḥīḥ al-Bukhārī'], ['ʿIlal al-Ḥadīth', 'Muwaṭṭaʾ Mālik'], ['Manāhij al-Muḥaddithīn', 'Ṣaḥīḥ al-Bukhārī'], ['Al-Nushakh wal-Taqyeed', 'Muwaṭṭaʾ Mālik']];
+let yr = 1, open = null;
+$('#page').innerHTML = `
+  <section class="ih">
+    <div>
+      <div class="ar" data-r>الحَدِيث</div>
+      <span class="kicker" data-r>${esc(H.HERO.eyebrow)}</span>
+      <h1 data-r>Hadith <em>Specialization</em></h1>
+      <p class="name" data-r>${esc(H.HERO.name)}</p>
+      <p class="lead" data-r>${esc(H.HERO.lead)}</p>
+      <div class="facts" data-r>${K.facts.map(([k, v]) => `<span><small>${k}</small><b>${v}</b></span>`).join('')}</div>
+      <div class="acts" data-r><a class="btn btn-g" href="#curriculum">Explore curriculum</a><a class="btn btn-glass" href="${H.ENROL}">For enrollment</a></div>
+      <small class="mail" data-r>Enrollment inquiries: ${esc(H.EMAIL)}</small>
+    </div>
+    <div class="chart glass" id="chart" data-r><span class="kicker">The program as an isnād</span><svg id="lines"></svg>
+      ${TIERS.map((t) => `<div class="tier">${t.map((title) => { const c = by(title); return `<button type="button" class="node s-${c.strand}${/Bukh|Muwa/.test(title) ? ' end' : ''}" data-c="${c.n}"><span class="ar">${c.ar}</span><small>${esc(c.title.replace(' — ', ' '))}</small></button>`; }).join('')}</div>`).join('')}
+      <p class="hint">Hover a course to follow what it builds on and leads to · click to read it</p></div>
+  </section>
+
+  <section class="blk ovw">
+    <div><span class="kicker">Program overview</span><h2>From preservation to critical analysis.</h2></div>
+    <div>${K.overview()}</div>
+  </section>
+
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Instructors</span><h2>Guided by specialist study.</h2></div></div>${K.instructors()}</section>
+
+  <section class="blk" id="curriculum">
+    <div class="sec-h"><div><span class="kicker">Hadith Specialization curriculum</span><h2>Seventeen courses across two years.</h2></div><p>Select a year, then open any course to read its overview and learning outcomes. ${K.standaloneCount} of them can also be taken today as standalone Talweeh courses.</p></div>
+    <div class="yt" id="yt"></div>
+    <div class="cgrid2" id="cgrid" data-stagger></div>
+  </section>
+  ${K.cta()}`;
+
+function paintYear() {
+  $('#yt').innerHTML = [1, 2].map((y) => `<button type="button" class="${yr === y ? 'on' : ''}" data-y="${y}"><div><span>Year ${y}</span><strong>${y === 1 ? '1st Year' : '2nd Year'}</strong></div><small>${K.year(y).length} courses</small></button>`).join('');
+  $('#cgrid').innerHTML = K.year(yr).map((c) => `<button type="button" class="cc2 s-${c.strand}" data-c="${c.n}"><span class="n">${String(c.n).padStart(2, '0')}</span><span><span class="ar">${c.ar}</span><strong>${esc(c.title)}</strong><small>${esc(c.subtitle)}</small><span class="tags"><span class="schip">${esc(K.strand(c.strand).label)}</span>${c.catalogSlug ? '<span class="solo">Also a standalone course</span>' : ''}</span></span></button>`).join('');
+  $('#cgrid').classList.remove('in'); Waha.reveal();
+}
+$('#yt').addEventListener('click', (e) => { const b = e.target.closest('[data-y]'); if (b) { yr = Number(b.dataset.y); paintYear(); } });
+
+function show(n) {
+  const c = H.COURSES[n - 1]; open = n;
+  $('#dr').innerHTML = `<button class="x" type="button" data-x aria-label="Close">✕</button><div class="ar">${c.ar}</div><span class="kicker">Year ${c.year} · course ${c.i} of ${K.year(c.year).length}</span><h3>${esc(c.title)}</h3><p class="sub">${esc(c.subtitle)}</p><div class="meta"><span class="schip s-${c.strand}">${esc(K.strand(c.strand).label)}</span></div>
+    ${K.detail(c)}
+    <div class="dnav"><button class="btn btn-glass btn-sm" type="button" data-go="${n - 1}" ${n === 1 ? 'disabled' : ''}>‹ Previous course</button><button class="btn btn-g btn-sm" type="button" data-go="${n + 1}" ${n === H.COURSES.length ? 'disabled' : ''}>Next course ›</button></div>`;
+  $('#dr').classList.add('on'); $('#shade').classList.add('on'); $('#dr').scrollTop = 0;
+}
+const close = () => { $('#dr').classList.remove('on'); $('#shade').classList.remove('on'); open = null; };
+document.addEventListener('click', (e) => {
+  const c = e.target.closest('[data-c]'); if (c) { show(Number(c.dataset.c)); return; }
+  const g = e.target.closest('[data-go]'); if (g) { show(Number(g.dataset.go)); return; }
+  if (e.target.closest('[data-x]') || e.target.id === 'shade') close();
+});
+addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+// draw the chain between node centres; hover lights a node's links
+function draw() {
+  const box = $('#chart').getBoundingClientRect(), pos = {};
+  $$('.node').forEach((n) => { const r = n.getBoundingClientRect(); pos[H.COURSES[n.dataset.c - 1].title] = { x: r.left - box.left + r.width / 2, t: r.top - box.top, b: r.bottom - box.top }; });
+  $('#lines').setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  $('#lines').innerHTML = LINKS.map(([a, b]) => { const p = pos[a], q = pos[b], m = (p.b + q.t) / 2; return `<path data-a="${esc(a)}" data-b="${esc(b)}" d="M${p.x} ${p.b} C ${p.x} ${m}, ${q.x} ${m}, ${q.x} ${q.t}"/>`; }).join('');
+}
+$('#chart').addEventListener('mouseover', (e) => {
+  const n = e.target.closest('.node'); const t = n ? H.COURSES[n.dataset.c - 1].title : null;
+  const near = new Set(t ? [t] : []);
+  $$('#lines path').forEach((p) => { const lit = t && (p.dataset.a === t || p.dataset.b === t); p.classList.toggle('lit', !!lit); if (lit) { near.add(p.dataset.a); near.add(p.dataset.b); } });
+  $$('.node').forEach((x) => x.classList.toggle('lit', !!t && near.has(H.COURSES[x.dataset.c - 1].title) && x !== n));
+});
+$('#chart').addEventListener('mouseleave', () => { $$('#lines path').forEach((p) => p.classList.remove('lit')); $$('.node').forEach((x) => x.classList.remove('lit')); });
+addEventListener('resize', draw); document.fonts.ready.then(draw); setTimeout(draw, 400);
+paintYear(); Waha.reveal();
+</script>
+</body>
+</html>

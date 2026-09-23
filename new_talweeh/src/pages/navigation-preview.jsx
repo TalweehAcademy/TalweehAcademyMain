@@ -8,9 +8,10 @@ export default function NavigationPreviewPage() {
       <PageHeader />
       <main className="academy-navigation-preview">
         <p className="academy-preview-label">Design preview</p>
-        <h1>{section}</h1>
-        <p>{section === 'Student Portal'
-          ? 'The existing student portal will be linked here once its address is confirmed.'
+        <h1>{section === 'Student Portal' ? 'Legacy Portal' : section}</h1>
+        {/* The portal button is now "Legacy Portal"; the old /navigation-preview/Student Portal address still works. */}
+        <p>{section === 'Legacy Portal' || section === 'Student Portal'
+          ? 'The legacy portal will be linked here once its address is confirmed.'
           : 'This section is part of the proposed website navigation. Its content has not been added to this preview yet.'}</p>
         <Link className="green-button" to="/">Back to Home</Link>
       </main>

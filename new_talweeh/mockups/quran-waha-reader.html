@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qurʾān · Tilāwah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Variation 1 — Tilāwah: the classic reader ═══
+   Glass tool bar under the header, a centred surah title like the homepage hero,
+   and each ayah on its own white card. */
+.subbar{position:sticky;top:94px;z-index:80;padding:0 22px;margin-top:14px}
+.subbar .in{max-width:1220px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:8px;border-radius:18px}
+.ssel{display:flex;align-items:center;gap:12px;padding:6px 14px 6px 8px;border-radius:14px;cursor:pointer;background:var(--c-in);border:1px solid var(--c-line);text-align:left;transition:border-color .3s}
+.ssel:hover{border-color:var(--gold)}
+.ssel .d{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--gold);color:var(--g2);font-weight:800;font-size:13px}
+.ssel strong{display:block;font-size:14px;color:var(--c-head);line-height:1.2}
+.ssel small{font-size:11.5px;color:var(--c-mut)}
+.ssel .cv{color:var(--gold);font-size:10px;margin-left:4px}
+.subbar .sp{flex:1}
+.tb{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:12px;border:1px solid transparent;background:none;cursor:pointer;font-size:13px;font-weight:700;color:var(--c-text);transition:.25s}
+.tb svg{width:17px;height:17px;fill:none;stroke:var(--gold);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tb:hover{background:var(--c-in);border-color:var(--c-line);color:var(--gold-b)}
+.tb .ct{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--clay);color:#2a150d;font-size:10.5px;display:grid;place-items:center}
+
+/* surah picker dropdown */
+.picker{position:absolute;top:calc(100% + 10px);left:0;width:min(420px,calc(100vw - 44px));max-height:min(520px,70vh);display:flex;flex-direction:column;border-radius:22px;padding:14px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:.35s var(--ease)}
+.picker.open{opacity:1;transform:none;pointer-events:auto}
+.picker .list{overflow-y:auto;margin-top:10px;display:grid;gap:2px}
+.picker .list button{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:12px;background:none;cursor:pointer;text-align:left;color:var(--c-text)}
+.picker .list button:hover,.picker .list button.on{background:var(--c-in)}
+.picker .list button.on{box-shadow:inset 3px 0 0 var(--gold)}
+.picker .list b{font-size:12px;color:var(--gold)}
+.picker .list small{display:block;font-size:11.5px;color:var(--c-mut)}
+.picker .list .ar{font-size:19px;color:var(--gold-b)}
+
+/* surah title */
+.shead{text-align:center;padding:64px 0 34px}
+.shead .eyebrow{font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.shead .name{font-family:'Amiri',serif;font-size:clamp(58px,8vw,104px);line-height:1.7;color:var(--p-head);margin:0;text-shadow:0 1px 0 rgba(215,179,115,.4)}
+.shead h1{font-size:clamp(30px,3.6vw,44px);margin-top:-6px}
+.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:18px 0 26px}
+.chips span{padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--p-soft);border:1px solid var(--p-line);color:var(--p-mut)}
+.chips span:first-child{color:var(--p-gold)}
+.acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.snav{display:flex;justify-content:space-between;align-items:center;max-width:860px;margin:34px auto 0;gap:10px}
+.snav a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;font-size:13px;color:var(--p-mut);transition:.3s}
+.snav a:hover{color:var(--p-head);background:var(--p-soft)}
+.snav a b{display:block;color:var(--p-head);font-size:14px}
+.snav a .arr{font-size:24px;color:var(--p-gold);line-height:1}
+.snav a:last-child{text-align:right}
+
+/* bismillah */
+.bism{text-align:center;font-family:'Amiri Quran','Amiri',serif;font-size:clamp(28px,3.4vw,40px);color:var(--p-head);padding:10px 0 30px;direction:rtl}
+
+/* ayah cards */
+.ayahs{max-width:980px;margin:0 auto;display:grid;gap:14px;list-style:none;--ar:34px;--tr:16.5px}
+.ay{position:relative;display:grid;grid-template-columns:44px 1fr;gap:18px;padding:24px 28px 18px 18px;border-radius:24px}
+.ay .side{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ay .ops{display:flex;gap:6px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--p-line);opacity:.55;transition:opacity .3s}
+.ay:hover .ops,.ay.active .ops{opacity:1}
+.ay .qt{font-size:var(--ar);color:var(--p-head);text-align:right}
+.ay .qt .w{border-radius:8px;padding:0 .06em;cursor:help;transition:background .2s,color .2s}
+.ay .qt .w:hover{background:rgba(215,179,115,.22);color:var(--p-gold)}
+.ay .tr{margin-top:12px;font-size:var(--tr);color:var(--p-mut);line-height:1.7}
+.ay .tr b{color:var(--p-gold);font-weight:700;margin-right:6px}
+.ay:hover{border-color:rgba(215,179,115,.5);box-shadow:0 16px 40px rgba(23,56,39,.1)}
+.ay.active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(215,179,115,.25),0 18px 44px rgba(184,137,76,.18)}
+.ay.active::before{content:'';position:absolute;left:0;top:22px;bottom:22px;width:3px;border-radius:3px;background:linear-gradient(var(--gold-b),var(--gold-d))}
+.hide-tr .ay .tr{display:none}
+/* word tooltip */
+.tip{position:fixed;z-index:300;pointer-events:none;padding:9px 12px;border-radius:12px;font-size:12.5px;text-align:center;opacity:0;transform:translate(-50%,-100%) translateY(-4px);transition:opacity .2s}
+.tip.on{opacity:1}
+.tip b{display:block;font-family:'Amiri',serif;font-size:19px;color:var(--gold-b);font-weight:400}
+.tip i{font-style:normal;color:var(--c-mut);font-size:11.5px}
+
+.next-card{max-width:980px;margin:40px auto 0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 30px;border-radius:26px}
+.next-card small{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.next-card h3{font-size:26px}
+.next-card .ar{font-size:30px;color:var(--gold-b)}
+
+@media(max-width:860px){.tb span.lb{display:none}.subbar{top:86px}}
+@media(max-width:560px){.subbar{padding:0 12px}.ay{grid-template-columns:1fr;padding:20px}.ay .side{flex-direction:row}.ayahs{--ar:28px}.ssel small{display:none}}
+</style>
+</head>
+<body class="">
+<div class="mock-bar"><span>Qurʾān · Variation 1 — <b>Tilāwah</b> · classic reader: glass tool bar, centred surah title, one card per ayah</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<div class="subbar"><div class="in glass" style="position:relative">
+  <button class="ssel" id="sselBtn" type="button" aria-haspopup="listbox"><span class="d" id="sselNum">1</span><span><strong id="sselName">1. Al-Faatiha</strong><small>Change Surah</small></span><span class="cv">▾</span></button>
+  <div class="picker glass" id="picker"><div class="search-in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pickQ" placeholder="Search surah name or number" /></div><div class="list" id="pickList"></div></div>
+  <span class="sp"></span>
+  <div class="seg" role="group" aria-label="Qurʾān mode"><button class="on" type="button">Reader</button><button type="button">Study</button><button type="button">Sources</button></div>
+  <button class="tb" type="button"><svg viewBox="0 0 24 24"><path d="M3 5.5C5.7 4.8 8 5.3 11 7v12c-3-1.7-5.3-2.2-8-1.5zM21 5.5c-2.7-.7-5-.2-8 1.5v12c3-1.7 5.3-2.2 8-1.5z"/></svg><span class="lb">Read</span></button>
+  <button class="tb" type="button" data-open="searchD"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lb">Search</span></button>
+  <button class="tb" type="button" data-open="savedD"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="lb">Saved</span><span class="ct" id="savedCt" hidden>0</span></button>
+  <button class="ib" type="button" data-open="settingsD" aria-label="Reader settings"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
+</div></div>
+
+<main><div class="wrap">
+  <section class="shead">
+    <div class="eyebrow" data-r>Surah <span id="sNo">1</span></div>
+    <div class="name" data-r id="sAr">الفاتحة</div>
+    <h1 data-r id="sEn">Al-Faatiha</h1>
+    <div class="chips" data-r><span id="sMean">The Opening</span><span id="sType">Meccan</span><span id="sAyahs">7 Ayahs</span></div>
+    <div class="acts" data-r>
+      <button class="btn btn-g" id="playSurah" type="button"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>Play Surah</button>
+      <button class="btn btn-glass" type="button"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>Sūrah Study</button>
+    </div>
+    <div class="snav" data-r><a href="#" id="prevS"><span class="arr">‹</span><span><small>Previous</small><b id="prevN">—</b></span></a><a href="#" id="nextS"><span><small>Next</small><b id="nextN">Al-Baqara</b></span><span class="arr">›</span></a></div>
+  </section>
+
+  <div class="bism" data-r id="bism">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+  <ol class="ayahs" id="ayahs" data-stagger></ol>
+
+  <div class="next-card glass" data-r><div><small>Continue reading</small><h3 id="ncName">Surah Al-Baqara</h3></div><div class="ar" id="ncAr">البقرة</div><a class="btn btn-g" href="#" id="ncBtn">Next Surah →</a></div>
+</div></main>
+
+<div id="waha-foot"></div>
+
+<!-- floating player -->
+<div class="player glass off" id="player">
+  <button class="pp" id="pp" type="button" aria-label="Play / pause"></button>
+  <div class="now"><small>Now reciting</small><strong><span id="nowAyah">1:1</span> <em>· Mishary Rashid Alafasy</em></strong><div class="bar-t" id="prog"><i></i></div></div>
+  <span class="rec">Ayah by ayah ▾</span>
+  <button class="ib" type="button" aria-label="Close player" onclick="document.getElementById('player').classList.add('off');R.pause()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer left glass" id="searchD" role="dialog" aria-label="Search the Qurʾān">
+  <div class="dh"><div><small>Reader</small><h3>Search Qurʾān</h3></div><button class="ib" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search Arabic, translation, or enter 2:255" /></div>
+  <p class="hint">Tip: enter a verse reference such as <b>2:255</b> to jump directly.</p>
+  <div class="res" id="res"></div>
+</aside>
+<aside class="drawer left glass" id="savedD" role="dialog" aria-label="Saved ayahs">
+  <div class="dh"><div><small>Reader</small><h3>Saved Ayahs</h3></div><button class="ib" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <p class="hint" style="margin:0 0 6px">Saved on this device for now. Account sync will be added when the Talweeh account system is connected.</p>
+  <div class="res" id="saved"></div>
+</aside>
+<aside class="drawer glass" id="settingsD" role="dialog" aria-label="Reader settings">
+  <div class="dh"><h3>Settings</h3><button class="ib" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="dg"><label>Translation</label><select class="sel"><option>Saheeh International</option><option>Marmaduke Pickthall</option><option>Abdullah Yusuf Ali</option><option>Muhammad Asad</option><option>Hilali &amp; Khan</option><option>Mubarakpuri</option><option>Wahiduddin Khan</option></select></div>
+  <div class="dg inline"><span class="l">Show translation</span><button class="sw on" id="swTr" type="button" aria-label="Show translation"></button></div>
+  <div class="dg"><span class="l">Qurʾān mode</span><div class="seg"><button class="on" type="button">Reader</button><button type="button">Study</button><button type="button">Sources</button></div></div>
+  <div class="dg"><label>Reciter</label><select class="sel"><option>Mishary Rashid Alafasy</option><option>Abdul Basit Abdul Samad</option><option>Mahmoud Khalil Al-Husary</option><option>Saad Al-Ghamdi</option><option>Maher Al-Muaiqly</option></select></div>
+  <div class="dg"><span class="l">Arabic script</span><div class="seg"><button class="on" type="button">Uthmani</button><button type="button">IndoPak</button></div></div>
+  <div class="dg inline"><span class="l">Arabic size</span><div class="step"><button type="button" data-sz="ar:-2">–</button><span id="arV">34</span><button type="button" data-sz="ar:2">+</button></div></div>
+  <div class="dg inline"><span class="l">Translation size</span><div class="step"><button type="button" data-sz="tr:-1">–</button><span id="trV">16</span><button type="button" data-sz="tr:1">+</button></div></div>
+  <div class="dg"><span class="l">Play a range of ayahs</span><div style="display:flex;gap:8px;align-items:center"><input class="sel" value="1" style="width:70px" /> <span>to</span> <input class="sel" value="7" style="width:70px" /><button class="btn btn-g btn-sm" type="button">Play range</button></div></div>
+</aside>
+<div class="tip glass" id="tip"></div>
+
+<script src="assets/quran-sample-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script>
+const { $, $$, marker, esc, surah } = Waha;
+const SAMPLE = { 1: window.QURAN_FATIHA, 67: window.QURAN_MULK };
+const WORDS = window.QURAN_FATIHA_WORDS;
+const saved = new Set();
+let cur = 1, R;
+
+const ICON = {
+  play: '<svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>',
+  mark: '<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+  link: '<svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>',
+  more: '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>',
+};
+
+function arabicHtml(n, a, text) {
+  const words = n === 1 && WORDS[a];
+  if (!words) return esc(text);
+  return words.map(([ar, en, tl]) => `<span class="w" data-en="${esc(en)}" data-tl="${esc(tl)}">${ar}</span>`).join(' ');
+}
+
+function render(n) {
+  cur = n;
+  const s = surah(n), rows = SAMPLE[n] || SAMPLE[1];
+  $('#sNo').textContent = n; $('#sAr').textContent = s.ar.replace(/^سورة\s*/, ''); $('#sEn').textContent = s.en;
+  $('#sMean').textContent = s.meaning; $('#sType').textContent = s.type; $('#sAyahs').textContent = s.ayahs + ' Ayahs';
+  $('#sselNum').textContent = n; $('#sselName').textContent = n + '. ' + s.en;
+  $('#prevN').textContent = n > 1 ? surah(n - 1).en : '—'; $('#nextN').textContent = n < 114 ? surah(n + 1).en : '—';
+  const nx = surah(n < 114 ? n + 1 : 1); $('#ncName').textContent = 'Surah ' + nx.en; $('#ncAr').textContent = nx.ar;
+  $('#bism').style.display = (n === 1 || n === 9) ? 'none' : '';
+  const list = $('#ayahs'); list.classList.remove('in');
+  list.innerHTML = rows.map(([a, ar, tr]) => `
+    <li class="ay card" id="a${a}" data-a="${a}">
+      <div class="side"><span class="vn">${n}:${a}</span></div>
+      <div><p class="qt">${arabicHtml(n, a, ar)} ${marker(a)}</p><p class="tr"><b>${a}.</b>${esc(tr)}</p>
+        <div class="ops"><button class="pb" type="button" data-play="${a}" aria-label="Play ayah">${ICON.play}</button>
+        <button class="pb${saved.has(n + ':' + a) ? ' on' : ''}" type="button" data-save="${a}" aria-label="Save ayah">${ICON.mark}</button>
+        <button class="pb" type="button" aria-label="Copy link">${ICON.link}</button>
+        <button class="pb" type="button" aria-label="More">${ICON.more}</button></div></div>
+    </li>`).join('') + (rows.length < s.ayahs && SAMPLE[n] ? `<li class="card" style="padding:18px;border-radius:20px;text-align:center;color:var(--p-mut);font-size:13.5px">Mockup shows the first ${rows.length} of ${s.ayahs} ayahs</li>` : '');
+  if (!SAMPLE[n]) list.insertAdjacentHTML('afterbegin', `<li class="card" style="padding:14px;border-radius:18px;text-align:center;color:var(--p-mut);font-size:13px">Sample text — the mockup includes Al-Fātiḥah and Al-Mulk; other surahs show Al-Fātiḥah as filler.</li>`);
+  requestAnimationFrame(() => Waha.reveal());
+  R && R.pause();
+  R = Waha.player({ count: rows.length, label: (a) => n + ':' + a, onAyah: (a) => { $$('.ay').forEach((x) => x.classList.toggle('active', +x.dataset.a === a)); $('#a' + a)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); } });
+}
+
+/* picker */
+const pl = $('#pickList');
+const fillPicker = (q = '') => { q = q.trim().toLowerCase(); pl.innerHTML = window.QURAN_SURAHS.filter((s) => !q || String(s[0]) === q || s[2].toLowerCase().includes(q) || s[3].toLowerCase().includes(q)).map((s) => `<button type="button" data-s="${s[0]}" class="${s[0] === cur ? 'on' : ''}"><b>${s[0]}</b><span>${s[2]}<small>${s[3]} · ${s[4]} ayahs</small></span><span class="ar">${s[1]}</span></button>`).join(''); };
+$('#sselBtn').addEventListener('click', (e) => { e.stopPropagation(); fillPicker(); $('#picker').classList.toggle('open'); $('#pickQ').focus(); });
+$('#pickQ').addEventListener('input', (e) => fillPicker(e.target.value));
+$('#picker').addEventListener('click', (e) => { e.stopPropagation(); const b = e.target.closest('[data-s]'); if (b) { $('#picker').classList.remove('open'); render(+b.dataset.s); scrollTo({ top: 0, behavior: 'smooth' }); } });
+document.addEventListener('click', () => $('#picker').classList.remove('open'));
+$('#prevS').addEventListener('click', (e) => { e.preventDefault(); if (cur > 1) render(cur - 1); });
+$('#nextS').addEventListener('click', (e) => { e.preventDefault(); if (cur < 114) render(cur + 1); });
+$('#ncBtn').addEventListener('click', (e) => { e.preventDefault(); render(cur < 114 ? cur + 1 : 1); scrollTo({ top: 0, behavior: 'smooth' }); });
+
+/* ayah actions */
+$('#ayahs').addEventListener('click', (e) => {
+  const p = e.target.closest('[data-play]'); if (p) R.play(+p.dataset.play);
+  const s = e.target.closest('[data-save]');
+  if (s) { const k = cur + ':' + s.dataset.save; saved.has(k) ? saved.delete(k) : saved.add(k); s.classList.toggle('on'); renderSaved(); }
+});
+$('#playSurah').addEventListener('click', () => R.play(1));
+
+/* word hover tooltip */
+const tip = $('#tip');
+$('#ayahs').addEventListener('mouseover', (e) => { const w = e.target.closest('.w'); if (!w) return; const r = w.getBoundingClientRect(); tip.innerHTML = `<b>${w.textContent}</b>${esc(w.dataset.en)}<br><i>${esc(w.dataset.tl)}</i>`; tip.style.left = r.left + r.width / 2 + 'px'; tip.style.top = r.top + 'px'; tip.classList.add('on'); });
+$('#ayahs').addEventListener('mouseout', (e) => { if (e.target.closest('.w')) tip.classList.remove('on'); });
+
+/* drawers */
+$$('[data-open]').forEach((b) => b.addEventListener('click', () => { Waha.drawer(b.dataset.open, true); if (b.dataset.open === 'searchD') $('#q').focus(); }));
+$$('[data-close]').forEach((b) => b.addEventListener('click', () => Waha.drawer(b.closest('.drawer').id, false)));
+
+/* search over the sample text */
+$('#q').addEventListener('input', (e) => {
+  const q = e.target.value.trim(); const out = $('#res');
+  if (!q) { out.innerHTML = ''; return; }
+  const ref = q.match(/^(\d{1,3}):(\d{1,3})$/);
+  if (ref) { const s = window.QURAN_SURAHS[ref[1] - 1]; out.innerHTML = s ? `<a href="#"><small>${ref[1]}:${ref[2]} · ${s[2]}</small><p>Jump directly to this ayah</p></a>` : ''; return; }
+  const hits = [];
+  for (const [n, rows] of Object.entries(SAMPLE)) rows.forEach(([a, ar, tr]) => { if (tr.toLowerCase().includes(q.toLowerCase()) || ar.includes(q)) hits.push(`<a href="#" data-go="${n}"><small>${n}:${a} · ${surah(+n).en}</small><span class="qt">${ar}</span><p>${esc(tr)}</p></a>`); });
+  out.innerHTML = hits.join('') || '<p class="hint">No matches in the sample text. Try “path”, “merciful” or “dominion”.</p>';
+});
+$('#res').addEventListener('click', (e) => { const a = e.target.closest('[data-go]'); if (a) { e.preventDefault(); Waha.drawer('searchD', false); render(+a.dataset.go); } });
+
+function renderSaved() {
+  const ct = $('#savedCt'); ct.hidden = !saved.size; ct.textContent = saved.size;
+  $('#saved').innerHTML = saved.size ? [...saved].map((k) => { const [n, a] = k.split(':'); const row = (SAMPLE[n] || SAMPLE[1])[a - 1]; return `<a href="#"><small>${k} · ${surah(+n).en}</small><span class="qt">${row[1]}</span><p>${esc(row[2])}</p></a>`; }).join('') : '<div style="text-align:center;padding:26px 10px"><strong style="color:var(--c-head)">No saved ayahs yet</strong><p class="hint">Use the bookmark beside any ayah to keep it here.</p></div>';
+}
+
+/* settings */
+$('#swTr').addEventListener('click', (e) => { e.currentTarget.classList.toggle('on'); document.body.classList.toggle('hide-tr'); });
+const sz = { ar: 34, tr: 16 };
+$$('[data-sz]').forEach((b) => b.addEventListener('click', () => { const [k, d] = b.dataset.sz.split(':'); sz[k] = Math.max(k === 'ar' ? 24 : 12, Math.min(k === 'ar' ? 52 : 24, sz[k] + +d)); $('#' + k + 'V').textContent = sz[k]; $('#ayahs').style.setProperty('--' + k, sz[k] + 'px'); }));
+$$('.seg').forEach((g) => g.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; $$('button', g).forEach((x) => x.classList.toggle('on', x === b)); }));
+
+renderSaved();
+render(1);
+Waha.reveal();
+</script>
+</body>
+</html>

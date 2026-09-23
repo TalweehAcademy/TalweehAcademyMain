@@ -3965,3 +3965,7 @@ html[data-theme="dark"] .academy-legal-page .legal-section-body li { color:#dce5
       url('/brand/dashboard-books.webp') center / cover no-repeat!important;
   }
 }
+
+/* Social icons in the older PageHeader / PageFooter are drawn as SVG (components/SocialGlyph.jsx),
+   the same shapes as the Wāḥa header and footer. */
+.social-links a svg,.top-bar-social a svg{width:15px;height:15px;fill:currentColor;display:block}

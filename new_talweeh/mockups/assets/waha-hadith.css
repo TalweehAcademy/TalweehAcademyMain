@@ -1,0 +1,49 @@
+/* ═══ Wāḥa Forest — Hadith Specialization pieces shared by the hadith-waha-*.html mockups ═══ */
+/* strands: one accent each */
+.s-history{--sc:#d7b373}.s-narrators{--sc:#e3a58a}.s-isnad{--sc:#7fb89a}.s-method{--sc:#b7a6d9}.s-sources{--sc:#8fb3c9}.s-critique{--sc:#d99a9a}.s-applied{--sc:#e0c36b}
+:root:not([data-theme="dark"]) .s-history{--sc:#a8792f}:root:not([data-theme="dark"]) .s-narrators{--sc:#b0654a}:root:not([data-theme="dark"]) .s-isnad{--sc:#2f7a58}:root:not([data-theme="dark"]) .s-method{--sc:#6c5a9e}:root:not([data-theme="dark"]) .s-sources{--sc:#3d7391}:root:not([data-theme="dark"]) .s-critique{--sc:#a24d4d}:root:not([data-theme="dark"]) .s-applied{--sc:#8a6d12}
+.schip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:999px;color:var(--sc);background:color-mix(in srgb,var(--sc) 12%,transparent);border:1px solid color-mix(in srgb,var(--sc) 35%,transparent);white-space:nowrap}
+.schip::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--sc)}
+
+/* course detail */
+.hdet{display:grid;gap:18px}
+.hlabel{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--p-gold);margin-bottom:6px}
+.hdet p{color:var(--p-text);line-height:1.8}
+.hnote{font-size:13px;color:var(--p-mut)!important;font-style:italic;margin-top:8px}
+.hdet-out ul{list-style:none;display:grid;gap:8px}
+.hdet-out li{position:relative;padding-left:28px;color:var(--p-text);line-height:1.6}
+.hdet-out li::before{content:'✓';position:absolute;left:0;top:1px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:color-mix(in srgb,var(--gold) 22%,transparent);color:var(--p-gold)}
+.hstand{border-radius:20px;padding:16px;background:var(--p-soft);border:1px solid var(--p-line)}
+.hstand-h{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center}
+.hstand-h .btn{grid-column:1/-1;justify-self:start}
+.hstand-h img{width:64px;height:80px;object-fit:cover;border-radius:10px}
+.hstand-h strong{display:block;font-family:'Lora',serif;font-size:18px;color:var(--p-head)}
+.hstand-h small{color:var(--p-mut);font-size:12.5px}
+.hless{list-style:none;display:grid;gap:4px;margin-top:14px;max-height:280px;overflow:auto;padding-right:4px}
+.hless li{display:grid;grid-template-columns:28px 1fr;gap:8px;font-size:13.5px;color:var(--p-text);padding:6px 4px;border-top:1px dashed var(--p-line)}
+.hless b{font-family:'Lora',serif;color:var(--p-gold);font-weight:600}
+.hless li.hmore{display:block;border:0}
+.hless li.hmore a{font-weight:700;color:var(--p-gold)}
+.hdet.dark p,.hdet.dark .hdet-out li,.hdet.dark .hless li{color:var(--c-text)}
+.hdet.dark .hlabel{color:var(--gold)}
+.hdet.dark .hstand{background:var(--c-in);border-color:var(--c-line)}
+.hdet.dark .hstand-h strong{color:var(--c-head)}
+.hdet.dark .hstand-h small,.hdet.dark .hnote{color:var(--c-mut)!important}
+.hdet.dark .hless li{border-color:var(--c-line)}
+
+/* instructors + closing call */
+.hinst{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hinst .card{display:flex;gap:16px;align-items:flex-start;padding:22px;border-radius:24px;transition:transform .4s var(--spring),border-color .3s}
+.hinst .card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.hi-n{font-family:'Lora',serif;font-size:32px;color:var(--p-gold);line-height:1}
+.hinst h3{font-size:21px}
+.hinst p{color:var(--p-mut);font-size:14px;margin:4px 0 8px}
+.hinst small{color:var(--p-gold);font-weight:700;font-size:12.5px}
+.hcta{margin:100px 0 20px;padding:54px 30px;border-radius:36px;text-align:center;background:url('../../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.hcta .ar{font-size:30px;color:var(--gold-b);line-height:1.7}
+.hcta .kicker{color:var(--gold)}
+.hcta h2{color:var(--cream);font-size:clamp(30px,4vw,50px);margin:8px 0 12px}
+.hcta p{color:rgba(243,232,211,.8);margin-bottom:22px}
+.hcta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hcta small{display:block;margin-top:16px;color:rgba(243,232,211,.6)}
+@media (max-width:760px){.hinst{grid-template-columns:1fr}.hstand-h{grid-template-columns:auto 1fr}.hstand-h .btn{grid-column:1/-1}}
