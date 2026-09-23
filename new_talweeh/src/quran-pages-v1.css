@@ -577,3 +577,28 @@
 }
 @media(max-width:760px){.qp-readmode .wh-footer{padding-bottom:84px}}
 @media(max-width:760px){.qp-viewbar.sheet-open .qp-vseg span{display:inline!important}.qp-viewbar.sheet-open .qp-vseg button{justify-content:center;gap:8px}}
+
+/* ── Madinah muṣḥaf page drawn line for line (MushafLines) ── */
+.qp-page.lined{padding-left:22px;padding-right:22px}
+.qp-mushaf{--mfs:20px;direction:rtl;font-family:'Amiri Quran','Amiri',serif;font-size:var(--mfs);color:var(--ink);display:flex;flex-direction:column;flex:1}
+.qp-ml{height:2.15em;display:flex;align-items:center;justify-content:space-between;white-space:nowrap;line-height:1}
+.qp-ml.c{justify-content:center;gap:.28em}
+.qp-ml.h{justify-content:center}
+.qp-ml.h .qp-cart{width:100%;height:1.8em;margin:0;font-size:.95em}
+.qp-ml.h .qp-bism{font-size:1em;margin:0}
+.qp-mushaf.opening{justify-content:center;padding:4% 8%}
+.qp-mushaf.opening .qp-ml{height:2.4em}
+/* while measuring: words packed, so a line's natural width can be read */
+.qp-mushaf.measure{font-size:20px}
+.qp-mushaf.measure .qp-ml.w{justify-content:flex-start;gap:.28em;width:max-content;overflow:visible}
+.qp-mw{cursor:pointer;border-radius:.2em;padding:0 .02em;transition:background .2s}
+.qp-mw:hover,.qp-mw.on{background:color-mix(in srgb,var(--gold) 22%,transparent)}
+.qp-mw .qp-am{color:var(--gold-d);margin:0}
+@media(max-width:760px){.qp-page.lined{padding:20px 12px 18px}.qp-page.lined .frame{inset:6px}}
+.qp-ml.h .qp-cart span{font-size:1em}
+/* the page's width must never depend on its lines (they are sized from it) */
+.qp-page.lined{min-width:0;overflow:hidden}
+.qp-mushaf{min-width:0;width:100%;contain:inline-size}
+.qp-ml{min-width:0}
+@media(max-width:760px){.qp-page.lined{padding:22px 18px 18px}}
+.qp-ml.w{padding:0 .15em;overflow:hidden}

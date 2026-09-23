@@ -3,11 +3,11 @@
 // Book view: Madinah + Ḥafṣ shows the real 604-page muṣḥaf layout (api.alquran.cloud/page);
 // IndoPak styles and the other riwāyāt come per surah and are paginated to the chosen line count.
 // Scroll view: one continuous column, surah after surah.
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
-import { RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
+import { RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
 import { AyahMarker, Icon, SurahPicker, useEscape } from '../quran/QuranUI'
 import { useScrollLock } from '../hooks/useScrollLock'
 import '../quran-pages-v1.css'
@@ -24,6 +24,67 @@ function SurahHead({ s }) {
       {s !== 1 && s !== 9 && <div className="qp-bism">{BASMALAH}</div>}
     </>
   )
+}
+
+// One Madinah muṣḥaf page drawn line for line as printed (15 lines; pages 1–2 are centred and shorter).
+// Every line on the page shares one type size, chosen so the longest line exactly fills the page width,
+// and each line is justified edge to edge, so the page looks the same on a phone as in print.
+// Runs of empty line slots before a surah hold its title (and basmalah, except for al-Tawbah).
+function MushafLines({ lines, no, onTap, selected }) {
+  const boxRef = useRef(null)
+  const [size, setSize] = useState(null)
+  const fit = useCallback(() => {
+    const box = boxRef.current
+    if (!box) return
+    const avail = box.clientWidth
+    if (!avail) return
+    box.classList.add('measure') // lays lines out packed at a fixed 20px (see CSS)
+    let widest = 0
+    box.querySelectorAll('.qp-ml.w').forEach((l) => { widest = Math.max(widest, l.scrollWidth) })
+    box.classList.remove('measure')
+    if (widest) setSize(Math.max(11, Math.min(40, 20 * (avail / widest) * 0.97)))
+  }, [])
+  useLayoutEffect(fit, [lines, fit])
+  // Safety net: if any line still runs past the page (glyph overhangs the measure missed), step down.
+  useLayoutEffect(() => {
+    const box = boxRef.current
+    if (!box || !size) return
+    const over = [...box.querySelectorAll('.qp-ml.w')].some((l) => l.scrollWidth > l.clientWidth + 1)
+    if (over && size > 11) setSize((v) => Math.max(11, v * 0.96))
+  }, [size])
+  useEffect(() => {
+    const ro = new ResizeObserver(fit)
+    if (boxRef.current) ro.observe(boxRef.current)
+    document.fonts?.ready.then(fit)
+    return () => ro.disconnect()
+  }, [fit])
+
+  const centred = no <= 2
+  const out = []
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i]
+    if (l.words.length) {
+      out.push(
+        <div key={l.n} className={`qp-ml w${centred ? ' c' : ''}`}>
+          {l.words.map((w, k) => (w.end
+            ? <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}><AyahMarker n={w.a} /></span>
+            : <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}>{w.t}</span>))}
+        </div>,
+      )
+      continue
+    }
+    // A run of empty slots: the next surah's title, then its basmalah.
+    let j = i
+    while (j < lines.length && !lines[j].words.length) j++
+    const nextWord = lines[j]?.words[0]
+    const sura = nextWord ? nextWord.s : (lines[i - 1]?.words.at(-1)?.s || 0) + 1
+    const run = j - i
+    out.push(<div key={`h${l.n}`} className="qp-ml h"><div className="qp-cart"><span>سُورَةُ {surahInfo(sura).ar}</span></div></div>)
+    if (run > 1) out.push(<div key={`b${l.n}`} className="qp-ml h"><div className="qp-bism">{sura !== 9 ? BASMALAH : ''}</div></div>)
+    for (let k = 2; k < run; k++) out.push(<div key={`e${l.n}-${k}`} className="qp-ml h" />)
+    i = j - 1
+  }
+  return <div className={`qp-mushaf${centred ? ' opening' : ''}`} ref={boxRef} style={size ? { '--mfs': `${size}px` } : undefined}>{out}</div>
 }
 
 // Rows [{ s, a, text }] → surah headers + continuous text, one clickable span per āyah.
@@ -105,6 +166,17 @@ export default function QuranReadPage() {
   /* ── book view, Madinah: two real pages ── */
   const spreadStart = page ? (page % 2 ? page : page - 1) : 0
   const [spreadRows, setSpreadRows] = useState([null, null])
+  const [spreadLines, setSpreadLines] = useState([null, null])
+  useEffect(() => {
+    if (!madinah || view !== 'book' || !spreadStart) return undefined
+    let live = true
+    setSpreadLines([null, null])
+    // If the line layout can't be fetched, the page falls back to flowing text (spreadLines stays null).
+    Promise.all([getMushafLines(spreadStart), spreadStart + 1 <= MUSHAF_PAGES ? getMushafLines(spreadStart + 1) : Promise.resolve([])])
+      .then((pair) => { if (live) setSpreadLines(pair) })
+      .catch(() => {})
+    return () => { live = false }
+  }, [madinah, view, spreadStart])
   useEffect(() => {
     if (!madinah || view !== 'book' || !spreadStart) return undefined
     let live = true
@@ -231,7 +303,16 @@ export default function QuranReadPage() {
     : view === 'book' ? `Juz ${juzOf(surah)} · Page ${Math.min(sub + 1, surahSubCount || 1)} of ${surahSubCount || '…'}` : `Juz ${juzOf(surah)} · ${locSurah.ayahs} āyāt`
   const riw = RIWAYAT.find((r) => r.id === riwayah)
 
-  const renderPage = (rows, no, key) => {
+  const renderPage = (rows, no, key, lines) => {
+    if (lines && lines.length) {
+      return (
+        <article key={key} className="qp-page lined">
+          <span className="frame" />
+          <MushafLines lines={lines} no={no} onTap={onTap} selected={pop?.k} />
+          <div className="qp-pno">{no ? arNum(no) : ''}</div>
+        </article>
+      )
+    }
     if (!rows) return <article key={key} className="qp-page"><span className="frame" /><p className="qp-status">Loading…</p></article>
     if (!rows.length) return <article key={key} className="qp-page blank"><span className="frame" /></article>
     return (
@@ -301,7 +382,7 @@ export default function QuranReadPage() {
           <div className="qp-book">
             <div className="qp-spread">
               {madinah
-                ? [renderPage(spreadRows[0], spreadStart, 'r'), renderPage(spreadRows[1], spreadStart + 1, 'l')]
+                ? [renderPage(spreadRows[0], spreadStart, 'r', spreadLines[0]), renderPage(spreadRows[1], spreadStart + 1, 'l', spreadLines[1])]
                 : [renderPage(subPages[sub] || (surahRows ? [] : null), sub + 1, 'r'), renderPage(subPages[sub + 1] || (surahRows ? [] : null), subPages[sub + 1] ? sub + 2 : 0, 'l')]}
             </div>
             <button className="qp-turn l" type="button" onClick={() => turn(1)} disabled={!canNext} aria-label="Next page">‹</button>

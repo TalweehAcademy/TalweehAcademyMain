@@ -239,3 +239,8 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 .cw-vp.is-fs .cw-vp-bar{padding:8px 12px 10px}
 .cw-vp:-webkit-full-screen{padding:0;border:0;border-radius:0;display:flex;flex-direction:column;justify-content:center;background:#050d09}
 .cw-vp:-webkit-full-screen .cw-vp-screen{border-radius:0;flex:1;aspect-ratio:auto}
+/* The search bar scrolls away with the page (it used to pin under the header and crowd the list). */
+.cw-band{position:relative;top:auto;margin:0 0 8px;padding:0}
+.cw-band.stuck{background:none}
+.cw-band::after{display:none}
+.cw-side{top:110px;max-height:calc(100vh - 126px)}

@@ -24,15 +24,16 @@ const WORD = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'
 const FACTS = [['Duration', '2 years'], ['Curriculum', `${H.COURSES.length} courses`], ['Level', 'Advanced'], ['Standalone now', `${soloCount} courses`]]
 const INSTRUCTOR_PAGES = { 'Sheikh Omer Khurshid': 'sheikh-omer-khurshid', 'Mufti Daud Khurshid': 'mufti-mohammad-daud-khurshid' }
 
-// The chart: rows from foundations to application; [course title, column 0–5]. The positions came from
+// The chart, drawn as an isnād is read: the applied readings (Bukhārī, the Muwaṭṭaʾ) at the top, down to
+// the foundations at the bottom; [course title, column 0–5]. The positions came from
 // a search over every arrangement for the fewest crossing lines and no line running behind a course.
 const ROWS = [
-  [['Tadwīn al-Sunnah', 0], ['Makānat al-Sunnah', 4]],
-  [['Takwīn al-Isnād', 0], ['Ruwāt al-Ḥadīth — Part 1', 1], ['Al-Jarḥ wa al-Taʿdīl', 2], ['Nukhbat al-Fikar', 3]],
-  [['Al-Athbāt wa al-Fahāris', 0], ['Takhrīj', 1], ['Ruwāt al-Ḥadīth — Part 2', 2], ['Tadrīb al-Rāwī 1', 3], ['Manāhij al-Muḥaddithīn', 4], ['Orientalist Critique', 5]],
-  [['Al-Nushakh wal-Taqyeed', 1], ['Dirāsat al-Asānīd', 2], ['Tadrīb al-Rāwī 2', 3]],
-  [['ʿIlal al-Ḥadīth', 2]],
   [['Muwaṭṭaʾ Mālik', 1.5], ['Ṣaḥīḥ al-Bukhārī', 3]],
+  [['ʿIlal al-Ḥadīth', 2]],
+  [['Al-Nushakh wal-Taqyeed', 1], ['Dirāsat al-Asānīd', 2], ['Tadrīb al-Rāwī 2', 3]],
+  [['Al-Athbāt wa al-Fahāris', 0], ['Takhrīj', 1], ['Ruwāt al-Ḥadīth — Part 2', 2], ['Tadrīb al-Rāwī 1', 3], ['Manāhij al-Muḥaddithīn', 4], ['Orientalist Critique', 5]],
+  [['Takwīn al-Isnād', 0], ['Ruwāt al-Ḥadīth — Part 1', 1], ['Al-Jarḥ wa al-Taʿdīl', 2], ['Nukhbat al-Fikar', 3]],
+  [['Tadwīn al-Sunnah', 0], ['Makānat al-Sunnah', 4]],
 ]
 // What builds on what. Tadrīb al-Rāwī builds on Nukhbat al-Fikar; al-Jarḥ → Dirāsat al-Asānīd is left
 // implicit, since it runs through Ruwāt al-Ḥadīth — Part 2.
@@ -56,7 +57,7 @@ function Chart({ onOpen }) {
       const r = n.getBoundingClientRect()
       pos[n.dataset.title] = { x: r.left - box.left + r.width / 2, t: r.top - box.top, b: r.bottom - box.top }
     })
-    setPaths(LINKS.map(([a, b]) => { const p = pos[a], q = pos[b], m = (p.b + q.t) / 2; return { a, b, d: `M${p.x} ${p.b} C ${p.x} ${m}, ${q.x} ${m}, ${q.x} ${q.t}` } }))
+    setPaths(LINKS.map(([a, b]) => { let p = pos[a], q = pos[b]; if (p.t > q.t) [p, q] = [q, p]; const m = (p.b + q.t) / 2; return { a, b, d: `M${p.x} ${p.b} C ${p.x} ${m}, ${q.x} ${m}, ${q.x} ${q.t}` } }))
   }, [])
   useLayoutEffect(draw, [draw])
   useEffect(() => {

@@ -42,8 +42,8 @@ export function WahaSocials({ social }) {
 // Same `tw-theme` preference key as PublicThemeToggle, so the choice carries to other pages.
 export function useSiteTheme() {
   const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'light'
-    return window.localStorage.getItem('tw-theme') === 'dark' ? 'dark' : 'light'
+    if (typeof window === 'undefined') return 'dark'
+    return window.localStorage.getItem('tw-theme') === 'light' ? 'light' : 'dark' // dark unless the visitor chose light
   })
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)

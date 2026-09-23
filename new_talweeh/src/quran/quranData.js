@@ -106,6 +106,32 @@ export function getMushafPage(page) {
   })
 }
 export const MUSHAF_PAGES = 604
+
+// The printed Madinah muṣḥaf's own layout for one page: its 15 lines, word by word, from quran.com.
+// Lines with no words are the surah title and basmalah slots; the reader fills them in.
+// Returns [{ n, words: [{ t, s, a, end }] }] for line numbers 1–15 (pages 1–2 have fewer lines).
+const QURAN_COM = 'https://api.quran.com/api/v4'
+export function getMushafLines(page) {
+  return once(`lines:${page}`, async () => {
+    const json = await getJson(`${QURAN_COM}/verses/by_page/${page}?words=true&word_fields=text_uthmani,line_number&per_page=60&fields=chapter_id`)
+    const byLine = new Map()
+    for (const v of json?.verses || []) {
+      const [s, a] = String(v.verse_key).split(':').map(Number)
+      for (const w of v.words || []) {
+        if (!byLine.has(w.line_number)) byLine.set(w.line_number, [])
+        byLine.get(w.line_number).push({ t: w.text_uthmani, s, a, end: w.char_type_name === 'end' })
+      }
+    }
+    const nums = [...byLine.keys()]
+    if (!nums.length) return []
+    const last = Math.max(15, ...nums)
+    const out = []
+    for (let n = 1; n <= last; n++) out.push({ n, words: byLine.get(n) || [] })
+    // Trim empty slots after the last written line (short final pages).
+    while (out.length && !out[out.length - 1].words.length) out.pop()
+    return out
+  })
+}
 export async function pageOf(surah, ayah = 1) {
   const rows = await getUthmani(surah)
   return rows[Math.max(0, Math.min(rows.length - 1, ayah - 1))]?.page || 1

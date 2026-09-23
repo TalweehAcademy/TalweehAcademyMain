@@ -375,3 +375,10 @@
   .wh-fcol .wh-socials,.wh-footer .wh-socials{justify-content:center}
   .wh-fbot{flex-direction:column;gap:14px;text-align:center}
 }
+/* Join Talweeh Society: a compact band rather than a full panel */
+@media(min-width:981px){
+  .wh-society{max-width:980px;margin:0 auto;padding:34px 40px;border-radius:28px;gap:24px}
+  .wh-society .wh-ic{width:52px;height:52px;border-radius:16px;font-size:24px;margin-bottom:10px}
+  .wh-home .wh-society h3{font-size:clamp(26px,2.6vw,34px);margin:6px 0}
+  .wh-society p{font-size:15px}
+}
