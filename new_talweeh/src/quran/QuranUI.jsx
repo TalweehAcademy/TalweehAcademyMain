@@ -85,14 +85,17 @@ export function useHoverCard() {
   const [card, setCard] = useState(null)
   const cardRef = useRef(null)
   const timer = useRef(null)
-  const show = useCallback((content, el) => { clearTimeout(timer.current); setCard({ content, el }) }, [])
+  // Measure the anchor now: showing the card re-renders the page, and the anchor element may be
+  // replaced in that render (a detached element measures as 0,0 — the card jumped to the top-left).
+  const show = useCallback((content, el) => { clearTimeout(timer.current); setCard({ content, rect: el.getBoundingClientRect() }) }, [])
   const hide = useCallback(() => { clearTimeout(timer.current); timer.current = setTimeout(() => setCard(null), 150) }, [])
   const keep = useCallback(() => clearTimeout(timer.current), [])
   useEffect(() => {
     if (!card || !cardRef.current) return
-    const r = card.el.getBoundingClientRect(), c = cardRef.current, w = c.offsetWidth, h = c.offsetHeight
-    let top = r.bottom + 10
-    if (top + h > window.innerHeight - 10) top = r.top - h - 10
+    const r = card.rect, c = cardRef.current, w = c.offsetWidth, h = c.offsetHeight
+    // Right above the phrase; below it only if there's no room above.
+    let top = r.top - h - 10
+    if (top < 10) top = r.bottom + 10
     c.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + 'px'
     c.style.top = Math.max(10, top) + 'px'
   }, [card])
