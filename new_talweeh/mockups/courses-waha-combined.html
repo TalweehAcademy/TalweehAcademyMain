@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Courses · Maktabah + Fihrist — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Courses · Variation 4 — Maktabah + Fihrist ═══
+   Top from Maktabah (C1): Arabic line, headline, live counts, four pathway tiles.
+   Bottom from Fihrist (C3): sticky search + sort bar, sidebar filters (access and every
+   subject) and detailed course rows with the curriculum preview. The pathway tiles drive
+   the sidebar's access filter. */
+.paths-wrap{margin-top:8px}
+.list-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.list-head h2{font-size:clamp(28px,3.2vw,40px);margin-top:4px}
+.fbar .cnt{margin-left:auto}
+.side .reset{margin-top:14px;width:100%}
+.side .opt:disabled{opacity:.4;cursor:default;background:none}
+.fx{margin-top:0}
+/* The search bar pins inside a band painted with the page background that reaches up behind
+   the header, so rows scrolling up disappear cleanly instead of showing through the gaps. */
+.fband{position:sticky;top:0;z-index:60;margin:-96px -30px 8px;padding:96px 30px 14px}
+.fband.stuck{background:var(--tile) repeat top center/720px auto fixed,var(--bg)}
+.fband::after{content:'';position:absolute;left:0;right:0;bottom:-18px;height:18px;background:linear-gradient(var(--bg),transparent);pointer-events:none;opacity:0;transition:opacity .2s}
+.fband.stuck::after{opacity:1}
+.fband .fbar{position:relative;top:0;margin:0}
+.side{top:188px;max-height:calc(100vh - 196px);overflow-y:auto;scrollbar-width:thin}
+</style>
+</head>
+<body data-nav="Courses" data-course-page="course-waha-majlis.html">
+<div class="mock-bar"><span>Courses · Variation 4 — <b>Maktabah + Fihrist</b> · C1’s hero &amp; pathways on top, C3’s sidebar (access + every subject) &amp; detailed rows below · courses open in Majlis</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<main><div class="wrap">
+  <section class="c-hero">
+    <div class="ar" data-r>حَيَاةُ الْعِلْمِ مُذَاكَرَتُهُ</div>
+    <h1 data-r>Study the Islamic sciences at your own pace.</h1>
+    <p class="lead" data-r>Structured, self-paced courses taught by Talweeh instructors — free courses open right here, paid courses continue in the Student Portal.</p>
+    <div class="c-stats" data-r id="stats"></div>
+  </section>
+
+  <div class="paths paths-wrap" data-stagger>
+    <a class="path glass on" href="#" data-path="">
+      <small>Self-paced</small><strong>Course Library</strong><span>Every public course</span></a>
+    <a class="path glass" href="#" data-path="free"><small>Open access</small><strong>Free Courses</strong><span>Watch every lesson here</span></a>
+    <a class="path glass" href="#"><small>Scheduled</small><strong>Live · Alimiyyah</strong><span>Guided classes with instructors</span></a>
+    <a class="path glass" href="#"><small>Focused</small><strong>Specialization</strong><span>Ḥadīth Specialization pathway</span></a>
+  </div>
+
+  <section class="sec" id="library">
+    <div class="list-head" data-r><div><span class="kicker">Course Library</span><h2 id="title">All Courses</h2></div></div>
+    <div class="fband"><div class="fbar glass">
+      <label class="search-in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search courses, instructors or subjects" autocomplete="off" /></label>
+      <select id="sort" aria-label="Sort courses"><option value="">Recommended</option><option value="free">Free first</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
+      <span class="cnt" id="cnt"></span>
+    </div></div>
+    <div class="fx">
+      <aside class="side glass">
+        <h4>Access</h4><div id="fAccess"></div>
+        <h4>Subject</h4><div id="fCat"></div>
+        <button class="btn btn-glass btn-sm reset" type="button" id="reset">Clear filters</button>
+      </aside>
+      <div class="rows" id="rows"></div>
+    </div>
+  </section>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, price, match, courseUrl, counts } = WahaCourses;
+const C = window.COURSES, D = window.COURSE_DETAILS, CATS = window.COURSE_CATEGORIES, N = counts();
+const f = { access: '', cat: '', ins: '' };
+{ const u = new URLSearchParams(location.search); f.cat = u.get('cat') || ''; f.access = u.get('access') || ''; }
+$('#stats').innerHTML = `<span><b>${C.length}</b> courses</span><span><b>${C.filter((c) => c.free).length}</b> free</span><span><b>${C.reduce((n, c) => n + c.lessons, 0)}</b> lessons</span><span><b>${CATS.filter((c) => N[c.slug]).length}</b> subjects</span>`;
+const opt = (key, val, label, n) => `<button class="opt${f[key] === val ? ' on' : ''}" type="button" data-k="${key}" data-v="${esc(val)}" ${n || f[key] === val ? '' : 'disabled'}>${esc(label)}<b>${n}</b></button>`;
+
+function draw() {
+  const q = $('#q').value.trim(), sort = $('#sort').value;
+  const base = C.filter((c) => match(c, q));
+  const pass = (c, skip) => (skip === 'access' || !f.access || (f.access === 'free' ? c.free : !c.free)) && (skip === 'cat' || !f.cat || c.cat === f.cat) && (skip === 'ins' || !f.ins || c.instructor === f.ins);
+  $('#fAccess').innerHTML = opt('access', '', 'All courses', base.filter((c) => pass(c, 'access')).length) + opt('access', 'free', 'Free — watch here', base.filter((c) => c.free && pass(c, 'access')).length) + opt('access', 'paid', 'Paid — Student Portal', base.filter((c) => !c.free && pass(c, 'access')).length);
+  $('#fCat').innerHTML = opt('cat', '', 'All subjects', base.filter((c) => pass(c, 'cat')).length) + CATS.map((k) => opt('cat', k.slug, k.label, base.filter((c) => c.cat === k.slug && pass(c, 'cat')).length)).join('');
+  let list = base.filter((c) => pass(c));
+  if (sort === 'free') list = [...list].sort((a, b) => b.free - a.free);
+  if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === 'price') list = [...list].sort((a, b) => a.price - b.price);
+  if (sort === 'lessons') list = [...list].sort((a, b) => b.lessons - a.lessons);
+  $('#title').textContent = f.access === 'free' ? 'Free Courses' : f.cat ? CATS.find((k) => k.slug === f.cat).label : f.access === 'paid' ? 'Paid Courses' : 'All Courses';
+  $('#cnt').textContent = `${list.length} of ${C.length}`;
+  $$('[data-path]').forEach((p) => p.classList.toggle('on', p.dataset.path === f.access && !f.cat && !f.ins));
+  $('#rows').innerHTML = list.map((c) => {
+    const ls = D[c.slug]?.lessons || [];
+    return `<article class="row card">
+      <a href="${courseUrl(c.slug)}"><img src="${esc(c.poster)}" alt="" loading="lazy" /></a>
+      <div><span class="cat">${esc(c.catLabel)}</span><h3><a href="${courseUrl(c.slug)}">${esc(c.title)}</a></h3><p>${esc(c.desc)}</p>
+        <div class="facts"><span>${esc(c.instructor)}</span><span>${c.lessons ? c.lessons + ' lessons' : 'Curriculum coming soon'}</span><span>${c.free ? 'Watch on this site' : 'Student Portal'}</span></div></div>
+      <div class="end"><span class="price${c.free ? ' free' : ''}">${price(c)}</span>${c.free ? `<a class="btn btn-g btn-sm" href="${courseUrl(c.slug)}">▶ Start free course</a>` : `<a class="btn btn-glass btn-sm" href="${courseUrl(c.slug)}">View course</a><button class="btn btn-g btn-sm" type="button" data-add="${c.slug}">Add to study list</button>`}</div>
+      ${ls.length ? `<details><summary>Preview curriculum ▾</summary><ol>${ls.slice(0, 8).map((l) => `<li>${esc(l.t)}${l.v ? ' <span style="color:var(--p-gold)">▶</span>' : ''}</li>`).join('')}${ls.length > 8 ? `<li style="list-style:none;color:var(--p-mut)">…and ${ls.length - 8} more</li>` : ''}</ol></details>` : ''}
+    </article>`;
+  }).join('') || '<p class="empty">No course matches these filters.</p>';
+  WahaCourses.refreshStudyButtons?.();
+}
+$('.side').addEventListener('click', (e) => { const b = e.target.closest('[data-k]'); if (!b) return; f[b.dataset.k] = f[b.dataset.k] === b.dataset.v ? '' : b.dataset.v; draw(); });
+$$('[data-path]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); f.access = a.dataset.path; f.cat = f.ins = ''; draw(); $('#library').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+$('#reset').addEventListener('click', () => { f.access = f.cat = f.ins = ''; $('#q').value = ''; draw(); });
+$('#q').addEventListener('input', draw); $('#sort').addEventListener('change', draw);
+draw(); WahaCourses.bindStudyList(); Waha.reveal();
+/* paint the band only while it is pinned */
+const band = $('.fband'), onBand = () => band.classList.toggle('stuck', band.getBoundingClientRect().top <= 0 && scrollY > 200);
+addEventListener('scroll', onBand, { passive: true }); onBand();
+if (f.cat || f.access) setTimeout(() => $('#library').scrollIntoView({ block: 'start' }), 60);
+</script>
+</body>
+</html>

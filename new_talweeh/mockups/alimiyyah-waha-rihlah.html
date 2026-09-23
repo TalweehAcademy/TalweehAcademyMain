@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ʿĀlimiyyah · Riḥlah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-alim.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ ʿĀlimiyyah · Variation D — Riḥlah (the journey) ═══
+   The ten years told as four stages of a journey — grouped from the live page's own year
+   titles (foundations → classical texts → advanced study → the ḥadīth collections). The hero
+   draws the route; each stage opens to show its years side by side. Ends with the three steps
+   to join, taken from the page's links. */
+.rh{margin-top:40px;text-align:center}
+.rh .ar{font-size:clamp(38px,4.6vw,56px);color:var(--p-gold);line-height:1.7;margin-bottom:4px}
+.rh h1{font-size:clamp(40px,5.6vw,76px);line-height:1.02;margin:8px auto 14px;max-width:18ch}
+.rh h1 em{display:block;font-style:italic;color:var(--p-gold);font-size:.58em;margin-top:8px}
+.rh .lead{color:var(--p-mut);font-size:17px;line-height:1.75;max-width:62ch;margin:0 auto}
+.rh .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:24px 0 10px}
+.route{position:relative;margin:50px 0 0;padding:34px 30px 30px;border-radius:34px}
+.route svg{position:absolute;left:30px;right:30px;top:45px;width:calc(100% - 60px);height:40px;overflow:visible}
+.route path{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:6 8;opacity:.7}
+.route .walk{stroke-dasharray:none;stroke-width:3;opacity:1;stroke-linecap:round}
+.stops{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stop{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:none;border:0;color:var(--c-text);cursor:pointer}
+.stop .dot{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-family:'Amiri',serif;font-size:22px;background:var(--c-solid);border:2px solid var(--gold);color:var(--gold-b);box-shadow:0 0 0 8px rgba(215,179,115,.12);transition:.4s var(--spring)}
+.stop:hover .dot{transform:scale(1.08)}
+.stop.on .dot{background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);transform:scale(1.12)}
+.stop small{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-top:8px}
+.stop strong{font-family:'Lora',serif;font-size:19px;color:var(--c-head)}
+.stop span{font-size:12.5px;color:var(--c-mut)}
+.stage{margin-top:26px;scroll-margin-top:110px}
+.stage-h{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;margin-bottom:18px}
+.stage-h .ar{font-size:26px;color:var(--p-gold);text-align:left;line-height:1.4}
+.stage-h h2{font-size:clamp(28px,3.4vw,44px)}
+.stage-h p{color:var(--p-mut);max-width:62ch;line-height:1.7;margin-top:6px}
+.stage-h .ynav{display:flex;gap:8px}
+.years{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,1fr);gap:16px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+.yc{scroll-snap-align:start;border-radius:26px;padding:20px;background:var(--p-card);border:1px solid var(--p-line);display:flex;flex-direction:column;gap:10px;animation:rise .5s var(--ease) both;animation-delay:calc(var(--i) * 90ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.yc .top{display:flex;justify-content:space-between;align-items:center}
+.yc .n{font-family:'Lora',serif;font-size:40px;color:var(--p-gold);line-height:1}
+.yc .ar{font-size:18px;color:var(--p-gold)}
+.yc h3{font-size:21px}
+.yc p{font-size:13.5px;color:var(--p-mut);line-height:1.6}
+.yc ul{list-style:none;display:grid;gap:6px;margin-top:4px}
+.yc li{display:grid;grid-template-columns:10px 1fr;gap:10px;align-items:baseline;font-size:14px;color:var(--p-head);padding:7px 0;border-top:1px dashed var(--p-line)}
+.yc li i{width:8px;height:8px;border-radius:50%;background:var(--fc);transform:translateY(-1px)}
+.yc li small{display:block;color:var(--p-mut);font-size:12px}
+.yc .ymore{align-self:flex-start;background:none;border:0;color:var(--p-gold);font-weight:700;cursor:pointer;padding:4px 0}
+.join{margin-top:100px}
+.join .sec-h h2{font-size:clamp(30px,3.6vw,46px)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.steps a{position:relative;display:block;padding:26px;border-radius:26px;background:var(--p-card);border:1px solid var(--p-line);transition:transform .4s var(--spring),border-color .3s}
+.steps a:hover{transform:translateY(-4px);border-color:var(--gold)}
+.steps a::before{counter-increment:s;content:counter(s);position:absolute;right:22px;top:14px;font-family:'Lora',serif;font-size:64px;color:var(--p-soft);-webkit-text-stroke:1px var(--p-line)}
+.steps small{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.steps h3{font-size:22px;margin:6px 0 8px}
+.steps p{color:var(--p-mut);line-height:1.65;font-size:14.5px}
+.steps b{display:inline-block;margin-top:12px;color:var(--p-gold)}
+@media (max-width:900px){.stops{grid-template-columns:1fr 1fr;row-gap:26px}.route svg{display:none}.steps{grid-template-columns:1fr}.stage-h{grid-template-columns:1fr}.years{grid-auto-columns:86%}}
+</style>
+</head>
+<body data-nav="Alimiyyah" data-alim="alimiyyah-waha-rihlah.html">
+<div class="mock-bar"><span>ʿĀlimiyyah · Variation D — <b>Riḥlah</b> · the ten years as four stages of a journey, each opening to its years side by side, then the three steps to join</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/alimiyyah-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-alim.js"></script>
+<script>
+const { $, $$ } = Waha, W = WahaAlim, { A, esc } = W;
+// four stages, grouped from the years' own titles
+const STAGES = [
+  { ar: 'التَّأْسِيس', name: 'Foundations', years: [1, 2], text: 'Arabic tools, Qurʾān recitation, creed, fiqh and adab — then the core Islamic sciences built on them.' },
+  { ar: 'المُتُون', name: 'Classical texts', years: [3, 4], text: 'Sustained classical texts across fiqh, tafsīr, ḥadīth, uṣūl and the Arabic sciences, with logic, rhetoric and scholarly method.' },
+  { ar: 'التَّعَمُّق', name: 'Advanced study', years: [5, 6, 7], text: 'Advanced fiqh, tafsīr and qirāʾāt, legal and theological study, legal maxims and higher ḥadīth.' },
+  { ar: 'الحَدِيث', name: 'The ḥadīth collections', years: [8, 9, 10], text: 'Mishkāt, the Muwaṭṭaʾ, Sharḥ Maʿānī al-Āthār, the Sunan and the two Ṣaḥīḥs — the culminating years.' },
+];
+let st = 0; const open = new Set();
+$('#page').innerHTML = `
+  <section class="rh">
+    <div class="ar" data-r>رِحْلَةُ طَلَبِ العِلْم</div>
+    <span class="kicker" data-r>Talweeh Academy · Online Seminary · Part-Time Online ʿĀlimiyyah Seminary</span>
+    <h1 data-r>Rooted in tradition.<em>Knowledge for a life of service.</em></h1>
+    <p class="lead" data-r>A comprehensive, structured path through traditional Islamic education—designed for students balancing work, family, and the pursuit of sacred knowledge.</p>
+    <div class="acts" data-r><a class="btn btn-g" href="${A.APPLY}" target="_blank" rel="noreferrer">Apply to the seminary →</a><a class="btn btn-glass" href="#route">Explore the curriculum</a><span class="apill">Applications are open</span></div>
+  </section>
+  <section class="route glass" id="route" data-r>
+    <svg viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M125 20 C 230 -5, 290 45, 375 20 S 530 -5, 625 20 S 790 45, 875 20"/><path class="walk" id="walk" d="M125 20 C 230 -5, 290 45, 375 20 S 530 -5, 625 20 S 790 45, 875 20"/></svg>
+    <div class="stops" id="stops">${STAGES.map((s, i) => `<button class="stop" type="button" data-st="${i}"><span class="dot">${s.ar}</span><small>Stage ${i + 1} · Years ${s.years[0]}–${s.years[s.years.length - 1]}</small><strong>${esc(s.name)}</strong><span>${s.years.reduce((n, y) => n + A.YEARS[y - 1].subjects.length, 0)} texts</span></button>`).join('')}</div>
+  </section>
+  <section class="stage" id="stage"></section>
+  ${W.benefits()}
+  ${W.mission()}
+  ${W.values()}
+  <section class="join">
+    <div class="sec-h"><div><span class="kicker">Begin with intention</span><h2>Three steps to join</h2></div><p>Applications are now open.</p></div>
+    <div class="steps" data-stagger>
+      <a href="#route"><small>Explore</small><h3>Read the curriculum</h3><p>Walk the four stages and the texts of each year, from the first year's foundations to the ḥadīth collections.</p><b>See the stages ↑</b></a>
+      <a href="${A.APPLY}" target="_blank" rel="noreferrer"><small>Apply</small><h3>Complete the application</h3><p>Complete the application form to learn more about joining the seminary.</p><b>Open the form →</b></a>
+      <a href="${A.ENROL}"><small>Enrol</small><h3>Enrollment</h3><p>For enrollment, write to the Academy at info@talweehacademy.com.</p><b>Email the Academy →</b></a>
+    </div>
+  </section>
+  ${W.apply()}`;
+
+const walk = $('#walk'), L = walk.getTotalLength();
+function paint() {
+  const s = STAGES[st];
+  $$('.stop').forEach((b, i) => b.classList.toggle('on', i === st));
+  walk.style.strokeDasharray = L; walk.style.transition = 'stroke-dashoffset .8s var(--ease)';
+  walk.style.strokeDashoffset = L * (1 - st / (STAGES.length - 1));
+  $('#stage').innerHTML = `
+    <div class="stage-h"><div><div class="ar">${s.ar}</div><span class="kicker">Stage ${st + 1} of 4 · Years ${s.years.join(', ')}</span><h2>${esc(s.name)}</h2><p>${esc(s.text)}</p></div>
+      <div class="ynav"><button class="btn btn-glass btn-sm" type="button" data-go="-1" ${st === 0 ? 'disabled' : ''}>‹ Previous stage</button><button class="btn btn-g btn-sm" type="button" data-go="1" ${st === 3 ? 'disabled' : ''}>Next stage ›</button></div></div>
+    <div class="years">${s.years.map((n, i) => { const y = A.YEARS[n - 1], all = open.has(n), list = all ? y.subjects : y.subjects.slice(0, 6);
+      return `<article class="yc" style="--i:${i}"><div class="top"><span class="n">${n}</span><span class="ar">${W.yearAr(n)}</span></div><span class="kicker">${y.label} · ${y.subjects.length} subjects</span><h3>${esc(y.subtitle)}</h3><p>${esc(y.intro)}</p>
+        <ul>${list.map((x) => `<li class="f-${x.fam}"><i></i><span>${esc(x.t)}<small>${esc(x.disc)}${x.d ? ' · ' + esc(x.d) : ''}</small></span></li>`).join('')}</ul>
+        ${y.subjects.length > 6 ? `<button class="ymore" type="button" data-more="${n}">${all ? 'Show fewer ▴' : `All ${y.subjects.length} subjects ▾`}</button>` : ''}</article>`; }).join('')}</div>`;
+}
+$('#stops').addEventListener('click', (e) => { const b = e.target.closest('[data-st]'); if (b) { st = Number(b.dataset.st); paint(); } });
+$('#stage').addEventListener('click', (e) => {
+  const g = e.target.closest('[data-go]'); if (g) { st = Math.max(0, Math.min(3, st + Number(g.dataset.go))); paint(); $('#route').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  const m = e.target.closest('[data-more]'); if (m) { const n = Number(m.dataset.more); open.has(n) ? open.delete(n) : open.add(n); paint(); }
+});
+paint(); Waha.reveal();
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study list · Cart — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-commerce.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Cart · the study list (/cart) ═══
+   Step 1 of enrolment. The courses added with "Add to study list", each with its enrolment
+   option and price; remove with undo; a green summary with what is due today, how close the
+   list is to the next multi-course saving, and the way on to secure checkout. Related courses
+   below can be added without leaving the page. ?empty=1 shows the empty list. */
+</style>
+</head>
+<body data-nav="Courses" data-catalog="courses-waha-combined.html">
+<div class="mock-bar"><span>Cart — <b>Your study list</b> · step 1 of enrolment: review courses, see savings, continue to secure checkout · <a href="?empty=1" style="color:var(--gold)">empty state</a></span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button type="button" id="undo">Undo</button></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-commerce.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaCommerce, { esc } = M;
+let list = M.items(), undo = null, recShown = 3;
+
+function paint() {
+  const n = list.length, sub = list.reduce((s, c) => s + M.option(c).cents, 0), b = M.bundle(n), save = Math.round(sub * b.pct / 100);
+  const head = `
+    <p class="crumbs"><a href="courses-waha-combined.html">Courses</a> / Study list</p>
+    <section class="chead"><div><span class="kicker">Enrollment cart</span><h1>Your study list</h1><p>Review the courses you’ve chosen, then continue to secure checkout. You can keep adding courses — enrolling in several together saves more.</p></div>${M.steps(0)}</section>`;
+  if (!n) {
+    $('#page').innerHTML = head + `<section class="cempty"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5.5C6.7 4.8 9 5.3 12 7v12c-3-1.7-5.3-2.2-8-1.5zM20 5.5c-2.7-.7-5-.2-8 1.5v12c3-1.7 5.3-2.2 8-1.5z"/></svg></span><h2>Your study list is empty.</h2><p>Choose a paid course and select “Add to study list” — it will wait here until you’re ready to enrol.</p><a class="btn btn-g" href="courses-waha-combined.html">Browse courses →</a></section>` + recs([]);
+    bindRecs(); return;
+  }
+  $('#page').innerHTML = head + `
+    <section class="clay">
+      <div>
+        <div class="clist-h"><span>${n} course${n === 1 ? '' : 's'} · ${M.money(sub)}</span><button type="button" id="clear">Clear study list</button></div>
+        <div class="citems">${list.map((c) => { const o = M.option(c); return `
+          <article class="ci" data-slug="${esc(c.slug)}">
+            <a href="course-waha-majlis.html?slug=${encodeURIComponent(c.slug)}"><img src="${esc(c.poster)}" alt="${esc(c.title)} course poster" /></a>
+            <div><small>${esc(c.catLabel)}</small><h3><a href="course-waha-majlis.html?slug=${encodeURIComponent(c.slug)}">${esc(c.title)}</a></h3><span class="who">${esc(c.instructor)}${c.lessons ? ` · ${c.lessons} lessons` : ''}</span><br /><span class="plan">${esc(o.label)} <em>· ${esc(o.billing)}</em></span></div>
+            <div class="end"><strong>${M.short(o.cents)}</strong><button type="button" class="rm" data-rm="${esc(c.slug)}">Remove</button></div>
+          </article>`; }).join('')}</div>
+        ${b.next ? `<div class="nudge" style="margin-top:14px"><i>%</i><div><strong>${b.pct ? `You’re saving ${b.pct}% — add ${b.need} more course${b.need === 1 ? '' : 's'} to save ${b.next.pct}%` : `Add ${b.need} more course${b.need === 1 ? '' : 's'} to save ${b.next.pct}%`}</strong><span>Multi-course savings are applied automatically at checkout.</span><div class="meter">${[1, 2, 3, 4, 5].map((k) => `<b class="${k <= n ? 'on' : ''}"></b>`).join('')}</div></div></div>` : ''}
+      </div>
+      <aside class="csum glass" aria-label="Order summary">
+        <div><span class="kicker">Order summary</span><h2>Due today</h2></div>
+        <div class="lines">${list.map((c) => `<div class="ln"><span>${esc(c.title)}</span><b>${M.short(M.option(c).cents)}</b></div>`).join('')}
+          ${b.pct ? `<div class="ln save"><span>Multi-course saving · ${b.pct}%</span><b>−${M.short(save)}</b></div>` : ''}</div>
+        <div class="due"><small>Estimated total</small><strong>${M.short(sub - save)}</strong></div>
+        <a class="btn btn-g" href="checkout-waha.html">Proceed to secure checkout →</a>
+        <a class="btn btn-glass" href="courses-waha-combined.html">Continue browsing courses</a>
+        <div class="trust"><span>🔒 Secure Stripe payment</span><span>✓ Savings applied automatically</span></div>
+        <p class="note">Payment is completed securely with Stripe. Promo codes can be added at checkout. Course access is activated through your Talweeh portal account.</p>
+      </aside>
+    </section>` + recs(list);
+  $('#clear').addEventListener('click', () => { const was = list.map((c) => c.slug); list = []; save_(); toast('Study list cleared', was); paint(); });
+  $$('[data-rm]').forEach((btn) => btn.addEventListener('click', () => {
+    const was = list.map((c) => c.slug), row = btn.closest('.ci'); row.classList.add('out');
+    setTimeout(() => { list = list.filter((c) => c.slug !== btn.dataset.rm); save_(); toast(`Removed ${M.bySlug(btn.dataset.rm).title}`, was); paint(); }, 250);
+  }));
+  bindRecs();
+}
+function recs(cur) {
+  const pool = M.related(cur.length ? cur : [M.bySlug('nukhbat-al-fikr')], 12);
+  if (!pool.length) return '';
+  const b = M.bundle(cur.length);
+  return `<section class="recs"><div class="sec-h"><div><span class="kicker">${cur.length ? 'Add courses & save' : 'Popular with students'}</span><h2>${cur.length && b.next ? `Often studied together — save ${b.next.pct}%` : 'Often studied together'}</h2></div><p>Chosen from the same subjects and teachers as your list. Add one here and it joins your study list.</p></div>
+    <div class="rgrid">${pool.slice(0, recShown).map((c) => M.recCard(c)).join('')}</div>
+    ${recShown < pool.length ? `<div class="more-row"><button type="button" class="btn btn-glass btn-sm" id="moreRecs">Show more courses</button><span>Showing ${recShown} of ${pool.length}</span></div>` : ''}</section>`;
+}
+function bindRecs() {
+  $$('[data-addrec]').forEach((btn) => btn.addEventListener('click', () => { list = [...list, M.bySlug(btn.dataset.addrec)]; save_(); paint(); }));
+  $('#moreRecs')?.addEventListener('click', () => { recShown += 3; paint(); });
+}
+function save_() { M.write(list.map((c) => c.slug)); }
+let tt;
+function toast(msg, was) {
+  undo = was; $('#toastMsg').textContent = msg; $('#toast').classList.add('on');
+  clearTimeout(tt); tt = setTimeout(() => $('#toast').classList.remove('on'), 5000);
+}
+$('#undo').addEventListener('click', () => { if (undo) { list = undo.map(M.bySlug); save_(); undo = null; paint(); } $('#toast').classList.remove('on'); });
+WahaCourses.bindStudyList?.();
+paint(); Waha.reveal();
+</script>
+</body>
+</html>

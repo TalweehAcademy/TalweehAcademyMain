@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Media · Riwāq — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-media.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Media · Variation A — Riwāq (the colonnade) ═══
+   A theatre at the top: the framed player with an "up next" rail beside it and the video's
+   overview underneath. Everything in the library below plays in that theatre without leaving
+   the page; the URL keeps ?v= and ?cat= so a video can be shared. */
+.theatre{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:22px;margin-top:34px;align-items:start}
+.now{margin-top:20px;display:grid;gap:14px}
+.now h2{font-size:clamp(26px,3vw,38px)}
+.now .mrw{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rail{border-radius:26px;padding:18px;position:sticky;top:110px;max-height:calc(100vh - 130px);display:flex;flex-direction:column}
+.rail h3{color:var(--c-head);font-size:20px}
+.rail .kicker{color:var(--gold)}
+.rail .sel{margin:12px 0 10px}
+.rail ol{list-style:none;overflow:auto;display:grid;gap:6px;padding-right:4px;margin-right:-6px}
+.rail li button{display:grid;grid-template-columns:22px 118px 1fr;gap:10px;align-items:center;width:100%;padding:7px;border-radius:14px;border:1px solid transparent;background:none;text-align:left;cursor:pointer;color:var(--c-text);transition:background .25s,border-color .25s}
+.rail li button:hover{background:var(--c-in)}
+.rail li button.on{background:var(--c-hi);border-color:var(--c-line)}
+.rail li .i{font-size:11px;font-weight:800;color:var(--c-mut);text-align:center}
+.rail li button.on .i{color:var(--gold)}
+.rail li img{width:118px;aspect-ratio:16/9;object-fit:cover;border-radius:9px}
+.rail li strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.3;color:var(--c-head)}
+.rail li small{display:block;font-size:11px;color:var(--c-mut);margin-top:2px}
+.rail .auto{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--c-line);font-size:12.5px;color:var(--c-mut);font-weight:600}
+.lib{margin-top:80px}
+@media (max-width:1060px){.theatre{grid-template-columns:1fr}.rail{position:static;max-height:420px}}
+</style>
+</head>
+<body data-nav="Media" data-media="media-waha-riwaq.html">
+<div class="mock-bar"><span>Media · Variation A — <b>Riwāq</b> · a theatre on top with an up-next rail; every video in the library plays in it without leaving the page</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap">
+  <section class="m-hero">
+    <div class="ar" data-r>وَقُلْ رَبِّ زِدْنِي عِلْمًا</div>
+    <h1 data-r>Beneficial knowledge, freely accessible.</h1>
+    <p class="lead" data-r>Selected academic excerpts, reminders, discussions and short lessons from Talweeh Academy — each with a short overview so you can find what is useful to you.</p>
+  </section>
+
+  <section class="theatre" id="watch">
+    <div>
+      <div id="player"></div>
+      <div class="now">
+        <div class="mrw"><div class="mmeta" id="meta"></div><p class="vp-keys" style="margin:0"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed</p></div>
+        <h2 id="title"></h2>
+        <div id="cta"></div>
+        <div class="mov clip" id="ov"></div>
+        <div class="mrw"><button class="mmore" id="more" type="button">Read the full overview ▾</button><span id="sub"></span></div>
+      </div>
+    </div>
+    <aside class="rail glass" aria-label="Up next">
+      <span class="kicker">Up next</span><h3 id="railTitle"></h3>
+      <select class="sel" id="railCat" aria-label="Up next from"></select>
+      <ol id="rail"></ol>
+      <div class="auto">Play the next video automatically <button class="sw on" type="button" id="autoNext" onclick="this.classList.toggle('on')" aria-label="Autoplay next"></button></div>
+    </aside>
+  </section>
+
+  <section class="lib" id="lib">
+    <div class="sec-h"><div><span class="kicker">Media library</span><h2 id="libTitle">Latest videos</h2></div><span class="mcount" id="count"></span></div>
+    <div class="mtool">
+      <div class="chips" id="chips"></div>
+      <label class="msearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search titles, topics, speakers" aria-label="Search media" /></label>
+    </div>
+    <div class="mgrid" id="grid" data-stagger></div>
+  </section>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/media-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-media.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaMedia, { esc } = M;
+const params = new URLSearchParams(location.search);
+let cat = M.CATS.some((c) => c.slug === params.get('cat')) ? params.get('cat') : 'all';
+let q = '', railCat = 'all';
+let cur = M.bySlug(params.get('v')) || M.MEDIA.find((m) => M.match(m, { cat })) || M.MEDIA[0];
+
+const player = new WahaCourses.WahaPlayer($('#player'), { onEnded: () => { if ($('#autoNext').classList.contains('on')) { const n = railList()[railList().indexOf(cur) + 1]; if (n) play(n, true); } } });
+const syncUrl = () => { const p = new URLSearchParams(); p.set('v', cur.slug); if (cat !== 'all') p.set('cat', cat); history.replaceState(null, '', '?' + p); };
+
+function play(m, autoplay) {
+  cur = m;
+  player.load(m.id, { title: m.title, kicker: `${M.catLabel(m.cats[0])} · ${m.speaker}`, autoplay });
+  $('#title').textContent = m.title;
+  $('#meta').innerHTML = `<span>${esc(M.catLabel(m.cats[0]))}</span><span>${esc(m.speaker)}</span>`;
+  $('#cta').innerHTML = M.courseCta(m);
+  $('#ov').innerHTML = M.paras(m.overview); $('#ov').classList.toggle('clip', m.overview.length >= 420);
+  $('#more').hidden = m.overview.length < 420;
+  $$('.mc').forEach((c) => c.classList.toggle('on', c.dataset.v === m.slug));
+  paintRail(); syncUrl();
+}
+$('#more').addEventListener('click', () => { $('#ov').classList.remove('clip'); $('#more').hidden = true; });
+$('#sub').innerHTML = M.subscribe;
+
+// up-next rail: the rest of the chosen topic (defaults to the playing video's topic)
+const railList = () => M.MEDIA.filter((m) => M.match(m, { cat: railCat }));
+$('#railCat').innerHTML = `<option value="all">All media</option>` + M.CATS.filter((c) => M.count(c.slug)).map((c) => `<option value="${c.slug}">${esc(c.label)}</option>`).join('');
+$('#railCat').addEventListener('change', (e) => { railCat = e.target.value; paintRail(); });
+function paintRail() {
+  const list = railList();
+  $('#railTitle').textContent = `${M.catLabel(railCat)} · ${list.length}`;
+  $('#railCat').value = railCat;
+  $('#rail').innerHTML = list.map((m, i) => `<li><button type="button" data-v="${esc(m.slug)}" class="${m === cur ? 'on' : ''}"><span class="i">${m === cur ? '▶' : i + 1}</span><img src="${M.thumb(m.id)}" alt="" loading="lazy" /><span><strong>${esc(m.title)}</strong><small>${esc(m.speaker)}</small></span></button></li>`).join('');
+  const on = $('#rail .on'); if (on) $('#rail').scrollTop = on.parentElement.offsetTop - $('#rail').offsetTop - 60;
+}
+$('#rail').addEventListener('click', (e) => { const b = e.target.closest('[data-v]'); if (b) play(M.bySlug(b.dataset.v), true); });
+
+// library
+function paintLib() {
+  const list = M.MEDIA.filter((m) => M.match(m, { cat, q }));
+  $('#chips').innerHTML = [{ slug: 'all', label: 'All media' }, ...M.CATS].map((c) => `<button type="button" class="chip${cat === c.slug ? ' on' : ''}" data-c="${c.slug}" ${M.count(c.slug) ? '' : 'disabled'}>${esc(c.label)}<b>${M.count(c.slug)}</b></button>`).join('');
+  $('#libTitle').textContent = cat === 'all' ? 'Latest videos' : M.catLabel(cat);
+  $('#count').textContent = `${list.length} ${list.length === 1 ? 'video' : 'videos'}`;
+  $('#grid').innerHTML = list.map((m) => M.card(m, { cls: m === cur ? 'on' : '' })).join('') || `<p class="empty">No videos match — try another topic or clear the search.</p>`;
+  $('#grid').classList.remove('in'); Waha.reveal();
+}
+$('#chips').addEventListener('click', (e) => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; railCat = cat; paintLib(); paintRail(); syncUrl(); });
+$('#q').addEventListener('input', (e) => { q = e.target.value; paintLib(); });
+$('#grid').addEventListener('click', (e) => {
+  const a = e.target.closest('.mc'); if (!a || e.metaKey || e.ctrlKey) return;
+  e.preventDefault(); play(M.bySlug(a.dataset.v), true);
+  $('#watch').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+railCat = cat !== 'all' ? cat : cur.cats[0];
+paintLib(); play(cur, false);
+if (params.get('cat')) setTimeout(() => $('#lib').scrollIntoView({ block: 'start' }), 60);
+</script>
+</body>
+</html>

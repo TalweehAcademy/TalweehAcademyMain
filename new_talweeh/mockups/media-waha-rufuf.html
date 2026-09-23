@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Media · Rufūf — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-media.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Media · Variation B — Rufūf (shelves) ═══
+   A featured video in a green hero, then one sliding shelf per topic (plus "Excerpts from our
+   courses"). Any video opens in a centred lightbox with the framed player, its overview and
+   the rest of that shelf. "See all" or a search turns the shelves into one grid. */
+.fhero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:34px;align-items:center;margin-top:28px;padding:34px;border-radius:34px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.fhero .feat{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/9;border:1px solid rgba(215,179,115,.45);cursor:pointer;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.fhero .feat img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.fhero .feat:hover img{transform:scale(1.05)}
+.fhero .feat .big{position:absolute;inset:0;margin:auto;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);box-shadow:0 0 0 12px rgba(215,179,115,.2);transition:transform .4s var(--spring)}
+.fhero .feat:hover .big{transform:scale(1.1)}
+.fhero .feat .big svg{width:30px;height:30px;margin-left:4px}
+.fhero .kicker{color:var(--gold)}
+.fhero .ar{text-align:left;font-size:34px;color:var(--gold-b);line-height:1.5}
+.fhero h1{color:var(--cream);font-size:clamp(30px,3.6vw,48px);margin:6px 0 12px}
+.fhero p{color:rgba(243,232,211,.78);line-height:1.7}
+.fhero .stats{display:flex;gap:18px;margin:18px 0 20px;flex-wrap:wrap}
+.fhero .stats span{font-size:13px;color:rgba(243,232,211,.7)}
+.fhero .stats b{display:block;font-family:'Lora',serif;font-size:28px;color:var(--gold-b)}
+.fhero .acts{display:flex;gap:10px;flex-wrap:wrap}
+.mfbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:44px 0 6px}
+.jump{display:flex;gap:6px;flex-wrap:wrap}
+.jump a{padding:7px 13px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--p-mut);border:1px solid var(--p-line);background:var(--p-card);transition:.3s}
+.jump a:hover{color:var(--p-head);border-color:var(--gold)}
+.shelf-s{margin-top:46px;scroll-margin-top:110px}
+.shelf-h{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+.shelf-h .ar{text-align:left;font-size:26px;color:var(--p-gold);line-height:1.2}
+.shelf-h h2{font-size:clamp(24px,2.6vw,32px)}
+.shelf-h h2 small{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--p-mut);font-weight:700;margin-left:8px}
+.shelf-h .ctl{display:flex;gap:6px;align-items:center}
+.shelf-h .all{font-size:13px;font-weight:700;color:var(--p-gold);margin-right:8px;background:none;border:0;cursor:pointer}
+.arr{width:40px;height:40px;border-radius:50%;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-head);cursor:pointer;font-size:18px;transition:.3s}
+.arr:hover:not(:disabled){border-color:var(--gold);color:var(--p-gold)}
+.arr:disabled{opacity:.35;cursor:default}
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,calc((100% - 48px)/4));gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 14px}
+.track::-webkit-scrollbar{display:none}
+.track .mc{scroll-snap-align:start}
+.results{margin-top:30px}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb-ov{position:absolute;inset:0;background:rgba(5,14,10,.72);backdrop-filter:blur(6px)}
+.lb-box{position:relative;width:min(1180px,100%);max-height:calc(100vh - 48px);overflow:auto;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;padding:22px;border-radius:32px;background:var(--bg);border:1px solid var(--c-line);box-shadow:0 40px 100px rgba(0,0,0,.5);transform:translateY(20px) scale(.98);transition:transform .45s var(--spring)}
+.lb.open .lb-box{transform:none}
+.lb-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-head);cursor:pointer;font-size:16px}
+.lb-main h2{font-size:clamp(22px,2.4vw,30px);margin:18px 0 10px}
+.lb-main .mcta{margin:14px 0}
+.lb-main .mrw{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.lb-side{padding-top:44px}
+.lb-side h4{font-size:18px;margin-bottom:10px}
+.lb-side .list{display:grid;gap:8px}
+.lb-side .it{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:center;padding:6px;border-radius:14px;border:1px solid transparent;background:none;text-align:left;cursor:pointer;color:var(--p-text)}
+.lb-side .it:hover{background:var(--p-soft)}
+.lb-side .it.on{border-color:var(--gold);background:var(--p-soft)}
+.lb-side .it img{width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:9px}
+.lb-side .it strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.3;color:var(--p-head)}
+.lb-side .it small{font-size:11px;color:var(--p-mut)}
+body.lb-lock{overflow:hidden}
+@media (max-width:980px){.fhero{grid-template-columns:1fr}.lb-box{grid-template-columns:1fr}.lb-side{padding-top:0}.track{grid-auto-columns:minmax(240px,78%)}}
+</style>
+</head>
+<body data-nav="Media" data-media="media-waha-rufuf.html">
+<div class="mock-bar"><span>Media · Variation B — <b>Rufūf</b> · a featured video, then sliding shelves by topic; videos open in a centred lightbox player</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<div class="lb" id="lb" aria-hidden="true">
+  <div class="lb-ov" data-close></div>
+  <div class="lb-box" role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+    <button class="lb-x" type="button" data-close aria-label="Close">✕</button>
+    <div class="lb-main">
+      <div id="player"></div>
+      <h2 id="lbTitle"></h2>
+      <div class="mmeta" id="lbMeta"></div>
+      <div id="lbCta"></div>
+      <div class="mov clip" id="lbOv"></div>
+      <div class="mrw"><button class="mmore" id="lbMore" type="button">Read more ▾</button><span id="lbSub"></span></div>
+    </div>
+    <aside class="lb-side"><span class="kicker" id="lbShelf"></span><h4>Next on this shelf</h4><div class="list" id="lbList"></div></aside>
+  </div>
+</div>
+
+<script src="assets/media-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-media.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaMedia, { esc } = M;
+const params = new URLSearchParams(location.search);
+const feature = M.MEDIA.find((m) => m.course) || M.MEDIA[0];
+const SHELVES = [
+  { id: 'courses', ar: 'مِنْ دُرُوسِنَا', label: 'Excerpts from our courses', list: M.MEDIA.filter((m) => m.course) },
+  ...M.CATS.map((c) => ({ id: c.slug, ar: c.ar, label: c.label, list: M.MEDIA.filter((m) => m.cats.includes(c.slug)) })),
+].filter((s) => s.list.length);
+let q = '', only = SHELVES.some((s) => s.id === params.get('cat')) ? params.get('cat') : '';
+
+$('#page').innerHTML = `
+  <section class="fhero">
+    <div>
+      <div class="ar">وَقُلْ رَبِّ زِدْنِي عِلْمًا</div>
+      <span class="kicker">Talweeh Academy Media</span>
+      <h1>Beneficial knowledge, freely accessible.</h1>
+      <p>Academic excerpts, reminders and short lessons from our teachers — free to watch, each with a short overview.</p>
+      <div class="stats"><span><b>${M.MEDIA.length}</b>videos</span><span><b>${M.CATS.filter((c) => M.count(c.slug)).length}</b>topics</span><span><b>${M.MEDIA.filter((m) => m.course).length}</b>from our courses</span></div>
+      <div class="acts"><button class="btn btn-g" type="button" data-play="${esc(feature.slug)}">▶ Watch the featured video</button>${M.subscribe}</div>
+    </div>
+    <div class="feat" data-play="${esc(feature.slug)}" role="button" tabindex="0" aria-label="Play ${esc(feature.title)}"><img src="${M.thumb(feature.id)}" alt="" /><span class="big">${M.PLAY}</span></div>
+  </section>
+  <div class="mfbar">
+    <nav class="jump" aria-label="Jump to a shelf">${SHELVES.map((s) => `<a href="#s-${s.id}" data-see="${s.id}">${esc(s.label)}</a>`).join('')}</nav>
+    <label class="msearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search every shelf" aria-label="Search media" /></label>
+  </div>
+  <div id="body"></div>`;
+
+function paint() {
+  const needle = q.trim();
+  if (needle || only) {
+    const shelf = SHELVES.find((s) => s.id === only);
+    const list = (shelf ? shelf.list : M.MEDIA).filter((m) => M.match(m, { q }));
+    $('#body').innerHTML = `<section class="results"><div class="sec-h"><div><span class="kicker">${needle ? 'Search' : 'Shelf'}</span><h2>${needle ? `“${esc(needle)}”` : esc(shelf.label)}${shelf && needle ? ` in ${esc(shelf.label)}` : ''}</h2></div><button class="btn btn-glass btn-sm" type="button" id="back">← All shelves</button></div>
+      <div class="mgrid" data-stagger>${list.map((m) => M.card(m, { tag: 'button' })).join('') || '<p class="empty">No videos match that search.</p>'}</div></section>`;
+    $('#back').onclick = () => { q = ''; only = ''; $('#q').value = ''; paint(); };
+  } else {
+    $('#body').innerHTML = SHELVES.map((s) => `
+      <section class="shelf-s" id="s-${s.id}">
+        <div class="shelf-h"><div>${s.ar ? `<div class="ar">${s.ar}</div>` : ''}<h2>${esc(s.label)}<small>${s.list.length}</small></h2></div>
+          <div class="ctl"><button class="all" type="button" data-see="${s.id}">See all →</button><button class="arr" type="button" data-dir="-1" aria-label="Scroll back">‹</button><button class="arr" type="button" data-dir="1" aria-label="Scroll on">›</button></div></div>
+        <div class="track" data-shelf="${s.id}">${s.list.map((m) => M.card(m, { tag: 'button' })).join('')}</div>
+      </section>`).join('');
+    $$('.track').forEach((t) => { const f = () => arrows(t); t.addEventListener('scroll', f, { passive: true }); f(); });
+  }
+  Waha.reveal();
+}
+function arrows(t) {
+  const [b, n] = t.previousElementSibling.querySelectorAll('.arr');
+  b.disabled = t.scrollLeft < 8; n.disabled = t.scrollLeft + t.clientWidth > t.scrollWidth - 8;
+}
+$('#page').addEventListener('click', (e) => {
+  const arr = e.target.closest('.arr');
+  if (arr) { const t = arr.closest('.shelf-s').querySelector('.track'); t.scrollBy({ left: Number(arr.dataset.dir) * t.clientWidth * 0.9, behavior: 'smooth' }); return; }
+  const see = e.target.closest('[data-see]');
+  if (see && see.classList.contains('all')) { only = see.dataset.see; paint(); $('#body').scrollIntoView({ behavior: 'smooth' }); return; }
+  if (see && (q || only)) { e.preventDefault(); q = ''; only = ''; $('#q').value = ''; paint(); $('#s-' + see.dataset.see).scrollIntoView({ behavior: 'smooth' }); return; }
+  const v = e.target.closest('.mc,[data-play]');
+  if (v) open(M.bySlug(v.dataset.v || v.dataset.play), v.closest('.track')?.dataset.shelf);
+});
+$('#q').addEventListener('input', (e) => { q = e.target.value; paint(); });
+
+// lightbox
+const player = new WahaCourses.WahaPlayer($('#player'), { onEnded: () => { const n = shelfList[shelfList.indexOf(cur) + 1]; if (n) show(n, true); } });
+let cur = null, shelfList = [];
+function open(m, shelfId) {
+  const shelf = SHELVES.find((s) => s.id === shelfId) || SHELVES.find((s) => s.id === m.cats[0]);
+  shelfList = shelf ? shelf.list : M.MEDIA;
+  $('#lbShelf').textContent = shelf ? shelf.label : 'All media';
+  $('#lb').classList.add('open'); $('#lb').setAttribute('aria-hidden', 'false'); document.body.classList.add('lb-lock');
+  show(m, true);
+}
+function show(m, autoplay) {
+  cur = m;
+  player.load(m.id, { title: m.title, kicker: m.speaker, autoplay });
+  $('#lbTitle').textContent = m.title;
+  $('#lbMeta').innerHTML = `<span>${esc(M.catLabel(m.cats[0]))}</span><span>${esc(m.speaker)}</span>`;
+  $('#lbCta').innerHTML = M.courseCta(m);
+  $('#lbOv').innerHTML = M.paras(m.overview); $('#lbOv').classList.toggle('clip', m.overview.length > 360); $('#lbMore').hidden = m.overview.length <= 360;
+  const i = shelfList.indexOf(m), next = [...shelfList.slice(i + 1), ...shelfList.slice(0, Math.max(0, i))].slice(0, 8);
+  $('#lbList').innerHTML = next.map((x) => `<button class="it" type="button" data-v="${esc(x.slug)}"><img src="${M.thumb(x.id)}" alt="" loading="lazy" /><span><strong>${esc(x.title)}</strong><small>${esc(x.speaker)}</small></span></button>`).join('');
+  $('.lb-box').scrollTop = 0;
+}
+function close() { player.pause(); $('#lb').classList.remove('open'); $('#lb').setAttribute('aria-hidden', 'true'); document.body.classList.remove('lb-lock'); }
+$('#lbSub').innerHTML = M.subscribe;
+$('#lbMore').addEventListener('click', () => { $('#lbOv').classList.remove('clip'); $('#lbMore').hidden = true; });
+$('#lbList').addEventListener('click', (e) => { const b = e.target.closest('[data-v]'); if (b) show(M.bySlug(b.dataset.v), true); });
+$('#lb').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) close(); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('#lb').classList.contains('open')) close(); });
+
+paint();
+</script>
+</body>
+</html>

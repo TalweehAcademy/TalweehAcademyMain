@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Courses · Rawḍ — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Courses · Variation 2 — Rawḍ: the garden of shelves ═══
+   A featured free course with its first lesson ready to play, then horizontal shelves:
+   free courses first, then one shelf per subject. Typing in search swaps shelves for a grid. */
+.feat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:26px;align-items:center;margin-top:30px;border-radius:32px;padding:30px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.feat .kicker{color:var(--gold)}
+.feat h1{font-size:clamp(34px,4.2vw,54px);color:var(--cream);margin:8px 0 10px}
+.feat p{color:rgba(243,232,211,.78);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.feat .facts{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+.feat .facts span{padding:6px 12px;border-radius:999px;background:rgba(243,232,211,.08);border:1px solid rgba(215,179,115,.28);font-size:12.5px;font-weight:700}
+.feat .acts{display:flex;gap:10px;flex-wrap:wrap}
+.feat-dots{display:flex;gap:6px;margin-top:18px}
+.feat-dots button{width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;background:rgba(243,232,211,.25);transition:.3s}
+.feat-dots button.on{width:26px;border-radius:9px;background:var(--gold)}
+.topsearch{max-width:760px;margin:36px auto 0;padding:8px 8px 8px 18px;border-radius:20px;display:flex;align-items:center;gap:10px}
+.topsearch svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:2;flex:none}
+.topsearch input{flex:1;min-width:0;border:0;background:none;outline:0;padding:12px 0;color:var(--c-head);font-size:15px}
+.topsearch input::placeholder{color:var(--c-mut)}
+@media(max-width:900px){.feat{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Courses" data-course-page="course-waha-majlis.html">
+<div class="mock-bar"><span>Courses · Variation 2 — <b>Rawḍ</b> · featured free course with its first lesson, then shelves: free first, one per subject</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<main><div class="wrap">
+  <section class="feat" id="feat" data-r="scale">
+    <div>
+      <span class="kicker">Featured free course</span>
+      <h1 id="fTitle"></h1>
+      <p id="fDesc"></p>
+      <div class="facts" id="fFacts"></div>
+      <div class="acts"><a class="btn btn-g" id="fGo" href="#">Open course →</a><a class="btn btn-glass" href="#free">All free courses</a></div>
+      <div class="feat-dots" id="fDots"></div>
+    </div>
+    <div id="fPlayer"></div>
+  </section>
+
+  <div class="topsearch glass" data-r><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search all courses, instructors or subjects" autocomplete="off" /></div>
+
+  <div id="shelves"></div>
+  <section class="sec" id="results" hidden><div class="sec-h"><div><span class="kicker">Search</span><h2 id="rTitle"></h2></div></div><div class="cgrid" id="rGrid"></div></section>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, card, match, courseUrl, WahaPlayer } = WahaCourses;
+const C = window.COURSES, D = window.COURSE_DETAILS, CATS = window.COURSE_CATEGORIES;
+
+/* featured: the free courses, each with its first playable lesson */
+const FEAT = C.filter((c) => c.free && D[c.slug]?.lessons.some((l) => l.v));
+const player = new WahaPlayer($('#fPlayer'));
+let fi = 0;
+function feature(i) {
+  fi = (i + FEAT.length) % FEAT.length;
+  const c = FEAT[fi], d = D[c.slug], first = d.lessons.find((l) => l.v);
+  $('#fTitle').textContent = c.title; $('#fDesc').textContent = c.desc;
+  $('#fFacts').innerHTML = `<span>${esc(c.catLabel)}</span><span>${esc(c.instructor)}</span><span>${c.lessons} lessons</span><span>Free</span>`;
+  $('#fGo').href = courseUrl(c.slug);
+  $('#fDots').innerHTML = FEAT.map((_, j) => `<button type="button" class="${j === fi ? 'on' : ''}" aria-label="Featured course ${j + 1}"></button>`).join('');
+  player.load(first.v, { title: first.t, kicker: c.title });
+}
+$('#fDots').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) feature([...b.parentNode.children].indexOf(b)); });
+
+/* shelves */
+const shelf = (id, kicker, title, list) => `
+  <section class="shelf" id="${id}" data-r><div class="sec-h"><div><span class="kicker">${kicker}</span><h2>${esc(title)} <span style="font:600 14px 'Plus Jakarta Sans';color:var(--p-mut)">${list.length}</span></h2></div>
+  <div class="shelf-ctl"><button class="glass" type="button" data-dir="-1" aria-label="Scroll left">‹</button><button class="glass" type="button" data-dir="1" aria-label="Scroll right">›</button></div></div>
+  <div class="shelf-row">${list.map(card).join('')}</div></section>`;
+$('#shelves').innerHTML = shelf('free', 'Open access', 'Free courses', C.filter((c) => c.free))
+  + CATS.map((cat) => { const l = C.filter((c) => c.cat === cat.slug); return l.length ? shelf('cat-' + cat.slug, 'Subject', cat.label, l) : ''; }).join('');
+$('#shelves').addEventListener('click', (e) => { const b = e.target.closest('[data-dir]'); if (!b) return; const row = b.closest('.shelf').querySelector('.shelf-row'); row.scrollBy({ left: Number(b.dataset.dir) * row.clientWidth * 0.85, behavior: 'smooth' }); });
+
+$('#q').addEventListener('input', (e) => {
+  const q = e.target.value.trim();
+  $('#shelves').hidden = !!q; $('#results').hidden = !q;
+  if (!q) return;
+  const list = C.filter((c) => match(c, q));
+  $('#rTitle').textContent = `${list.length} course${list.length === 1 ? '' : 's'} for “${q}”`;
+  $('#rGrid').innerHTML = list.map(card).join('') || '<p class="empty">Nothing matches — try a subject such as Fiqh or Ḥadīth.</p>';
+});
+
+feature(0); WahaCourses.bindStudyList();
+Waha.reveal();
+</script>
+</body>
+</html>

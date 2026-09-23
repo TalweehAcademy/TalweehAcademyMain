@@ -1,0 +1,106 @@
+@import '@fontsource/amiri-quran/arabic-400.css';
+/* ═══ Wāḥa Arabic: /arabic (Iʿrāb) ═══
+   From mockups/arabic-waha-irab-refined.html. Inside the Wāḥa shell (.wh-home.cw); every class is ai-.
+   The video frame (.cw-vp) and kicker come from courses-waha-v1.css. */
+.ai main .ar{font-family:'Amiri',serif;direction:rtl}
+
+/* tracks: one accent each */
+.ai .t-found{--tc:#a8792f}.ai .t-nahw{--tc:#2f7a58}.ai .t-sarf{--tc:#b0654a}.ai .t-adab{--tc:#6c5a9e}.ai .t-quran{--tc:#3d7391}
+[data-theme="dark"] .ai .t-found{--tc:#d7b373}[data-theme="dark"] .ai .t-nahw{--tc:#7fb89a}[data-theme="dark"] .ai .t-sarf{--tc:#e3a58a}[data-theme="dark"] .ai .t-adab{--tc:#b7a6d9}[data-theme="dark"] .ai .t-quran{--tc:#8fb3c9}
+
+/* ── hero: the Basmalah, parsed ── */
+.ai-hero{margin-top:36px;padding:34px;border-radius:36px;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.ai-hero .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.ai-hero .cw-kicker{color:var(--gold)}
+.wh-home .ai-hero h1{color:var(--cream);font-size:clamp(34px,4.4vw,58px);line-height:1.05;margin:8px 0 0;max-width:17ch}
+.ai-seg{display:inline-flex;padding:4px;gap:2px;border-radius:12px;background:rgba(243,232,211,.06);border:1px solid rgba(215,179,115,.28)}
+.ai-seg button{border:0;background:none;cursor:pointer;padding:7px 13px;border-radius:9px;font:inherit;font-size:12.5px;font-weight:700;color:var(--c-mut);transition:.25s}
+.ai-seg button:hover{color:var(--gold-b)}
+.ai-seg button.on{background:var(--gold);color:var(--g2)}
+.ai-verse{direction:rtl;display:flex;justify-content:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;margin:40px 0 16px}
+.ai-verse .w{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 16px 12px;border-radius:20px;border:1px solid transparent;background:none;color:var(--cream);cursor:pointer;font:inherit;transition:background .3s,border-color .3s,transform .35s var(--spring)}
+.ai-verse .w:hover,.ai-verse .w.on{background:rgba(243,232,211,.06);border-color:rgba(215,179,115,.4);transform:translateY(-3px)}
+.ai-verse .q{font-family:'Amiri Quran','Amiri',serif;font-size:clamp(40px,5.4vw,70px);line-height:1.9;color:var(--gold-b)}
+.ai-verse .q b{color:#9fd8b8;font-weight:400}
+.ai-verse .tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;direction:ltr}
+.ai-verse .tag{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(215,179,115,.16);color:var(--gold-b);white-space:nowrap}
+.ai-verse .tag.alt{background:rgba(159,216,184,.14);color:#9fd8b8}
+.ai-explain{max-width:760px;margin:10px auto 0;padding:18px 22px;border-radius:20px;background:rgba(10,24,17,.45);border:1px solid rgba(215,179,115,.25);min-height:96px}
+.ai-explain small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.ai-explain strong{font-family:'Lora',serif;font-size:21px;color:var(--cream)}
+.wh-home .ai-explain p{color:rgba(243,232,211,.8);line-height:1.7;margin-top:4px}
+.ai-hero .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid rgba(215,179,115,.2)}
+.ai-hero .foot p{color:rgba(243,232,211,.75);max-width:60ch;line-height:1.7}
+.ai-hero .foot .acts{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ── sections ── */
+.ai-blk{margin-top:100px;scroll-margin-top:100px}
+.ai-sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.wh-home .ai-sec-h h2,.wh-home .ai-h2{font-size:clamp(30px,3.8vw,48px);margin-top:4px}
+.ai-sec-h p{color:var(--p-mut);max-width:52ch;line-height:1.6}
+
+/* objectives: the sciences on the left, the program video on the right */
+.ai-objw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:30px;align-items:start;margin-top:22px}
+.ai-objw .vid{position:sticky;top:110px}
+
+/* accordion */
+.ai-acc{display:grid;gap:8px;align-content:start}
+.ai-acc-i{border-radius:18px;background:var(--p-card);border:1px solid var(--p-line);transition:border-color .3s,box-shadow .3s}
+.ai-acc-i.open{border-color:var(--gold);box-shadow:0 12px 30px rgba(8,20,14,.08)}
+.ai-acc-i > button{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;padding:16px 18px;background:none;border:0;text-align:left;cursor:pointer;font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--p-head)}
+.ai-acc-i > button i{position:relative;width:28px;height:28px;flex:none;border-radius:50%;border:1px solid var(--p-line);transition:.35s var(--spring)}
+.ai-acc-i > button i::before,.ai-acc-i > button i::after{content:'';position:absolute;left:8px;right:8px;top:13px;height:1.5px;background:var(--p-gold);transition:.35s var(--spring)}
+.ai-acc-i > button i::after{transform:rotate(90deg)}
+.ai-acc-i.open > button i{background:var(--gold);border-color:var(--gold)}
+.ai-acc-i.open > button i::before,.ai-acc-i.open > button i::after{background:var(--g2)}
+.ai-acc-i.open > button i::after{transform:rotate(0)}
+.ai-acc-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.ai-acc-i.open .ai-acc-a{grid-template-rows:1fr}
+.ai-acc-a > div{overflow:hidden;padding:0 18px}
+.ai-acc-i.open .ai-acc-a > div{padding-bottom:16px}
+.wh-home .ai-acc-a p,.ai-acc-a li{color:var(--p-text);line-height:1.75;font-size:15px}
+.wh-home .ai-acc-a p{margin-bottom:8px}
+.ai-acc-a ul{margin:4px 0 10px 18px;padding:0;display:grid;gap:3px}
+.ai-acc-a li::marker{color:var(--p-gold)}
+.wh-home .ai-acc-a h5{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--p-gold);margin:12px 0 4px}
+.ai-acc-a strong{color:var(--p-head)}
+
+/* the ladder: tracks × modules */
+.ai-ladder{display:grid;grid-template-columns:190px repeat(5,minmax(0,1fr));gap:8px}
+.ai-ladder .hd{padding:12px;border-radius:16px;background:var(--c-solid);color:var(--c-head)}
+.ai-ladder .hd small{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.ai-ladder .hd strong{display:block;font-family:'Lora',serif;font-size:15px;font-weight:600;line-height:1.3}
+.ai-ladder .hd span{display:block;font-size:11.5px;color:var(--c-mut)}
+.ai-ladder .rh{display:flex;flex-direction:column;justify-content:center;padding:12px 14px;border-radius:16px;background:var(--p-soft);border:1px solid var(--p-line);border-left:4px solid var(--tc)}
+.ai-ladder .rh .ar{font-size:20px;color:var(--tc);text-align:left;line-height:1.4}
+.ai-ladder .rh strong{font-size:13px;color:var(--p-head)}
+.ai-ladder .cell{display:grid;gap:6px;align-content:start;padding:6px;border-radius:16px;border:1px dashed var(--p-line);min-height:70px}
+.ai-ladder .spacer{display:none}
+.ai-ladder .found{grid-row:span 4;border-style:solid;background:linear-gradient(180deg,color-mix(in srgb,var(--tc) 14%,transparent),transparent)}
+.ai-text{display:flex;flex-direction:column;gap:2px;width:100%;padding:12px 14px 12px 16px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line);border-left:4px solid var(--tc);text-align:left;cursor:pointer;font:inherit;transition:transform .3s var(--spring),box-shadow .3s}
+.ai-text:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(8,20,14,.1)}
+.ai-text.on{box-shadow:0 0 0 2px var(--tc)}
+.ai-text strong{font-family:'Lora',serif;font-size:16px;color:var(--p-head);line-height:1.3}
+.ai-text em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--tc)}
+.ai-text small{font-size:12.5px;color:var(--p-mut)}
+.ai-detail{margin-top:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:26px;padding:26px;border-radius:28px;scroll-margin-top:110px;animation:ai-in .45s var(--ease)}
+@keyframes ai-in{from{opacity:0;transform:translateY(10px)}}
+.ai-detail .cw-kicker{color:var(--gold)}
+.wh-home .ai-detail h3{color:var(--c-head);font-size:28px;margin:4px 0 10px}
+.ai-detail .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ai-detail .meta span{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;background:var(--c-in);border:1px solid var(--c-line);color:var(--c-mut)}
+.wh-home .ai-detail .ov{color:var(--c-text);line-height:1.75;font-size:14.5px}
+.wh-home .ai-detail h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.wh-home .ai-detail .body p,.ai-detail .body li{color:var(--c-text);line-height:1.8;margin-bottom:8px}
+.ai-detail .body ul{margin:4px 0 10px 18px;padding:0}
+.ai-detail .body strong,.wh-home .ai-detail .body h5{color:var(--c-head)}
+
+/* FAQ + closing call */
+.ai-faq{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+.ai-cta{margin:100px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.wh-home .ai-cta h2{color:var(--cream);font-size:clamp(30px,4vw,50px);margin:0 0 14px}
+.wh-home .ai-cta p{color:rgba(243,232,211,.8);max-width:64ch;margin:0 auto 24px;line-height:1.75}
+.ai-cta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+@media (max-width:1100px){.ai-ladder{grid-template-columns:repeat(5,minmax(170px,1fr));overflow-x:auto;padding-bottom:6px}.ai-ladder .corner,.ai-ladder .rh{display:none}.ai-ladder .found{grid-row:auto}.ai-ladder .spacer{display:block;visibility:hidden}.ai-detail,.ai-objw,.ai-faq{grid-template-columns:1fr}.ai-objw .vid{position:static}}
+@media (max-width:560px){.ai-hero{padding:22px 16px;border-radius:26px}.ai-verse{gap:4px}.ai-verse .w{padding:10px 8px}.ai-cta{padding:36px 18px}}

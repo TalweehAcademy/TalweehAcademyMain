@@ -1,0 +1,59 @@
+/* ═══ Wāḥa Forest — Arabic-program pieces shared by the arabic-waha-*.html mockups ═══ */
+/* tracks: one accent each */
+.t-found{--tc:#d7b373}.t-nahw{--tc:#7fb89a}.t-sarf{--tc:#e3a58a}.t-adab{--tc:#b7a6d9}.t-quran{--tc:#8fb3c9}
+:root:not([data-theme="dark"]) .t-found{--tc:#a8792f}:root:not([data-theme="dark"]) .t-nahw{--tc:#2f7a58}:root:not([data-theme="dark"]) .t-sarf{--tc:#b0654a}:root:not([data-theme="dark"]) .t-adab{--tc:#6c5a9e}:root:not([data-theme="dark"]) .t-quran{--tc:#3d7391}
+
+/* a text studied */
+.rtext{display:flex;flex-direction:column;gap:2px;padding:12px 14px 12px 16px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line);border-left:4px solid var(--tc)}
+.rtext strong{font-family:'Lora',serif;font-size:16px;color:var(--p-head);line-height:1.3}
+.rtext em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--tc)}
+.rtext small{font-size:12.5px;color:var(--p-mut)}
+
+/* accordion */
+.racc{display:grid;gap:8px}
+.racc-i{border-radius:18px;background:var(--p-card);border:1px solid var(--p-line);transition:border-color .3s,box-shadow .3s}
+.racc-i.open{border-color:var(--gold);box-shadow:0 12px 30px rgba(8,20,14,.08)}
+.racc-i > button{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;padding:16px 18px;background:none;border:0;text-align:left;cursor:pointer;font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--p-head)}
+.racc-i > button i{position:relative;width:28px;height:28px;flex:none;border-radius:50%;border:1px solid var(--p-line);transition:.35s var(--spring)}
+.racc-i > button i::before,.racc-i > button i::after{content:'';position:absolute;left:8px;right:8px;top:13px;height:1.5px;background:var(--p-gold);transition:.35s var(--spring)}
+.racc-i > button i::after{transform:rotate(90deg)}
+.racc-i.open > button i{background:var(--gold);border-color:var(--gold)}
+.racc-i.open > button i::before,.racc-i.open > button i::after{background:var(--g2)}
+.racc-i.open > button i::after{transform:rotate(0)}
+.racc-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.racc-i.open .racc-a{grid-template-rows:1fr}
+.racc-a > div{overflow:hidden;padding:0 18px}
+.racc-i.open .racc-a > div{padding-bottom:16px}
+.racc-a p,.racc-a li{color:var(--p-text);line-height:1.75;font-size:15px}
+.racc-a p{margin-bottom:8px}
+.racc-a ul{margin:4px 0 10px 18px;display:grid;gap:3px}
+.racc-a li::marker{color:var(--p-gold)}
+.racc-a h5{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--p-gold);margin:12px 0 4px}
+.racc-a strong{color:var(--p-head)}
+/* on a green panel */
+.racc.dark .racc-i{background:var(--c-in);border-color:var(--c-line)}
+.racc.dark .racc-i > button{color:var(--c-head)}
+.racc.dark .racc-a p,.racc.dark .racc-a li{color:var(--c-text)}
+.racc.dark .racc-a strong{color:var(--c-head)}
+
+/* facts */
+.rfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border-radius:22px;overflow:hidden;background:var(--p-line);border:1px solid var(--p-line)}
+.rfacts div{padding:16px 18px;background:var(--p-card)}
+.rfacts dt{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.rfacts dd{font-family:'Lora',serif;font-size:18px;color:var(--p-head);margin-top:3px;line-height:1.3}
+
+/* proud cards + closing call */
+.rproud{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.rproud .card{position:relative;padding:22px;border-radius:22px;transition:transform .4s var(--spring),border-color .3s}
+.rproud .card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.rproud h4{font-size:19px;margin-bottom:6px}
+.rproud p{color:var(--p-mut);font-size:14px;line-height:1.6}
+.rproud b{position:absolute;right:18px;top:18px;color:var(--p-gold)}
+.rcta{margin:100px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('../../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.rcta img{height:54px;margin:0 auto 14px;filter:sepia(1) saturate(2.4) hue-rotate(-8deg) brightness(1.15)}
+.rcta .kicker{color:var(--gold)}
+.rcta h2{color:var(--cream);font-size:clamp(30px,4vw,50px);margin:8px 0 14px}
+.rcta p{color:rgba(243,232,211,.8);max-width:64ch;margin:0 auto 24px;line-height:1.75}
+.rcta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media (max-width:1000px){.rproud{grid-template-columns:1fr 1fr}.rfacts{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rproud,.rfacts{grid-template-columns:1fr}}

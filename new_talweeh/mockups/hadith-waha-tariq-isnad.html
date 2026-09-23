@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hadith Specialization · Ṭarīq + Isnād — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-hadith.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Hadith Specialization · Variation F — Ṭarīq + Isnād ═══
+   Ṭarīq's centred hero writing (text · transmission · verification) in the left column, the
+   Isnād chart of the program on the right; the rest of the page is Isnād (overview,
+   instructors, the curriculum by year with its side drawer, the enrolment call).
+   Nukhbat al-Fikar is added to the program (Year 1, before Tadrīb al-Rāwī) and Tadrīb al-Rāwī
+   now builds on it. The chart places every course on a six-column grid chosen so the lines
+   don't cross or run behind other courses. */
+.hx{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:36px;align-items:center;margin-top:40px}
+.th{text-align:center}
+.triad{display:flex;justify-content:center;align-items:center;gap:clamp(12px,2vw,26px);margin-bottom:16px}
+.triad div{display:flex;flex-direction:column;align-items:center}
+.triad .ar{font-size:clamp(30px,3.2vw,44px);color:var(--p-gold);line-height:1.4}
+.triad small{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--p-mut)}
+.triad i{width:7px;height:7px;border-radius:50%;background:var(--gold);transform:rotate(45deg)}
+.th h1{font-size:clamp(40px,4.6vw,66px);line-height:1;margin:4px 0 10px}
+.th h1 em{font-style:italic;color:var(--p-gold)}
+.th .name{font-family:'Lora',serif;font-style:italic;font-size:18px;color:var(--p-head);margin-bottom:14px}
+.th .lead{color:var(--p-mut);line-height:1.8;max-width:56ch;margin:0 auto}
+.th .facts{display:grid;grid-template-columns:repeat(4,auto);margin:24px auto;width:max-content;max-width:100%;border-radius:18px;overflow:hidden;border:1px solid var(--p-line);background:var(--p-card)}
+.th .facts span{padding:11px 16px;border-right:1px solid var(--p-line)}
+.th .facts span:last-child{border:0}
+.th .facts small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.th .facts b{font-family:'Lora',serif;font-size:19px;color:var(--p-head);font-weight:600;white-space:nowrap}
+.th .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.th .mail{display:block;margin-top:12px;font-size:12.5px;color:var(--p-mut)}
+
+/* the chart: six columns; each course sits at a column position within its row */
+.chart{position:relative;border-radius:32px;padding:24px 14px 18px}
+.chart > .kicker{color:var(--gold);text-align:center;display:block;margin-bottom:12px}
+.plot{position:relative}
+.plot svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.plot path{fill:none;stroke:var(--c-line);stroke-width:1.5;transition:stroke .3s,stroke-width .3s}
+.plot path.lit{stroke:var(--gold);stroke-width:2.5}
+.row{position:relative;height:74px}
+.row + .row{margin-top:22px}
+.node{position:absolute;top:0;z-index:1;width:calc(100% / 6 - 8px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 6px;border-radius:14px;background:var(--c-solid);border:1px solid var(--c-line);color:var(--c-head);cursor:pointer;text-align:center;transition:border-color .3s,background .3s,box-shadow .3s}
+.node .ar{font-family:'Amiri',serif;font-size:15px;color:var(--gold-b);line-height:1.4}
+.node small{font-size:10px;color:var(--c-mut);line-height:1.25}
+.node::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sc)}
+.node:hover,.node.lit{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.node.lit{background:var(--c-hi)}
+.node.goal{background:linear-gradient(135deg,var(--gold-b),var(--gold));border-color:transparent}
+.node.goal .ar{color:var(--g2)}.node.goal small{color:rgba(16,37,28,.75)}
+.chart .hint{text-align:center;font-size:12px;color:var(--c-mut);margin-top:14px}
+
+.blk{margin-top:100px;scroll-margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.ovw{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:start}
+.ovw h2{font-size:clamp(32px,4vw,52px);margin-top:6px}
+.ovw p{font-size:17px;line-height:1.85;color:var(--p-text);margin-bottom:14px}
+.yt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.yt button{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-radius:22px;border:1px solid var(--p-line);background:var(--p-card);cursor:pointer;text-align:left;transition:.3s}
+.yt button span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.yt button strong{display:block;font-family:'Lora',serif;font-size:26px;color:var(--p-head)}
+.yt button small{font-size:13px;color:var(--p-mut)}
+.yt button.on{background:var(--c-grad,var(--c-solid));border-color:var(--c-solid)}
+.yt button.on strong{color:var(--c-head)}.yt button.on span{color:var(--gold)}.yt button.on small{color:var(--c-mut)}
+.cgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.cc2{position:relative;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:18px;border-radius:22px;text-align:left;cursor:pointer;background:var(--p-card);border:1px solid var(--p-line);transition:transform .35s var(--spring),border-color .3s}
+.cc2:hover{transform:translateY(-3px);border-color:var(--gold)}
+.cc2 .n{font-family:'Lora',serif;font-size:28px;color:var(--p-gold);line-height:1}
+.cc2 .ar{font-family:'Amiri',serif;font-size:18px;color:var(--p-gold);line-height:1.4;direction:rtl;text-align:left}
+.cc2 strong{display:block;font-family:'Lora',serif;font-size:18px;color:var(--p-head)}
+.cc2 small{display:block;color:var(--p-mut);font-size:13px;margin:2px 0 10px}
+.cc2 .tags{display:flex;gap:6px;flex-wrap:wrap}
+.cc2 .solo{font-size:11px;font-weight:800;color:var(--p-gold);padding:4px 10px;border-radius:999px;border:1px dashed color-mix(in srgb,var(--gold) 60%,transparent)}
+/* drawer */
+.shade{position:fixed;inset:0;z-index:240;background:rgba(5,14,10,.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s}
+.shade.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:12px;right:12px;bottom:12px;z-index:250;width:min(560px,calc(100vw - 24px));border-radius:28px;padding:26px;overflow:auto;background:var(--bg);border:1px solid var(--c-line);box-shadow:0 30px 80px rgba(0,0,0,.4);transform:translateX(110%);transition:transform .5s var(--spring)}
+.dr.on{transform:none}
+.dr .x{position:sticky;top:0;float:right;width:40px;height:40px;border-radius:50%;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-head);cursor:pointer}
+.dr .ar{font-family:'Amiri',serif;font-size:30px;color:var(--p-gold);line-height:1.4;text-align:left}
+.dr h3{font-size:30px;margin:2px 0 4px}
+.dr .sub{color:var(--p-mut);margin-bottom:14px}
+.dr .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.dr .dnav{display:flex;justify-content:space-between;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--p-line)}
+
+@media (max-width:1100px){.hx,.ovw{grid-template-columns:1fr}.hx{gap:30px}}
+@media (max-width:640px){.th .facts{grid-template-columns:1fr 1fr;width:100%}.th .facts span:nth-child(2){border-right:0}.th .facts span:nth-child(-n+2){border-bottom:1px solid var(--p-line)}.chart{padding:20px 6px 14px}.node{width:calc(100% / 6 - 4px);padding:6px 2px}.node small{display:none}.node .ar{font-size:12px}.row{height:52px}.triad small{display:none}}
+</style>
+</head>
+<body data-nav="Hadith Specialization" data-hadith="hadith-waha-tariq-isnad.html">
+<div class="mock-bar"><span>Hadith Specialization · Variation F — <b>Ṭarīq + Isnād</b> · Ṭarīq's hero writing beside the Isnād chart (now with Nukhbat al-Fikar), then the Isnād page</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+<div class="shade" id="shade"></div>
+<aside class="dr" id="dr" aria-label="Course details"></aside>
+
+<script src="assets/hadith-data.js"></script>
+<script>
+// Nukhbat al-Fikar joins the program in Year 1, before Tadrīb al-Rāwī (which builds on it). Its overview
+// and outcomes are drawn from the standalone Nukhbat al-Fikar course in the Talweeh catalog.
+(function () {
+  const H = window.HADITH;
+  const nukhbat = { strand: 'method', ar: 'نُخْبَةُ الفِكَر', title: 'Nukhbat al-Fikar', subtitle: 'Foundations of Hadith Nomenclature', catalogSlug: 'nukhbat-al-fikr', year: 1,
+    overview: 'A comprehensive examination of the foundational text by al-Ḥāfiẓ Ibn Ḥajar on the nomenclature of ḥadīth. In this concise yet profoundly informative work, Ibn Ḥajar summarizes more than 100 branches of the discipline of Uṣūl al-ḥadīth — the groundwork on which the advanced study of Tadrīb al-Rāwī is built.',
+    outcomes: ['Study the essential topics of ḥadīth science as Ibn Ḥajar presents them, including al-isnād, al-ʿilal and al-jarḥ wa al-taʿdīl.', 'Appreciate the depth and significance of the many branches of Uṣūl al-ḥadīth.', 'Understand how these branches interconnect and contribute to the integrity and authenticity of ḥadīth literature.', 'Engage critically with Ibn Ḥajar’s methodology and the rational foundations underlying the evaluation of narrations.'] };
+  const at = H.COURSES.findIndex((c) => c.title === 'Tadrīb al-Rāwī 1');
+  H.COURSES.splice(at, 0, nukhbat);
+  H.COURSES.forEach((c, k) => { c.n = k + 1; c.i = H.COURSES.filter((x) => x.year === c.year).indexOf(c) + 1; });
+})();
+</script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-hadith.js"></script>
+<script>
+const { $, $$ } = Waha, K = WahaHadith, { H, esc } = K;
+const by = (t) => H.COURSES.find((c) => c.title === t);
+const solo = [...new Map(H.COURSES.filter((c) => c.catalogSlug).map((c) => [c.catalogSlug, c])).values()];
+const WORD = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+// The chart: rows from foundations to application; [title, column 0–5]. Positions come from a search
+// over every arrangement for the fewest crossing lines and no line running behind another course.
+const ROWS = [
+  [['Tadwīn al-Sunnah', 0], ['Makānat al-Sunnah', 4]],
+  [['Takwīn al-Isnād', 0], ['Ruwāt al-Ḥadīth — Part 1', 1], ['Al-Jarḥ wa al-Taʿdīl', 2], ['Nukhbat al-Fikar', 3]],
+  [['Al-Athbāt wa al-Fahāris', 0], ['Takhrīj', 1], ['Ruwāt al-Ḥadīth — Part 2', 2], ['Tadrīb al-Rāwī 1', 3], ['Manāhij al-Muḥaddithīn', 4], ['Orientalist Critique', 5]],
+  [['Al-Nushakh wal-Taqyeed', 1], ['Dirāsat al-Asānīd', 2], ['Tadrīb al-Rāwī 2', 3]],
+  [['ʿIlal al-Ḥadīth', 2]],
+  [['Muwaṭṭaʾ Mālik', 1.5], ['Ṣaḥīḥ al-Bukhārī', 3]],
+];
+// What builds on what (from → to). Tadrīb al-Rāwī now builds on Nukhbat al-Fikar, not Manāhij.
+// Al-Jarḥ → Dirāsat al-Asānīd is left implicit: it runs through Ruwāt al-Ḥadīth — Part 2.
+const LINKS = [['Tadwīn al-Sunnah', 'Ruwāt al-Ḥadīth — Part 1'], ['Tadwīn al-Sunnah', 'Takwīn al-Isnād'], ['Makānat al-Sunnah', 'Manāhij al-Muḥaddithīn'], ['Makānat al-Sunnah', 'Al-Jarḥ wa al-Taʿdīl'], ['Makānat al-Sunnah', 'Orientalist Critique'],
+  ['Nukhbat al-Fikar', 'Tadrīb al-Rāwī 1'],
+  ['Ruwāt al-Ḥadīth — Part 1', 'Ruwāt al-Ḥadīth — Part 2'], ['Takwīn al-Isnād', 'Takhrīj'], ['Takwīn al-Isnād', 'Al-Athbāt wa al-Fahāris'], ['Al-Jarḥ wa al-Taʿdīl', 'Ruwāt al-Ḥadīth — Part 2'],
+  ['Takhrīj', 'Dirāsat al-Asānīd'], ['Tadrīb al-Rāwī 1', 'Tadrīb al-Rāwī 2'], ['Al-Athbāt wa al-Fahāris', 'Al-Nushakh wal-Taqyeed'], ['Ruwāt al-Ḥadīth — Part 2', 'Dirāsat al-Asānīd'],
+  ['Dirāsat al-Asānīd', 'ʿIlal al-Ḥadīth'], ['Tadrīb al-Rāwī 2', 'ʿIlal al-Ḥadīth'], ['ʿIlal al-Ḥadīth', 'Ṣaḥīḥ al-Bukhārī'], ['ʿIlal al-Ḥadīth', 'Muwaṭṭaʾ Mālik'], ['Manāhij al-Muḥaddithīn', 'Ṣaḥīḥ al-Bukhārī'], ['Al-Nushakh wal-Taqyeed', 'Muwaṭṭaʾ Mālik']];
+let yr = 1, open = null;
+$('#page').innerHTML = `
+  <section class="hx">
+    <div class="th">
+      <div class="triad" data-r><div><span class="ar">النَّصّ</span><small>Text</small></div><i></i><div><span class="ar">الرِّوَايَة</span><small>Transmission</small></div><i></i><div><span class="ar">التَّحْقِيق</span><small>Verification</small></div></div>
+      <span class="kicker" data-r>${esc(H.HERO.eyebrow)}</span>
+      <h1 data-r>Hadith <em>Specialization</em></h1>
+      <p class="name" data-r>${esc(H.HERO.name)} — a tradition studied through its sources.</p>
+      <p class="lead" data-r>${esc(H.HERO.lead)}</p>
+      <div class="facts" data-r>${K.facts.map(([k, v]) => `<span><small>${k}</small><b>${v}</b></span>`).join('')}<span><small>Standalone now</small><b>${solo.length} courses</b></span></div>
+      <div class="acts" data-r><a class="btn btn-g" href="#curriculum">Explore curriculum</a><a class="btn btn-glass" href="${H.ENROL}">For enrollment</a></div>
+      <small class="mail" data-r>Enrollment inquiries: ${esc(H.EMAIL)}</small>
+    </div>
+    <div class="chart glass" id="chart" data-r><span class="kicker">The program as an isnād</span>
+      <div class="plot" id="plot"><svg id="lines"></svg>
+        ${ROWS.map((row) => `<div class="row">${row.map(([title, col]) => { const c = by(title); return `<button type="button" class="node s-${c.strand}${/Bukh|Muwa/.test(title) ? ' goal' : ''}" data-c="${c.n}" style="left:${(col + 0.5) / 6 * 100}%"><span class="ar">${c.ar}</span><small>${esc(c.title.replace(' — ', ' '))}</small></button>`; }).join('')}</div>`).join('')}
+      </div>
+      <p class="hint">Hover a course to follow what it builds on and leads to · click to read it</p></div>
+  </section>
+
+  <section class="blk ovw">
+    <div><span class="kicker">Program overview</span><h2>From preservation to critical analysis.</h2></div>
+    <div>${K.overview()}</div>
+  </section>
+
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Instructors</span><h2>Guided by specialist study.</h2></div></div>${K.instructors()}</section>
+
+  <section class="blk" id="curriculum">
+    <div class="sec-h"><div><span class="kicker">Hadith Specialization curriculum</span><h2>${WORD[H.COURSES.length] || H.COURSES.length} courses across two years.</h2></div><p>Select a year, then open any course to read its overview and learning outcomes. ${K.standaloneCount} of them can also be taken today as standalone Talweeh courses.</p></div>
+    <div class="yt" id="yt"></div>
+    <div class="cgrid2" id="cgrid" data-stagger></div>
+  </section>
+  ${K.cta()}`;
+
+function paintYear() {
+  $('#yt').innerHTML = [1, 2].map((y) => `<button type="button" class="${yr === y ? 'on' : ''}" data-y="${y}"><div><span>Year ${y}</span><strong>${y === 1 ? '1st Year' : '2nd Year'}</strong></div><small>${K.year(y).length} courses</small></button>`).join('');
+  $('#cgrid').innerHTML = K.year(yr).map((c) => `<button type="button" class="cc2 s-${c.strand}" data-c="${c.n}"><span class="n">${String(c.n).padStart(2, '0')}</span><span><span class="ar">${c.ar}</span><strong>${esc(c.title)}</strong><small>${esc(c.subtitle)}</small><span class="tags"><span class="schip">${esc(K.strand(c.strand).label)}</span>${c.catalogSlug ? '<span class="solo">Also a standalone course</span>' : ''}</span></span></button>`).join('');
+  $('#cgrid').classList.remove('in'); Waha.reveal();
+}
+$('#yt').addEventListener('click', (e) => { const b = e.target.closest('[data-y]'); if (b) { yr = Number(b.dataset.y); paintYear(); } });
+
+function show(n) {
+  const c = H.COURSES[n - 1]; open = n;
+  $('#dr').innerHTML = `<button class="x" type="button" data-x aria-label="Close">✕</button><div class="ar">${c.ar}</div><span class="kicker">Year ${c.year} · course ${c.i} of ${K.year(c.year).length}</span><h3>${esc(c.title)}</h3><p class="sub">${esc(c.subtitle)}</p><div class="meta"><span class="schip s-${c.strand}">${esc(K.strand(c.strand).label)}</span></div>
+    ${K.detail(c)}
+    <div class="dnav"><button class="btn btn-glass btn-sm" type="button" data-go="${n - 1}" ${n === 1 ? 'disabled' : ''}>‹ Previous course</button><button class="btn btn-g btn-sm" type="button" data-go="${n + 1}" ${n === H.COURSES.length ? 'disabled' : ''}>Next course ›</button></div>`;
+  $('#dr').classList.add('on'); $('#shade').classList.add('on'); $('#dr').scrollTop = 0;
+}
+const close = () => { $('#dr').classList.remove('on'); $('#shade').classList.remove('on'); open = null; };
+document.addEventListener('click', (e) => {
+  const c = e.target.closest('[data-c]'); if (c) { show(Number(c.dataset.c)); return; }
+  const g = e.target.closest('[data-go]'); if (g) { show(Number(g.dataset.go)); return; }
+  if (e.target.closest('[data-x]') || e.target.id === 'shade') close();
+});
+addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+// draw the chain between node centres; hover lights a node's links
+function draw() {
+  const box = $('#plot').getBoundingClientRect(), pos = {};
+  $$('.node').forEach((n) => { const r = n.getBoundingClientRect(); pos[H.COURSES[n.dataset.c - 1].title] = { x: r.left - box.left + r.width / 2, t: r.top - box.top, b: r.bottom - box.top }; });
+  $('#lines').setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+  $('#lines').innerHTML = LINKS.map(([a, b]) => { const p = pos[a], q = pos[b], m = (p.b + q.t) / 2; return `<path data-a="${esc(a)}" data-b="${esc(b)}" d="M${p.x} ${p.b} C ${p.x} ${m}, ${q.x} ${m}, ${q.x} ${q.t}"/>`; }).join('');
+}
+$('#chart').addEventListener('mouseover', (e) => {
+  const n = e.target.closest('.node'); const t = n ? H.COURSES[n.dataset.c - 1].title : null;
+  const near = new Set(t ? [t] : []);
+  $$('#lines path').forEach((p) => { const lit = t && (p.dataset.a === t || p.dataset.b === t); p.classList.toggle('lit', !!lit); if (lit) { near.add(p.dataset.a); near.add(p.dataset.b); } });
+  $$('.node').forEach((x) => x.classList.toggle('lit', !!t && near.has(H.COURSES[x.dataset.c - 1].title) && x !== n));
+});
+$('#chart').addEventListener('mouseleave', () => { $$('#lines path').forEach((p) => p.classList.remove('lit')); $$('.node').forEach((x) => x.classList.remove('lit')); });
+addEventListener('resize', draw); document.fonts.ready.then(draw); setTimeout(draw, 400);
+paintYear(); Waha.reveal();
+</script>
+</body>
+</html>

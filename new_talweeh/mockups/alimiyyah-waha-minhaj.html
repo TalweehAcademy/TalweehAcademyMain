@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ʿĀlimiyyah · Minhāj — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-alim.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ ʿĀlimiyyah · Variation A — Minhāj (the path) ═══
+   A centred hero under an arch, the program card as a glass arch beside the promise, then the
+   ten years as one continuous path: a pinned rail on the left fills in as you scroll and jumps
+   to any year; each year is a station with its Arabic name, intro and the texts studied. */
+.mh{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:40px}
+.mh .ar{font-size:clamp(34px,4vw,50px);color:var(--p-gold);line-height:1.5;text-align:left}
+.mh h1{font-size:clamp(40px,5.4vw,74px);line-height:1.02;margin:10px 0 18px}
+.mh h1 em{font-style:italic;color:var(--p-gold);font-size:.62em;display:block;margin-top:10px;line-height:1.15}
+.mh .name{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:12.5px;color:var(--p-head);margin-bottom:10px}
+.mh .lead{color:var(--p-mut);font-size:17px;line-height:1.75;max-width:52ch}
+.mh .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:26px 0 18px}
+.mh .acts .lnk{font-weight:700;color:var(--p-gold);padding:0 8px}
+.archcard{position:relative;border-radius:260px 260px 34px 34px;padding:80px 34px 34px;text-align:center;color:var(--c-text);overflow:hidden}
+.archcard::before{content:'';position:absolute;inset:12px;border-radius:250px 250px 26px 26px;border:1px solid var(--c-line);pointer-events:none}
+.archcard .mark{font-family:'Amiri',serif;font-size:96px;line-height:1.35;margin-bottom:6px;color:var(--gold);opacity:.95}
+.archcard .kicker{color:var(--gold);margin-top:10px}
+.archcard h2{color:var(--c-head);font-size:34px;margin:8px 0 20px}
+.archcard dl{display:grid;gap:10px;text-align:left}
+.archcard dl div{display:flex;justify-content:space-between;gap:14px;padding:12px 16px;border-radius:14px;background:var(--c-in);border:1px solid var(--c-line)}
+.archcard dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--c-mut)}
+.archcard dd{color:var(--c-head);font-weight:700}
+.archcard p{margin-top:18px;color:var(--c-mut);font-style:italic}
+.apath{margin-top:100px;scroll-margin-top:100px}
+.apath-h{text-align:center;max-width:720px;margin:0 auto 40px}
+.apath-h h2{font-size:clamp(34px,4.4vw,58px);margin:8px 0 12px}
+.apath-h p{color:var(--p-mut);line-height:1.7}
+.apath-h .chips{justify-content:center;margin-top:20px}
+.apl{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+.rail{position:sticky;top:110px;border-radius:26px;padding:16px 14px}
+.rail .kicker{color:var(--gold);padding:0 8px 8px}
+.rail ol{list-style:none;position:relative;display:grid;gap:2px}
+.rail ol::before{content:'';position:absolute;left:21px;top:14px;bottom:14px;width:2px;background:var(--c-line)}
+.rail .fill{position:absolute;left:21px;top:14px;width:2px;background:linear-gradient(var(--gold-b),var(--gold));height:0;transition:height .3s}
+.rail a{position:relative;display:flex;align-items:center;gap:12px;padding:8px;border-radius:12px;color:var(--c-mut);font-size:13.5px;font-weight:700;transition:background .25s,color .25s}
+.rail a:hover{background:var(--c-in);color:var(--c-head)}
+.rail a i{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;background:var(--c-solid);border:1px solid var(--c-line);color:var(--c-mut);transition:.35s var(--spring)}
+.rail a.done i{background:var(--gold-d);border-color:var(--gold);color:var(--g2)}
+.rail a.on{color:var(--gold-b);background:var(--c-hi)}
+.rail a.on i{background:var(--gold);color:var(--g2);transform:scale(1.12);border-color:var(--gold)}
+.rail a small{margin-left:auto;font-size:11px;color:var(--c-mut);font-weight:600}
+.station{position:relative;padding:0 0 70px;scroll-margin-top:110px}
+.station-h{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-bottom:18px}
+.station-h .num{width:84px;height:84px;border-radius:26px;display:grid;place-items:center;font-family:'Lora',serif;font-size:36px;color:var(--gold-b);background:var(--c-grad,var(--c-solid));border:1px solid var(--c-line);box-shadow:var(--shadow);transform:rotate(-4deg)}
+.station-h .ar{font-size:22px;color:var(--p-gold);line-height:1.4;text-align:left}
+.station-h h3{font-size:clamp(24px,2.8vw,34px)}
+.station-h .kicker{margin-bottom:2px}
+.station .intro{color:var(--p-mut);line-height:1.75;max-width:70ch;margin-bottom:18px}
+.station .asubs{grid-template-columns:1fr 1fr}
+.station .bar{display:flex;height:8px;border-radius:999px;overflow:hidden;margin:0 0 18px;background:var(--p-soft)}
+.station .bar span{background:var(--fc)}
+@media (max-width:1000px){.mh{grid-template-columns:1fr}.apl{grid-template-columns:1fr}.rail{position:sticky;top:88px;z-index:30;padding:8px}.rail .kicker{display:none}.rail ol{display:flex;overflow-x:auto;gap:4px}.rail ol::before,.rail .fill{display:none}.rail a small{display:none}.rail a{white-space:nowrap}.station .asubs{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Alimiyyah" data-alim="alimiyyah-waha-minhaj.html">
+<div class="mock-bar"><span>ʿĀlimiyyah · Variation A — <b>Minhāj</b> · an arch hero, then the ten years as one continuous path with a rail that fills as you scroll</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/alimiyyah-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-alim.js"></script>
+<script>
+const { $, $$ } = Waha, W = WahaAlim, { A, esc } = W;
+let fam = '';
+$('#page').innerHTML = `
+  <section class="mh">
+    <div>
+      <div class="ar" data-r>العَالِمِيَّة</div>
+      <span class="kicker" data-r>Talweeh Academy · Online Seminary</span>
+      <h1 data-r>Rooted in tradition.<em>Knowledge for a life of service.</em></h1>
+      <p class="name" data-r>Part-Time Online ʿĀlimiyyah Seminary</p>
+      <p class="lead" data-r>A comprehensive, structured path through traditional Islamic education—designed for students balancing work, family, and the pursuit of sacred knowledge.</p>
+      <div class="acts" data-r><a class="btn btn-g" href="${A.APPLY}" target="_blank" rel="noreferrer">Apply to the seminary →</a><a class="btn btn-glass" href="${A.ENROL}">For enrollment</a><a class="lnk" href="#path">Explore the curriculum ↓</a></div>
+      <span class="apill" data-r>Applications are open</span>
+    </div>
+    <aside class="archcard glass" data-r aria-label="Program details">
+      <div class="mark">علم</div>
+      <span class="kicker">Your next chapter in learning</span>
+      <h2>The ʿĀlimiyyah Seminary</h2>
+      <dl>${W.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}<div><dt>Curriculum</dt><dd>10 years · ${W.total} texts</dd></div></dl>
+      <p>Traditional depth. A structured path. Space for your commitments.</p>
+    </aside>
+  </section>
+  ${W.benefits()}
+  ${W.mission()}
+  ${W.values('arch')}
+  <section class="apath" id="path">
+    <div class="apath-h"><span class="kicker">A structured journey through the Islamic sciences</span><h2>Explore your curriculum</h2><p>Explore the texts and subjects across Talweeh Academy’s ten-year part-time ʿĀlimiyyah curriculum. Pick a discipline to trace it from the first year to the last.</p><div class="chips" id="fams"></div></div>
+    <div class="apl">
+      <nav class="rail glass" aria-label="Curriculum years"><span class="kicker">Ten years</span><ol id="rail"><span class="fill" id="fill"></span>${A.YEARS.map((y) => `<li><a href="#y${y.n}" data-y="${y.n}"><i>${y.n}</i>${y.label}<small>${y.subjects.length}</small></a></li>`).join('')}</ol></nav>
+      <div id="stations">${A.YEARS.map((y) => `
+        <section class="station" id="y${y.n}">
+          <div class="station-h"><span class="num">${y.n}</span><div><div class="ar">${W.yearAr(y.n)}</div><span class="kicker">${y.label} · ${y.subjects.length} subjects</span><h3>${esc(y.subtitle)}</h3></div></div>
+          <p class="intro">${esc(y.intro)}</p>
+          <div class="bar" title="Subjects by discipline">${A.FAMILIES.map((f) => W.famCount(y, f.k) ? `<span class="f-${f.k}" style="flex:${W.famCount(y, f.k)}" title="${esc(f.label)} · ${W.famCount(y, f.k)}"></span>` : '').join('')}</div>
+          <ol class="asubs">${y.subjects.map((s) => W.subject(s)).join('')}</ol>
+        </section>`).join('')}</div>
+    </div>
+  </section>
+  ${W.apply()}`;
+
+function paintFams() { $('#fams').innerHTML = W.famChips(fam, { counts: true }); $$('.asub').forEach((li) => li.classList.toggle('dim', !!fam && !li.classList.contains('f-' + fam))); }
+$('#fams').addEventListener('click', (e) => { const b = e.target.closest('[data-fam]'); if (!b) return; fam = fam === b.dataset.fam ? '' : b.dataset.fam; paintFams(); });
+paintFams();
+
+// the rail fills with the reader's progress through the ten years
+const links = $$('#rail a'), stations = $$('.station');
+function onScroll() {
+  let cur = 0;
+  stations.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) cur = i; });
+  const inPath = $('#stations').getBoundingClientRect().top < innerHeight * 0.4;
+  links.forEach((a, i) => { a.classList.toggle('on', inPath && i === cur); a.classList.toggle('done', inPath && i < cur); });
+  const first = links[0].getBoundingClientRect(), on = links[cur].getBoundingClientRect();
+  $('#fill').style.height = inPath ? on.top - first.top + 'px' : '0';
+}
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+Waha.reveal();
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arabic · Qirāʾah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-arabic.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Arabic · Variation E — Qirāʾah (the reading) ═══
+   A scroll story. A cinematic green hero with the Basmalah and the promise; then the six
+   learning objectives told one at a time — the Arabic name of each skill holds still on the
+   left and changes as you read; then the five modules as large sliding cards; the mission as
+   a pull quote; the teachers and facts; a short FAQ; and Become a Member. */
+.cine{position:relative;margin-top:22px;min-height:78vh;display:grid;place-items:center;text-align:center;padding:60px 24px;border-radius:40px;overflow:hidden;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,radial-gradient(90% 80% at 50% 30%,var(--g4),var(--g2) 65%,#07130d);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.cine .ghost{position:absolute;inset:auto 0 -8% 0;font-family:'Amiri',serif;font-size:clamp(160px,26vw,380px);line-height:1;color:rgba(215,179,115,.08);pointer-events:none;direction:rtl}
+.cine img{height:64px;margin:0 auto 20px;filter:sepia(1) saturate(2.4) hue-rotate(-8deg) brightness(1.15)}
+.cine .kicker{color:var(--gold)}
+.cine h1{color:var(--cream);font-size:clamp(40px,6vw,86px);line-height:1.02;margin:14px auto 18px;max-width:14ch}
+.cine h1 em{display:block;font-style:italic;color:var(--gold-b);font-size:.55em;margin-top:10px}
+.cine p{color:rgba(243,232,211,.8);max-width:58ch;margin:0 auto;line-height:1.75;font-size:17px}
+.cine .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.cine .scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,232,211,.6)}
+.cine .scroll::after{content:'';display:block;width:1px;height:34px;margin:8px auto 0;background:linear-gradient(var(--gold),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:50px;margin-top:110px}
+.pin{position:sticky;top:120px;height:calc(100vh - 160px);display:grid;place-items:center}
+.medal{position:relative;width:min(420px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center}
+.medal::before{content:'';position:absolute;inset:14px;border-radius:50%;border:1px dashed var(--c-line)}
+.medal svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.medal circle{fill:none;stroke-width:3}
+.medal .term{font-family:'Amiri',serif;font-size:clamp(46px,5.4vw,78px);color:var(--gold-b);line-height:1.4;direction:rtl;transition:opacity .35s,transform .35s var(--spring)}
+.medal .term.swap{opacity:0;transform:translateY(10px) scale(.96)}
+.medal small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-top:4px}
+.medal .cnt{position:absolute;bottom:18%;font-family:'Lora',serif;color:var(--c-mut);font-size:14px}
+.steps{padding:10vh 0 20vh}
+.ostep{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .5s}
+.ostep.on{opacity:1}
+.ostep .kicker{margin-bottom:8px}
+.ostep h2{font-size:clamp(30px,3.6vw,48px);margin-bottom:14px}
+.ostep p{color:var(--p-text);line-height:1.85;font-size:17px}
+.story-h{text-align:center;max-width:820px;margin:0 auto -4vh}
+.story-h h2{font-size:clamp(34px,4.4vw,58px);margin:8px 0 12px}
+.story-h p{color:var(--p-mut);line-height:1.8}
+.mods{margin-top:100px}
+.mods .sec-h h2{font-size:clamp(32px,4vw,52px)}
+.mods .ctl{display:flex;gap:8px}
+.arr{width:44px;height:44px;border-radius:50%;border:1px solid var(--p-line);background:var(--p-card);color:var(--p-head);font-size:18px;cursor:pointer}
+.arr:hover{border-color:var(--gold);color:var(--p-gold)}
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:min(560px,86%);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 18px}
+.track::-webkit-scrollbar{display:none}
+.mc{scroll-snap-align:start;display:flex;flex-direction:column;gap:14px;padding:30px;border-radius:32px;color:var(--c-text);min-height:520px}
+.mc .top{display:flex;justify-content:space-between;align-items:flex-start}
+.mc .n{font-family:'Lora',serif;font-size:90px;line-height:.8;color:var(--gold)}
+.mc .dur{text-align:right}
+.mc .dur b{display:block;font-family:'Lora',serif;font-size:22px;color:var(--c-head)}
+.mc .dur span{font-size:12px;color:var(--c-mut)}
+.mc h3{color:var(--c-head);font-size:30px}
+.mc p{color:var(--c-text);line-height:1.7;font-size:14.5px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.mc .books{display:grid;gap:6px;margin-top:auto}
+.mc .books span{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--c-in);border:1px solid var(--c-line);border-left:3px solid var(--tc);font-family:'Lora',serif;color:var(--c-head);font-size:14.5px}
+.mc .books em{font-style:normal;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;color:var(--tc);white-space:nowrap}
+.quote{margin-top:110px;text-align:center;max-width:900px;margin-left:auto;margin-right:auto}
+.quote .ar{font-size:40px;color:var(--p-gold);line-height:1.4}
+.quote blockquote{font-family:'Lora',serif;font-size:clamp(24px,2.8vw,36px);line-height:1.4;color:var(--p-head);font-style:italic;margin:12px 0 16px}
+.quote cite{font-style:normal;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.team{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px;margin-top:100px;align-items:start}
+.teach{padding:26px;border-radius:28px}
+.teach .kicker{color:var(--gold)}
+.teach h3{color:var(--c-head);font-size:28px;margin:6px 0 16px}
+.teach .who{display:flex;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--c-line)}
+.teach .who i{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:'Amiri',serif;font-size:24px;background:var(--c-in);border:1px solid var(--c-line);color:var(--gold-b)}
+.teach .who strong{color:var(--c-head);font-family:'Lora',serif;font-size:18px}
+.teach p{color:var(--c-mut);font-size:13.5px;line-height:1.6;margin-top:10px}
+.faq5{margin-top:100px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:30px;align-items:start}
+.faq5 h2{font-size:clamp(30px,3.6vw,46px);margin:6px 0 12px}
+.faq5 p{color:var(--p-mut);line-height:1.7;margin-bottom:16px}
+@media (max-width:1000px){.story{grid-template-columns:1fr}.pin{position:sticky;top:84px;height:auto;z-index:5;padding:10px 0;background:var(--bg)}.medal{width:170px}.medal .cnt{display:none}.ostep{min-height:auto;padding:30px 0;opacity:1}.team,.faq5{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Arabic" data-arabic="arabic-waha-qiraah.html">
+<div class="mock-bar"><span>Arabic · Variation E — <b>Qirāʾah</b> · a cinematic hero and a scroll story: each skill's Arabic name holds still while you read, then the modules as sliding cards</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/arabic-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-arabic.js"></script>
+<script>
+const { $, $$ } = Waha, X = WahaArabic, { R, esc } = X;
+const O = R.OBJECTIVES;
+$('#page').innerHTML = `
+  <section class="cine">
+    <div class="ghost" aria-hidden="true">العربية</div>
+    <div>
+      <img src="../public/legacy-assets/talweeharabic/2025/12/bismilla-e1755384561119-300.webp" alt="Bismillah al-Rahman al-Rahim" />
+      <span class="kicker">Talweeh Arabic · 2-Year Program · ${esc(X.fact('Next cohort'))}</span>
+      <h1>Don’t just Recite the Qur’an<em>Understand it.</em></h1>
+      <p>A structured, step-by-step pathway for students who want to move beyond isolated rules and develop a clear framework for understanding Arabic.</p>
+      <div class="acts">${X.member()}<a class="btn btn-glass" href="#story">Begin reading ↓</a></div>
+    </div>
+    <span class="scroll">Scroll</span>
+  </section>
+
+  <section class="story-h" id="story" style="margin-top:110px"><span class="kicker">Learning objectives</span><h2>Six things you will be able to do</h2><p>${esc(R.OBJ_INTRO)}</p></section>
+  <section class="story">
+    <div class="pin"><div class="medal glass"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" style="stroke:var(--c-line)"/><circle id="ring" cx="50" cy="50" r="48" style="stroke:var(--gold)" stroke-dasharray="0 302" stroke-linecap="round"/></svg><div><div class="term" id="term"></div><small id="termEn"></small></div><span class="cnt" id="cnt"></span></div></div>
+    <div class="steps">${O.map((o, i) => `<article class="ostep" data-i="${i}"><span class="kicker">${String(i + 1).padStart(2, '0')} / ${String(O.length).padStart(2, '0')}</span><h2>${esc(X.objTitle(o.title))}</h2><p>${esc(o.text)}</p></article>`).join('')}</div>
+  </section>
+
+  <section class="mods">
+    <div class="sec-h"><div><span class="kicker">Module overviews</span><h2>Five modules, two years</h2></div><div class="ctl"><button class="arr" type="button" data-d="-1" aria-label="Previous module">‹</button><button class="arr" type="button" data-d="1" aria-label="Next module">›</button></div></div>
+    <div class="track" id="track">${R.MODULES.map((m) => `<article class="mc glass"><div class="top"><span class="n">${m.n}</span><div class="dur"><b>${esc(m.duration)}</b><span>${esc(m.format)} · ${esc(m.hours)}</span></div></div><h3>${esc(m.name)}</h3><p>${esc(m.overview)}</p><div class="books">${m.texts.map((t) => `<span class="t-${t.track}">${esc(t.t)}${t.code ? `<em>${esc(t.code)}</em>` : ''}</span>`).join('')}</div></article>`).join('')}</div>
+  </section>
+
+  <section class="quote" data-r><div class="ar">رِسَالَتُنَا</div><blockquote>“${esc(R.ABOUT[4].paragraphs[0].split('. ').slice(0, 2).join('. '))}.”</blockquote><cite>Mission statement · Talweeh Arabic</cite></section>
+
+  <section class="team">
+    <div class="teach glass" data-r><span class="kicker">Instructors</span><h3>Taught by</h3>${['Shaykh Omer Khurshid', 'Mufti Dawood Khurshid'].map((n) => `<div class="who"><i>${n.includes('Omer') ? 'ع' : 'د'}</i><strong>${n}</strong></div>`).join('')}<p>Both instructors completed advanced Islamic studies at the Islamic University of Madinah and have extensive experience teaching Arabic and Islamic sciences.</p></div>
+    <div data-r>${X.facts()}<div style="margin-top:18px" id="video"></div></div>
+  </section>
+
+  <section class="faq5"><div><span class="kicker">Frequently asked questions</span><h2>Before you begin</h2><p>Everything you need to know about joining the 2-Year Arabic Program.</p><a class="btn btn-glass btn-sm" href="arabic-waha-fihris.html#faq">All ${R.FAQ.length} questions →</a></div>
+    ${X.accordion(R.FAQ.filter((f) => /designed for|understand the Qur|prior knowledge|live or recorded|hours per week/.test(f.q)), { open: 0 })}</section>
+  ${X.cta()}`;
+
+X.player($('#video'), R.INTRO_VIDEO, { title: 'Why study Arabic?', kicker: 'Talweeh Arabic' });
+// the medal follows the step being read
+const steps = $$('.ostep'); let cur = -1;
+function setStep(i) {
+  if (i === cur) return; cur = i; const o = O[i], t = $('#term');
+  t.classList.add('swap');
+  setTimeout(() => { t.textContent = X.OBJ_AR[o.title] || ''; $('#termEn').textContent = X.objTitle(o.title); t.classList.remove('swap'); }, 180);
+  $('#cnt').textContent = `${i + 1} of ${O.length}`;
+  $('#ring').setAttribute('stroke-dasharray', `${((i + 1) / O.length) * 302} 302`);
+  steps.forEach((s, k) => s.classList.toggle('on', k === i));
+}
+function onScroll() { let i = 0; steps.forEach((s, k) => { if (s.getBoundingClientRect().top < innerHeight * 0.55) i = k; }); setStep(i); }
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+$('.mods .ctl').addEventListener('click', (e) => { const b = e.target.closest('[data-d]'); if (b) $('#track').scrollBy({ left: Number(b.dataset.d) * $('#track').clientWidth * 0.7, behavior: 'smooth' }); });
+X.bindAccordions(); Waha.reveal();
+</script>
+</body>
+</html>

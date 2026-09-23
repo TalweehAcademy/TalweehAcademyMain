@@ -6,7 +6,7 @@
   <title>Talweeh Academy — Sema</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
@@ -128,17 +128,141 @@
     footer a{display:block;font-size:13.5px;padding:5px 0;color:#8f96c6;}
     footer a:hover{color:var(--gold);}
     .fbottom{border-top:1px solid var(--line);margin-top:38px;padding-top:22px;font-size:12.5px;color:#6a719f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  
+    /* ═══ Live-homepage sections, drawn in Sema's language ═══ */
+    /* the main site's tiled calligraphy background (public-theme.css .academy-home) */
+    :root{--tile:url('../public/brand/talweeh-pattern-dark.png');}
+    body{background:var(--tile) repeat top center/720px auto fixed,var(--bg);}
+    .hero{background:var(--tile) repeat top center/720px auto,radial-gradient(900px 520px at 78% -8%,rgba(124,92,214,.4),transparent 60%),radial-gradient(760px 460px at 8% 12%,rgba(68,86,199,.34),transparent 58%),var(--bg);}
+    .hero-pattern{display:none;}
+    .feature{background:var(--tile) repeat top center/720px auto,linear-gradient(180deg,var(--bg2),var(--bg));}
+    .cta .p{background:var(--tile) repeat top center/720px auto;opacity:1;}
+    footer.site{background:var(--tile) repeat top center/720px auto,#080a22;}
+    .topbar{font-size:13px;border-bottom:1px solid var(--line);background:rgba(8,10,34,.6);}
+    .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:38px;}
+    .tb-portal{font-weight:700;color:var(--gold);}
+    .tb-right{display:flex;align-items:center;gap:12px;}
+    .tb-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+    .socials{display:flex;gap:8px;}
+    .socials a{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:12px;color:var(--gold);background:rgba(255,255,255,.04);border:1px solid var(--line);transition:.2s;}
+    .socials a:hover{border-color:var(--gold);transform:translateY(-2px);}
+    .nav-links .caret{font-size:10px;margin-left:4px;color:var(--gold);}
+    .hero .hero-arabic{font-family:'Amiri',serif;font-size:clamp(30px,3.6vw,42px);color:var(--gold);margin:12px 0 6px;}
+    .hero h1{min-height:1.1em;}
+    .hero p.lead{margin-top:18px;}
+    .feature-art .p,.course .thumb .p,.inst .ph .p{background:var(--tile) repeat top center/720px auto;opacity:1;}
+    .hero h1.swap{animation:hswap .7s cubic-bezier(.2,.8,.2,1) both;}
+    @keyframes hswap{from{opacity:0;transform:translateY(16px);filter:blur(6px);}to{opacity:1;transform:none;filter:none;}}
+    .proof{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:34px;}
+    .proof span{font-size:13px;font-weight:500;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);}
+    .proof span::before{content:'✦';color:var(--gold);margin-right:8px;font-size:10px;}
+    .hero-controls{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:30px;}
+    .hctl{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--gold);font-size:20px;cursor:pointer;transition:.2s;}
+    .hctl:hover{border-color:var(--gold);background:rgba(231,192,105,.1);}
+    .hero-dots{display:flex;gap:8px;}
+    .hero-dot{width:9px;height:9px;border-radius:999px;border:0;background:rgba(255,255,255,.2);cursor:pointer;padding:0;transition:width .35s,background .3s;}
+    .hero-dot.active{width:30px;background:linear-gradient(90deg,var(--gold),var(--gold-dk));}
+    .cats.three{grid-template-columns:repeat(3,1fr);}
+    @media(max-width:860px){.cats.three{grid-template-columns:1fr;}}
+    .ico-svg{width:26px;height:26px;fill:currentColor;}
+    .cat .ico{font-family:'Amiri',serif;}
+    .cat .go{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;color:var(--gold);}
+    .course .thumb.photo{background-size:cover;background-position:center;}
+    .course .thumb.photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,16,48,.85),rgba(13,16,48,.1) 60%);}
+    .course .thumb.photo .glyph{position:absolute;z-index:1;right:18px;bottom:12px;font-family:'Amiri',serif;font-size:38px;}
+    .course .thumb.photo .badge{z-index:1;}
+    .course .thumb.photo img{transition:transform .8s;}
+    .course p.desc{font-size:14px;color:var(--muted);margin:-4px 0 16px;}
+    .course .go{display:flex;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600;color:var(--gold);}
+    .paths{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+    @media(max-width:860px){.paths{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:520px){.paths{grid-template-columns:1fr;}}
+    .path{position:relative;overflow:hidden;border-radius:18px;padding:26px 22px;min-height:200px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,var(--surf),var(--bg2));border:1px solid var(--line);transition:.2s;}
+    .path::before{content:'';position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,214,.35),transparent 70%);transition:transform .5s;}
+    .path:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 20px 44px rgba(0,0,0,.4);}
+    .path:hover::before{transform:scale(1.6);}
+    .path-n{position:relative;font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);}
+    .path strong{position:relative;font-family:'Playfair Display',serif;font-size:23px;font-weight:600;margin-top:8px;}
+    .path small{position:relative;font-size:13.5px;color:var(--muted);}
+    .path-go{position:relative;margin-top:auto;align-self:flex-end;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(231,192,105,.12);color:var(--gold);transition:.25s;}
+    .path:hover .path-go{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#1a1530;}
+    .center-btn{text-align:center;margin-top:38px;}
+    .arts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+    @media(max-width:860px){.arts{grid-template-columns:1fr;}}
+    .art{display:flex;flex-direction:column;border-radius:18px;padding:28px 24px;background:linear-gradient(180deg,var(--surf),var(--bg2));border:1px solid var(--line);transition:.2s;}
+    .art:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 20px 44px rgba(0,0,0,.4);}
+    .art .meta{display:flex;gap:12px;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c9b6ff;margin-bottom:14px;}
+    .art h3{font-size:21px;margin-bottom:12px;line-height:1.3;}
+    .art p{font-size:14px;color:var(--muted);margin-bottom:18px;}
+    .art .more{margin-top:auto;font-size:14px;font-weight:600;color:var(--gold);}
+    .feature .text-link{display:inline-block;margin-top:22px;font-weight:600;color:var(--gold);}
+    .feature .text-link::after{content:' →';}
+    .feature-art .c h3{font-size:26px;margin-top:10px;}
+    .feature-art .c p{font-size:15px;color:var(--muted);margin:12px auto 0;max-width:30em;}
+    .vid-rail{position:relative;}
+    .vid-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 44px)/3);gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;}
+    .vid-row::-webkit-scrollbar{display:none;}
+    @media(max-width:860px){.vid-row{grid-auto-columns:82%;}}
+    .vid{scroll-snap-align:start;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--surf),var(--bg2));border:1px solid var(--line);transition:.2s;}
+    .vid:hover{border-color:var(--gold);}
+    .vid .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;}
+    .vid .thumb img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:transform .8s,opacity .3s;}
+    .vid:hover .thumb img{transform:scale(1.05);opacity:1;}
+    .vid .play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;color:#1a1530;background:linear-gradient(135deg,var(--gold),var(--gold-dk));box-shadow:0 0 40px rgba(231,192,105,.5);transition:transform .3s;}
+    .vid:hover .play{transform:scale(1.1);}
+    .vid .vmeta{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;}
+    .vid .vmeta span{display:block;font-weight:600;font-size:14.5px;}
+    .vid .vmeta small{font-size:12.5px;color:var(--muted);}
+    .vid .vmeta strong{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);}
+    .rail-arrow{position:absolute;top:36%;z-index:3;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(13,16,48,.85);backdrop-filter:blur(8px);color:var(--gold);font-size:22px;cursor:pointer;}
+    .rail-arrow.prev{left:-22px;} .rail-arrow.next{right:-22px;}
+    @media(max-width:860px){.rail-arrow{display:none;}}
+    .society{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;padding:38px 42px;border-radius:24px;position:relative;overflow:hidden;
+      background:var(--tile) repeat top center/720px auto,linear-gradient(120deg,var(--indigo),var(--violet));box-shadow:0 30px 70px rgba(0,0,0,.35);}
+    .society .soc-ico{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;background:rgba(255,255,255,.12);color:var(--gold);}
+    .society .soc-ico .ico-svg{width:36px;height:36px;}
+    .society .eyebrow{color:#fff2cf;}
+    .society h3{font-size:clamp(26px,3vw,36px);margin:8px 0;}
+    .society p{color:rgba(255,255,255,.8);max-width:52ch;}
+    @media(max-width:860px){.society{grid-template-columns:1fr;padding:30px 26px;}}
+    .cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;}
+    .tst-wrap{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;}
+    .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+    @media(max-width:860px){.tst-wrap{grid-template-columns:1fr;}.tst-grid{grid-template-columns:1fr;}.tst-wrap .hctl{display:none;}}
+    .tst-card{display:flex;flex-direction:column;border-radius:18px;padding:28px 24px;background:linear-gradient(180deg,var(--surf),var(--bg2));border:1px solid var(--line);animation:tstin .5s ease both;}
+    .tst-card[hidden]{display:none;}
+    @keyframes tstin{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+    .tst-card .q{font-family:'Playfair Display',serif;font-size:52px;line-height:.5;color:var(--gold);margin-bottom:14px;}
+    .tst-card p{font-size:14.5px;color:var(--fg);opacity:.88;margin-bottom:20px;}
+    .tst-card .who{margin-top:auto;display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line);}
+    .tst-card .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#1a1530;background:linear-gradient(135deg,var(--gold),var(--gold-dk));}
+    .tst-card h4{font-size:16px;}
+    .tst-card .loc{font-size:12.5px;color:var(--muted);}
+    .pips{display:flex;justify-content:center;gap:8px;margin-top:24px;}
+    .pips span{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.2);transition:width .35s,background .3s;}
+    .pips span.on{width:26px;background:var(--gold);}
+    .fcols{grid-template-columns:1.7fr repeat(4,1fr);}
+    @media(max-width:860px){.fcols{grid-template-columns:1fr 1fr;}}
+    .fbrand{display:flex;gap:16px;align-items:flex-start;}
+    .fseal{width:84px;height:84px;border-radius:50%;flex:none;border:1px solid var(--line);}
+    .fbrand strong{display:block;font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
+    .fbrand span{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:4px 0 10px;}
+    .fbrand p{font-size:13.5px;}
+    .totop{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--gold);font-size:18px;cursor:pointer;}
   </style>
 </head>
 <body>
-  <div class="mock-bar"><div class="wrap"><span>Design 6 of 6 — <b style="color:var(--gold)">Sema</b> · jewel-toned twilight</span><a href="index.html">← Back to all designs</a></div></div>
-  <div class="promo">✦ Ramadan intake now open — <b>up to 50% off</b> select courses</div>
+  <div class="mock-bar"><div class="wrap"><span>Design 1 — <b style="color:var(--gold)">Sema</b> · jewel-toned twilight</span><a href="index.html">← Back to all designs</a></div></div>
+  <div class="topbar"><div class="wrap">
+    <a class="tb-portal" href="#">Student Portal</a>
+    <div class="tb-right"><span class="tb-label">Connect</span><div class="socials"><a href="#" aria-label="X / Twitter">𝕏</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">◉</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="WhatsApp">☎</a></div></div>
+  </div></div>
 
   <header class="site">
     <div class="wrap nav">
       <a class="brand" href="#"><span class="seal">✦</span> Talweeh</a>
-      <nav class="nav-links"><a href="#">Courses</a><a href="#">Services</a><a href="#">Articles</a><a href="#">Instructors</a><a href="#">About</a></nav>
-      <div class="nav-actions"><a class="login" href="#">Login</a><button class="btn btn-gold">My Journey</button></div>
+      <nav class="nav-links"><a href="#">Quran</a><a href="#">Courses<span class="caret">▾</span></a><a href="#">Media<span class="caret">▾</span></a><a href="#">Arabic</a><a href="#">Hadith Specialization</a><a href="#">About<span class="caret">▾</span></a></nav>
+      <div class="nav-actions"><a class="btn btn-gold" href="#">Student Portal</a></div>
     </div>
   </header>
 
@@ -146,34 +270,53 @@
     <div class="hero-pattern"></div>
     <div class="wrap">
       <div class="moon">☾</div>
-      <span class="eyebrow">Knowledge · Light · Beauty</span>
-      <h1>Where sacred knowledge <span>comes to light</span></h1>
-      <p class="lead">Study Qur'an, Hadith, Fiqh and Arabic under qualified scholars — in a serene, jewel-toned space designed for the modern seeker.</p>
+      <span class="eyebrow">Talweeh Academy · Learn with purpose</span>
+      <p class="hero-arabic">رَبِّ زِدْنِي عِلْمًا</p>
+      <h1 id="heroHeading">2 Year Arabic Program</h1>
+      <p class="lead">Explore the Islamic sciences through structured programs, guided study, and beneficial knowledge for every stage of your journey.</p>
       <div class="hero-cta">
-        <button class="btn btn-gold">Explore Courses →</button>
-        <button class="btn btn-ghost">Meet the scholars</button>
+        <a class="btn btn-gold" id="heroCta" href="#"><span>Explore Arabic Program</span> →</a>
+        <a class="btn btn-ghost" href="#programs">Explore our programs</a>
       </div>
-      <div class="hero-stats">
-        <div><div class="n">12k+</div><div class="l">Students</div></div>
-        <div><div class="n">80+</div><div class="l">Courses</div></div>
-        <div><div class="n">25</div><div class="l">Scholars</div></div>
-        <div><div class="n">4.9</div><div class="l">Avg. rating</div></div>
+      <div class="proof"><span>Structured curricula</span><span>Traditional texts</span><span>Live &amp; on-demand study</span></div>
+      <div class="hero-controls">
+        <button class="hctl" id="heroPrev" type="button" aria-label="Previous slide">‹</button>
+        <div class="hero-dots" id="heroDots"><button class="hero-dot active" type="button" aria-label="Slide 1"></button><button class="hero-dot" type="button" aria-label="Slide 2"></button><button class="hero-dot" type="button" aria-label="Slide 3"></button></div>
+        <button class="hctl" id="heroNext" type="button" aria-label="Next slide">›</button>
       </div>
     </div>
   </section>
 
-  <section class="block">
+  <section class="block" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="cats three">
+        <a class="cat" href="#"><div class="ico">ض</div><h4>Arabic Program</h4><p>A step by step 2 year program to learn the Arabic language.</p><span class="go">Learn more →</span></a>
+        <a class="cat" href="#"><div class="ico"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6c1 6-6 9-6 16h12c0-7-7-10-6-16z"/><rect x="10" y="34" width="6" height="22" rx="1"/><rect x="48" y="34" width="6" height="22" rx="1"/><path d="M13 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8zM51 24c.5 4-3 5-3 8h6c0-3-3.5-4-3-8z"/><path d="M18 40c0-8 8-10 14-16 6 6 14 8 14 16v16H36v-8a4 4 0 0 0-8 0v8H18V40z"/></svg></div><h4>Talweeh Society</h4><p>Get access to our free courses and weekly lessons.</p><span class="go">Learn more →</span></a>
+        <a class="cat" href="#"><div class="ico"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="24" r="8"/><path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z"/><circle cx="45" cy="22" r="6.5"/><path d="M40 37.5c1.6-.7 3.3-1 5-1 7 0 12 4.4 12 12.4V50H40.6a19 19 0 0 0-.6-12.5z"/></svg></div><h4>Authorized Instructors</h4><p>Qualified instructors navigating your path.</p><span class="go">Learn more →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="programs">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Fields of Study</span>
-        <h2>The Islamic sciences, illuminated</h2>
-        <p>Structured tracks across the core disciplines, taught with clarity and rooted in tradition.</p>
+        <span class="eyebrow">A path to deeper understanding</span>
+        <h2>Find your next chapter.</h2>
+        <p>Build your foundations. Deepen your study. Choose a program that meets your goals.</p>
       </div>
-      <div class="cats">
-        <div class="cat"><div class="ico">۝</div><h4>Tafsīr</h4><p>Qur'anic exegesis & meanings</p></div>
-        <div class="cat"><div class="ico">⚖</div><h4>Fiqh</h4><p>Jurisprudence & practice</p></div>
-        <div class="cat"><div class="ico">☾</div><h4>‘Aqīdah</h4><p>Creed & theology</p></div>
-        <div class="cat"><div class="ico">✎</div><h4>Naḥw</h4><p>Arabic grammar & syntax</p></div>
+      <div class="courses">
+        <a class="course" href="#">
+          <div class="thumb photo" style="background-image:url('../public/brand/program-arabic-manuscript.webp')"><span class="glyph">العربية</span><span class="badge">01</span></div>
+          <div class="body"><span class="cat-tag">Language &amp; understanding</span><h3>Arabic</h3><p class="desc">A step-by-step, two-year program designed to build lasting understanding of the Arabic language.</p><span class="go">Explore the program <span>→</span></span></div>
+        </a>
+        <a class="course" href="#">
+          <div class="thumb photo" style="background-image:url('../public/brand/program-alimiyyah.webp')"><span class="glyph">العالمية</span><span class="badge">02</span></div>
+          <div class="body"><span class="cat-tag">Islamic scholarship</span><h3>Alimiyyah</h3><p class="desc">Explore a guided path through the Islamic sciences with structured progression and serious study.</p><span class="go">Explore the program <span>→</span></span></div>
+        </a>
+        <a class="course" href="#">
+          <div class="thumb photo" style="background-image:url('../public/brand/program-hadith-books.webp')"><span class="glyph">الحديث</span><span class="badge">03</span></div>
+          <div class="body"><span class="cat-tag">Specialized study</span><h3>Hadith Specialization</h3><p class="desc">Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.</p><span class="go">Explore the program <span>→</span></span></div>
+        </a>
       </div>
     </div>
   </section>
@@ -181,27 +324,33 @@
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Featured</span>
-        <h2>Begin with these</h2>
-        <p>The courses our students return to again and again.</p>
+        <span class="eyebrow">Continue your study</span>
+        <h2>Featured Courses</h2>
+        <p>Choose the format and subject that best fits your current stage of learning.</p>
       </div>
-      <div class="courses">
-        <article class="course">
-          <div class="thumb"><div class="p"></div><span class="glyph">⚖</span><span class="badge">Online</span></div>
-          <div class="body"><span class="cat-tag">Fiqh</span><h3>Foundations of Islamic Jurisprudence</h3>
-            <div class="meta"><span class="avatar">OK</span><span class="iname">Sh. Omer Khurshid</span><span class="price">$49</span></div></div>
-        </article>
-        <article class="course">
-          <div class="thumb"><div class="p"></div><span class="glyph">۝</span><span class="badge">Online</span></div>
-          <div class="body"><span class="cat-tag">Tafsīr</span><h3>Understanding the Qur'an</h3>
-            <div class="meta"><span class="avatar">YH</span><span class="iname">Dr. Yusuf Hassan</span><span class="price">$45</span></div></div>
-        </article>
-        <article class="course">
-          <div class="thumb"><div class="p"></div><span class="glyph">☾</span><span class="badge">Online</span></div>
-          <div class="body"><span class="cat-tag">Ḥadīth</span><h3>The Science of Prophetic Narrations</h3>
-            <div class="meta"><span class="avatar">IZ</span><span class="iname">Sh. Ibrahim Z.</span><span class="price">$55</span></div></div>
-        </article>
+      <div class="paths">
+        <a class="path" href="#"><span class="path-n">01</span><strong>Live</strong><small>Join guided classes with scheduled instruction</small><span class="path-go">→</span></a>
+        <a class="path" href="#"><span class="path-n">02</span><strong>On Demand</strong><small>Study structured lessons at your own pace</small><span class="path-go">→</span></a>
+        <a class="path" href="#"><span class="path-n">03</span><strong>Free</strong><small>Begin with accessible courses and resources</small><span class="path-go">→</span></a>
+        <a class="path" href="#"><span class="path-n">04</span><strong>Specialization</strong><small>Advance into focused study through dedicated specialist pathways</small><span class="path-go">→</span></a>
       </div>
+      <div class="center-btn"><a class="btn btn-gold" href="#">Load all Courses →</a></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">From the Talweeh library</span>
+        <h2>Latest Articles</h2>
+        <p>Short academic benefits and reflections to support continued reading beyond the classroom.</p>
+      </div>
+      <div class="arts">
+        <article class="art"><div class="meta"><span>January 8, 2026</span><span>6 Minutes</span></div><h3>Taḥsīn &amp; Taqbīḥ: Reason, Revelation, and the Foundations of Islamic Morality</h3><p>Before delving into the primary evidences of Islamic law, classical scholars of uṣūl al-fiqh established a series of foundational discussions known as mabādiʾ.</p><a class="more" href="#">Read More.....</a></article>
+        <article class="art"><div class="meta"><span>October 30, 2025</span><span>8 Minutes</span></div><h3>The Legacy of Mukhtasar al-Qudūrī</h3><p>In this section, we will cover the century-long legacy of the Mukhtaṣar, discovering the most famous works that stem from it.</p><a class="more" href="#">Read More.....</a></article>
+        <article class="art"><div class="meta"><span>October 11, 2024</span><span>18 Minutes</span></div><h3>The Nature of Islamic Finance</h3><p>Islamic jurisprudence has demonstrated over the centuries its ability to adapt to any time or place, meet any challenge, and overcome any obstacle.</p><a class="more" href="#">Read More.....</a></article>
+      </div>
+      <div class="center-btn"><a class="btn btn-ghost" href="#">View Articles →</a></div>
     </div>
   </section>
 
@@ -209,18 +358,14 @@
     <div class="wrap">
       <div>
         <span class="eyebrow">Why Talweeh</span>
-        <h2>Depth and beauty, in every lesson</h2>
-        <p>Each course is broken into clear lessons with quizzes and checkpoints, so your progress is always visible.</p>
-        <ul>
-          <li><span class="ck">✓</span> Qualified scholars with connected chains</li>
-          <li><span class="ck">✓</span> Lesson quizzes that reinforce retention</li>
-          <li><span class="ck">✓</span> Self-paced, on any device</li>
-          <li><span class="ck">✓</span> Certificates upon completion</li>
-        </ul>
+        <h2>About Talweeh Academy</h2>
+        <p>At Talweeh Academy, our mission is to elevate academic awareness across all levels, offering comprehensive programs tailored for laypersons, students, and scholars. Our curriculum spans a broad range of Islamic academic disciplines.</p>
+        <ul><li><span class="ck">✓</span> Structured progression</li><li><span class="ck">✓</span> Qualified instruction</li><li><span class="ck">✓</span> Purposeful learning</li></ul>
+        <a class="text-link" href="#">About Us</a>
       </div>
       <div class="feature-art">
         <div class="p"></div>
-        <div class="c"><div class="ar">۞</div><p class="q">"The seeking of knowledge is an obligation upon every Muslim."</p></div>
+        <div class="c"><div class="ar">۞</div><h3>Why Talweeh Academy</h3><p>Our instructors possess authorizations (ijāzāt) from esteemed scholars worldwide and have uniquely integrated traditional and academic methods in their quest for knowledge. Join us and check out the first few lessons of our courses for free.</p><a class="btn btn-gold" style="margin-top:22px" href="#">Sign UP →</a></div>
       </div>
     </div>
   </section>
@@ -228,15 +373,29 @@
   <section class="block">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Our Teachers</span>
-        <h2>Devoted scholars</h2>
-        <p>Knowledge transmitted with care, adab, and authenticity.</p>
+        <span class="eyebrow">Talweeh Media</span>
+        <h2>Youtube Videos</h2>
+        <p>Selected lessons, academic benefits, and discussions from Talweeh Academy.</p>
       </div>
-      <div class="insts">
-        <div class="inst"><div class="ph"><div class="p"></div>OK</div><h4>Sh. Omer Khurshid</h4><span>Fiqh & Usūl</span></div>
-        <div class="inst"><div class="ph"><div class="p"></div>YH</div><h4>Dr. Yusuf Hassan</h4><span>Tafsīr</span></div>
-        <div class="inst"><div class="ph"><div class="p"></div>IZ</div><h4>Sh. Ibrahim Z.</h4><span>Ḥadīth</span></div>
-        <div class="inst"><div class="ph"><div class="p"></div>AM</div><h4>Ustadh Ahmad M.</h4><span>Arabic</span></div>
+      <div class="vid-rail">
+        <button class="rail-arrow prev" id="vidPrev" type="button" aria-label="Previous videos">‹</button>
+        <div class="vid-row" id="vidRow">
+          <article class="vid"><div class="thumb"><img src="https://i.ytimg.com/vi/T4-h_N8VN_A/hqdefault.jpg" alt="" loading="lazy" /><span class="play">▶</span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>01</strong></div></article>
+          <article class="vid"><div class="thumb"><img src="https://i.ytimg.com/vi/SQmeAQ6wZ1U/hqdefault.jpg" alt="" loading="lazy" /><span class="play">▶</span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>02</strong></div></article>
+          <article class="vid"><div class="thumb"><img src="https://i.ytimg.com/vi/mmXvxdH9mAs/hqdefault.jpg" alt="" loading="lazy" /><span class="play">▶</span></div><div class="vmeta"><div><span>Featured lecture</span><small>Talweeh Academy Media</small></div><strong>03</strong></div></article>
+        </div>
+        <button class="rail-arrow next" id="vidNext" type="button" aria-label="Next videos">›</button>
+      </div>
+      <div class="center-btn"><a class="btn btn-ghost" href="#">▶ Subscribe to our YouTube</a></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="society">
+        <span class="soc-ico"><svg class="ico-svg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="24" r="8"/><path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z"/><circle cx="45" cy="22" r="6.5"/><path d="M40 37.5c1.6-.7 3.3-1 5-1 7 0 12 4.4 12 12.4V50H40.6a19 19 0 0 0-.6-12.5z"/></svg></span>
+        <div><span class="eyebrow">Community · continued learning</span><h3>Join Talweeh Society</h3><p>Join us as we share uplifting reminders and insights from various texts, along with access to our free weekly lessons.</p></div>
+        <a class="btn btn-gold" href="#">Join Us →</a>
       </div>
     </div>
   </section>
@@ -244,22 +403,97 @@
   <section class="cta">
     <div class="p"></div>
     <div class="cta-inner">
-      <h2>Begin your <span>journey</span> today</h2>
-      <p>Join thousands learning their deen with clarity and confidence.</p>
-      <button class="btn btn-gold">Create free account →</button>
+      <span class="eyebrow">Begin your next chapter</span>
+      <h2 style="margin-top:12px">Study with clarity, structure, and <span>purpose.</span></h2>
+      <p>Explore Talweeh Academy's programs and courses, then continue your learning through your student portal.</p>
+      <div class="cta-actions"><a class="btn btn-gold" href="#">Explore courses →</a><a class="btn btn-ghost" href="#">Student Portal</a></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Student experiences</span>
+        <h2>What our students say</h2>
+        <p>Reflections from learners studying with Talweeh Academy around the world.</p>
+      </div>
+      <div class="tst-wrap">
+        <button class="hctl" id="tstPrev" type="button" aria-label="Previous testimonials">‹</button>
+        <div class="tst-grid">
+          <article class="tst-card"><div class="q">“</div><p>Learning Arabic has been a transformative experience, especially under the guidance of my respected teachers Shaykh Daud and Shaykh Omer. Their dedication to teaching not only helped me in grasping the language but also enriched my appreciation for the Ulama of the past, and respect for all seekers of knowledge.</p><div class="who"><span class="av">MK</span><div><h4>Mustafa Khan</h4><span class="loc">Toronto, Canada</span></div></div></article>
+          <article class="tst-card"><div class="q">“</div><p>Mashallah, this academy changed the way I look at online courses. The level of sharpness of the instructors is unreal. They do not shy away from mentioning nuances, grammar benefits, and differences in opinions over any text.</p><div class="who"><span class="av">MI</span><div><h4>Muhammed Ince</h4><span class="loc">Turkey</span></div></div></article>
+          <article class="tst-card"><div class="q">“</div><p>Studying with Sheikh Omer really opened my mind to see how the Islamic sciences work in tandem. I have not had a better teacher in explaining the details and intricacies of all the sciences especially in fiqh and usool ul fiqh.</p><div class="who"><span class="av">MK</span><div><h4>Mohammed Kaleelurrahman</h4><span class="loc">Dallas, USA</span></div></div></article>
+          <article class="tst-card"><div class="q">“</div><p>Having studied with Mufti Dawud for over a year, I have benefitted greatly from his teaching. His way of teaching has been easy to understand, and he challenges us to push ourselves. As a convert, I found studying with him to be very inclusive and helpful.</p><div class="who"><span class="av">AG</span><div><h4>Aldo Gjataj</h4><span class="loc">Ashford, England</span></div></div></article>
+          <article class="tst-card"><div class="q">“</div><p>What I really love about the way Sheikh teaches is that whenever we learn a new rule, we immediately apply it. The practicality in his teaching method brings life to the theory which many students find difficult to grasp.</p><div class="who"><span class="av">MP</span><div><h4>Muhammad Patel</h4><span class="loc">Botswana</span></div></div></article>
+        </div>
+        <button class="hctl" id="tstNext" type="button" aria-label="Next testimonials">›</button>
+      </div>
+      <div class="pips" id="tstPips"></div>
     </div>
   </section>
 
   <footer class="site">
     <div class="wrap">
       <div class="fcols">
-        <div><a class="brand" href="#"><span class="seal">✦</span> Talweeh</a><p style="font-size:13.5px;max-width:26em;">A serene home for sacred knowledge — beautiful, accessible, and rooted in tradition.</p></div>
-        <div><h5>Explore</h5><a href="#">Courses</a><a href="#">Instructors</a><a href="#">Articles</a><a href="#">Services</a></div>
-        <div><h5>Account</h5><a href="#">Login</a><a href="#">Register</a><a href="#">Dashboard</a><a href="#">My Quizzes</a></div>
-        <div><h5>Company</h5><a href="#">About Us</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+        <div class="fbrand"><img class="fseal" src="../public/brand/talweeh-footer-seal.webp" alt="Talweeh Academy seal" /><div><strong>Talweeh Academy</strong><span>Structured Islamic Academia</span><p>Study with clarity, structure, and purpose.</p></div></div>
+        <div><h5>Explore</h5><a href="#">Courses</a><a href="#">Arabic</a><a href="#">Quran</a><a href="#">Alimiyyah</a></div>
+        <div><h5>Academy</h5><a href="#">About Us</a><a href="#">Instructors</a><a href="#">Articles</a></div>
+        <div><h5>Student</h5><a href="#">Student Portal</a><a href="#">Contact</a><a href="#">Terms &amp; Conditions</a></div>
+        <div><h5>Follow Talweeh</h5><div class="socials"><a href="#" aria-label="X / Twitter">𝕏</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">◉</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="WhatsApp">☎</a></div></div>
       </div>
-      <div class="fbottom"><span>© 2026 Talweeh Academy. All rights reserved.</span><span>Made with iḥsān</span></div>
+      <div class="fbottom"><span>© All rights reserved by Talweeh Academy 2025</span><button class="totop" type="button" aria-label="Scroll to top" onclick="scrollTo({top:0,behavior:'smooth'})">⌃</button></div>
     </div>
   </footer>
+
+  <script>
+
+    /* hero carousel: the live homepage rotates three slides every 5s */
+    (() => {
+      const slides = [{"heading":"2 Year Arabic Program","cta":"Explore Arabic Program"},{"heading":"Discover! Enlighten! Empower!","cta":"Start your Journey"},{"heading":"Revolutionizing your experience with Islamic Academia","cta":"Start your Journey"}];
+      const h = document.getElementById('heroHeading'), cta = document.getElementById('heroCta');
+      const dots = [...document.querySelectorAll('#heroDots .hero-dot')];
+      if (!h) return;
+      let i = 0, timer;
+      const render = () => {
+        const s = slides[i], words = s.heading.split(' ');
+        const w = s.heading.split(' '), last = w.pop(); h.innerHTML = (w.length ? w.join(' ') + ' ' : '') + '<span>' + last + '</span>';
+        h.classList.remove('swap'); void h.offsetWidth; h.classList.add('swap');
+        cta.querySelector('span').textContent = s.cta;
+        dots.forEach((d, j) => d.classList.toggle('active', j === i));
+      };
+      const go = (n) => { i = (n + slides.length) % slides.length; render(); restart(); };
+      const restart = () => { clearInterval(timer); timer = setInterval(() => { i = (i + 1) % slides.length; render(); }, 5000); };
+      dots.forEach((d, j) => d.addEventListener('click', () => go(j)));
+      document.getElementById('heroPrev')?.addEventListener('click', () => go(i - 1));
+      document.getElementById('heroNext')?.addEventListener('click', () => go(i + 1));
+      render(); restart();
+    })();
+
+    /* testimonials: three per page, arrows page through all five */
+    (() => {
+      const cards = [...document.querySelectorAll('.tst-card')], per = 3, pages = Math.ceil(cards.length / per);
+      const pip = document.getElementById('tstPips');
+      if (!cards.length) return;
+      let p = 0;
+      if (pip) pip.innerHTML = Array.from({ length: pages }, (_, k) => '<span></span>').join('');
+      const show = () => {
+        cards.forEach((c, k) => { c.hidden = Math.floor(k / per) !== p; });
+        pip && [...pip.children].forEach((s, k) => s.classList.toggle('on', k === p));
+      };
+      document.getElementById('tstPrev')?.addEventListener('click', () => { p = (p - 1 + pages) % pages; show(); });
+      document.getElementById('tstNext')?.addEventListener('click', () => { p = (p + 1) % pages; show(); });
+      show();
+    })();
+
+    /* video rail arrows */
+    (() => {
+      const row = document.getElementById('vidRow');
+      if (!row) return;
+      const step = () => (row.querySelector('.vid')?.getBoundingClientRect().width || 300) + 20;
+      document.getElementById('vidPrev')?.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: 'smooth' }));
+      document.getElementById('vidNext')?.addEventListener('click', () => row.scrollBy({ left: step(), behavior: 'smooth' }));
+    })();
+
+  </script>
 </body>
 </html>

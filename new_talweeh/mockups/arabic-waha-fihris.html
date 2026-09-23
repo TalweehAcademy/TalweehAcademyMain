@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arabic · Fihris — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-arabic.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Arabic · Variation C — Fihris (the guide) ═══
+   Everything a prospective student needs, as one well-indexed guide: a compact hero with the
+   key facts, then a sticky table of contents that follows your reading. Sections: overview,
+   objectives, each module, calendar & format, class times (from the FAQ), fees, instructors,
+   a searchable FAQ, and about. Nothing is hidden behind tabs — it reads top to bottom. */
+.gh{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:30px;align-items:end;margin-top:36px;padding-bottom:30px;border-bottom:1px solid var(--p-line)}
+.gh .ar{font-size:34px;color:var(--p-gold);line-height:1.5;text-align:left}
+.gh h1{font-size:clamp(34px,4.4vw,56px);line-height:1.05;margin:6px 0 12px}
+.gh .lead{color:var(--p-mut);line-height:1.75;max-width:60ch}
+.gh .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.gh .keys{display:grid;gap:8px}
+.gh .keys div{display:flex;justify-content:space-between;gap:14px;padding:12px 16px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line)}
+.gh .keys dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.gh .keys dd{font-weight:700;color:var(--p-head);text-align:right}
+.gl{display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px;margin-top:34px;align-items:start}
+.toc{position:sticky;top:110px;border-radius:22px;padding:16px 12px;max-height:calc(100vh - 130px);overflow:auto}
+.toc .kicker{color:var(--gold);padding:0 10px 8px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--c-mut);transition:background .25s,color .25s}
+.toc a:hover{background:var(--c-in);color:var(--c-head)}
+.toc a.on{background:var(--c-hi);color:var(--gold-b)}
+.toc a i{width:6px;height:6px;border-radius:50%;background:var(--c-line);flex:none}
+.toc a.on i{background:var(--gold)}
+.toc a.sub{padding-left:26px;font-size:12.5px}
+.doc > section{padding:0 0 60px;scroll-margin-top:110px}
+.doc h2{font-size:clamp(28px,3.2vw,40px);margin:6px 0 14px}
+.doc h3{font-size:24px;margin:0 0 8px}
+.doc p.body{color:var(--p-text);line-height:1.85;font-size:16px;margin-bottom:12px;max-width:78ch}
+.objg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.objg article{padding:20px;border-radius:20px}
+.objg h4{font-size:18px;margin-bottom:6px}
+.objg p{color:var(--p-mut);font-size:14px;line-height:1.7}
+.mblock{padding:24px;border-radius:24px;background:var(--p-card);border:1px solid var(--p-line);margin-bottom:16px;scroll-margin-top:110px}
+.mblock .top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.mblock .num{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-family:'Lora',serif;font-size:24px;color:var(--gold-b);background:var(--c-solid)}
+.mblock .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.mblock .meta span{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--p-soft);color:var(--p-mut);border:1px solid var(--p-line)}
+.mblock .texts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:14px 0}
+.fmt{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0}
+.fmt div{padding:14px;border-radius:16px;background:var(--p-card);border:1px solid var(--p-line)}
+.fmt small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.fmt strong{display:block;font-family:'Lora',serif;color:var(--p-head);margin:4px 0 2px}
+.fmt span{font-size:12.5px;color:var(--p-mut)}
+.fmt .live{border-top:3px solid #4fc28a}.fmt .mix{border-top:3px solid var(--gold)}
+.times{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.times div{padding:16px;border-radius:18px;background:var(--c-grad,var(--c-solid));text-align:center}
+.times b{display:block;font-family:'Lora',serif;font-size:24px;color:var(--gold-b)}
+.times span{font-size:12px;color:var(--c-mut)}
+.gnote{font-size:13px;color:var(--p-mut);margin-top:10px}
+.fee{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;padding:26px;border-radius:26px}
+.fee .big{font-family:'Lora',serif;font-size:56px;color:var(--gold-b);line-height:1}
+.fee .big small{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--c-mut);margin-top:6px}
+.fee p{color:var(--c-text);line-height:1.7}
+.inst{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inst article{display:flex;gap:14px;align-items:center;padding:20px;border-radius:20px}
+.inst .av{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:'Amiri',serif;font-size:26px;background:var(--c-solid);color:var(--gold-b);flex:none}
+.inst strong{font-family:'Lora',serif;font-size:19px;color:var(--p-head)}
+.inst p{font-size:13.5px;color:var(--p-mut)}
+.fsearch{margin-bottom:14px}
+.fcount{font-size:13px;color:var(--p-mut);margin:-6px 0 12px}
+mark{background:color-mix(in srgb,var(--gold) 35%,transparent);color:inherit;border-radius:3px;padding:0 2px}
+@media (max-width:1000px){.gh,.gl{grid-template-columns:1fr}.toc{position:static;max-height:none;display:none}.objg,.inst{grid-template-columns:1fr}.fmt,.times{grid-template-columns:1fr 1fr}.fee{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Arabic" data-arabic="arabic-waha-fihris.html">
+<div class="mock-bar"><span>Arabic · Variation C — <b>Fihris</b> · one well-indexed guide with a contents list that follows you, class times, fees and a searchable FAQ</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/arabic-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-arabic.js"></script>
+<script>
+const { $, $$ } = Waha, X = WahaArabic, { R, esc } = X;
+const faqA = (re) => R.FAQ.find((f) => re.test(f.q))?.a || '';
+const TOC = [['overview', 'Overview'], ['objectives', 'Learning objectives'], ['modules', 'Modules'], ...R.MODULES.map((m) => [`m${m.n}`, `Module ${m.n} · ${m.name}`, 1]), ['format', 'Calendar & format'], ['times', 'Class times'], ['fees', 'Fees'], ['instructors', 'Instructors'], ['faq', 'FAQ'], ['about', 'About Talweeh Arabic']];
+$('#page').innerHTML = `
+  <header class="gh">
+    <div><div class="ar">دَلِيلُ البَرْنَامَج</div><span class="kicker">Talweeh Arabic · Program guide</span><h1>The 2-Year Arabic Program</h1>
+      <p class="lead">A structured, step-by-step pathway for students who want to move beyond isolated rules and develop a clear framework for understanding Arabic.</p>
+      <div class="acts">${X.member()}${X.calendar}</div></div>
+    <dl class="keys">${R.FACTS.slice(0, 5).map((f) => `<div><dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd></div>`).join('')}</dl>
+  </header>
+  <div class="gl">
+    <nav class="toc glass" aria-label="On this page"><span class="kicker">On this page</span>${TOC.map(([id, l, sub]) => `<a href="#${id}" class="${sub ? 'sub' : ''}" data-id="${id}"><i></i>${esc(l)}</a>`).join('')}</nav>
+    <div class="doc">
+      <section id="overview"><span class="kicker">Overview</span><h2>Unlock the Language of the Qur’an Beyond Translation</h2>${X.md(faqA(/What is the Talweeh/))}<div id="video" style="margin-top:18px"></div></section>
+      <section id="objectives"><span class="kicker">Learning objectives</span><h2>Don’t just Recite the Qur’an — Understand it!</h2><p class="body">${esc(R.OBJ_INTRO)}</p>
+        <div class="objg">${R.OBJECTIVES.map((o) => `<article class="card"><h4>${esc(o.title)}</h4><p>${esc(o.text)}</p></article>`).join('')}</div></section>
+      <section id="modules"><span class="kicker">Module overviews</span><h2>Five modules</h2><p class="body">At Talweeh Arabic, we have curated the most effective texts into a comprehensive two-year curriculum designed to guide you from beginner to advanced proficiency.</p>
+        ${R.MODULES.map((m) => `<article class="mblock" id="m${m.n}"><div class="top"><span class="num">${m.n}</span><div><h3>Module ${m.n} — ${esc(m.name)}</h3><div class="meta"><span>${esc(m.duration)}</span><span>${esc(m.format)}</span><span>${esc(m.hours)}</span></div></div></div>
+          <p class="body">${esc(m.overview)}</p><div class="texts">${m.texts.map(X.textChip).join('')}</div>${X.accordion(m.sections, { open: -1 })}</article>`).join('')}</section>
+      <section id="format"><span class="kicker">Calendar & format</span><h2>How the two years run</h2><p class="body">${esc(R.CALENDAR)}</p>
+        <div class="fmt">${R.MODULES.map((m) => `<div class="${m.format.includes('recorded') ? 'mix' : 'live'}"><small>Module ${m.n}</small><strong>${esc(m.format)}</strong><span>${esc(m.duration)} · ${esc(m.hours)}</span></div>`).join('')}</div>${X.calendar}</section>
+      <section id="times"><span class="kicker">Class times</span><h2>When live classes meet</h2><div class="times">${R.TIMES.map((t) => { const [time, ...zone] = t.split(' '); const tt = t.match(/^[\d:]+ [AP]M/)[0]; return `<div><b>${esc(tt)}</b><span>${esc(t.replace(tt, '').trim())}</span></div>`; }).join('')}</div>
+        <p class="gnote">Daylight savings might affect the time. Class timings can potentially be updated based on the commitments of the instructors. All live classes are recorded and uploaded to the Talweeh Student Portal.</p></section>
+      <section id="fees"><span class="kicker">Fees</span><h2>Tuition</h2><div class="fee glass"><div class="big">$99<small>USD per month</small></div><div><p>Full details regarding enrollment and payment are available on the program registration page. The next cohort begins in ${esc(X.fact('Next cohort'))}.</p><div style="margin-top:14px">${X.member()}</div></div></div></section>
+      <section id="instructors"><span class="kicker">Instructors</span><h2>Who teaches the program</h2><div class="inst">${['Shaykh Omer Khurshid', 'Mufti Dawood Khurshid'].map((n) => `<article class="card"><span class="av">${n.includes('Omer') ? 'ع' : 'د'}</span><div><strong>${n}</strong><p>Completed advanced Islamic studies at the Islamic University of Madinah, with extensive experience teaching Arabic and Islamic sciences.</p></div></article>`).join('')}</div></section>
+      <section id="faq"><span class="kicker">Frequently asked questions</span><h2>Everything you need to know</h2>
+        <label class="msearch fsearch" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:var(--p-card);border:1px solid var(--p-line)"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--p-gold)"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search the questions — e.g. fees, recordings, Qur’an" style="flex:1;border:0;background:none;outline:0;color:var(--p-text)" aria-label="Search FAQ" /></label>
+        <p class="fcount" id="fcount"></p><div id="faqList"></div></section>
+      <section id="about"><span class="kicker">About Talweeh Arabic</span>${R.ABOUT.map((s) => `<h3 style="margin-top:22px">${esc(s.title)}</h3>${s.paragraphs.map((p) => `<p class="body">${esc(p)}</p>`).join('')}`).join('')}<div style="margin-top:24px">${X.proud()}</div></section>
+    </div>
+  </div>
+  ${X.cta()}`;
+
+X.player($('#video'), R.HERO.video.src.split('v=')[1], { title: 'About the 2-Year Arabic Program', kicker: 'Talweeh Arabic' });
+function paintFaq(q = '') {
+  const n = q.trim().toLowerCase(), list = R.FAQ.filter((f) => !n || (f.q + ' ' + f.a).toLowerCase().includes(n));
+  $('#faqList').innerHTML = list.length ? X.accordion(list, { open: n ? 0 : -1 }) : '<p class="gnote">No question matches — please feel free to contact us.</p>';
+  if (n) $$('#faqList .racc-i > button span').forEach((s) => { s.innerHTML = s.textContent.replace(new RegExp(`(${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'), '<mark>$1</mark>'); });
+  $('#fcount').textContent = n ? `${list.length} of ${R.FAQ.length} questions` : `${R.FAQ.length} questions`;
+}
+$('#q').addEventListener('input', (e) => paintFaq(e.target.value));
+paintFaq();
+// contents follows the reader
+const links = $$('.toc a'), targets = links.map((a) => document.getElementById(a.dataset.id));
+function spy() { let cur = 0; targets.forEach((t, i) => { if (t.getBoundingClientRect().top < 160) cur = i; }); links.forEach((a, i) => a.classList.toggle('on', i === cur)); }
+addEventListener('scroll', spy, { passive: true }); spy();
+X.bindAccordions(); Waha.reveal();
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Media · Mawḍūʿ — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-media.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Media · Variation F — Mawḍūʿ (by topic) ═══
+   Three steps, one file:
+     no params  → choose a topic (tiles with the Arabic name, a short blurb and a thumbnail strip)
+     ?cat=slug  → that topic's videos as rows: the video on the left, its description on the right
+     ?v=slug    → the Majlis watch page for that video (stage band, player, prev / next in the topic)
+   Every link stays inside this file, so the whole flow can be clicked through. */
+
+/* ── 1. topic picker ── */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.tile{position:relative;display:flex;flex-direction:column;min-height:300px;border-radius:28px;overflow:hidden;color:var(--cream);border:1px solid rgba(215,179,115,.3);background:linear-gradient(160deg,var(--g4),var(--g2) 75%);box-shadow:var(--shadow);transition:transform .45s var(--spring),border-color .3s}
+.tile:hover{transform:translateY(-6px);border-color:var(--gold)}
+.tile-bg{position:absolute;inset:0;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/560px auto;opacity:.55}
+.tile-in{position:relative;display:flex;flex-direction:column;gap:8px;padding:26px 26px 18px;flex:1}
+.tile .ar{font-size:34px;color:var(--gold);line-height:1.4;align-self:flex-start}
+.tile h3{font-size:26px;color:var(--cream)}
+.tile p{color:rgba(243,232,211,.75);font-size:14px;line-height:1.6;max-width:36ch}
+.tile .cnt{position:absolute;top:24px;right:24px;padding:6px 12px;border-radius:999px;background:rgba(243,232,211,.08);border:1px solid rgba(215,179,115,.35);font-size:12px;font-weight:800;color:var(--gold-b)}
+.tile .strip{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 18px 18px}
+.tile .strip img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;opacity:.85;transition:opacity .3s}
+.tile:hover .strip img{opacity:1}
+.tile .go{margin-top:auto;padding-top:10px;font-weight:800;font-size:13.5px;color:var(--gold-b)}
+.tile.wide{grid-column:span 2}
+.tile.wide .strip{grid-template-columns:repeat(5,1fr)}
+
+/* ── 2. topic page: rows ── */
+.thead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-top:18px}
+.thead .ar{font-size:clamp(30px,3.6vw,44px);color:var(--p-gold);line-height:1.4;text-align:left}
+.thead h1{font-size:clamp(32px,4.2vw,54px)}
+.thead p{color:var(--p-mut);max-width:58ch;line-height:1.7;margin-top:8px}
+.tswitch{margin-top:26px;padding:14px 0;border-top:1px solid var(--p-line);border-bottom:1px solid var(--p-line);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.tswitch .chips{margin:0}
+.rows{display:grid;gap:16px;margin-top:28px}
+.vrow{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:26px;align-items:center;padding:14px;border-radius:26px;background:var(--p-card);border:1px solid var(--p-line);transition:border-color .3s,box-shadow .3s,transform .4s var(--spring)}
+.vrow:hover{border-color:var(--gold);box-shadow:var(--shadow);transform:translateY(-3px)}
+.vrow .th{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#0a1811}
+.vrow .th img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.vrow:hover .th img{transform:scale(1.05)}
+.vrow .th .n{position:absolute;left:12px;top:12px;padding:5px 10px;border-radius:999px;background:rgba(16,37,28,.72);border:1px solid rgba(215,179,115,.45);color:var(--gold-b);font-size:11px;font-weight:800;letter-spacing:.1em;backdrop-filter:blur(8px)}
+.vrow .th .pl{position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;display:grid;place-items:center;background:rgba(16,37,28,.7);border:1px solid rgba(215,179,115,.55);color:var(--gold);backdrop-filter:blur(8px);transition:transform .4s var(--spring),background .3s,color .3s}
+.vrow .th .pl svg{width:24px;height:24px;margin-left:3px}
+.vrow:hover .th .pl{transform:scale(1.12);background:var(--gold);color:var(--g2)}
+.vrow .bd{display:flex;flex-direction:column;gap:8px;padding-right:12px;min-width:0}
+.vrow .bd small{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.vrow .bd h3{font-family:'Lora',serif;font-size:clamp(19px,1.9vw,24px);line-height:1.3;color:var(--p-head)}
+.vrow .bd .sp{font-size:13px;font-weight:700;color:var(--p-mut)}
+.vrow .bd .ds{color:var(--p-text);line-height:1.65;font-size:14.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.vrow .bd .ft{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px}
+.vrow .bd .co{padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700;color:var(--p-gold);background:var(--p-soft);border:1px solid var(--p-line)}
+.vrow .bd .w{margin-left:auto;font-size:13.5px;font-weight:800;color:var(--p-gold)}
+.others{margin-top:70px}
+.others .tgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:0}
+.others .tile{min-height:0}
+.others .tile .strip,.others .tile p{display:none}
+.others .tile .ar{font-size:26px}
+.others .tile h3{font-size:20px}
+
+/* ── 3. watch page (Majlis) ── */
+.stageband{position:relative;margin-top:26px;padding:34px 34px 30px;border-radius:34px;background:url('../public/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.stageband .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.stageband .kicker{color:var(--gold)}
+.stageband h1{color:var(--cream);font-size:clamp(28px,3.8vw,50px);max-width:24ch;margin-top:6px}
+.stageband .by{color:rgba(243,232,211,.75);font-weight:600;margin-top:8px}
+.stageband .pn{display:flex;gap:8px}
+.stageband .vp{box-shadow:0 40px 90px rgba(0,0,0,.45)}
+.stageband .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.stageband .vp-keys{color:rgba(243,232,211,.7);margin:0}
+.stageband .vp-keys kbd{background:rgba(243,232,211,.08);border-color:rgba(215,179,115,.3);color:var(--cream)}
+.upn{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:16px;background:rgba(243,232,211,.06);border:1px solid rgba(215,179,115,.25);color:var(--cream);max-width:420px;transition:border-color .3s}
+.upn:hover{border-color:var(--gold)}
+.upn img{width:92px;aspect-ratio:16/9;object-fit:cover;border-radius:9px}
+.upn small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.upn strong{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px}
+.body2{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:30px;margin-top:40px;align-items:start}
+.body2 h2{font-size:clamp(24px,2.6vw,32px);margin:4px 0 16px}
+.aboutc{position:sticky;top:110px;border-radius:26px;padding:22px;display:grid;gap:16px}
+.aboutc .kicker{color:var(--gold)}
+.aboutc dl{display:grid;gap:12px}
+.aboutc dt{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--c-mut)}
+.aboutc dd{color:var(--c-head);font-weight:600;margin-top:2px}
+.aboutc dd a{color:var(--gold-b)}
+.aboutc .mcta{background:var(--c-in);border-color:var(--c-line)}
+.aboutc .mcta strong{color:var(--c-head)}
+.aboutc .copy{width:100%}
+.aboutc .msub{justify-content:center}
+.mgrid.three{grid-template-columns:repeat(3,1fr)}
+
+@media (max-width:1000px){.tgrid{grid-template-columns:1fr 1fr}.tile.wide{grid-column:span 2}.body2{grid-template-columns:1fr}.aboutc{position:static}.mgrid.three{grid-template-columns:1fr 1fr}.vrow{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px}}
+@media (max-width:700px){.tgrid{grid-template-columns:1fr}.tile.wide{grid-column:auto}.tile.wide .strip{grid-template-columns:repeat(3,1fr)}.tile.wide .strip img:nth-child(n+4){display:none}.vrow{grid-template-columns:1fr;padding:10px}.vrow .bd{padding:4px 6px 8px}.stageband{padding:20px 14px}.mgrid.three{grid-template-columns:1fr}.tswitch .msearch{flex:1 1 100%;min-width:0}}
+</style>
+</head>
+<body data-nav="Media" data-media="media-waha-mawdu.html">
+<div class="mock-bar"><span>Media · Variation F — <b>Mawḍūʿ</b> · choose a topic → its videos in rows (video left, description right) → the Majlis watch page</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/media-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-media.js"></script>
+<script>
+const { $, $$ } = Waha, M = WahaMedia, { esc } = M;
+const params = new URLSearchParams(location.search);
+const HOME = 'media-waha-mawdu.html';
+const topicUrl = (slug) => `${HOME}?cat=${encodeURIComponent(slug)}`;
+const watchUrl = (m, cat) => `${HOME}?v=${encodeURIComponent(m.slug)}${cat && cat !== m.cats[0] ? `&cat=${encodeURIComponent(cat)}` : ''}`;
+// the shared video card links to the Majlis mockup — point it back into this flow instead
+const card = (m, cat) => M.card(m).replace(`href="${M.watchUrl(m)}"`, `href="${watchUrl(m, cat)}"`);
+
+// A line for each topic (mockup copy — would come from the CMS)
+const BLURB = {
+  'usul-al-hadith': 'How the ḥadīth masters judged narrations: definitions, grading, and the reasoning behind the terms.',
+  'usul-al-fiqh': 'The principles jurists use to derive rulings from the Qurʾān and Sunnah.',
+  fiqh: 'Rulings of worship and daily life, explained with their evidences and the positions of the schools.',
+  arabic: 'The language of revelation — grammar, morphology and how to keep going as a student.',
+  'tips-for-students': 'Practical advice on studying, choosing texts, teachers and building a routine.',
+  'general-naseeha': 'Reminders and counsel for the heart — short talks to return to.',
+  podcasts: 'Longer conversations with our teachers.'
+};
+const TOPICS = M.CATS.filter((c) => M.count(c.slug)).sort((a, b) => M.count(b.slug) - M.count(a.slug));
+const inTopic = (slug) => M.MEDIA.filter((m) => m.cats.includes(slug));
+const plural = (n) => `${n} ${n === 1 ? 'video' : 'videos'}`;
+
+const tile = (c, wide) => {
+  const vids = inTopic(c.slug);
+  return `<a class="tile${wide ? ' wide' : ''}" href="${topicUrl(c.slug)}">
+    <span class="tile-bg"></span><span class="cnt">${plural(vids.length)}</span>
+    <span class="tile-in"><span class="ar">${c.ar}</span><h3>${esc(c.label)}</h3><p>${esc(BLURB[c.slug] || '')}</p><span class="go">Browse this topic →</span></span>
+    <span class="strip">${vids.slice(0, wide ? 5 : 3).map((m) => `<img src="${M.thumb(m.id)}" alt="" loading="lazy" />`).join('')}</span>
+  </a>`;
+};
+
+const vPick = M.bySlug(params.get('v'));
+const cPick = TOPICS.find((c) => c.slug === params.get('cat'));
+if (vPick) watchView(vPick, cPick ? cPick.slug : vPick.cats[0]);
+else if (cPick) topicView(cPick);
+else topicsView();
+Waha.reveal();
+
+/* ── 1. choose a topic ── */
+function topicsView() {
+  $('#page').innerHTML = `
+    <section class="m-hero">
+      <div class="ar" data-r>وَقُلْ رَبِّ زِدْنِي عِلْمًا</div>
+      <h1 data-r>What would you like to learn about?</h1>
+      <p class="lead" data-r>Excerpts, reminders and short lessons from Talweeh Academy, gathered by topic. Choose one to see every video in it, each with a short overview.</p>
+    </section>
+    <section class="tgrid" data-stagger>${TOPICS.map((c, i) => tile(c, i === 0 && (TOPICS.length + 1) % 3 === 0)).join('')}</section>`;
+}
+
+/* ── 2. one topic, as rows ── */
+function topicView(c) {
+  const all = inTopic(c.slug);
+  document.title = `${c.label} — Talweeh Academy Media`;
+  $('#page').innerHTML = `
+    <p class="crumbs"><a href="${HOME}">Media</a> / ${esc(c.label)}</p>
+    <section class="thead">
+      <div><div class="ar" data-r>${c.ar}</div><h1 data-r>${esc(c.label)}</h1><p data-r>${esc(BLURB[c.slug] || '')}</p></div>
+      <a class="btn btn-glass btn-sm" href="${HOME}">← All topics</a>
+    </section>
+    <div class="tswitch">
+      <div class="chips">${TOPICS.map((t) => `<a class="chip${t === c ? ' on' : ''}" href="${topicUrl(t.slug)}">${esc(t.label)}<b>${M.count(t.slug)}</b></a>`).join('')}</div>
+      <label class="msearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search in ${esc(c.label)}" aria-label="Search this topic" /></label>
+    </div>
+    <p class="mcount" id="count" style="margin-top:18px"></p>
+    <section class="rows" id="rows" data-stagger></section>
+    <section class="others"><div class="sec-h"><div><span class="kicker">Keep exploring</span><h2>Other topics</h2></div></div>
+      <div class="tgrid">${TOPICS.filter((t) => t !== c).map((t) => tile(t)).join('')}</div></section>`;
+
+  const paint = (q = '') => {
+    const list = all.filter((m) => M.match(m, { q }));
+    $('#count').textContent = q ? `${list.length} of ${plural(all.length)}` : plural(all.length);
+    $('#rows').innerHTML = list.map((m) => `
+      <a class="vrow" href="${watchUrl(m, c.slug)}">
+        <span class="th"><img src="${M.thumb(m.id)}" alt="" loading="lazy" /><span class="n">${String(all.indexOf(m) + 1).padStart(2, '0')}</span><span class="pl">${M.PLAY}</span></span>
+        <span class="bd">
+          <small>${esc(c.label)}</small>
+          <h3>${esc(m.title)}</h3>
+          <span class="sp">${esc(m.speaker)}</span>
+          <span class="ds">${esc(m.short.replace(/\s*\n+\s*/g, ' '))}</span>
+          <span class="ft">${m.course ? `<span class="co">From ${esc(m.course.title)}</span>` : ''}<span class="w">Watch →</span></span>
+        </span>
+      </a>`).join('') || `<p class="empty">Nothing in ${esc(c.label)} matches — try another word.</p>`;
+    $('#rows').classList.remove('in'); Waha.reveal();
+  };
+  $('#q').addEventListener('input', (e) => paint(e.target.value));
+  paint();
+}
+
+/* ── 3. the watch page ── */
+function watchView(m, cat) {
+  const topic = inTopic(cat), i = topic.indexOf(m);
+  const prev = topic[i - 1], next = topic[i + 1];
+  const fromCourse = m.course ? M.MEDIA.filter((x) => x !== m && x.course && x.course.slug === m.course.slug) : [];
+  const more = topic.filter((x) => x !== m && !fromCourse.includes(x)).slice(0, 6);
+  document.title = `${m.title} — Talweeh Academy Media`;
+
+  $('#page').innerHTML = `
+    <p class="crumbs"><a href="${HOME}">Media</a> / <a href="${topicUrl(cat)}">${esc(M.catLabel(cat))}</a> / ${esc(m.title)}</p>
+    <section class="stageband">
+      <div class="top">
+        <div><span class="kicker">${esc(M.catLabel(cat))} · ${i + 1} of ${topic.length}</span><h1>${esc(m.title)}</h1><p class="by">${esc(m.speaker)}</p></div>
+        <div class="pn"><a class="btn btn-glass btn-sm" href="${topicUrl(cat)}">☰ All in topic</a>${prev ? `<a class="btn btn-glass btn-sm" href="${watchUrl(prev, cat)}">‹ Previous</a>` : ''}${next ? `<a class="btn btn-g btn-sm" href="${watchUrl(next, cat)}">Next ›</a>` : ''}</div>
+      </div>
+      <div id="player"></div>
+      <div class="foot">
+        <p class="vp-keys"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen</p>
+        ${next ? `<a class="upn" href="${watchUrl(next, cat)}"><img src="${M.thumb(next.id)}" alt="" /><span><small>Up next in ${esc(M.catLabel(cat))}</small><strong>${esc(next.title)}</strong></span></a>` : ''}
+      </div>
+    </section>
+
+    <section class="body2">
+      <div>
+        <span class="kicker">Overview</span><h2>About this video</h2>
+        <div class="mov">${M.paras(m.overview)}</div>
+      </div>
+      <aside class="aboutc glass">
+        <span class="kicker">In this majlis</span>
+        <dl>
+          <div><dt>Teacher</dt><dd>${esc(m.speaker)}</dd></div>
+          <div><dt>Topic</dt><dd><a href="${topicUrl(cat)}">${esc(M.catLabel(cat))} →</a></dd></div>
+          <div><dt>Full title on YouTube</dt><dd>${esc(m.full)}</dd></div>
+        </dl>
+        ${M.courseCta(m)}
+        ${M.subscribe}
+        <button class="btn btn-glass btn-sm copy" type="button" id="copy">Copy link to this video</button>
+      </aside>
+    </section>
+
+    ${fromCourse.length ? `<section class="sec"><div class="sec-h"><div><span class="kicker">From ${esc(m.course.title)}</span><h2>More from this course</h2></div><a class="btn btn-glass btn-sm" href="${M.courseUrl(m.course)}">${m.course.free ? 'Watch the whole course →' : 'View the course →'}</a></div>
+      <div class="mgrid three" data-stagger>${fromCourse.slice(0, 3).map((x) => card(x, cat)).join('')}</div></section>` : ''}
+    ${more.length ? `<section class="sec"><div class="sec-h"><div><span class="kicker">Continue watching</span><h2>More in ${esc(M.catLabel(cat))}</h2></div><a class="btn btn-glass btn-sm" href="${topicUrl(cat)}">All ${esc(M.catLabel(cat))} →</a></div>
+      <div class="mgrid three" data-stagger>${more.map((x) => card(x, cat)).join('')}</div></section>` : ''}`;
+
+  const player = new WahaCourses.WahaPlayer($('#player'), { onEnded: () => { if (next) location.href = watchUrl(next, cat); } });
+  player.load(m.id, { title: m.title, kicker: m.speaker });
+  $('#copy').addEventListener('click', (e) => { navigator.clipboard?.writeText(location.href); e.target.textContent = '✓ Link copied'; setTimeout(() => (e.target.textContent = 'Copy link to this video'), 1600); });
+}
+</script>
+</body>
+</html>

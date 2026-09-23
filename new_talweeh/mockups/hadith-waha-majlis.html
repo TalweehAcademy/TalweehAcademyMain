@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hadith Specialization · Majlis — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-hadith.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Hadith Specialization · Variation D — Majlis (the sitting) ═══
+   The whole program as a sequence of seventeen sittings. A dark hero over the manuscript;
+   then a numbered rail of all seventeen courses (Year 1 → Year 2) and one large "sitting" view
+   for the chosen course — its Arabic name, overview, outcomes and standalone course. Move with
+   the rail, the arrows or the ← → keys. */
+.dk{position:relative;margin-top:22px;border-radius:38px;overflow:hidden;min-height:560px;display:grid;align-items:end;padding:50px;background:#0b1a13;border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.dk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.38;filter:saturate(.8)}
+.dk::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,14,.96) 0%,rgba(8,20,14,.82) 45%,rgba(8,20,14,.35) 100%),linear-gradient(0deg,rgba(8,20,14,.8),transparent 50%)}
+.dk > div{position:relative;z-index:1;max-width:680px}
+.dk .ar{font-family:'Amiri',serif;font-size:clamp(40px,5vw,64px);color:var(--gold-b);line-height:1.4;direction:rtl;text-align:left}
+.dk .kicker{color:var(--gold)}
+.dk h1{color:var(--cream);font-size:clamp(44px,6vw,86px);line-height:.98;margin:10px 0 12px}
+.dk h1 em{font-style:italic;color:var(--gold-b)}
+.dk .name{font-family:'Lora',serif;font-style:italic;color:rgba(243,232,211,.85);font-size:19px;margin-bottom:12px}
+.dk p{color:rgba(243,232,211,.78);line-height:1.75}
+.dk .facts{display:flex;gap:24px;margin:22px 0}
+.dk .facts small{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.dk .facts b{font-family:'Lora',serif;font-size:24px;color:var(--cream);font-weight:600}
+.dk .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.dk .acts small{color:rgba(243,232,211,.6);font-size:12.5px}
+.seq{margin-top:90px;scroll-margin-top:100px}
+.seq .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.rail{position:relative;display:flex;gap:6px;align-items:stretch;overflow-x:auto;padding:8px;border-radius:24px;scrollbar-width:thin}
+.rail .yr{flex:none;display:flex;align-items:center;padding:0 12px;writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--gold);border-left:1px solid var(--c-line)}
+.rail .yr:first-child{border:0}
+.rail button{flex:none;width:92px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:16px;border:1px solid transparent;background:none;color:var(--c-mut);cursor:pointer;transition:background .3s,transform .3s var(--spring)}
+.rail button b{font-family:'Lora',serif;font-size:24px;color:var(--c-head);line-height:1}
+.rail button span{font-family:'Amiri',serif;font-size:13px;line-height:1.3;color:var(--gold-b);text-align:center}
+.rail button i{width:22px;height:3px;border-radius:3px;background:var(--sc)}
+.rail button:hover{background:var(--c-in);transform:translateY(-2px)}
+.rail button.on{background:linear-gradient(135deg,var(--gold-b),var(--gold));}
+.rail button.on b,.rail button.on span{color:var(--g2)}
+.sit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px;margin-top:26px;padding:36px;border-radius:34px;background:var(--p-card);border:1px solid var(--p-line);box-shadow:0 30px 60px rgba(8,20,14,.08);animation:in .5s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+.sit .big{font-family:'Lora',serif;font-size:130px;line-height:.8;color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--gold) 70%,transparent)}
+.sit .ar{font-family:'Amiri',serif;font-size:clamp(34px,4vw,54px);color:var(--p-gold);line-height:1.5;direction:rtl;text-align:left;margin-top:10px}
+.sit h3{font-size:clamp(28px,3.2vw,42px);margin:4px 0}
+.sit .sub{color:var(--p-mut);font-size:17px;margin-bottom:14px}
+.sit .ov{color:var(--p-text);line-height:1.85;font-size:16px;margin-top:16px}
+.sit .snote{font-size:13px;color:var(--p-mut);font-style:italic;margin-top:10px}
+.sit .ctl{display:flex;gap:8px;margin-top:22px}
+.sit .right .hdet-ov{display:none}
+.sit .right .hdet-out li{font-size:15.5px}
+.sit .empty2{padding:22px;border-radius:18px;background:var(--p-soft);color:var(--p-mut);font-size:14px;line-height:1.7}
+.blk{margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.ovw{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px}
+.ovw p{font-size:17px;line-height:1.85;color:var(--p-text);margin-bottom:12px}
+@media (max-width:1000px){.dk{padding:28px 22px;min-height:0}.sit{grid-template-columns:1fr;padding:24px}.ovw{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Hadith Specialization" data-hadith="hadith-waha-majlis.html">
+<div class="mock-bar"><span>Hadith Specialization · Variation D — <b>Majlis</b> · a dark manuscript hero, then the seventeen courses as a numbered sequence with one large sitting view (← → to move)</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/hadith-data.js"></script>
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-hadith.js"></script>
+<script>
+const { $, $$ } = Waha, K = WahaHadith, { H, esc } = K;
+let cur = 1;
+$('#page').innerHTML = `
+  <section class="dk"><img src="../public/brand/hadith-specialization-manuscript.webp" alt="" />
+    <div>
+      <div class="ar">مَجْلِسُ الحَدِيث</div>
+      <span class="kicker">${esc(H.HERO.eyebrow)}</span>
+      <h1>Hadith <em>Specialization</em></h1>
+      <p class="name">${esc(H.HERO.name)}</p>
+      <p>${esc(H.HERO.lead)}</p>
+      <div class="facts">${K.facts.map(([k, v]) => `<span><small>${k}</small><b>${v}</b></span>`).join('')}</div>
+      <div class="acts"><a class="btn btn-g" href="#seq">Explore curriculum</a><a class="btn btn-glass" href="${H.ENROL}">For enrollment</a><small>Enrollment inquiries: ${esc(H.EMAIL)}</small></div>
+    </div>
+  </section>
+
+  <section class="seq" id="seq">
+    <div class="sec-h"><div><span class="kicker">Hadith Specialization curriculum</span><h2>Seventeen sittings, in order.</h2></div><p>Select a course from the sequence, then read its overview and learning outcomes.</p></div>
+    <div class="rail glass" id="rail" role="tablist" aria-label="Courses">${[1, 2].map((y) => `<span class="yr">Year ${y}</span>` + K.year(y).map((c) => `<button type="button" role="tab" class="s-${c.strand}" data-c="${c.n}" title="${esc(c.title)}"><b>${c.n}</b><span>${c.ar}</span><i></i></button>`).join('')).join('')}</div>
+    <div id="sit"></div>
+  </section>
+
+  <section class="blk ovw"><div><span class="kicker">Program overview</span><h2 style="font-size:clamp(32px,4vw,52px);margin-top:6px">From preservation to critical analysis.</h2></div><div>${K.overview()}</div></section>
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Instructors</span><h2>Guided by specialist study.</h2></div></div>${K.instructors()}</section>
+  ${K.cta()}`;
+
+function show(n, scrollRail = true) {
+  cur = Math.max(1, Math.min(H.COURSES.length, n));
+  const c = H.COURSES[cur - 1], s = K.strand(c.strand);
+  $$('#rail button').forEach((b) => { const on = Number(b.dataset.c) === cur; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); if (on && scrollRail) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); });
+  $('#sit').innerHTML = `<article class="sit">
+    <div><span class="big">${String(cur).padStart(2, '0')}</span><div class="ar">${c.ar}</div><span class="kicker">Year ${c.year} · course ${c.i} of ${K.year(c.year).length}</span><h3>${esc(c.title)}</h3><p class="sub">${esc(c.subtitle)}</p><span class="schip s-${c.strand}">${esc(s.label)}</span>
+      <p class="ov">${esc(c.overview)}</p>${c.note ? `<p class="snote">${esc(c.note)}</p>` : ''}
+      <div class="ctl"><button class="btn btn-glass btn-sm" type="button" data-go="-1" ${cur === 1 ? 'disabled' : ''}>‹ Previous</button><button class="btn btn-g btn-sm" type="button" data-go="1" ${cur === H.COURSES.length ? 'disabled' : ''}>Next ›</button></div></div>
+    <div class="right">${c.outcomes.length || c.catalogSlug ? K.detail(c, { lessonLimit: 7 }) : `<div class="empty2">Learning outcomes for this module are not listed on the program page yet. For details, contact Talweeh Academy at ${esc(H.EMAIL)}.</div>`}</div></article>`;
+}
+$('#rail').addEventListener('click', (e) => { const b = e.target.closest('[data-c]'); if (b) show(Number(b.dataset.c)); });
+$('#sit').addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) show(cur + Number(b.dataset.go)); });
+addEventListener('keydown', (e) => {
+  if (e.target !== document.body) return; const r = $('#seq').getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) return;
+  if (e.key === 'ArrowRight') show(cur + 1); else if (e.key === 'ArrowLeft') show(cur - 1);
+});
+show(1, false); Waha.reveal();
+</script>
+</body>
+</html>

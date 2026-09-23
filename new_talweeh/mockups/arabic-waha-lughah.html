@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arabic · Lughah — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<link rel="stylesheet" href="assets/waha-arabic.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Arabic · Variation A — Lughah (the language) ═══
+   The program landing, in the order a visitor asks: what is it (hero + intro video in the
+   Talweeh player), what are the facts, what will I learn (six objectives), how is it built
+   (a two-year bar sized by each module's months, opening to that module), who is behind it,
+   and the common questions — ending with Become a Member. */
+.lh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:center;margin-top:40px}
+.lh .script{font-family:'Amiri',serif;font-size:clamp(60px,8vw,108px);line-height:1.3;color:var(--p-gold);direction:rtl;text-align:left}
+.lh .script small{display:block;font-size:.3em;color:var(--p-mut);line-height:1.4}
+.lh h1{font-size:clamp(38px,4.8vw,64px);line-height:1.04;margin:12px 0 16px}
+.lh h1 span{display:block;font-style:italic;color:var(--p-gold);font-size:.7em;margin-top:6px}
+.lh .lead{color:var(--p-mut);font-size:17px;line-height:1.75;max-width:52ch}
+.lh .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.lh .cap{margin-top:12px;text-align:center;color:var(--p-mut);font-size:13px}
+.qnav{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:50px}
+.qnav a{display:flex;flex-direction:column;gap:2px;padding:18px 20px;border-radius:20px;transition:transform .35s var(--spring),border-color .3s}
+.qnav a:hover{transform:translateY(-3px);border-color:var(--gold)}
+.qnav span{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--p-gold)}
+.qnav strong{font-family:'Lora',serif;font-size:20px;color:var(--p-head)}
+.qnav small{color:var(--p-mut);font-size:13px}
+.blk{margin-top:100px;scroll-margin-top:100px}
+.blk .sec-h h2{font-size:clamp(30px,3.8vw,48px)}
+.blk .intro{color:var(--p-mut);line-height:1.8;max-width:80ch;margin:-4px 0 26px;font-size:16px}
+.objs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.obj{position:relative;padding:24px 22px;border-radius:24px;cursor:pointer;text-align:left;border:1px solid var(--p-line);background:var(--p-card);transition:transform .4s var(--spring),border-color .3s}
+.obj:hover{transform:translateY(-4px);border-color:var(--gold)}
+.obj .ar{font-size:28px;color:var(--p-gold);line-height:1.4;text-align:left}
+.obj h3{font-size:21px;margin:4px 0 8px}
+.obj p{color:var(--p-mut);font-size:14px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.obj.open p{-webkit-line-clamp:unset}
+.obj b{display:inline-block;margin-top:10px;font-size:13px;color:var(--p-gold)}
+.twoyr{display:flex;gap:6px;padding:8px;border-radius:24px;margin-bottom:22px}
+.twoyr button{position:relative;flex:var(--m);min-width:120px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 16px;border-radius:17px;border:1px solid transparent;background:var(--c-in);color:var(--c-text);text-align:left;cursor:pointer;transition:background .3s,transform .35s var(--spring)}
+.twoyr button:hover{transform:translateY(-2px)}
+.twoyr button small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold)}
+.twoyr button strong{font-family:'Lora',serif;font-size:17px;color:var(--c-head)}
+.twoyr button span{font-size:12px;color:var(--c-mut)}
+.twoyr button.on{background:linear-gradient(135deg,var(--gold-b),var(--gold))}
+.twoyr button.on small,.twoyr button.on strong,.twoyr button.on span{color:var(--g2)}
+.mod{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start;animation:in .5s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+.mod .n{font-family:'Lora',serif;font-size:80px;line-height:.9;color:var(--p-gold)}
+.mod h3{font-size:clamp(26px,3vw,36px);margin:6px 0 8px}
+.mod .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.mod .meta span{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;background:var(--p-soft);border:1px solid var(--p-line);color:var(--p-mut)}
+.mod .ov{color:var(--p-text);line-height:1.8}
+.mod h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--p-gold);margin:22px 0 10px}
+.mod .texts{display:grid;gap:8px}
+.about{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.about article{padding:26px;border-radius:24px}
+.about article:first-child{grid-column:1/-1}
+.about span{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--p-gold)}
+.about h3{font-size:24px;margin:6px 0 10px}
+.about p{color:var(--p-mut);line-height:1.75;margin-bottom:10px}
+.faqw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:30px;align-items:start}
+.faqw .fside{position:sticky;top:110px}
+.faqw .fside h2{font-size:clamp(30px,3.8vw,46px);margin:6px 0 12px}
+.faqw .fside p{color:var(--p-mut);line-height:1.7;margin-bottom:18px}
+@media (max-width:1000px){.lh,.mod,.faqw{grid-template-columns:1fr}.qnav{grid-template-columns:1fr 1fr}.objs{grid-template-columns:1fr 1fr}.twoyr{flex-wrap:wrap}.twoyr button{flex:1 1 40%}.about{grid-template-columns:1fr}.faqw .fside{position:static}}
+@media (max-width:560px){.objs{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="Arabic" data-arabic="arabic-waha-lughah.html">
+<div class="mock-bar"><span>Arabic · Variation A — <b>Lughah</b> · the program landing: intro video, facts, objectives, a two-year module bar, about and FAQ</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/arabic-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script src="assets/waha-arabic.js"></script>
+<script>
+const { $, $$ } = Waha, X = WahaArabic, { R, esc } = X;
+let mod = 1;
+$('#page').innerHTML = `
+  <section class="lh">
+    <div>
+      <div class="script" data-r>العَرَبِيَّة<small>لُغَةُ القُرْآن</small></div>
+      <span class="kicker" data-r>Talweeh Academy · Arabic Studies · 2-Year Program</span>
+      <h1 data-r>Build a lasting relationship<span>with the Arabic language.</span></h1>
+      <p class="lead" data-r>A structured, step-by-step pathway for students who want to move beyond isolated rules and develop a clear framework for understanding Arabic.</p>
+      <div class="acts" data-r>${X.member()}<a class="btn btn-glass" href="#modules">Explore the Program</a></div>
+    </div>
+    <div data-r><div id="intro"></div><p class="cap">Why study Arabic? — an introduction to the vision behind Arabic study at Talweeh Academy.</p></div>
+  </section>
+  <nav class="qnav" data-stagger>
+    <a class="card" href="#learn"><span>01</span><strong>Objectives</strong><small>What you will learn</small></a>
+    <a class="card" href="#modules"><span>02</span><strong>Program</strong><small>Explore the structured pathway</small></a>
+    <a class="card" href="#about"><span>03</span><strong>About</strong><small>Understand the approach</small></a>
+    <a class="card" href="#faq"><span>04</span><strong>FAQ</strong><small>Answers for prospective students</small></a>
+  </nav>
+  <section class="blk" data-r>${X.facts()}</section>
+
+  <section class="blk" id="learn">
+    <div class="sec-h"><div><span class="kicker">Learning objectives</span><h2>Don’t just Recite the Qur’an — Understand it!</h2></div></div>
+    <p class="intro">${esc(R.OBJ_INTRO)}</p>
+    <div class="objs" data-stagger>${R.OBJECTIVES.map((o) => `<button class="obj" type="button"><div class="ar">${X.OBJ_AR[o.title] || ''}</div><h3>${esc(X.objTitle(o.title))}</h3><p>${esc(o.text)}</p><b>Read more ▾</b></button>`).join('')}</div>
+  </section>
+
+  <section class="blk" id="modules">
+    <div class="sec-h"><div><span class="kicker">Module overviews</span><h2>Two years, five modules</h2></div><p>At Talweeh Arabic, we have curated the most effective texts into a comprehensive two-year curriculum designed to guide you from beginner to advanced proficiency.</p></div>
+    <div class="twoyr glass" role="tablist" id="bar">${R.MODULES.map((m) => `<button type="button" role="tab" data-m="${m.n}" style="--m:${m.months || 4}"><small>Module ${m.n} · ${esc(m.duration)}</small><strong>${esc(m.name)}</strong><span>${esc(m.format)}</span></button>`).join('')}</div>
+    <div id="mod"></div>
+  </section>
+
+  <section class="blk" id="about">
+    <div class="sec-h"><div><span class="kicker">About Talweeh Arabic</span><h2>A traditional language pathway with structured progression.</h2></div><p>Learn how the program combines classical texts, applied analysis, and a carefully sequenced curriculum for serious students of Arabic.</p></div>
+    <div class="about" data-stagger>${R.ABOUT.map((s, i) => `<article class="card"><span>${String(i + 1).padStart(2, '0')}</span><h3>${esc(s.title)}</h3>${s.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}</article>`).join('')}</div>
+  </section>
+
+  <section class="blk"><div class="sec-h"><div><span class="kicker">Talweeh Arabic</span><h2>Things that make us proud</h2></div></div>${X.proud()}</section>
+
+  <section class="blk faqw" id="faq">
+    <div class="fside"><span class="kicker">Frequently asked questions</span><h2>Everything you need to know</h2><p>Everything you need to know about joining the 2-Year Arabic Program. If you have any further questions, please feel free to contact us.</p>${X.member()}</div>
+    ${X.accordion(R.FAQ)}
+  </section>
+  ${X.cta()}`;
+
+X.player($('#intro'), R.INTRO_VIDEO, { title: 'Why study Arabic?', kicker: 'Talweeh Arabic' });
+function paintMod() {
+  const m = R.MODULES[mod - 1];
+  $$('#bar button').forEach((b) => b.classList.toggle('on', Number(b.dataset.m) === mod));
+  $('#mod').innerHTML = `<div class="mod">
+    <div><span class="n">${m.n}</span><h3>${esc(m.name)}</h3><div class="meta"><span>${esc(m.duration)}</span><span>${esc(m.format)}</span><span>${esc(m.hours)}</span></div><p class="ov">${esc(m.overview)}</p>
+      <h4>Texts studied</h4><div class="texts">${m.texts.map(X.textChip).join('')}</div></div>
+    <div><h4 style="margin-top:0">Module ${m.n} in detail</h4>${X.accordion(m.sections)}</div></div>`;
+}
+$('#bar').addEventListener('click', (e) => { const b = e.target.closest('[data-m]'); if (b) { mod = Number(b.dataset.m); paintMod(); } });
+$$('.obj').forEach((o) => o.addEventListener('click', () => { o.classList.toggle('open'); o.querySelector('b').textContent = o.classList.contains('open') ? 'Show less ▴' : 'Read more ▾'; }));
+X.bindAccordions(); paintMod(); Waha.reveal();
+</script>
+</body>
+</html>

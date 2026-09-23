@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Course · Theatre — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Course page · Variation A — Theatre ═══
+   Free course: the player leads — big framed player with the playlist beside it, lesson notes
+   and prev/next underneath, then the course description. Paid course: course page with an
+   enrol card and the curriculum (locked). */
+.th{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;margin-top:16px}
+.th-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-top:6px}
+.th-head h1{font-size:clamp(30px,3.6vw,46px)}
+.th-head .cat{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.pl{position:sticky;top:100px;border-radius:26px;display:flex;flex-direction:column;max-height:calc(100vh - 120px);overflow:hidden}
+.pl-h{padding:18px 18px 12px;border-bottom:1px solid var(--c-line)}
+.pl-h strong{display:block;font-family:'Lora',serif;font-size:19px;color:var(--c-head)}
+.pl-h small{font-size:12px;color:var(--c-mut)}
+.pl-h .bar{height:5px;border-radius:5px;background:var(--c-in);margin-top:10px;overflow:hidden}
+.pl-h .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-d),var(--gold-b))}
+.pl-l{overflow-y:auto;padding:8px;scrollbar-width:thin;scrollbar-color:rgba(215,179,115,.4) transparent}
+.pl-l button{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;width:100%;padding:10px;border:0;border-radius:14px;background:none;cursor:pointer;text-align:left;color:var(--c-text);transition:background .2s}
+.pl-l button:hover{background:var(--c-in)}
+.pl-l button.on{background:rgba(215,179,115,.16);box-shadow:inset 3px 0 0 var(--gold)}
+.pl-l .n{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:11.5px;font-weight:800;background:var(--c-in);border:1px solid var(--c-line);color:var(--gold-b)}
+.pl-l button.on .n{background:var(--gold);color:var(--g2);border-color:var(--gold)}
+.pl-l button.done .n::after{content:'✓'}
+.pl-l button.done .n span{display:none}
+.pl-l strong{display:block;font-size:13.5px;line-height:1.35;color:var(--c-head)}
+.pl-l small{display:block;font-size:11.5px;color:var(--c-mut);margin-top:2px}
+.about{margin-top:54px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:26px}
+.about h2{font-size:30px;margin:4px 0 12px}
+.about .lead{white-space:pre-line;color:var(--p-text);line-height:1.75}
+.about .facts{border-radius:24px;padding:20px;display:grid;gap:12px;align-content:start}
+.about .facts div{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding-bottom:10px;border-bottom:1px solid var(--c-line)}
+.about .facts div:last-child{border:0;padding:0}
+.about .facts span{color:var(--c-mut)}
+.about .facts b{color:var(--c-head);text-align:right}
+@media(max-width:1000px){.th,.about{grid-template-columns:1fr}.pl{position:relative;top:0;max-height:480px}}
+</style>
+</head>
+<body data-nav="Courses" data-catalog="courses-waha-maktabah.html">
+<div class="mock-bar"><span>Course page · Variation A — <b>Theatre</b> · player first with a side playlist (free) · one “Add to study list” button + locked curriculum (paid) · try <a href="?slug=introduction-to-al-muwattayn" style="text-decoration:underline">a free course</a> or <a href="?slug=nur-al-idah" style="text-decoration:underline">a paid one</a></span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+<main><div class="wrap" id="page"></div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, price, WahaPlayer } = WahaCourses;
+const params = new URLSearchParams(location.search);
+const slug = params.get('slug') || 'introduction-to-al-muwattayn';
+const c = window.COURSES.find((x) => x.slug === slug) || window.COURSES[0], d = window.COURSE_DETAILS[c.slug] || { lessons: [] };
+const L = d.lessons, playable = L.map((l, i) => (l.v ? i : -1)).filter((i) => i >= 0);
+const LEVEL = { all_levels: 'All levels', beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
+document.title = `${c.title} — Talweeh Academy`;
+const crumbs = `<p class="crumbs"><a href="courses-waha-maktabah.html">Courses</a> / <a href="courses-waha-maktabah.html">${esc(c.catLabel)}</a> / ${esc(c.title)}</p>`;
+const factsBox = `<aside class="facts glass"><div><span>Instructor</span><b>${esc(c.instructor)}</b></div><div><span>Subject</span><b>${esc(c.catLabel)}</b></div><div><span>Lessons</span><b>${c.lessons || '—'}</b></div><div><span>Level</span><b>${LEVEL[d.level] || 'All levels'}</b></div><div><span>Language</span><b>${esc(d.language || 'English')}</b></div><div><span>Access</span><b>${c.free ? 'Free · on this site' : price(c) + ' · Student Portal'}</b></div></aside>`;
+const extra = ['intro', 'audience', 'outcomes', 'method', 'prerequisites'].map((k) => d[k] ? `<h3 style="font-size:19px;margin:22px 0 6px">${{ intro: 'Course introduction', audience: 'Who it is for', outcomes: 'Learning outcomes', method: 'Teaching methodology', prerequisites: 'Prerequisites' }[k]}</h3><p class="lead">${esc(d[k])}</p>` : '').join('');
+
+if (c.free && playable.length) {
+  /* ── free: theatre ── */
+  const seen = new Set(JSON.parse(localStorage.getItem('waha-seen-' + c.slug) || '[]'));
+  $('#page').innerHTML = `${crumbs}
+    <div class="th-head"><div><span class="cat">${esc(c.catLabel)} · Free course</span><h1>${esc(c.title)}</h1></div><a class="btn btn-glass btn-sm" href="courses-waha-maktabah.html">← Back to courses</a></div>
+    <div class="th">
+      <div><div id="player"></div>
+        <p class="vp-keys"><kbd>Space</kbd> play / pause · <kbd>←</kbd> <kbd>→</kbd> 10 seconds · <kbd>&lt;</kbd> <kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen · <kbd>M</kbd> mute</p>
+        <div class="lmeta"><div><span class="kicker" id="lk"></span><h2 id="lt"></h2></div><div class="navs"><button class="btn btn-glass btn-sm" id="prev">‹ Previous</button><button class="btn btn-g btn-sm" id="next">Next lesson ›</button></div></div>
+        <p class="lmeta-o" id="lo" style="color:var(--p-text);line-height:1.7;margin-top:10px;white-space:pre-line"></p></div>
+      <aside class="pl glass"><div class="pl-h"><strong>Course playlist</strong><small id="prog"></small><div class="bar"><i id="progBar"></i></div></div><div class="pl-l" id="list"></div></aside>
+    </div>
+    <section class="about"><div><span class="kicker">About this course</span><h2>${esc(c.title)}</h2><p class="lead">${esc(c.desc)}</p>${extra}</div>${factsBox}</section>`;
+  const player = new WahaPlayer($('#player'), { onEnded: () => { const n = playable[playable.indexOf(cur) + 1]; if (n != null) open(n, true); } });
+  let cur = Math.max(0, (Number(params.get('lesson')) || 1) - 1);
+  if (!L[cur]?.v) cur = playable[0];
+  function list() {
+    $('#list').innerHTML = L.map((l, i) => `<button type="button" class="${i === cur ? 'on' : ''}${seen.has(i) && i !== cur ? ' done' : ''}" data-i="${i}" ${l.v ? '' : 'disabled'}><span class="n"><span>${i + 1}</span></span><span><strong>${esc(l.t)}</strong><small>${esc(l.topic || (l.v ? 'Video lesson' : 'Not available'))}</small></span></button>`).join('');
+    $('#prog').textContent = `${seen.size} of ${playable.length} lessons watched`;
+    $('#progBar').style.width = (seen.size / playable.length) * 100 + '%';
+    $('#list .on')?.scrollIntoView({ block: 'nearest' });
+  }
+  function open(i, autoplay) {
+    cur = i; const l = L[i];
+    seen.add(i); try { localStorage.setItem('waha-seen-' + c.slug, JSON.stringify([...seen])); } catch (e) {}
+    $('#lk').textContent = `Lesson ${i + 1} of ${L.length}`; $('#lt').textContent = l.t; $('#lo').textContent = l.o;
+    $('#prev').disabled = playable.indexOf(i) <= 0; $('#next').disabled = playable.indexOf(i) >= playable.length - 1;
+    player.load(l.v, { title: l.t, kicker: `Lesson ${i + 1} · ${c.title}`, autoplay });
+    const u = new URL(location.href); u.searchParams.set('lesson', i + 1); history.replaceState(null, '', u);
+    list();
+  }
+  $('#list').addEventListener('click', (e) => { const b = e.target.closest('[data-i]'); if (b && !b.disabled) { open(Number(b.dataset.i), true); window.scrollTo({ top: $('#player').getBoundingClientRect().top + scrollY - 110, behavior: 'smooth' }); } });
+  $('#prev').addEventListener('click', () => open(playable[playable.indexOf(cur) - 1], true));
+  $('#next').addEventListener('click', () => open(playable[playable.indexOf(cur) + 1], true));
+  open(cur, false);
+} else {
+  /* ── paid (or no videos yet): course page + enrol card ── */
+  $('#page').innerHTML = `${crumbs}
+    <div class="chero">
+      <div><span class="cat">${esc(c.catLabel)} · On-demand</span><h1>${esc(c.title)}</h1>${c.ar ? `<div class="ar">${esc(c.ar)}</div>` : ''}
+        <p class="lead clip" id="lead">${esc(c.desc)}</p><button class="more" id="more">Read more ▾</button>
+        <div class="cfacts"><span>${esc(c.instructor)}</span><span>${c.lessons || '—'} lessons</span><span>${LEVEL[d.level] || 'All levels'}</span><span>${esc(d.language || 'English')}</span></div>
+        <section class="sec"><div class="sec-h"><div><span class="kicker">Complete curriculum</span><h2>${L.length ? L.length + ' lessons' : 'Curriculum coming soon'}</h2></div></div>
+          <div class="curric card">${L.map((l, i) => `<div class="les"><span class="n">${String(i + 1).padStart(2, '0')}</span><span><strong>${esc(l.t)}</strong>${l.o ? `<small>${esc(l.o)}</small>` : ''}</span><span class="ic" title="In the Student Portal"><svg viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></div>`).join('') || '<p class="empty">The curriculum for this course will be listed soon.</p>'}</div></section>
+        ${extra}
+      </div>
+      <aside class="buy glass"><img src="${esc(c.poster)}" alt="${esc(c.title)} poster" /><div class="in">
+        <div class="pr">${price(c)}${c.free ? '' : '<small>one-time</small>'}</div>
+        ${c.free ? '<a class="btn btn-g" href="#">Start free course →</a>' : `<button class="btn btn-g" type="button" data-add="${c.slug}">Add to study list</button>`}
+        <ul><li>Taught by ${esc(c.instructor)}</li><li>${c.lessons || 'Full'} self-paced lessons</li><li>${c.free ? 'Watch every lesson on this site' : 'Lessons delivered in the Student Portal'}</li></ul>
+        <p class="note">${c.free ? '' : 'Checkout completes on the Talweeh checkout; access opens in your Student Portal.'}</p>
+      </div></aside>
+    </div>`;
+  $('#more').addEventListener('click', (e) => { $('#lead').classList.remove('clip'); e.target.remove(); });
+}
+WahaCourses.bindStudyList();
+Waha.reveal();
+</script>
+</body>
+</html>

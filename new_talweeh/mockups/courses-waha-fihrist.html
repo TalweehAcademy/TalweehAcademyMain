@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Courses · Fihrist — Talweeh Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/waha-quran.css" />
+<link rel="stylesheet" href="assets/waha-courses.css" />
+<script>try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('talweeh-waha-forest-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+/* ═══ Courses · Variation 3 — Fihrist: the catalogue ═══
+   A scholarly index: sidebar filters (access, subject, instructor), detailed rows with
+   description, facts and an expandable curriculum preview. */
+.fhead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:46px 0 22px;border-bottom:1px solid var(--p-line);margin-bottom:22px}
+.fhead h1{font-size:clamp(38px,4.8vw,62px);margin-top:4px}
+.fhead p{color:var(--p-mut);max-width:52ch}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tools .filter{display:flex;align-items:center;gap:8px;padding:0 14px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line)}
+.tools .filter svg{width:16px;height:16px;fill:none;stroke:var(--p-gold);stroke-width:2}
+.tools .filter input{border:0;background:none;outline:0;padding:11px 0;width:220px;color:var(--p-head)}
+.tools select{padding:11px 12px;border-radius:14px;background:var(--p-card);border:1px solid var(--p-line);color:var(--p-head);font-size:13px}
+.side .reset{margin-top:14px;width:100%}
+</style>
+</head>
+<body data-nav="Courses" data-course-page="course-waha-theatre.html">
+<div class="mock-bar"><span>Courses · Variation 3 — <b>Fihrist</b> · catalogue: sidebar filters, detailed rows, curriculum preview in place</span><a href="index.html">← Back to all designs</a></div>
+<div id="waha-top"></div>
+
+<main><div class="wrap">
+  <div class="fhead" data-r>
+    <div><span class="kicker">Fihrist · Course catalogue</span><h1>All courses</h1><p>Every public course with its instructor, length and access. Open a row to preview the curriculum.</p></div>
+    <div class="tools">
+      <label class="filter"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search the catalogue" autocomplete="off" /></label>
+      <select id="sort" aria-label="Sort"><option value="">Recommended</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
+    </div>
+  </div>
+  <div class="fx">
+    <aside class="side glass" data-r>
+      <h4>Access</h4><div id="fAccess"></div>
+      <h4>Subject</h4><div id="fCat"></div>
+      <h4>Instructor</h4><div id="fIns"></div>
+      <button class="btn btn-glass btn-sm reset" type="button" id="reset">Clear filters</button>
+    </aside>
+    <section><p class="kicker" id="cnt" style="margin-bottom:12px"></p><div class="rows" id="rows"></div></section>
+  </div>
+</div></main>
+<div id="waha-foot"></div>
+
+<script src="assets/courses-data.js"></script>
+<script src="assets/waha-quran.js"></script>
+<script src="assets/waha-courses.js"></script>
+<script>
+const { $, $$ } = Waha, { esc, price, match, courseUrl } = WahaCourses;
+const C = window.COURSES, D = window.COURSE_DETAILS, CATS = window.COURSE_CATEGORIES;
+const INS = [...new Set(C.map((c) => c.instructor))];
+const f = { access: '', cat: '', ins: '' };
+const opt = (key, val, label, n) => `<button class="opt${f[key] === val ? ' on' : ''}" type="button" data-k="${key}" data-v="${esc(val)}">${esc(label)}<b>${n}</b></button>`;
+function draw() {
+  const q = $('#q').value.trim(), sort = $('#sort').value;
+  const base = C.filter((c) => match(c, q));
+  const pass = (c, skip) => (skip === 'access' || !f.access || (f.access === 'free' ? c.free : !c.free)) && (skip === 'cat' || !f.cat || c.cat === f.cat) && (skip === 'ins' || !f.ins || c.instructor === f.ins);
+  $('#fAccess').innerHTML = opt('access', '', 'All courses', base.filter((c) => pass(c, 'access')).length) + opt('access', 'free', 'Free — watch here', base.filter((c) => c.free && pass(c, 'access')).length) + opt('access', 'paid', 'Paid — Student Portal', base.filter((c) => !c.free && pass(c, 'access')).length);
+  $('#fCat').innerHTML = opt('cat', '', 'All subjects', base.filter((c) => pass(c, 'cat')).length) + CATS.map((k) => { const n = base.filter((c) => c.cat === k.slug && pass(c, 'cat')).length; return n ? opt('cat', k.slug, k.label, n) : ''; }).join('');
+  $('#fIns').innerHTML = INS.map((i) => opt('ins', i, i, base.filter((c) => c.instructor === i && pass(c, 'ins')).length)).join('');
+  let list = base.filter((c) => pass(c));
+  if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === 'price') list = [...list].sort((a, b) => a.price - b.price);
+  if (sort === 'lessons') list = [...list].sort((a, b) => b.lessons - a.lessons);
+  $('#cnt').textContent = `${list.length} course${list.length === 1 ? '' : 's'}`;
+  $('#rows').innerHTML = list.map((c) => {
+    const ls = D[c.slug]?.lessons || [];
+    return `<article class="row card">
+      <a href="${courseUrl(c.slug)}"><img src="${esc(c.poster)}" alt="" loading="lazy" /></a>
+      <div><span class="cat">${esc(c.catLabel)}</span><h3><a href="${courseUrl(c.slug)}">${esc(c.title)}</a></h3><p>${esc(c.desc)}</p>
+        <div class="facts"><span>${esc(c.instructor)}</span><span>${c.lessons ? c.lessons + ' lessons' : 'Curriculum coming soon'}</span><span>${c.free ? 'Watch on this site' : 'Student Portal'}</span></div></div>
+      <div class="end"><span class="price${c.free ? ' free' : ''}">${price(c)}</span><a class="btn ${c.free ? 'btn-g' : 'btn-glass'} btn-sm" href="${courseUrl(c.slug)}">${c.free ? '▶ Start free course' : 'View course'}</a></div>
+      ${ls.length ? `<details><summary>Preview curriculum ▾</summary><ol>${ls.slice(0, 8).map((l) => `<li>${esc(l.t)}${l.v ? ' <span style="color:var(--p-gold)">▶</span>' : ''}</li>`).join('')}${ls.length > 8 ? `<li style="list-style:none;color:var(--p-mut)">…and ${ls.length - 8} more</li>` : ''}</ol></details>` : ''}
+    </article>`;
+  }).join('') || '<p class="empty">No course matches these filters.</p>';
+}
+$('.side').addEventListener('click', (e) => { const b = e.target.closest('[data-k]'); if (!b) return; f[b.dataset.k] = f[b.dataset.k] === b.dataset.v ? '' : b.dataset.v; draw(); });
+$('#reset').addEventListener('click', () => { f.access = f.cat = f.ins = ''; $('#q').value = ''; draw(); });
+$('#q').addEventListener('input', draw); $('#sort').addEventListener('change', draw);
+draw(); WahaCourses.bindStudyList(); Waha.reveal();
+</script>
+</body>
+</html>

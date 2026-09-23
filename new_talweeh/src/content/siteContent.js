@@ -45,11 +45,10 @@ export const CONTENT_REGISTRY = {
       default: {
         copyright: '© All rights reserved by Talweeh Academy 2025',
         social: [
-          { label: 'X / Twitter', icon: '𝕏', href: '#' },
+          { label: 'X / Twitter', icon: '𝕏', href: 'https://x.com/Talweeh_Academy' },
           { label: 'YouTube', icon: '▶', href: 'https://www.youtube.com/@Talweeh.Academy' },
           { label: 'Telegram', icon: '◉', href: 'https://t.me/talweeh_academy' },
-          { label: 'Instagram', icon: '◎', href: '#' },
-          { label: 'WhatsApp', icon: '☎', href: '#' },
+          { label: 'Instagram', icon: '◎', href: 'https://www.instagram.com/talweeh.academy/' },
         ],
       },
     },
