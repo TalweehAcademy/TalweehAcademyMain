@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SocialGlyph from '../components/SocialGlyph'
+import { useScrollLock } from '../hooks/useScrollLock'
 import { LEGACY_PORTAL } from '../constants/links'
 import { ASSET } from '../constants/assets'
 import { useContent } from '../hooks/useContent'
@@ -164,6 +165,7 @@ export function PublicThemeToggle() {
 export function PageHeader() {
   const { content: g } = useContent('global')
   const [menuOpen, setMenuOpen] = useState(false)
+  useScrollLock(menuOpen)
 
   return (
     <header className="site-header academy-header">

@@ -9,6 +9,7 @@ import { RouteMeta } from './hooks/useDocumentMeta'
 import { extractVideoId } from './utils/youtube'
 import WahaVideoPlayer from './courses/WahaVideoPlayer'
 import { LEGACY_PORTAL } from './constants/links'
+import SwipeDots from './components/SwipeDots'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
@@ -102,6 +103,31 @@ function ProgramCoverflow() {
   const narrow = useNarrow()
   const layout = { spread: narrow ? 60 : 300, rot: 30, depth: 180, side: .3, sideFilter: 'blur(5px) saturate(.5)' }
   const go = (step) => setCurrent((c) => (c + step + PROGRAMS.length) % PROGRAMS.length)
+  const rowRef = useRef(null)
+
+  // Phones: a flat row of cards you swipe through, with dots instead of arrows.
+  if (narrow) {
+    return (
+      <>
+        <div className="wh-swipe wh-swipe-cv" ref={rowRef}>
+          {PROGRAMS.map((program, i) => (
+            <article key={program.title} className="wh-cv flat">
+              <div className="wh-img" style={{ backgroundImage: `url('${program.image}')` }} />
+              <span className="wh-n wh-glass">{String(i + 1).padStart(2, '0')}</span>
+              <div className="wh-bd">
+                <div className="wh-ar">{program.arabic}</div>
+                <small>{program.kicker}</small>
+                <h3>{program.title}</h3>
+                <p>{program.text}</p>
+                <Link className="wh-btn wh-btn-cream" to={program.to}>Explore the program →</Link>
+              </div>
+            </article>
+          ))}
+        </div>
+        <SwipeDots targetRef={rowRef} count={PROGRAMS.length} />
+      </>
+    )
+  }
 
   return (
     <>
@@ -139,14 +165,37 @@ function TestimonialCarousel({ testimonials }) {
   const count = testimonials.length
   const layout = { spread: narrow ? 40 : 360, rot: 0, depth: 120, side: .6, sideFilter: 'blur(3px) saturate(.7)' }
   const go = (step) => setCurrent((c) => (c + step + count) % count)
+  const rowRef = useRef(null)
 
   useEffect(() => {
-    if (count < 2 || prefersReducedMotion()) return undefined
+    if (narrow || count < 2 || prefersReducedMotion()) return undefined
     const timer = window.setTimeout(() => setCurrent((c) => (c + 1) % count), 6500)
     return () => window.clearTimeout(timer)
   }, [current, count])
 
   if (!count) return null
+  const cardBody = (item) => {
+    const initials = item.name.split(/\s+/).filter(Boolean)
+    return <>
+      <div className="wh-q">“</div>
+      <p>{item.quote}</p>
+      <div className="wh-who">
+        <span className="wh-av">{(initials[0]?.[0] || '') + (initials.length > 1 ? initials[initials.length - 1][0] : '')}</span>
+        <div><h4>{item.name}</h4><small>{item.location}</small></div>
+      </div>
+    </>
+  }
+  // Phones: swipe through the testimonials; no arrows, no auto-advance.
+  if (narrow) {
+    return (
+      <>
+        <div className="wh-swipe wh-swipe-tc" ref={rowRef}>
+          {testimonials.map((item) => <article key={item.name} className="wh-tc wh-glass flat">{cardBody(item)}</article>)}
+        </div>
+        <SwipeDots targetRef={rowRef} count={count} />
+      </>
+    )
+  }
   return (
     <>
       <div className="wh-tcar" data-r>
@@ -193,6 +242,8 @@ function LandingPage() {
   const { content: g } = useContent('global')
   const [slide, setSlide] = useState(0)
   const rootRef = useRef(null)
+  const artsRef = useRef(null)
+  const vidsRef = useRef(null)
   const latestArticles = ARTICLES.slice(0, 3)
   const videos = (c.youtube.videos || []).filter(Boolean).slice(0, 6)
 
@@ -280,7 +331,7 @@ function LandingPage() {
             <section className="wh-s">
               <div className="wh-wrap">
                 <SectionHeading title={c.latestArticles.heading} text="Short academic benefits and reflections to support continued reading beyond the classroom." />
-                <div className="wh-arts" data-stagger>
+                <div className="wh-arts wh-swipe-m" data-stagger ref={artsRef}>
                   {latestArticles.map((article) => (
                     <article key={article.id} className="wh-art wh-glass">
                       <div className="wh-meta">
@@ -293,6 +344,7 @@ function LandingPage() {
                     </article>
                   ))}
                 </div>
+                <div className="wh-dots-m"><SwipeDots targetRef={artsRef} count={latestArticles.length} /></div>
                 <div className="wh-center" data-r><Link className="wh-btn wh-btn-glass" to="/articles">{c.latestArticles.buttonLabel} →</Link></div>
               </div>
             </section>
@@ -325,9 +377,10 @@ function LandingPage() {
             <section className="wh-s">
               <div className="wh-wrap">
                 <SectionHeading title={c.youtube.heading} text="Selected lessons, academic benefits, and discussions from Talweeh Academy." />
-                <div className="wh-vg" data-stagger>
+                <div className="wh-vg wh-swipe-m" data-stagger ref={vidsRef}>
                   {videos.map((src, i) => <VideoCard key={`${src}-${i}`} src={src} index={i} />)}
                 </div>
+                <div className="wh-dots-m"><SwipeDots targetRef={vidsRef} count={videos.length} /></div>
                 <div className="wh-center" data-r>
                   <a className="wh-btn wh-btn-glass" href={c.youtube.url} target="_blank" rel="noreferrer">{c.youtube.buttonLabel}</a>
                 </div>

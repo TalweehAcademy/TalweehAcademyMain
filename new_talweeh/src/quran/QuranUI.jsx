@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // Small pieces shared by the Wāḥa Qurʾān pages (read / study / listen).
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useScrollLock } from '../hooks/useScrollLock'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { arNum, surahInfo } from './quranData'
 
@@ -43,6 +44,7 @@ export function SurahPicker({ open, onClose, onPick, current, withJuz = true, ba
   const [q, setQ] = useState('')
   const inputRef = useRef(null)
   useEscape(open, onClose)
+  useScrollLock(open)
   useEffect(() => { if (open) setTimeout(() => inputRef.current?.focus(), 60) }, [open])
   const t = q.trim().toLowerCase()
   const ref = t.match(/^(\d{1,3})\s*:\s*(\d{1,3})$/)

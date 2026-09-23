@@ -9,6 +9,7 @@ import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
 import { AyahMarker, Icon, SurahPicker, useEscape } from '../quran/QuranUI'
+import { useScrollLock } from '../hooks/useScrollLock'
 import '../quran-pages-v1.css'
 
 const PREFS_KEY = 'talweeh-read-prefs'
@@ -79,6 +80,9 @@ export default function QuranReadPage() {
   const [sub, setSub] = useState(0) // page index within a surah, for non-Madinah book view
   const [pickerOpen, setPickerOpen] = useState(false)
   const [dockOpen, setDockOpen] = useState(false)
+  // Phones: the reading tools live in a sheet behind one floating button, so the page is just the muṣḥaf.
+  const [toolsOpen, setToolsOpen] = useState(false)
+  useScrollLock(toolsOpen || dockOpen)
   const [pop, setPop] = useState(null)
   const [error, setError] = useState('')
 
@@ -210,6 +214,8 @@ export default function QuranReadPage() {
   }, [])
   const closeDock = useCallback(() => setDockOpen(false), [])
   useEscape(dockOpen, closeDock)
+  const closeTools = useCallback(() => { setToolsOpen(false); setDockOpen(false) }, [])
+  useEscape(toolsOpen && !dockOpen, closeTools)
   useEffect(() => {
     if (!dockOpen) return undefined
     const close = (e) => { if (!e.target.closest('.qp-dock,.qp-dbtn')) setDockOpen(false) }
@@ -238,7 +244,10 @@ export default function QuranReadPage() {
   }
 
   return (
-    <WahaPage className="qp" overlays={<>
+    <WahaPage className="qp qp-readmode" overlays={<>
+      <button type="button" className={`qp-fab${toolsOpen ? ' hide' : ''}`} onClick={() => setToolsOpen(true)} aria-haspopup="dialog" aria-label="Reading options">
+        {Icon.sliders}<span><strong>{locSurah.en}</strong><small>{locSub}</small></span>
+      </button>
       <SurahPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onPick={goTo} current={surah} title="Choose where to read" />
       <div className={`qp-vpop${pop ? ' on' : ''}`} style={pop ? { left: pop.x, top: pop.y } : undefined} onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Āyah">
         {pop && <>
@@ -259,12 +268,15 @@ export default function QuranReadPage() {
           <p>Turn muṣḥaf pages or scroll continuously. Tap an āyah for its translation, recitation and study notes.</p>
         </section>
 
-        <div className="qp-viewbar wh-glass">
+        {/* inside <main> (its own stacking layer) so it sits under the sheet, not over it */}
+        <div className={`qp-sheet-ov${toolsOpen ? ' open' : ''}`} onClick={closeTools} aria-hidden="true" />
+        <div className={`qp-viewbar wh-glass${toolsOpen ? ' sheet-open' : ''}`} role={toolsOpen ? 'dialog' : undefined} aria-label={toolsOpen ? 'Reading options' : undefined}>
+          <div className="qp-sheet-h"><span className="qp-kicker">Reading options</span><button className="qp-ib" type="button" onClick={closeTools} aria-label="Close">{Icon.close}</button></div>
           <div className="qp-seg qp-vseg" role="group" aria-label="Reading view">
             <button type="button" className={view === 'book' ? 'on' : ''} onClick={() => setView('book')}>{Icon.book}<span>Muṣḥaf pages</span></button>
             <button type="button" className={view === 'scroll' ? 'on' : ''} onClick={() => setView('scroll')}>{Icon.scroll}<span>Scroll</span></button>
           </div>
-          <button className="qp-loc" type="button" onClick={() => setPickerOpen(true)} aria-haspopup="dialog">
+          <button className="qp-loc" type="button" onClick={() => { setToolsOpen(false); setDockOpen(false); setPickerOpen(true) }} aria-haspopup="dialog">
             <span className="d">{locSurah.n}</span><span><strong>{locSurah.en}</strong><small>{locSub}</small></span><span className="qp-ar">{locSurah.ar}</span><i>▾</i>
           </button>
           <div className="qp-vb-r">

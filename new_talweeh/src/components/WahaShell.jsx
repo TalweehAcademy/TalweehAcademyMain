@@ -7,6 +7,7 @@ import { NavigationDropdown, navLinks, footerLinks } from '../pages/_shared'
 import { useContent } from '../hooks/useContent'
 import { StudyListButton, StudyListHost } from '../courses/StudyList'
 import SocialGlyph from './SocialGlyph'
+import { useScrollLock } from '../hooks/useScrollLock'
 import { LEGACY_PORTAL } from '../constants/links'
 import '../home-waha-v1.css'
 import '../courses-waha-v1.css'
@@ -56,6 +57,7 @@ export function WahaHeader({ social }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const closeMenu = () => setMenuOpen(false)
+  useScrollLock(menuOpen)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
