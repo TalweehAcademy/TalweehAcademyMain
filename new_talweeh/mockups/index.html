@@ -24,7 +24,7 @@
     .grid{max-width:1180px;margin:0 auto;padding:36px 28px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;}
     .card{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:#13201c;transition:.2s;display:flex;flex-direction:column;}
     .card:hover{border-color:rgba(215,179,115,.55);box-shadow:0 30px 60px rgba(0,0,0,.4);}
-    .pair{display:grid;grid-template-columns:1fr 1fr;height:170px;}
+    .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));height:170px;}
     .preview{position:relative;overflow:hidden;display:grid;place-items:center;transition:filter .2s;}
     .preview:hover{filter:brightness(1.08);}
     .preview .glyph{font-family:'Newsreader',serif;font-size:50px;position:relative;}
@@ -35,6 +35,7 @@
     .p-sema{background:radial-gradient(circle at 50% 30%,#222a63,#0d1030);} .p-sema .glyph{color:#e7c069;}
     .p-tazhib{background:radial-gradient(260px 180px at 50% 110%,rgba(212,175,94,.3),transparent 65%),#0b0e0c;} .p-tazhib .glyph{color:#f0d68a;text-shadow:0 0 32px rgba(212,175,94,.6);}
     .p-waraq{background:radial-gradient(260px 180px at 50% 110%,rgba(71,116,92,.22),transparent 65%),linear-gradient(150deg,#f8f6f0,#efece2);} .p-waraq .glyph{color:#2f5240;}
+    .p-grove{background:radial-gradient(200px 130px at 50% 62%,#356b4e,#28573e 55%,transparent 56%),#0c2218;} .p-grove .glyph{color:#f3dca8;text-shadow:0 0 24px rgba(243,220,168,.4);}
     .p-forest{background:radial-gradient(260px 180px at 85% 0%,rgba(215,179,115,.3),transparent 60%),radial-gradient(220px 160px at 0% 100%,rgba(176,101,74,.35),transparent 60%),#1e3d2e;} .p-forest .glyph{color:#e3c69a;text-shadow:0 0 28px rgba(215,179,115,.45);}
     .body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1;}
     .num{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7f8e85;font-weight:700;}
@@ -81,26 +82,28 @@
       <div class="pair">
         <a class="preview p-sema" href="landing-sema.html"><div class="pat star-gold"></div><div class="glyph">☾</div><span class="lbl">Original</span></a>
         <a class="preview p-forest" href="landing-sema-forest.html"><div class="pat star-gold"></div><div class="glyph">☾</div><span class="lbl">Forest</span></a>
+        <a class="preview p-grove" href="landing-sema-grove.html"><div class="pat star-gold"></div><div class="glyph">☾</div><span class="lbl">Grove</span></a>
       </div>
       <div class="body">
         <div class="num">Design 1</div>
         <h3>Sema</h3>
         <div class="tag">Jewel-toned · twilight · elegant</div>
-        <p>A night-sky page with a glowing moon, gold gradients and Playfair type. The Forest variant turns the indigo into the site green, and its violet into clay and teal tiles.</p>
-        <div class="links"><a class="open orig" href="landing-sema.html">Original</a><a class="open forest" href="landing-sema-forest.html">Forest variant →</a></div>
+        <p>A night-sky page with a glowing moon, gold gradients and Playfair type. The Forest variant turns the indigo into the site green, and its violet into clay and teal tiles. Grove sets light-green cards on a deep forest background, with a light-mode toggle (soft sage page, dark-green cards).</p>
+        <div class="links"><a class="open orig" href="landing-sema.html">Original</a><a class="open forest" href="landing-sema-forest.html">Forest variant →</a><a class="open orig" href="landing-sema-grove.html">Grove</a></div>
       </div>
     </div>
     <div class="card">
       <div class="pair">
         <a class="preview p-tazhib" href="landing-tazhib.html"><div class="pat star-gold"></div><div class="glyph">۞</div><span class="lbl">Original</span></a>
         <a class="preview p-forest" href="landing-tazhib-forest.html"><div class="pat star-gold"></div><div class="glyph">۞</div><span class="lbl">Forest</span></a>
+        <a class="preview p-grove" href="landing-tazhib-grove.html"><div class="pat star-gold"></div><div class="glyph">۞</div><span class="lbl">Grove</span></a>
       </div>
       <div class="body">
         <div class="num">Design 2</div>
         <h3>Tazhīb</h3>
         <div class="tag">Illuminated manuscript · cinematic · scroll-driven</div>
-        <p>A self-drawing girih medallion, scroll-driven reveals, gold-foil headline and tilt cards. The Forest variant swaps the black lacquer for the site greens, with clay accents.</p>
-        <div class="links"><a class="open orig" href="landing-tazhib.html">Original</a><a class="open forest" href="landing-tazhib-forest.html">Forest variant →</a></div>
+        <p>A self-drawing girih medallion, scroll-driven reveals, gold-foil headline and tilt cards. The Forest variant swaps the black lacquer for the site greens, with clay accents. Grove sets light-green panels on a deep forest background, with a light-mode toggle (soft sage page, dark-green panels).</p>
+        <div class="links"><a class="open orig" href="landing-tazhib.html">Original</a><a class="open forest" href="landing-tazhib-forest.html">Forest variant →</a><a class="open orig" href="landing-tazhib-grove.html">Grove</a></div>
       </div>
     </div>
     <div class="card">
