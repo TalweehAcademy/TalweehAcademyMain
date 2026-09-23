@@ -10,6 +10,7 @@ import { extractVideoId } from './utils/youtube'
 import WahaVideoPlayer from './courses/WahaVideoPlayer'
 import { LEGACY_PORTAL } from './constants/links'
 import SwipeDots from './components/SwipeDots'
+import { StudyListHost } from './courses/StudyList'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
@@ -434,6 +435,7 @@ function LandingPage() {
       </main>
 
       <WahaFooter social={g.footer.social} copyright={g.footer.copyright} />
+      <StudyListHost />
     </div>
   )
 }

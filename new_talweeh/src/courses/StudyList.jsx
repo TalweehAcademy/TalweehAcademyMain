@@ -37,6 +37,8 @@ function Dialog({ added, optionId, onClose }) {
   const currency = rows.find((r) => r.option)?.option.currency || 'USD'
   const total = rows.reduce((n, r) => n + Number(r.option?.amount_cents || 0), 0)
   const subscriptions = rows.filter((r) => r.option && r.option.billing_type !== 'one_time').length
+  // Empty list: suggest three paid courses with posters, the fuller ones first.
+  const suggestions = rows.length ? [] : courses.filter((c) => !c.free && c.poster).sort((a, b) => (b.lessonCount || 0) - (a.lessonCount || 0)).slice(0, 3)
   useEffect(() => {
     const key = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', key)
@@ -63,10 +65,26 @@ function Dialog({ added, optionId, onClose }) {
           </ul>
           {total > 0 && <div className="cw-sl-total"><span>Due at enrolment</span><b>{money(total, currency)}</b></div>}
           {subscriptions > 1 && <p className="cw-sl-warn">Only one monthly plan can be checked out at a time — remove one, or finish them separately.</p>}
-        </> : <p className="cw-sl-empty">Add a course with “Add to study list” and it will wait here until you enrol.</p>}
+        </> : <>
+          <p className="cw-sl-empty">Nothing here yet. Open any paid course and choose “Add to study list” — it will wait here until you’re ready to enrol.</p>
+          {suggestions.length > 0 && <>
+            <span className="cw-kicker cw-sl-sugk">A few courses to start with</span>
+            <ul className="cw-sl-items cw-sl-sug">
+              {suggestions.map((c) => (
+                <li key={c.slug}>
+                  <Link to={`/courses/${c.slug}`} onClick={onClose} className="cw-sl-sugl">
+                    {c.poster ? <img src={c.poster} alt="" /> : <span className="ph" />}
+                    <span><strong>{c.title}</strong><small>{c.instructor}{c.lessonCount ? ` · ${c.lessonCount} lessons` : ''}</small></span>
+                    <b>{c.free ? 'Free' : c.priceCents ? money(c.priceCents, c.currency) : ''}</b>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>}
+        </>}
         <div className="cw-sl-acts">
           {rows.length > 0 && <Link className="wh-btn wh-btn-g" to="/cart" onClick={onClose}>Proceed to enrolment →</Link>}
-          <Link className="wh-btn wh-btn-glass" to="/courses" onClick={onClose}>Keep browsing courses</Link>
+          <Link className={`wh-btn ${rows.length ? 'wh-btn-glass' : 'wh-btn-g'}`} to="/courses" onClick={onClose}>{rows.length ? 'Keep browsing courses' : 'Browse all courses →'}</Link>
         </div>
         <p className="cw-sl-note">Enrolment completes at checkout; lessons open in your Student Portal.</p>
       </div>
