@@ -36,8 +36,10 @@ npm run cms:import -- ./snapshot.json  # apply a CMS snapshot before building
 
 There is no test suite.
 
-`npm run build` is a five-stage pipeline, and the order matters:
+`npm run build` is a six-stage pipeline, and the order matters:
 
+0. `scripts/sync-quran-study-publications.mjs` — replays Qurʾān Study ranges published from Legacy
+   (see *Qurʾān Study auto-publish*). A no-op when its env vars are unset.
 1. `scripts/verify-public-paid-video-safety.mjs` — fails the build if any **paid** course in
    `src/data/publicCourseCatalog.js` has a lesson with a YouTube URL. Paid lesson videos must
    never ship in public data.
@@ -121,6 +123,25 @@ Two of the five bindings currently do nothing:
 
 Articles, instructors, and site content do flow through. Do not assume the course/media path
 works because the pipeline runs cleanly.
+
+## Qurʾān Study auto-publish
+
+Study content is edited in Legacy (`talweeh-academic-system`) and published per āyah range from
+`/quran-study/publish` there. Publishing builds the range's snapshot ZIP on the Legacy server, archives it
+in the private `quran-study-corpus` bucket with one "active" record per range, and calls a Netlify build
+hook for this site.
+
+At build time `scripts/sync-quran-study-publications.mjs` lists the active ranges from
+`QURAN_STUDY_PUBLICATION_URL` (Legacy's `/api/quran-study/publications`, bearer
+`QURAN_STUDY_PUBLIC_SYNC_TOKEN`), downloads each ZIP from a short-lived signed storage URL, checks its
+SHA-256, and runs `scripts/import-quran-study-snapshot.mjs <zip> --expect-range=S:F-T` oldest first, so a
+newer overlapping range wins for the āyāt it covers. Any failure fails the build; the previous deploy stays
+live. Both env vars are build-time only — never `VITE_*`.
+
+- With the env vars set, **every** deploy of this site (including ordinary code pushes) needs Legacy up.
+- The imports land on top of the committed `src/quran-study-static/`. Once auto-publish is on, **don't
+  commit manual Study imports** — an older active publication would overwrite them on the next build.
+- Unpublishing a range in Legacy makes those āyāt fall back to the committed files.
 
 ## Static-only enforcement
 

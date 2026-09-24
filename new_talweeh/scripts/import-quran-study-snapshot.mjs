@@ -207,6 +207,15 @@ const scope = {
 if (!Number.isInteger(scope.surah) || scope.surah < 1 || scope.surah > 114 || !Number.isInteger(scope.fromAyah) || !Number.isInteger(scope.toAyah) || scope.fromAyah < 1 || scope.toAyah < scope.fromAyah) {
   throw new Error('The snapshot range is invalid.')
 }
+// The publication sync passes the range it expects (--expect-range=81:1-5); a ZIP whose own range differs is refused.
+const expected = process.argv.slice(3).find((arg) => arg.startsWith('--expect-range='))
+if (expected) {
+  const want = /^--expect-range=(\d+):(\d+)-(\d+)$/.exec(expected)
+  if (!want) throw new Error(`Invalid ${expected}`)
+  if (Number(want[1]) !== scope.surah || Number(want[2]) !== scope.fromAyah || Number(want[3]) !== scope.toAyah) {
+    throw new Error(`Snapshot covers ${scope.surah}:${scope.fromAyah}–${scope.toAyah} but was published as ${want[1]}:${want[2]}–${want[3]}.`)
+  }
+}
 
 const dir = pad3(scope.surah)
 const archiveBase = `surahs/${dir}`

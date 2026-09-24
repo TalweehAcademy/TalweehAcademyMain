@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/verify-public-paid-video-safety.mjs && node scripts/generate-public-course-index.mjs && node scripts/generate-public-course-details.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/verify-static-frontend.mjs",
+    "build": "node scripts/sync-quran-study-publications.mjs && node scripts/verify-public-paid-video-safety.mjs && node scripts/generate-public-course-index.mjs && node scripts/generate-public-course-details.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/verify-static-frontend.mjs",
     "build:deploy": "npm run build",
     "start": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
     "preview": "vite preview",
     "cms:import": "node scripts/import-cms-snapshot.mjs",
     "cms:verify": "node scripts/verify-cms-fixture.mjs",
-    "quran-study:import": "node scripts/import-quran-study-snapshot.mjs"
+    "quran-study:import": "node scripts/import-quran-study-snapshot.mjs",
+    "quran-study:sync": "node scripts/sync-quran-study-publications.mjs"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.3.0",
