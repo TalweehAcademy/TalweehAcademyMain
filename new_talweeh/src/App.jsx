@@ -19,6 +19,7 @@ const MediaDetailPage = lazy(() => import('./pages/media-watch-waha'))
 const ArticleDetailPage = lazy(() => import('./pages/article-waha'))
 const AboutWahaPage = lazy(() => import('./pages/about-waha'))
 const CourseLandingPage = lazy(() => import('./pages/course-waha'))
+const RoadmapPage = lazy(() => import('./pages/roadmap-waha'))
 const CommerceCartPage = lazy(() => import('./pages/cart-waha'))
 const CommerceCheckoutPage = lazy(() => import('./pages/checkout-waha'))
 const QuranReaderPage = lazy(() => import('./pages/quran-reader'))
@@ -513,6 +514,7 @@ function AppInner() {
         <Route path="/instructors" element={<AboutWahaPage tab="instructors" />} />
         <Route path="/instructors/:slug" element={<AboutWahaPage tab="instructors" />} />
         <Route path="/contact-us" element={<AboutWahaPage tab="contact" />} />
+        <Route path="/courses/roadmap" element={<RoadmapPage />} />
         <Route path="/courses/:slug" element={<CourseLandingPage />} />
         <Route path="/cart" element={<CommerceCartPage />} />
         <Route path="/checkout" element={<CommerceCheckoutPage />} />

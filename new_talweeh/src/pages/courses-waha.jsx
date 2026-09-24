@@ -122,6 +122,7 @@ export default function CoursesWahaPage() {
         <div className="cw-paths" data-stagger>
           <button type="button" className={`cw-path wh-glass${!access && !cat ? ' on' : ''}`} onClick={() => pickPath('')}><small>Self-paced</small><strong>Course Library</strong><span>Every public course</span></button>
           <button type="button" className={`cw-path wh-glass${access === 'free' && !cat ? ' on' : ''}`} onClick={() => pickPath('free')}><small>Open access</small><strong>Free Courses</strong><span>Watch every lesson here</span></button>
+          <Link className="cw-path wh-glass cw-path-road" to="/courses/roadmap"><small>Guided</small><strong>Study Roadmap</strong><span>Which texts to study, level by level</span></Link>
           <Link className="cw-path wh-glass" to="/alimiyyah"><small>Scheduled</small><strong>Live · Alimiyyah</strong><span>Guided classes with instructors</span></Link>
           <Link className="cw-path wh-glass" to="/hadith-specialization"><small>Focused</small><strong>Specialization</strong><span>Ḥadīth Specialization pathway</span></Link>
         </div>
