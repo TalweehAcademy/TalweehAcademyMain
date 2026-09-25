@@ -32,6 +32,22 @@ export const HADITH = {
       "year": 1,
       "i": 1,
       "strand": "history",
+      "ar": "مَدْخَلٌ إِلَى أُصُولِ الحَدِيث",
+      "title": "Introduction to Uṣūl al-Ḥadīth",
+      "subtitle": "The Development of the Hadith Sciences",
+      "catalogSlug": "introduction-to-usul-al-hadith",
+      "overview": "A historical study of how Uṣūl al-Ḥadīth — the foundations of ḥadīth science — developed, from the time of the Messenger of Allah ﷺ to the compilation of the later works. It gives the whole program its starting point: why the discipline exists, how it took shape, and the role it plays across Islamic scholarship.",
+      "outcomes": [
+        "Trace the historical development of Uṣūl al-Ḥadīth from the Prophetic era to the later compilations.",
+        "Understand the role of ḥadīth science within Islamic scholarship, including jurisprudence and theology.",
+        "Build the historical grounding needed for the program's later courses on the Sunnah, narrators and nomenclature."
+      ]
+    },
+    {
+      "n": 2,
+      "year": 1,
+      "i": 2,
+      "strand": "history",
       "ar": "تَدْوِينُ السُّنَّة",
       "title": "Tadwīn al-Sunnah",
       "subtitle": "Compilation of the Sunnah",
@@ -45,9 +61,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 2,
+      "n": 3,
       "year": 1,
-      "i": 2,
+      "i": 3,
       "strand": "history",
       "ar": "مَكَانَةُ السُّنَّة",
       "title": "Makānat al-Sunnah",
@@ -62,9 +78,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 3,
+      "n": 4,
       "year": 1,
-      "i": 3,
+      "i": 4,
       "strand": "narrators",
       "ar": "رُوَاةُ الحَدِيث ١",
       "title": "Ruwāt al-Ḥadīth — Part 1",
@@ -77,9 +93,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 4,
+      "n": 5,
       "year": 1,
-      "i": 4,
+      "i": 5,
       "strand": "isnad",
       "ar": "تَكْوِينُ الإِسْنَاد",
       "title": "Takwīn al-Isnād",
@@ -94,9 +110,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 5,
+      "n": 6,
       "year": 1,
-      "i": 5,
+      "i": 6,
       "strand": "narrators",
       "ar": "الجَرْحُ وَالتَّعْدِيل",
       "title": "Al-Jarḥ wa al-Taʿdīl",
@@ -111,9 +127,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 6,
+      "n": 7,
       "year": 1,
-      "i": 6,
+      "i": 7,
       "strand": "method",
       "ar": "مَنَاهِجُ المُحَدِّثِين",
       "title": "Manāhij al-Muḥaddithīn",
@@ -127,9 +143,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 7,
+      "n": 8,
       "year": 1,
-      "i": 7,
+      "i": 8,
       "strand": "sources",
       "ar": "التَّخْرِيج",
       "title": "Takhrīj",
@@ -144,9 +160,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 8,
+      "n": 9,
       "year": 1,
-      "i": 8,
+      "i": 9,
       "strand": "isnad",
       "ar": "دِرَاسَةُ الأَسَانِيد",
       "title": "Dirāsat al-Asānīd",
@@ -159,9 +175,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 9,
+      "n": 10,
       "year": 1,
-      "i": 9,
+      "i": 10,
       "strand": "isnad",
       "ar": "الأَثْبَاتُ وَالفَهَارِس",
       "title": "Al-Athbāt wa al-Fahāris",
@@ -175,9 +191,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 10,
+      "n": 11,
       "year": 1,
-      "i": 10,
+      "i": 11,
       "strand": "narrators",
       "ar": "رُوَاةُ الحَدِيث ٢",
       "title": "Ruwāt al-Ḥadīth — Part 2",
@@ -204,13 +220,13 @@ export const HADITH = {
         "Understand how these branches interconnect and contribute to the integrity and authenticity of ḥadīth literature.",
         "Engage critically with Ibn Ḥajar’s methodology and the rational foundations underlying the evaluation of narrations."
       ],
-      "n": 11,
-      "i": 11
+      "n": 12,
+      "i": 12
     },
     {
-      "n": 12,
+      "n": 13,
       "year": 1,
-      "i": 12,
+      "i": 13,
       "strand": "method",
       "ar": "تَدْرِيبُ الرَّاوِي ١",
       "title": "Tadrīb al-Rāwī 1",
@@ -226,7 +242,7 @@ export const HADITH = {
       "note": "The supplied course notes describe Tadrīb al-Rāwī as one continuous advanced Muṣṭalaḥ course. This overview is shared across Parts 1 and 2 of the two-year sequence."
     },
     {
-      "n": 13,
+      "n": 14,
       "year": 2,
       "i": 1,
       "strand": "method",
@@ -244,7 +260,7 @@ export const HADITH = {
       "note": "The supplied course notes describe Tadrīb al-Rāwī as one continuous advanced Muṣṭalaḥ course. This overview is shared across Parts 1 and 2 of the two-year sequence."
     },
     {
-      "n": 14,
+      "n": 15,
       "year": 2,
       "i": 2,
       "strand": "sources",
@@ -255,7 +271,7 @@ export const HADITH = {
       "outcomes": []
     },
     {
-      "n": 15,
+      "n": 16,
       "year": 2,
       "i": 3,
       "strand": "critique",
@@ -270,7 +286,7 @@ export const HADITH = {
       ]
     },
     {
-      "n": 16,
+      "n": 17,
       "year": 2,
       "i": 4,
       "strand": "method",
@@ -285,7 +301,7 @@ export const HADITH = {
       ]
     },
     {
-      "n": 17,
+      "n": 18,
       "year": 2,
       "i": 5,
       "strand": "applied",
@@ -300,7 +316,7 @@ export const HADITH = {
       ]
     },
     {
-      "n": 18,
+      "n": 19,
       "year": 2,
       "i": 6,
       "strand": "applied",

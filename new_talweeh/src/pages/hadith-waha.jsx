@@ -34,16 +34,23 @@ const ROWS = [
   [['Al-Athbāt wa al-Fahāris', 0], ['Takhrīj', 1], ['Ruwāt al-Ḥadīth — Part 2', 2], ['Tadrīb al-Rāwī 1', 3], ['Manāhij al-Muḥaddithīn', 4], ['Orientalist Critique', 5]],
   [['Takwīn al-Isnād', 0], ['Ruwāt al-Ḥadīth — Part 1', 1], ['Al-Jarḥ wa al-Taʿdīl', 2], ['Nukhbat al-Fikar', 3]],
   [['Tadwīn al-Sunnah', 0], ['Makānat al-Sunnah', 4]],
+  [['Introduction to Uṣūl al-Ḥadīth', 2]],
 ]
 // What builds on what. Tadrīb al-Rāwī builds on Nukhbat al-Fikar; al-Jarḥ → Dirāsat al-Asānīd is left
 // implicit, since it runs through Ruwāt al-Ḥadīth — Part 2.
 const LINKS = [
+  ['Introduction to Uṣūl al-Ḥadīth', 'Tadwīn al-Sunnah'], ['Introduction to Uṣūl al-Ḥadīth', 'Makānat al-Sunnah'], ['Introduction to Uṣūl al-Ḥadīth', 'Nukhbat al-Fikar'],
   ['Tadwīn al-Sunnah', 'Ruwāt al-Ḥadīth — Part 1'], ['Tadwīn al-Sunnah', 'Takwīn al-Isnād'], ['Makānat al-Sunnah', 'Manāhij al-Muḥaddithīn'], ['Makānat al-Sunnah', 'Al-Jarḥ wa al-Taʿdīl'], ['Makānat al-Sunnah', 'Orientalist Critique'],
   ['Nukhbat al-Fikar', 'Tadrīb al-Rāwī 1'],
   ['Ruwāt al-Ḥadīth — Part 1', 'Ruwāt al-Ḥadīth — Part 2'], ['Takwīn al-Isnād', 'Takhrīj'], ['Takwīn al-Isnād', 'Al-Athbāt wa al-Fahāris'], ['Al-Jarḥ wa al-Taʿdīl', 'Ruwāt al-Ḥadīth — Part 2'],
   ['Takhrīj', 'Dirāsat al-Asānīd'], ['Tadrīb al-Rāwī 1', 'Tadrīb al-Rāwī 2'], ['Al-Athbāt wa al-Fahāris', 'Al-Nushakh wal-Taqyeed'], ['Ruwāt al-Ḥadīth — Part 2', 'Dirāsat al-Asānīd'],
   ['Dirāsat al-Asānīd', 'ʿIlal al-Ḥadīth'], ['Tadrīb al-Rāwī 2', 'ʿIlal al-Ḥadīth'], ['ʿIlal al-Ḥadīth', 'Ṣaḥīḥ al-Bukhārī'], ['ʿIlal al-Ḥadīth', 'Muwaṭṭaʾ Mālik'], ['Manāhij al-Muḥaddithīn', 'Ṣaḥīḥ al-Bukhārī'], ['Al-Nushakh wal-Taqyeed', 'Muwaṭṭaʾ Mālik'],
 ]
+
+// A course's dot marks where its lines run down to what it builds on: under the box when a course sits below it,
+// on top for the foundation (nothing below, so its lines only rise).
+const ROW_OF = new Map(ROWS.flatMap((row, i) => row.map(([title]) => [title, i])))
+const BUILDS_ON = new Set(LINKS.map(([a, b]) => (ROW_OF.get(a) < ROW_OF.get(b) ? a : b)))
 
 function Chart({ onOpen }) {
   const plotRef = useRef(null)
@@ -78,7 +85,7 @@ function Chart({ onOpen }) {
               const c = by(title)
               return (
                 <button type="button" key={title} data-title={title}
-                  className={`node s-${c.strand}${/Bukh|Muwa/.test(title) ? ' goal' : ''}${hover && near.has(title) && title !== hover ? ' lit' : ''}`}
+                  className={`node s-${c.strand}${BUILDS_ON.has(title) ? ' dot-below' : ''}${/Bukh|Muwa/.test(title) ? ' goal' : ''}${hover && near.has(title) && title !== hover ? ' lit' : ''}`}
                   style={{ left: `${((col + 0.5) / 6) * 100}%` }}
                   onMouseEnter={() => setHover(title)} onFocus={() => setHover(title)} onClick={() => onOpen(c.n)}>
                   <span className="ar" lang="ar">{c.ar}</span><small>{c.title.replace(' — ', ' ')}</small>
