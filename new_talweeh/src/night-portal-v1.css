@@ -1,0 +1,83 @@
+/* ═══ Dark mode = the Legacy portal's night palette (ʿĀlimiyyah dashboard look) ═══
+   Deep near-black green (#06110B) with the gold lattice, glass surfaces with thin gold edges, cream/gold type and
+   gold-gradient primary actions — the same tokens as talweeh-academic-system's AlimDash.css (dark).
+   Light mode is untouched. Selectors start with html[data-theme="dark"] so they outrank the page stylesheets'
+   own [data-theme="dark"] blocks regardless of load order (pages load their CSS lazily). */
+
+html[data-theme="dark"],html[data-theme="dark"] body{background:#06110B}
+
+/* ── Wāḥa pages (WahaShell / .wh-home): remap the shared tokens ── */
+html[data-theme="dark"] .wh-home{
+  --g:#0F271B;--g2:#0B1F15;--g3:#12301F;--g4:#173A27;--g-deep:#06110B;
+  --g-rgb:15,39,27;--g2-rgb:11,31,21;--g3-rgb:18,48,31;--gd-rgb:6,17,11;--sh-rgb:0,0,0;
+  --gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;--cream:#F6F0E2;--sage:#A3B4A8;--muted:#A3B4A8;
+  --bg:#06110B;--tile:none;
+  --p-head:#F6F0E2;--p-text:#CBD6CD;--p-mut:#A3B4A8;--p-gold:#EBCB8B;
+  --c:rgba(10,28,19,.62);--c-grad:var(--c);--c-solid:#0F271B;--c-hi:rgba(18,48,31,.9);
+  --c-line:rgba(242,214,158,.14);--c-in:rgba(255,255,255,.06);
+  --c-head:#F6F0E2;--c-text:#E4EBE3;--c-mut:#A3B4A8;
+  --shadow:0 30px 60px -30px rgba(0,0,0,.8);
+  --h1a:#F6F0E2;
+  --au1:#1d4a33;--au-op:.28;
+  --foot:#040B07;
+  /* the portal's lattice at ~16%: a dark wash over the gold lattice, both fixed like the old tile */
+  background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)) fixed,url('/brand/lattice-gold.webp') 0 0/620px auto repeat fixed,#06110B;
+}
+
+/* Glass: the portal's tiles — translucent deep green, gold hairline, soft top highlight. */
+html[data-theme="dark"] .wh-home .wh-glass{background:var(--c);border-color:var(--c-line);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.06)}
+html[data-theme="dark"] .wh-home .wh-head .wh-bar{background:rgba(10,28,19,.82)}
+html[data-theme="dark"] .wh-home .wh-head.scrolled .wh-bar{box-shadow:0 20px 50px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06)}
+
+/* Headings: the portal's gold-gradient serif for every page title (h1) and section title. */
+html[data-theme="dark"] .wh-home :is(h1,.wh-sh h2){
+  background:linear-gradient(180deg,#FFFBEF 0%,#F6DDA5 60%,#D4AC66 100%);-webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;text-shadow:none;filter:drop-shadow(0 2px 14px rgba(0,0,0,.45));
+  /* gradient text is clipped to the box: room for descenders (g, p, y) without shifting the layout */
+  padding-bottom:.14em;margin-bottom:-.14em}
+html[data-theme="dark"] .wh-home .wh-wordmark strong{color:#F6F0E2}
+html[data-theme="dark"] .wh-home .wh-wordmark small{color:#EBCB8B}
+
+/* Actions: gold primary (dark text), glass secondary with a gold edge. */
+html[data-theme="dark"] .wh-home .wh-btn-g{background:linear-gradient(180deg,#F6DDA5,#C99A4E);color:#1A1407;box-shadow:0 12px 28px -10px rgba(201,154,78,.7)}
+html[data-theme="dark"] .wh-home .wh-btn-g:hover{box-shadow:0 18px 36px -10px rgba(201,154,78,.8)}
+html[data-theme="dark"] .wh-home .wh-btn-glass{background:rgba(10,28,19,.62);color:#F6F0E2;border-color:rgba(242,214,158,.3)}
+html[data-theme="dark"] .wh-home .wh-btn-glass:hover{border-color:#EBCB8B;color:#F6DDA5}
+html[data-theme="dark"] .wh-home .wh-btn-cream{background:#F6F0E2;color:#0B1F15;border-color:#EBCB8B}
+html[data-theme="dark"] .wh-home .wh-dot.active,html[data-theme="dark"] .wh-home .wh-ctl button.wh-a:hover{background:#EBCB8B}
+html[data-theme="dark"] .wh-home .wh-pill{background:rgba(235,203,139,.12);box-shadow:inset 0 0 0 1px rgba(242,214,158,.2)}
+
+/* Header controls, dropdowns and socials in the portal's chip style. */
+html[data-theme="dark"] .wh-home :is(.wh-theme-btn,.wh-burger){background:rgba(255,255,255,.06);border-color:rgba(242,214,158,.18);color:#EBCB8B}
+html[data-theme="dark"] .wh-home .wh-nav .academy-nav-panel{background:rgba(10,28,19,.96);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-color:rgba(242,214,158,.14);border-top-color:#EBCB8B;box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+html[data-theme="dark"] .wh-home .wh-nav .academy-nav-panel h2{color:#EBCB8B}
+html[data-theme="dark"] .wh-home .wh-socials a{background:rgba(255,255,255,.06);border-color:rgba(242,214,158,.18)}
+
+/* ── Older pages (Arabic Program / FAQ / About) on the --academy-* tokens ── */
+html[data-theme="dark"]{
+  --academy-deep:rgb(6 17 11);--academy-brand:rgb(15 39 27);--academy-brand-strong:rgb(23 58 39);
+  --academy-gold:rgb(235 203 139);--academy-gold-strong:rgb(246 221 165);
+  --academy-canvas:rgb(6 17 11);--academy-surface:rgb(12 31 21);--academy-surface-muted:rgb(16 40 27);
+  --academy-heading:rgb(246 240 226);--academy-text:rgb(203 214 205);--academy-muted:rgb(163 180 168);
+  --academy-line:rgb(242 214 158 / .14);--academy-on-brand:rgb(246 240 226);
+}
+html[data-theme="dark"] .academy-home{
+  background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)) fixed,url('/brand/lattice-gold.webp') 0 0/620px auto repeat fixed,#06110B!important;
+}
+
+/* ═══ Light mode: every green surface uses the same deep green as dark mode ═══
+   Header bar, glass panels, cards, the coverflow shade, footer and headings move from the old forest green
+   (#183428 family) to the portal's deep green (#0F271B family). The light background and gold stay as they are. */
+html[data-theme="light"] .wh-home{
+  --g:#0F271B;--g2:#0B1F15;--g3:#12301F;--g4:#173A27;--g-deep:#06110B;
+  --g-rgb:15,39,27;--g2-rgb:11,31,21;--g3-rgb:18,48,31;--gd-rgb:6,17,11;
+  --c:rgba(11,31,21,.97);--c-solid:#0F271B;--c-hi:rgba(18,48,31,.98);
+  --c-grad:linear-gradient(155deg,rgba(18,48,31,.98) 0%,rgba(13,36,24,.98) 48%,rgba(8,24,16,.99) 100%);
+  --c-line:rgba(242,214,158,.18);
+  --p-head:#10251A;--h1a:#10251A;
+  --foot:#06110B;
+}
+/* Courses video player frame (both themes): the deep green instead of the old emerald gradient. */
+html .wh-home .cw-vp{background:linear-gradient(155deg,#173A27,#0F271B 55%,#06110B);border-color:rgba(242,214,158,.4)}
+/* Older pages on the --academy-* tokens: the same deep green for brand surfaces in light mode. */
+html[data-theme="light"]{--academy-brand:rgb(15 39 27);--academy-brand-strong:rgb(23 58 39);--academy-deep:rgb(6 17 11);--green:#0F271B;--green-dark:#0B1F15}
