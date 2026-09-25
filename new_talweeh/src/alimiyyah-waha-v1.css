@@ -111,3 +111,13 @@
 
 @media (max-width:1000px){.ak-benefits{grid-template-columns:1fr}.ak-mission{grid-template-columns:1fr;gap:10px}.ak-values{grid-template-columns:repeat(2,1fr)}.ak-volw{grid-template-columns:1fr}.ak-fihris{position:static}.ak-spread{grid-template-columns:1fr;height:auto}.ak-spread::after{display:none}.ak-pg:first-child{border-radius:18px 18px 0 0}.ak-pg:last-child{border-radius:0 0 18px 18px}.ak-pg{padding:30px 22px 50px}.ak-pg .tocw{overflow:visible}.ak-turn{display:none}}
 @media (max-width:560px){.ak-values{grid-template-columns:1fr}.ak-toc li{grid-template-columns:22px 1fr}.ak-toc li::after{display:none}.ak-toc li .ak-disc{grid-column:2;justify-self:start}.ak-tp-in{padding:40px 18px 34px}.ak-bnav .cw-keys{display:none}}
+/* Amiri stacks lām over mīm (لم) as a required ligature, which reads badly in the large العَالِمِيَّة title. The
+   title is split between the lām and the mīm, and this first part is shaped with "rlig" off, so the two can't
+   form that ligature, while the letters still join and the rest (the shadda + fatḥa) keeps its normal marks. */
+.ak main .t-ar-a{font-feature-settings:"rlig" 0}
+/* Light mode: the hero panel is the same deep green as dark mode (inside its green frame), with dark mode's
+   cream and gold type, instead of cream paper. The curriculum "book" pages below keep their paper colour. */
+html[data-theme="light"] .ak .ak-tp-in{
+  --ink:#F6F0E2;--p-gold:#EBCB8B;--gold:#EBCB8B;--p-soft:rgba(243,232,211,.06);--p-line:rgba(242,214,158,.2);
+  background:#0F271B;border-color:rgba(242,214,158,.35);outline-color:rgba(242,214,158,.22)}
+html[data-theme="light"] .ak .ak-tp-in .wh-btn-glass{background:rgba(255,255,255,.06);border-color:rgba(242,214,158,.35);color:#F6F0E2}
