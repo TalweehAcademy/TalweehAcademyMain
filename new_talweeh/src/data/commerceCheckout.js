@@ -1,4 +1,4 @@
-import { commercePortalBase, fetchLiveCommerceCatalog } from './liveCommerceCatalog'
+import { commercePortalBase, fetchLiveCommerceCatalog, peekLiveCommerceCatalog } from './liveCommerceCatalog'
 
 function categoryKeys(categories = []) {
   return (Array.isArray(categories) ? categories : [])
@@ -45,7 +45,8 @@ export function optionBillingLabel(option = {}) {
 }
 
 export async function fetchCheckoutCatalog({ signal } = {}) {
-  const payload = await fetchLiveCommerceCatalog({ force: true, signal })
+  // A catalog fetched in the last minute is reused (the server re-validates every option and price).
+  const payload = peekLiveCommerceCatalog(60000) || await fetchLiveCommerceCatalog({ force: true, signal })
   // Programmes (Two-Year Arabic Program, Hadith Specialization) come apart from the course list so they can be
   // bought here without being listed among the courses.
   const programs = (Array.isArray(payload?.programs) ? payload.programs : []).map((program) => ({ ...program, program: true }))

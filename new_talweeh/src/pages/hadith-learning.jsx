@@ -26,6 +26,7 @@ const periods = HADITH_PLAN.years.map((y) => {
 export default function HadithLearningPage() {
   return (
     <ProgramLearningPreview
+      programKey="hadith"
       meta={{ title: 'My Learning · Hadith Specialization', description: 'The Hadith Specialization year by year and month by month.' }}
       kicker="Hadith Specialization · My Learning"
       title="The programme, month by month"

@@ -14,6 +14,7 @@ import { loadPublicCourse } from '../data/publicCourseDetails'
 import { money } from '../data/commerceCheckout'
 import { lessonTitle } from '../courses/courseKit'
 import { HADITH_PROGRAM_ENROL } from '../constants/links'
+import { warmProgramEnrol } from '../data/programEnrol'
 import '../hadith-waha-v1.css'
 
 const by = (title) => H.COURSES.find((c) => c.title === title)
@@ -167,6 +168,8 @@ function Drawer({ n, onClose, onGo }) {
 }
 
 export default function HadithWahaPage() {
+  // Load the enrolment page and the live prices in the background, so Enroll opens at once.
+  useEffect(() => { const t = setTimeout(() => warmProgramEnrol('hadith'), 800); return () => clearTimeout(t) }, [])
   useDocumentMeta({ title: 'Hadith Specialization', description: H.HERO.lead })
   const [yr, setYr] = useState(1)
   const [open, setOpen] = useState(null)
@@ -187,7 +190,7 @@ export default function HadithWahaPage() {
             <p className="name">{H.HERO.name} — a tradition studied through its sources.</p>
             <p className="lead">{H.HERO.lead}</p>
             <div className="facts">{FACTS.map(([k, v]) => <span key={k}><small>{k}</small><b>{v}</b></span>)}</div>
-            <div className="acts"><a className="wh-btn wh-btn-g" href="#curriculum" onClick={toCurriculum}>Explore curriculum</a><a className="wh-btn wh-btn-glass" href={HADITH_PROGRAM_ENROL}>Enroll now</a></div>
+            <div className="acts"><a className="wh-btn wh-btn-g" href="#curriculum" onClick={toCurriculum}>Explore curriculum</a><Link className="wh-btn wh-btn-glass" to={HADITH_PROGRAM_ENROL}>Enroll now</Link></div>
             <small className="mail"><Link to="/hadith-specialization/learning">See the plan month by month →</Link> · Enrollment inquiries: {H.EMAIL}</small>
           </div>
           <Chart onOpen={setOpen} />
@@ -230,7 +233,7 @@ export default function HadithWahaPage() {
           <span className="cw-kicker">Enrollment</span>
           <h2>Interested in the Hadith Specialization?</h2>
           <p>Pay in full or in monthly installments. Your lessons open in the Student Portal as soon as payment is confirmed.</p>
-          <div className="acts"><a className="wh-btn wh-btn-g" href={HADITH_PROGRAM_ENROL}>Enroll now →</a><Link className="wh-btn wh-btn-glass" to="/hadith-specialization/learning">See My Learning month by month</Link><Link className="wh-btn wh-btn-glass" to="/courses?category=hadith-sciences">Browse the standalone courses</Link></div>
+          <div className="acts"><Link className="wh-btn wh-btn-g" to={HADITH_PROGRAM_ENROL}>Enroll now →</Link><Link className="wh-btn wh-btn-glass" to="/hadith-specialization/learning">See My Learning month by month</Link><Link className="wh-btn wh-btn-glass" to="/courses?category=hadith-sciences">Browse the standalone courses</Link></div>
           <small>Enrollment inquiries: {H.EMAIL}</small>
         </section>
       </div>

@@ -22,6 +22,7 @@ const periods = ARABIC_PLAN.modules.map((mo) => ({
 export default function ArabicLearningPage() {
   return (
     <ProgramLearningPreview
+      programKey="arabic"
       meta={{ title: 'My Learning · Two-Year Arabic Program', description: 'The whole Two-Year Arabic Program, module by module and month by month.' }}
       kicker="Two-Year Arabic Program · My Learning"
       title="The whole programme, month by month"

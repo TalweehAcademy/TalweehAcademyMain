@@ -7,22 +7,31 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WahaPage } from './WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
-import { fetchLiveCommerceCatalog } from '../data/liveCommerceCatalog'
+import { fetchLiveCommerceCatalog, peekLiveCommerceCatalog } from '../data/liveCommerceCatalog'
+import { warmProgramCheckout } from '../data/programEnrol'
 import { money, optionBillingLabel } from '../data/commerceCheckout'
 import '../program-learning-v1.css'
 
+function optionsFrom(payload, programKey) {
+  if (!payload) return null
+  const program = (Array.isArray(payload.programs) ? payload.programs : []).find((p) => p.program_key === programKey)
+  return Array.isArray(program?.purchase_options) ? program.purchase_options : []
+}
+
 export default function ProgramEnrolPage({ programKey, title, kicker, lead, included, backHref, backLabel, learningHref }) {
   useDocumentMeta({ title: `Enroll · ${title}`, description: lead })
-  const [state, setState] = useState({ loading: true, options: [], error: '' })
+  // A catalog already fetched on the programme page paints the options at once; a fresh copy follows.
+  const [state, setState] = useState(() => {
+    const cached = optionsFrom(peekLiveCommerceCatalog(), programKey)
+    return cached ? { loading: false, options: cached, error: '' } : { loading: true, options: [], error: '' }
+  })
   useEffect(() => {
-    const controller = new AbortController()
-    fetchLiveCommerceCatalog({ force: true, signal: controller.signal })
-      .then((payload) => {
-        const program = (Array.isArray(payload?.programs) ? payload.programs : []).find((p) => p.program_key === programKey)
-        setState({ loading: false, options: Array.isArray(program?.purchase_options) ? program.purchase_options : [], error: '' })
-      })
-      .catch((e) => { if (e?.name !== 'AbortError') setState({ loading: false, options: [], error: 'Enrollment options could not be loaded. Please refresh and try again.' }) })
-    return () => controller.abort()
+    let active = true
+    warmProgramCheckout()
+    fetchLiveCommerceCatalog()
+      .then((payload) => { if (active) setState({ loading: false, options: optionsFrom(payload, programKey) || [], error: '' }) })
+      .catch(() => { if (active) setState((current) => (current.options.length ? current : { loading: false, options: [], error: 'Enrollment options could not be loaded. Please refresh and try again.' })) })
+    return () => { active = false }
   }, [programKey])
 
   return (
@@ -46,7 +55,7 @@ export default function ProgramEnrolPage({ programKey, title, kicker, lead, incl
                   <div className="pe-price"><b>{money(option.amount_cents, option.currency)}</b><small>{full ? 'one payment' : `/ ${option.billing_interval || 'month'}`}</small></div>
                   <p className="pe-sub">{option.display_subtitle || optionBillingLabel(option)}</p>
                   <ul className="pe-list">{included.map((line) => <li key={line}>{line}</li>)}</ul>
-                  <a className={`wh-btn ${full ? 'wh-btn-g' : 'wh-btn-glass'} pe-cta`} href={`/checkout?options=${encodeURIComponent(option.id)}`}>{full ? 'Pay in full' : 'Pay monthly'} →</a>
+                  <Link className={`wh-btn ${full ? 'wh-btn-g' : 'wh-btn-glass'} pe-cta`} to={`/checkout?options=${encodeURIComponent(option.id)}`}>{full ? 'Pay in full' : 'Pay monthly'} →</Link>
                 </article>
               )
             }) : <p className="cw-empty">Online enrollment for this programme opens soon. For enrollment now, contact info@talweehacademy.com.</p>}

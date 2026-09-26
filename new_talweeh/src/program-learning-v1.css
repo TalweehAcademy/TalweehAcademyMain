@@ -10,7 +10,7 @@
 .pl-stats b{display:block;font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--p-head)}
 .pl-stats small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
 .pl-hero .acts,.pl-cta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
-.pl-lock{margin:16px auto 0;max-width:60ch;font-size:13px;color:var(--p-mut)}
+.wh-home .pl-lock{margin:16px auto 0;max-width:60ch;padding:0 16px;font-size:13px;color:var(--p-mut)}
 
 .pl-board{margin-top:56px}
 .pl-periods{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
@@ -68,5 +68,6 @@
 .pe-list li{position:relative;padding-left:26px;font-size:14px;line-height:1.5;color:var(--p-text)}
 .pe-list li::before{content:'✓';position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10.5px;font-weight:800;background:color-mix(in srgb,var(--gold) 22%,transparent);color:var(--p-gold)}
 .pe-cta{justify-content:center}
-.pe-note{max-width:760px;margin:22px auto 60px;text-align:center;font-size:13px;line-height:1.6;color:var(--p-mut)}
-.pe-note a{color:var(--p-gold);font-weight:700}
+/* .wh-home p resets margins, so these need the shell class to keep their spacing and centring. */
+.wh-home .pe-note{max-width:640px;margin:34px auto 72px;padding:0 20px;text-align:center;font-size:13.5px;line-height:1.7;color:var(--p-mut);text-wrap:balance}
+.wh-home .pe-note a{color:var(--p-gold);font-weight:700}

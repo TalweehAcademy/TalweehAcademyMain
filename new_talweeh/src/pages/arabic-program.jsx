@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { PageHeader, PageFooter } from './_shared'
 import VideoFacade from '../components/VideoFacade'
 import './arabic-single-page.css'
@@ -120,7 +121,7 @@ export default function ArabicProgramPage() {
         </section>
 
         <section className="arb-membership-finish" aria-label="Join the Arabic program">
-          <a className="arb-btn-primary" href={ARABIC_PROGRAM_ENROL}>Enroll now</a>
+          <Link className="arb-btn-primary" to={ARABIC_PROGRAM_ENROL}>Enroll now</Link>
         </section>
       </main>
       <PageFooter />

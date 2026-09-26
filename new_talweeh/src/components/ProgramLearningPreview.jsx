@@ -3,18 +3,20 @@
 // students see it in the Legacy portal (periods > months > weeks), with every lesson locked like a paid
 // course's curriculum: titles only, no video links. Data: src/data/programLearningPlans.js (exported from
 // Legacy). Styles: program-learning-v1.css, on top of the Wāḥa shell and courses-waha-v1.css (.cw-lc cards).
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WahaPage } from './WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { LEGACY_PORTAL } from '../constants/links'
+import { warmProgramEnrol } from '../data/programEnrol'
 import '../program-learning-v1.css'
 
 /**
  * periods: [{ key, label, sub, months: [{ key, label, sub, weeks: [{ week, items: [{ title, sub?, tag?, note? }] }] }] }]
  */
-export default function ProgramLearningPreview({ meta, kicker, title, lead, periodLabel, periods, enrolHref, backHref, backLabel, stats }) {
+export default function ProgramLearningPreview({ programKey, meta, kicker, title, lead, periodLabel, periods, enrolHref, backHref, backLabel, stats }) {
   useDocumentMeta(meta)
+  useEffect(() => { const t = setTimeout(() => warmProgramEnrol(programKey), 800); return () => clearTimeout(t) }, [programKey])
   const [p, setP] = useState(0)
   const [m, setM] = useState(0)
   const period = periods[p]
@@ -32,7 +34,7 @@ export default function ProgramLearningPreview({ meta, kicker, title, lead, peri
           <p className="lead">{lead}</p>
           {stats?.length ? <div className="pl-stats">{stats.map(([k, v]) => <span key={k}><b>{v}</b><small>{k}</small></span>)}</div> : null}
           <div className="acts">
-            <a className="wh-btn wh-btn-g" href={enrolHref}>Enroll now →</a>
+            <Link className="wh-btn wh-btn-g" to={enrolHref}>Enroll now →</Link>
             <a className="wh-btn wh-btn-glass" href={`${LEGACY_PORTAL}/auth/login`}>Already enrolled? Sign in</a>
           </div>
           <p className="pl-lock">🔒 Lessons play in the Talweeh Student Portal once you enroll. This page shows the whole plan so you can see what each month holds.</p>
@@ -87,7 +89,7 @@ export default function ProgramLearningPreview({ meta, kicker, title, lead, peri
           <span className="cw-kicker">Enrollment</span>
           <h2>Ready to begin?</h2>
           <p>Pay in full or month by month. Your lessons, quizzes, notes and progress open in the Student Portal as soon as payment is confirmed.</p>
-          <div className="acts"><a className="wh-btn wh-btn-g" href={enrolHref}>Enroll now →</a><Link className="wh-btn wh-btn-glass" to={backHref}>{backLabel}</Link></div>
+          <div className="acts"><Link className="wh-btn wh-btn-g" to={enrolHref}>Enroll now →</Link><Link className="wh-btn wh-btn-glass" to={backHref}>{backLabel}</Link></div>
         </section>
       </div>
     </WahaPage>

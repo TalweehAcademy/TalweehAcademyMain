@@ -5,6 +5,17 @@ let cachedPayload = null
 let cachedAt = 0
 let pendingRequest = null
 
+/** The last catalog fetched in this visit, if it is at most maxAgeMs old (for an instant first paint). */
+export function peekLiveCommerceCatalog(maxAgeMs = 120000) {
+  return cachedPayload && Date.now() - cachedAt < maxAgeMs ? cachedPayload : null
+}
+
+/** Starts fetching the catalog in the background (shared with the next caller), ignoring failures. */
+export function warmLiveCommerceCatalog() {
+  if (peekLiveCommerceCatalog(MEMORY_CACHE_MS) || pendingRequest) return
+  fetchLiveCommerceCatalog().catch(() => {})
+}
+
 function trimBase(value = '') {
   return String(value || '').trim().replace(/\/+$/, '')
 }
