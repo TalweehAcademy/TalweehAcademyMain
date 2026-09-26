@@ -177,7 +177,7 @@ export default function CheckoutExperience({ initialOptionIds = [], initialHando
     const selectedSlugs = new Set(selectedCourses.map((course) => course.checkout_slug))
     const ownedSlugs = new Set(checkoutIdentity.ownedCheckoutSlugs || [])
     return catalog
-      .filter((course) => !selectedSlugs.has(course.checkout_slug) && !ownedSlugs.has(course.checkout_slug))
+      .filter((course) => !course.program && !selectedSlugs.has(course.checkout_slug) && !ownedSlugs.has(course.checkout_slug))
       .map((course) => ({
         course,
         option: firstCompatibleOption(course, currency, hasSubscription),

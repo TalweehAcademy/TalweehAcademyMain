@@ -33,7 +33,7 @@ export function recommend(catalog, selected, { currency = 'USD', hasSubscription
     return options.find((o) => o.billing_type === 'one_time') || options[0] || null
   }
   return catalog
-    .filter((c) => !chosen.has(c.checkout_slug) && !ownedSet.has(c.checkout_slug))
+    .filter((c) => !c.program && !chosen.has(c.checkout_slug) && !ownedSet.has(c.checkout_slug))
     .map((course) => {
       let score = course.featured ? 2 : 0
       for (const s of selected) {

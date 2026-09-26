@@ -46,7 +46,10 @@ export function optionBillingLabel(option = {}) {
 
 export async function fetchCheckoutCatalog({ signal } = {}) {
   const payload = await fetchLiveCommerceCatalog({ force: true, signal })
-  return (Array.isArray(payload?.courses) ? payload.courses : [])
+  // Programmes (Two-Year Arabic Program, Hadith Specialization) come apart from the course list so they can be
+  // bought here without being listed among the courses.
+  const programs = (Array.isArray(payload?.programs) ? payload.programs : []).map((program) => ({ ...program, program: true }))
+  return [...(Array.isArray(payload?.courses) ? payload.courses : []), ...programs]
     .filter((course) => !course?.free && course?.checkout_available !== false)
     .map((course) => ({
       ...course,
