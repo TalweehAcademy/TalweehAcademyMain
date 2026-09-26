@@ -1,0 +1,55 @@
+/* ═══ Programme "My Learning" preview (/arabic/learning, /hadith-specialization/learning) ═══
+   ProgramLearningPreview.jsx, inside the Wāḥa shell (.wh-home.cw.pl); lesson cards are courses-waha-v1.css .cw-lc. */
+.pl-hero{margin-top:40px;text-align:center;max-width:860px;margin-inline:auto}
+.pl-back{display:inline-block;margin-bottom:16px;font-size:13px;font-weight:700;color:var(--p-gold)}
+.wh-home .pl-hero h1{font-size:clamp(38px,4.6vw,62px);margin:6px 0 12px}
+.wh-home .pl-hero .lead{color:var(--p-mut);line-height:1.8;max-width:62ch;margin:0 auto}
+.pl-stats{display:inline-grid;grid-auto-flow:column;margin:24px auto 0;border-radius:18px;overflow:hidden;border:1px solid var(--p-line);background:var(--p-card)}
+.pl-stats span{padding:11px 18px;border-right:1px solid var(--p-line)}
+.pl-stats span:last-child{border:0}
+.pl-stats b{display:block;font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--p-head)}
+.pl-stats small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.pl-hero .acts,.pl-cta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.pl-lock{margin:16px auto 0;max-width:60ch;font-size:13px;color:var(--p-mut)}
+
+.pl-board{margin-top:56px}
+.pl-periods{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.pl-periods button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 18px;border-radius:20px;border:1px solid var(--p-line);background:var(--p-card);cursor:pointer;text-align:left;font:inherit;transition:.3s}
+.pl-periods button span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--p-gold)}
+.pl-periods button strong{font-family:'Lora',serif;font-size:17px;line-height:1.25;color:var(--p-head)}
+.pl-periods button small{font-size:12.5px;color:var(--p-mut)}
+.pl-periods button.on{background:var(--c-grad,var(--c-solid));border-color:var(--c-solid)}
+.pl-periods button.on strong{color:var(--c-head)}.pl-periods button.on span{color:var(--gold)}.pl-periods button.on small{color:var(--c-mut)}
+.pl-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.pl-months button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid var(--p-line);background:var(--p-card);cursor:pointer;font:inherit;text-align:left;transition:.25s}
+.pl-months button b{font-size:13.5px;color:var(--p-head)}
+.pl-months button small{font-size:12px;color:var(--p-mut)}
+.pl-months button:hover{border-color:var(--gold)}
+.pl-months button.empty{opacity:.55}
+.pl-months button.on{background:linear-gradient(135deg,var(--gold-b),var(--gold) 55%,var(--gold-d));border-color:transparent}
+.pl-months button.on b,.pl-months button.on small{color:var(--g2)}
+.pl-month-h{display:flex;align-items:baseline;gap:12px;margin:30px 0 14px}
+.wh-home .pl-month-h h2{font-size:clamp(26px,3vw,36px)}
+.pl-month-h small{color:var(--p-mut);font-size:14px}
+.pl-weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+.pl-week{display:flex;flex-direction:column;gap:8px;min-width:0;padding:10px;border-radius:20px;background:var(--p-soft);border:1px solid var(--p-line)}
+.pl-week-h{display:flex;justify-content:space-between;align-items:baseline;padding:4px 6px}
+.pl-week-h b{font-family:'Lora',serif;font-size:17px;color:var(--p-head)}
+.pl-week-h small{font-size:12px;color:var(--p-mut)}
+.pl .pl-week .cw-lc{grid-template-columns:40px minmax(0,1fr);padding:12px;border-radius:16px}
+.pl .pl-week .cw-lc .n{width:36px;height:36px}
+.pl .pl-week .cw-lc strong{font-size:13.5px;overflow-wrap:anywhere}
+.pl-course{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:800;color:var(--sc,var(--p-gold));background:color-mix(in srgb,var(--sc,var(--gold)) 14%,transparent)}
+.pl-note{margin:0;padding:8px 10px;font-size:12.5px;color:var(--p-mut);font-style:italic}
+/* Hadith strands, as on /hadith-specialization. */
+.pl .s-history{--sc:#a8792f}.pl .s-narrators{--sc:#b0654a}.pl .s-isnad{--sc:#2f7a58}.pl .s-method{--sc:#6c5a9e}
+[data-theme="dark"] .pl .s-history{--sc:#d7b373}[data-theme="dark"] .pl .s-narrators{--sc:#e3a58a}[data-theme="dark"] .pl .s-isnad{--sc:#7fb89a}[data-theme="dark"] .pl .s-method{--sc:#b7a6d9}
+.pl .cw-lc[class*=" s-"]{box-shadow:inset 3px 0 0 var(--sc)}
+
+.pl-cta{margin:90px 0 20px;padding:48px 28px;border-radius:32px;text-align:center;background:linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.pl-cta .cw-kicker{color:var(--gold)}
+.wh-home .pl-cta h2{color:var(--cream);font-size:clamp(30px,4vw,46px);margin:8px 0 10px}
+.wh-home .pl-cta p{color:rgba(243,232,211,.8);max-width:56ch;margin:0 auto}
+
+@media (max-width:1100px){.pl-weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.pl-weeks{grid-template-columns:minmax(0,1fr)}.pl-stats{grid-auto-flow:row;grid-template-columns:1fr 1fr}.pl-stats span:nth-child(2){border-right:0}}

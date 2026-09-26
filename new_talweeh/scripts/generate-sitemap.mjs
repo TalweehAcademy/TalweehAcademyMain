@@ -16,6 +16,9 @@ const staticPaths = [
   '/arabic/program',
   '/arabic/faq',
   '/arabic/about',
+  '/arabic/learning',
+  '/hadith-specialization',
+  '/hadith-specialization/learning',
   '/p/terms-conditions',
 ]
 

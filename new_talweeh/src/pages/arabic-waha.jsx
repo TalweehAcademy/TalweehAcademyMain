@@ -6,6 +6,8 @@
 // and the closing call.
 import { Fragment, useRef, useState } from 'react'
 import { WahaPage } from '../components/WahaShell'
+import { Link } from 'react-router-dom'
+import { ARABIC_PROGRAM_ENROL } from '../constants/links'
 import WahaVideoPlayer from '../courses/WahaVideoPlayer'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { youTubeId } from '../courses/courseKit'
@@ -91,7 +93,7 @@ function Hero() {
       <div className="ai-explain" aria-live="polite"><small>{LENSES.find((l) => l[0] === lens)[1]} · word {word + 1} of {WORDS.length}</small><strong>{head}</strong><p>{body}</p></div>
       <div className="foot">
         <p>Don’t just Recite the Qur’an — Understand it! In just 6 hours per week over two years, students confidently understand Qur’anic passages, navigate Arabic dictionaries, and read unvowelized texts.</p>
-        <div className="acts"><a className="wh-btn wh-btn-g" href={R.LINKS.membership} target="_blank" rel="noreferrer">Become a Member →</a><a className="wh-btn wh-btn-glass" href="#ladder" onClick={seeTexts}>See the texts</a></div>
+        <div className="acts"><a className="wh-btn wh-btn-g" href={ARABIC_PROGRAM_ENROL}>Enroll now →</a><a className="wh-btn wh-btn-glass" href="#ladder" onClick={seeTexts}>See the texts</a><Link className="wh-btn wh-btn-glass" to="/arabic/learning">See My Learning</Link></div>
       </div>
     </section>
   )
@@ -189,7 +191,8 @@ export default function ArabicWahaPage() {
           <h2>Unlock the Language of the Qur’an<br />Beyond Translation</h2>
           <p>{R.INVITATION}</p>
           <div className="acts">
-            <a className="wh-btn wh-btn-g" href={R.LINKS.membership} target="_blank" rel="noreferrer">Become a Member →</a>
+            <a className="wh-btn wh-btn-g" href={ARABIC_PROGRAM_ENROL}>Enroll now →</a>
+            <Link className="wh-btn wh-btn-glass" to="/arabic/learning">See the programme month by month</Link>
             <a className="wh-btn wh-btn-glass" href={R.LINKS.telegram} target="_blank" rel="noreferrer">Talweeh Society on Telegram</a>
           </div>
         </section>

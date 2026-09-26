@@ -3,6 +3,8 @@
 // src/pages/hadith-specialization.jsx. "strand" groups the courses; "catalogSlug" links a course that is
 // also sold on its own to the public catalog. Nukhbat al-Fikar (Year 1, before Tadrīb al-Rāwī) is added
 // here; its overview and outcomes come from the standalone Nukhbat al-Fikar course.
+// Order: the courses follow the Hadith Specialization lesson plan in the Legacy portal (first lesson of each
+// course); Manāhij al-Muḥaddithīn, Dirāsat al-Asānīd and Ruwāt al-Ḥadīth — Part 2 are in Year 2.
 
 export const HADITH = {
   "HERO": {
@@ -44,9 +46,26 @@ export const HADITH = {
       ]
     },
     {
-      "n": 2,
+      "strand": "method",
+      "ar": "نُخْبَةُ الفِكَر",
+      "title": "Nukhbat al-Fikar",
+      "subtitle": "Foundations of Hadith Nomenclature",
+      "catalogSlug": "nukhbat-al-fikr",
       "year": 1,
-      "i": 2,
+      "overview": "A comprehensive examination of the foundational text by al-Ḥāfiẓ Ibn Ḥajar on the nomenclature of ḥadīth. In this concise yet profoundly informative work, Ibn Ḥajar summarizes more than 100 branches of the discipline of Uṣūl al-ḥadīth — the groundwork on which the advanced study of Tadrīb al-Rāwī is built.",
+      "outcomes": [
+        "Study the essential topics of ḥadīth science as Ibn Ḥajar presents them, including al-isnād, al-ʿilal and al-jarḥ wa al-taʿdīl.",
+        "Appreciate the depth and significance of the many branches of Uṣūl al-ḥadīth.",
+        "Understand how these branches interconnect and contribute to the integrity and authenticity of ḥadīth literature.",
+        "Engage critically with Ibn Ḥajar’s methodology and the rational foundations underlying the evaluation of narrations."
+      ],
+      "n": 2,
+      "i": 2
+    },
+    {
+      "n": 3,
+      "year": 1,
+      "i": 3,
       "strand": "history",
       "ar": "تَدْوِينُ السُّنَّة",
       "title": "Tadwīn al-Sunnah",
@@ -61,9 +80,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 3,
+      "n": 4,
       "year": 1,
-      "i": 3,
+      "i": 4,
       "strand": "history",
       "ar": "مَكَانَةُ السُّنَّة",
       "title": "Makānat al-Sunnah",
@@ -78,9 +97,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 4,
+      "n": 5,
       "year": 1,
-      "i": 4,
+      "i": 5,
       "strand": "narrators",
       "ar": "رُوَاةُ الحَدِيث ١",
       "title": "Ruwāt al-Ḥadīth — Part 1",
@@ -93,140 +112,9 @@ export const HADITH = {
       ]
     },
     {
-      "n": 5,
-      "year": 1,
-      "i": 5,
-      "strand": "isnad",
-      "ar": "تَكْوِينُ الإِسْنَاد",
-      "title": "Takwīn al-Isnād",
-      "subtitle": "Formation of Chains of Transmission",
-      "catalogSlug": "takwin-al-asanid",
-      "overview": "This course explains how the isnād developed from the Prophetic era through the generations of the Ṣaḥābah, their successors, and later scholars, culminating in the major ḥadīth compilations. Students learn methods for identifying prominent narrators and apply the Madār method in tracing transmission chains.",
-      "outcomes": [
-        "Outline the historical development of the isnād from the Prophetic era to the codification period.",
-        "Apply the Madār method in tracing transmission chains.",
-        "Identify key narrators leading up to the six canonical collections.",
-        "Understand the relationship between isnād development and the emergence of ḥadīth compilations."
-      ]
-    },
-    {
       "n": 6,
       "year": 1,
       "i": 6,
-      "strand": "narrators",
-      "ar": "الجَرْحُ وَالتَّعْدِيل",
-      "title": "Al-Jarḥ wa al-Taʿdīl",
-      "subtitle": "Criticism and Accreditation of Narrators",
-      "catalogSlug": "al-jarh-wa-l-tadil",
-      "overview": "This course offers an in-depth study of the principles and application of narrator criticism. Students examine the nature of narrator evaluation, the interaction between jarḥ and taʿdīl, the terminology of the classical critics, and the external factors that influence narrator assessment.",
-      "outcomes": [
-        "Understand the foundational principles governing narrator evaluation.",
-        "Differentiate between various types and levels of jarḥ and taʿdīl.",
-        "Interpret terminology used by classical critics in narrator assessment.",
-        "Apply principles of fair judgment when reconciling conflicting evaluations."
-      ]
-    },
-    {
-      "n": 7,
-      "year": 1,
-      "i": 7,
-      "strand": "method",
-      "ar": "مَنَاهِجُ المُحَدِّثِين",
-      "title": "Manāhij al-Muḥaddithīn",
-      "subtitle": "Methodologies of the Hadith Scholars",
-      "overview": "This course examines the methodologies employed by the authors of major ḥadīth compilations, including Mālik, Aḥmad, al-Bukhārī, Muslim, Abū Dāwūd, al-Tirmidhī, Ibn Mājah, al-Nasāʾī, al-Dārimī, al-Ṭaḥāwī, and others. Attention is given to selection, narration, organization, subtle indications of ʿilal, jurisprudential leanings, and chapter headings.",
-      "outcomes": [
-        "Describe the methodologies of major ḥadīth compilers.",
-        "Analyze how compilers selected, structured, and transmitted narrations.",
-        "Identify indications of ʿilal and juristic opinions within compilations.",
-        "Evaluate the role of chapter headings in conveying scholarly perspectives."
-      ]
-    },
-    {
-      "n": 8,
-      "year": 1,
-      "i": 8,
-      "strand": "sources",
-      "ar": "التَّخْرِيج",
-      "title": "Takhrīj",
-      "subtitle": "Referencing Hadiths in Primary Sources",
-      "catalogSlug": "takhri-j-al-h-adi-th-q2zxxj",
-      "overview": "This course trains students in sourcing ḥadīth back to their original references. Students learn to locate narrations by isnād, matn, topical keywords, or thematic subject, use classical and modern research tools, properly format a takhrīj, and create visual charts of transmission routes.",
-      "outcomes": [
-        "Locate narrations using isnād, matn, or topical references.",
-        "Utilize classical and modern takhrīj resources effectively.",
-        "Properly format a takhrīj entry.",
-        "Construct isnād charts showing multiple routes of transmission."
-      ]
-    },
-    {
-      "n": 9,
-      "year": 1,
-      "i": 9,
-      "strand": "isnad",
-      "ar": "دِرَاسَةُ الأَسَانِيد",
-      "title": "Dirāsat al-Asānīd",
-      "subtitle": "Analysis of Chains of Transmission",
-      "overview": "After completing studies in takhrīj, al-Jarḥ wa al-Taʿdīl, and muṣṭalaḥ, students learn how to apply rulings to specific isnāds. This capstone application integrates methodologies from earlier courses so that narrations can be critically evaluated by chain structure, narrator reliability, and transmission context.",
-      "outcomes": [
-        "Apply cumulative knowledge to assess the strength of a given isnād.",
-        "Integrate principles from muṣṭalaḥ, takhrīj, and al-Jarḥ wa al-Taʿdīl.",
-        "Formulate a reasoned grading for narrations based on chain analysis."
-      ]
-    },
-    {
-      "n": 10,
-      "year": 1,
-      "i": 10,
-      "strand": "isnad",
-      "ar": "الأَثْبَاتُ وَالفَهَارِس",
-      "title": "Al-Athbāt wa al-Fahāris",
-      "subtitle": "Indexes and Referential Works",
-      "catalogSlug": "al-athbat-wal-faharis",
-      "overview": "This course examines the athbāt, fahāris, and maʿājim of later-era narrators. Students learn how to locate the maqrūʾāt and masmūʿāt of a narrator with their teachers in the post-classical period, with special attention to historically significant high chains and verifiable samāʿ.",
-      "outcomes": [
-        "Navigate and interpret later-era athbāt and fahāris.",
-        "Identify maqrūʾāt and masmūʿāt in later isnāds.",
-        "Trace historically significant high chains with authenticated samāʿ."
-      ]
-    },
-    {
-      "n": 11,
-      "year": 1,
-      "i": 11,
-      "strand": "narrators",
-      "ar": "رُوَاةُ الحَدِيث ٢",
-      "title": "Ruwāt al-Ḥadīth — Part 2",
-      "subtitle": "Advanced Narrator Studies",
-      "overview": "This course examines early and later works of al-Jarḥ wa al-Taʿdīl together with reference works on personal names, kunā, alqāb, and ansāb. Students develop familiarity with the literature needed to identify narrators accurately and compare the methodologies of prominent critics across the centuries.",
-      "outcomes": [
-        "Identify and describe major early and later works in al-Jarḥ wa al-Taʿdīl.",
-        "Utilize name, title, and lineage references for narrator identification.",
-        "Accurately read and vocalize narrator names.",
-        "Compare methodological approaches of prominent critics across centuries."
-      ]
-    },
-    {
-      "strand": "method",
-      "ar": "نُخْبَةُ الفِكَر",
-      "title": "Nukhbat al-Fikar",
-      "subtitle": "Foundations of Hadith Nomenclature",
-      "catalogSlug": "nukhbat-al-fikr",
-      "year": 1,
-      "overview": "A comprehensive examination of the foundational text by al-Ḥāfiẓ Ibn Ḥajar on the nomenclature of ḥadīth. In this concise yet profoundly informative work, Ibn Ḥajar summarizes more than 100 branches of the discipline of Uṣūl al-ḥadīth — the groundwork on which the advanced study of Tadrīb al-Rāwī is built.",
-      "outcomes": [
-        "Study the essential topics of ḥadīth science as Ibn Ḥajar presents them, including al-isnād, al-ʿilal and al-jarḥ wa al-taʿdīl.",
-        "Appreciate the depth and significance of the many branches of Uṣūl al-ḥadīth.",
-        "Understand how these branches interconnect and contribute to the integrity and authenticity of ḥadīth literature.",
-        "Engage critically with Ibn Ḥajar’s methodology and the rational foundations underlying the evaluation of narrations."
-      ],
-      "n": 12,
-      "i": 12
-    },
-    {
-      "n": 13,
-      "year": 1,
-      "i": 13,
       "strand": "method",
       "ar": "تَدْرِيبُ الرَّاوِي ١",
       "title": "Tadrīb al-Rāwī 1",
@@ -242,7 +130,74 @@ export const HADITH = {
       "note": "The supplied course notes describe Tadrīb al-Rāwī as one continuous advanced Muṣṭalaḥ course. This overview is shared across Parts 1 and 2 of the two-year sequence."
     },
     {
-      "n": 14,
+      "n": 7,
+      "year": 1,
+      "i": 7,
+      "strand": "isnad",
+      "ar": "تَكْوِينُ الإِسْنَاد",
+      "title": "Takwīn al-Isnād",
+      "subtitle": "Formation of Chains of Transmission",
+      "catalogSlug": "takwin-al-asanid",
+      "overview": "This course explains how the isnād developed from the Prophetic era through the generations of the Ṣaḥābah, their successors, and later scholars, culminating in the major ḥadīth compilations. Students learn methods for identifying prominent narrators and apply the Madār method in tracing transmission chains.",
+      "outcomes": [
+        "Outline the historical development of the isnād from the Prophetic era to the codification period.",
+        "Apply the Madār method in tracing transmission chains.",
+        "Identify key narrators leading up to the six canonical collections.",
+        "Understand the relationship between isnād development and the emergence of ḥadīth compilations."
+      ]
+    },
+    {
+      "n": 8,
+      "year": 1,
+      "i": 8,
+      "strand": "narrators",
+      "ar": "الجَرْحُ وَالتَّعْدِيل",
+      "title": "Al-Jarḥ wa al-Taʿdīl",
+      "subtitle": "Criticism and Accreditation of Narrators",
+      "catalogSlug": "al-jarh-wa-l-tadil",
+      "overview": "This course offers an in-depth study of the principles and application of narrator criticism. Students examine the nature of narrator evaluation, the interaction between jarḥ and taʿdīl, the terminology of the classical critics, and the external factors that influence narrator assessment.",
+      "outcomes": [
+        "Understand the foundational principles governing narrator evaluation.",
+        "Differentiate between various types and levels of jarḥ and taʿdīl.",
+        "Interpret terminology used by classical critics in narrator assessment.",
+        "Apply principles of fair judgment when reconciling conflicting evaluations."
+      ]
+    },
+    {
+      "n": 9,
+      "year": 1,
+      "i": 9,
+      "strand": "isnad",
+      "ar": "الأَثْبَاتُ وَالفَهَارِس",
+      "title": "Al-Athbāt wa al-Fahāris",
+      "subtitle": "Indexes and Referential Works",
+      "catalogSlug": "al-athbat-wal-faharis",
+      "overview": "This course examines the athbāt, fahāris, and maʿājim of later-era narrators. Students learn how to locate the maqrūʾāt and masmūʿāt of a narrator with their teachers in the post-classical period, with special attention to historically significant high chains and verifiable samāʿ.",
+      "outcomes": [
+        "Navigate and interpret later-era athbāt and fahāris.",
+        "Identify maqrūʾāt and masmūʿāt in later isnāds.",
+        "Trace historically significant high chains with authenticated samāʿ."
+      ]
+    },
+    {
+      "n": 10,
+      "year": 1,
+      "i": 10,
+      "strand": "sources",
+      "ar": "التَّخْرِيج",
+      "title": "Takhrīj",
+      "subtitle": "Referencing Hadiths in Primary Sources",
+      "catalogSlug": "takhri-j-al-h-adi-th-q2zxxj",
+      "overview": "This course trains students in sourcing ḥadīth back to their original references. Students learn to locate narrations by isnād, matn, topical keywords, or thematic subject, use classical and modern research tools, properly format a takhrīj, and create visual charts of transmission routes.",
+      "outcomes": [
+        "Locate narrations using isnād, matn, or topical references.",
+        "Utilize classical and modern takhrīj resources effectively.",
+        "Properly format a takhrīj entry.",
+        "Construct isnād charts showing multiple routes of transmission."
+      ]
+    },
+    {
+      "n": 11,
       "year": 2,
       "i": 1,
       "strand": "method",
@@ -260,9 +215,56 @@ export const HADITH = {
       "note": "The supplied course notes describe Tadrīb al-Rāwī as one continuous advanced Muṣṭalaḥ course. This overview is shared across Parts 1 and 2 of the two-year sequence."
     },
     {
-      "n": 15,
+      "n": 12,
       "year": 2,
       "i": 2,
+      "strand": "narrators",
+      "ar": "رُوَاةُ الحَدِيث ٢",
+      "title": "Ruwāt al-Ḥadīth — Part 2",
+      "subtitle": "Advanced Narrator Studies",
+      "overview": "This course examines early and later works of al-Jarḥ wa al-Taʿdīl together with reference works on personal names, kunā, alqāb, and ansāb. Students develop familiarity with the literature needed to identify narrators accurately and compare the methodologies of prominent critics across the centuries.",
+      "outcomes": [
+        "Identify and describe major early and later works in al-Jarḥ wa al-Taʿdīl.",
+        "Utilize name, title, and lineage references for narrator identification.",
+        "Accurately read and vocalize narrator names.",
+        "Compare methodological approaches of prominent critics across centuries."
+      ]
+    },
+    {
+      "n": 13,
+      "year": 2,
+      "i": 3,
+      "strand": "method",
+      "ar": "مَنَاهِجُ المُحَدِّثِين",
+      "title": "Manāhij al-Muḥaddithīn",
+      "subtitle": "Methodologies of the Hadith Scholars",
+      "overview": "This course examines the methodologies employed by the authors of major ḥadīth compilations, including Mālik, Aḥmad, al-Bukhārī, Muslim, Abū Dāwūd, al-Tirmidhī, Ibn Mājah, al-Nasāʾī, al-Dārimī, al-Ṭaḥāwī, and others. Attention is given to selection, narration, organization, subtle indications of ʿilal, jurisprudential leanings, and chapter headings.",
+      "outcomes": [
+        "Describe the methodologies of major ḥadīth compilers.",
+        "Analyze how compilers selected, structured, and transmitted narrations.",
+        "Identify indications of ʿilal and juristic opinions within compilations.",
+        "Evaluate the role of chapter headings in conveying scholarly perspectives."
+      ]
+    },
+    {
+      "n": 14,
+      "year": 2,
+      "i": 4,
+      "strand": "isnad",
+      "ar": "دِرَاسَةُ الأَسَانِيد",
+      "title": "Dirāsat al-Asānīd",
+      "subtitle": "Analysis of Chains of Transmission",
+      "overview": "After completing studies in takhrīj, al-Jarḥ wa al-Taʿdīl, and muṣṭalaḥ, students learn how to apply rulings to specific isnāds. This capstone application integrates methodologies from earlier courses so that narrations can be critically evaluated by chain structure, narrator reliability, and transmission context.",
+      "outcomes": [
+        "Apply cumulative knowledge to assess the strength of a given isnād.",
+        "Integrate principles from muṣṭalaḥ, takhrīj, and al-Jarḥ wa al-Taʿdīl.",
+        "Formulate a reasoned grading for narrations based on chain analysis."
+      ]
+    },
+    {
+      "n": 15,
+      "year": 2,
+      "i": 5,
       "strand": "sources",
       "ar": "النُّسَخُ وَالتَّقْيِيد",
       "title": "Al-Nushakh wal-Taqyeed",
@@ -273,7 +275,7 @@ export const HADITH = {
     {
       "n": 16,
       "year": 2,
-      "i": 3,
+      "i": 6,
       "strand": "critique",
       "ar": "نَقْدُ الاِسْتِشْرَاق",
       "title": "Orientalist Critique",
@@ -288,7 +290,7 @@ export const HADITH = {
     {
       "n": 17,
       "year": 2,
-      "i": 4,
+      "i": 7,
       "strand": "method",
       "ar": "عِلَلُ الحَدِيث",
       "title": "ʿIlal al-Ḥadīth",
@@ -303,7 +305,7 @@ export const HADITH = {
     {
       "n": 18,
       "year": 2,
-      "i": 5,
+      "i": 8,
       "strand": "applied",
       "ar": "صَحِيحُ البُخَارِيّ",
       "title": "Ṣaḥīḥ al-Bukhārī",
@@ -318,7 +320,7 @@ export const HADITH = {
     {
       "n": 19,
       "year": 2,
-      "i": 6,
+      "i": 9,
       "strand": "applied",
       "ar": "مُوَطَّأُ مَالِك",
       "title": "Muwaṭṭaʾ Mālik",

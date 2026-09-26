@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { PageHeader, PageFooter } from './_shared'
 import VideoFacade from '../components/VideoFacade'
 import './arabic-single-page.css'
+import { ARABIC_PROGRAM_ENROL } from '../constants/links'
 import {
-  ARABIC_LINKS, PROGRAM_HERO, LEARNING_OBJECTIVES_INTRO, LEARNING_OBJECTIVES,
+  PROGRAM_HERO, LEARNING_OBJECTIVES_INTRO, LEARNING_OBJECTIVES,
   PROGRAM_MODULES,
 } from '../content/arabicProgram'
 
@@ -119,7 +120,7 @@ export default function ArabicProgramPage() {
         </section>
 
         <section className="arb-membership-finish" aria-label="Join the Arabic program">
-          <a className="arb-btn-primary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
+          <a className="arb-btn-primary" href={ARABIC_PROGRAM_ENROL}>Enroll now</a>
         </section>
       </main>
       <PageFooter />

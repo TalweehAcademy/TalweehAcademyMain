@@ -36,6 +36,8 @@ import { useContent } from './hooks/useContent'
 import { EditModeProvider, EditModeToggle, Editable } from './components/ContentEditor'
 import { LOGO, SmartLink, WahaHeader, WahaFooter, WahaPage, prefersReducedMotion, useWahaMotion } from './components/WahaShell'
 const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith-waha'))
+const HadithLearningPage = lazy(() => import('./pages/hadith-learning'))
+const ArabicLearningPage = lazy(() => import('./pages/arabic-learning'))
 const AlimiyyahPage = lazy(() => import('./pages/alimiyyah-waha'))
 const NavigationPreviewPage = lazy(() => import('./pages/navigation-preview'))
 
@@ -503,6 +505,7 @@ function AppInner() {
         <Route path="/navigation-preview/Alimiyyah" element={<AlimiyyahPage />} />
         <Route path="/alimiyyah" element={<AlimiyyahPage />} />
         <Route path="/hadith-specialization" element={<HadithSpecializationPage />} />
+        <Route path="/hadith-specialization/learning" element={<HadithLearningPage />} />
         <Route path="/navigation-preview/Hadith%20Specialization" element={<HadithSpecializationPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/navigation-preview/:section" element={<NavigationPreviewPage />} />
@@ -525,6 +528,7 @@ function AppInner() {
         <Route path="/quran/listen" element={<QuranListenPage />} />
         <Route path="/arabic" element={<ArabicPage />} />
         <Route path="/arabic/program" element={<ArabicProgramPage />} />
+        <Route path="/arabic/learning" element={<ArabicLearningPage />} />
         <Route path="/arabic/faq" element={<ArabicFaqPage />} />
         <Route path="/arabic/about" element={<ArabicAboutPage />} />
         <Route path="/p/terms-conditions" element={<AboutWahaPage tab="terms" />} />
