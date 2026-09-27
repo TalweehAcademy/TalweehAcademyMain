@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import CheckoutExperience from '../components/CheckoutExperience'
 import { PageFooter, PageHeader } from './_shared'
 import { commerceCartOptionIds, readCommerceHandoff, rememberCommerceHandoff } from '../data/commerceCart'
+import '../commerce-checkout.css'
 
 function normalizeOptions(value) {
   return Array.from(new Set(

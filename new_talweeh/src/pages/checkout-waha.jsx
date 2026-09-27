@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { WahaPage } from '../components/WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { fetchCheckoutCatalog, money, optionBillingLabel, requestCommerceCheckout, requestCommerceQuote } from '../data/commerceCheckout'
-import { commerceCartOptionIds, readCommerceHandoff, rememberCommerceHandoff } from '../data/commerceCart'
+import { commerceCartOptionIds, readCommerceHandoff, rememberCommerceHandoff, stripHandoffFromUrl } from '../data/commerceCart'
 import { Nudge, Recommendations, Steps, pct, posterOf, recommend } from '../commerce/commerceKit'
 import '../commerce-waha-v1.css'
 
@@ -29,7 +29,7 @@ export default function CheckoutWahaPage() {
   const [params] = useSearchParams()
   const queryHandoff = String(params.get('handoff') || '').trim().slice(0, 4096)
   const initialHandoff = queryHandoff || readCommerceHandoff()
-  useEffect(() => { if (queryHandoff) rememberCommerceHandoff(queryHandoff) }, [queryHandoff])
+  useEffect(() => { if (queryHandoff) { rememberCommerceHandoff(queryHandoff); stripHandoffFromUrl() } }, [queryHandoff])
   const initialOptionIds = useMemo(() => {
     const fromQuery = normalizeOptions(params.get('options'))
     return fromQuery.length ? fromQuery : commerceCartOptionIds()
@@ -97,7 +97,6 @@ export default function CheckoutWahaPage() {
     if (!selectedIds.length) return
     const q = new URLSearchParams()
     q.set('options', selectedIds.join(','))
-    if (initialHandoff) q.set('handoff', initialHandoff)
     window.history.replaceState(window.history.state, '', `/checkout?${q.toString()}`)
   }, [selectionKey, initialHandoff]) // eslint-disable-line react-hooks/exhaustive-deps
 

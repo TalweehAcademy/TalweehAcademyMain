@@ -94,7 +94,7 @@
   z-index: -1;
   background:
     linear-gradient(180deg, rgba(5, 25, 17, .06), rgba(5, 25, 17, .24)),
-    url('/brand/talweeh-pattern-dark.png') center / 620px auto repeat;
+    url('/brand/talweeh-pattern-dark.webp') center / 620px auto repeat;
   opacity: .17;
   pointer-events: none;
 }

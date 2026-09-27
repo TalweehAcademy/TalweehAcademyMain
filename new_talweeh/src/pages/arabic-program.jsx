@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+// The PageHeader-era styles, split out of the global App.css / public-theme.css (only these pages use them).
+import '../App-legacy-pages.css'
+import '../public-theme-legacy-pages.css'
 import { PageHeader, PageFooter } from './_shared'
 import VideoFacade from '../components/VideoFacade'
 import './arabic-single-page.css'

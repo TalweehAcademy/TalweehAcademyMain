@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { PageFooter, PageHeader } from './_shared'
 import { fetchCheckoutCatalog, money, optionBillingLabel } from '../data/commerceCheckout'
 import {
+import '../commerce-checkout.css'
   clearCommerceCart,
   readCommerceCartItems,
   readCommerceHandoff,

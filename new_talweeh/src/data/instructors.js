@@ -3,7 +3,7 @@ export const INSTRUCTORS = [
     slug: 'sheikh-omer-khurshid',
     name: 'Sheikh Omer Khurshid',
     role: 'Instructor · Ḥadīth, Uṣūl & Fiqh',
-    image: '/instructors/sheikh-omer-khurshid.png',
+    image: '/instructors/sheikh-omer-khurshid.webp',
     imagePosition: 'center 22%',
     summary:
       'A graduate of the Faculty of Ḥadīth at the Islamic University of Madinah with broad training across the Islamic sciences and traditional ijāzāt from scholars worldwide.',

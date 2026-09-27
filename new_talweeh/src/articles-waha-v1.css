@@ -28,7 +28,7 @@
 .wh-home .at-feature .ex{font-size:16.5px;line-height:1.85;color:color-mix(in srgb,var(--ink) 78%,transparent)}
 .at-feature .ex::first-letter{float:left;font-family:'Lora',serif;font-size:58px;line-height:.9;padding:6px 10px 0 0;color:var(--p-gold)}
 .at-feature .go,.at-card .go{margin-top:auto;font-weight:800;color:var(--p-gold);font-size:14px}
-.at-feature .art{position:relative;min-height:320px;background:url('/brand/talweeh-pattern-dark.png') repeat center/560px auto,linear-gradient(160deg,var(--g4),var(--g2) 75%)}
+.at-feature .art{position:relative;min-height:320px;background:url('/brand/talweeh-pattern-dark.webp') repeat center/560px auto,linear-gradient(160deg,var(--g4),var(--g2) 75%)}
 .at-feature .art{display:grid;place-items:center;padding:22px}
 .at-feature .art img{position:relative;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.35);border:1px solid rgba(215,179,115,.3)}
 .at-feature .orn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--cream)}
@@ -45,7 +45,7 @@
 .at-card > div{display:flex;flex-direction:column;gap:8px;padding:20px 22px;flex:1}
 .wh-home .at-card h3{font-size:21px;line-height:1.25}
 .wh-home .at-card p{color:var(--p-mut);font-size:14.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.at-cta{margin:90px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.at-cta{margin:90px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .at-cta .cw-kicker{color:var(--gold)}
 .wh-home .at-cta h2{color:var(--cream);font-size:clamp(28px,3.6vw,46px);margin:8px 0 12px}
 .wh-home .at-cta p{color:rgba(243,232,211,.8);max-width:56ch;margin:0 auto 22px;line-height:1.7}

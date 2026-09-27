@@ -1,7 +1,4 @@
 /* Talweeh Commerce v2.4.2 — public-site cart + Stripe Embedded Checkout */
-.academy-cart-link{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 13px;border:1px solid rgba(185,147,61,.35);border-radius:999px;color:inherit;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap}
-.academy-cart-link b{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#9a772c;color:#fff;font-size:10px}
-.academy-cart-mobile{display:none}
 
 .public-course-plan-picker{display:grid;gap:9px;margin:18px 0}
 .public-course-plan-picker>span{font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:#7c6732}
@@ -88,5 +85,5 @@
 [data-theme="dark"] .checkout-savings-panel,[data-theme="dark"] .checkout-bundle-promo,[data-theme="dark"] .checkout-coupon-disclosure,[data-theme="dark"] .checkout-related-card{background:#152019;border-color:#2a3931}
 
 @media(max-width:980px){.commerce-cart-layout,.checkout-main-grid{grid-template-columns:1fr}.commerce-cart-summary,.checkout-payment-panel{position:static}.checkout-related-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:760px){.academy-cart-mobile{display:inline-flex}.nav-actions .academy-cart-link{display:none}.commerce-cart-page,.talweeh-checkout-page{width:min(100% - 22px,1180px);padding-top:28px}.commerce-cart-head,.checkout-page-heading{align-items:flex-start;flex-direction:column}.commerce-cart-item{grid-template-columns:72px minmax(0,1fr)}.commerce-cart-item>strong{grid-column:2}.checkout-order-row{grid-template-columns:60px minmax(0,1fr)}.checkout-order-row>strong{grid-column:2}.checkout-benefit-form{grid-template-columns:1fr}.checkout-benefit-form button{min-height:38px}.checkout-related-grid{grid-template-columns:1fr}.public-course-commerce-actions{grid-template-columns:1fr}}
+@media(max-width:760px){.commerce-cart-page,.talweeh-checkout-page{width:min(100% - 22px,1180px);padding-top:28px}.commerce-cart-head,.checkout-page-heading{align-items:flex-start;flex-direction:column}.commerce-cart-item{grid-template-columns:72px minmax(0,1fr)}.commerce-cart-item>strong{grid-column:2}.checkout-order-row{grid-template-columns:60px minmax(0,1fr)}.checkout-order-row>strong{grid-column:2}.checkout-benefit-form{grid-template-columns:1fr}.checkout-benefit-form button{min-height:38px}.checkout-related-grid{grid-template-columns:1fr}.public-course-commerce-actions{grid-template-columns:1fr}}
 @media(max-width:470px){.checkout-savings-panel{margin:12px}.checkout-bundle-promo{grid-template-columns:1fr}.checkout-bundle-icon{display:none}.checkout-bundle-promo>b{justify-self:start}.checkout-related-section{padding:16px}.checkout-related-card{grid-template-columns:92px minmax(0,1fr)}}

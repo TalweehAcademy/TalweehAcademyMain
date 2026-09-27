@@ -9,7 +9,7 @@
 [data-theme="dark"] .ai .t-found{--tc:#d7b373}[data-theme="dark"] .ai .t-nahw{--tc:#7fb89a}[data-theme="dark"] .ai .t-sarf{--tc:#e3a58a}[data-theme="dark"] .ai .t-adab{--tc:#b7a6d9}[data-theme="dark"] .ai .t-quran{--tc:#8fb3c9}
 
 /* ── hero: the Basmalah, parsed ── */
-.ai-hero{margin-top:36px;padding:34px;border-radius:36px;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
+.ai-hero{margin-top:36px;padding:34px;border-radius:36px;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream)}
 .ai-hero .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
 .ai-hero .cw-kicker{color:var(--gold)}
 .wh-home .ai-hero h1{color:var(--cream);font-size:clamp(34px,4.4vw,58px);line-height:1.05;margin:8px 0 0;max-width:17ch}
@@ -97,7 +97,7 @@
 
 /* FAQ + closing call */
 .ai-faq{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
-.ai-cta{margin:100px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.ai-cta{margin:100px 0 20px;padding:50px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .wh-home .ai-cta h2{color:var(--cream);font-size:clamp(30px,4vw,50px);margin:0 0 14px}
 .wh-home .ai-cta p{color:rgba(243,232,211,.8);max-width:64ch;margin:0 auto 24px;line-height:1.75}
 .ai-cta .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}

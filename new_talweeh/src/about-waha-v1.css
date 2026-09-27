@@ -10,7 +10,7 @@
 .aw-sec-h p{color:var(--p-mut);max-width:52ch;line-height:1.6}
 
 /* band: the seal level with the title, then the four tabs */
-.aw-band{position:relative;margin-top:30px;padding:40px 34px 0;border-radius:34px;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 72%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream);overflow:hidden}
+.aw-band{position:relative;margin-top:30px;padding:40px 34px 0;border-radius:34px;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 72%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow);color:var(--cream);overflow:hidden}
 .aw-band .top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
 .aw-band .seal{width:124px;height:124px;opacity:.95;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35))}
 .aw-band .cw-kicker{color:var(--gold)}
@@ -62,7 +62,7 @@
 .aw-mini strong{display:block;font-family:'Lora',serif;font-size:17px;color:var(--p-head)}
 .aw-mini small{color:var(--p-mut);font-size:12.5px}
 .aw-ends{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;align-items:stretch}
-.aw-invite{padding:40px 36px;border-radius:32px;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.aw-invite{padding:40px 36px;border-radius:32px;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .aw-invite .cw-kicker{color:var(--gold)}
 .wh-home .aw-invite h2{color:var(--cream);font-size:clamp(28px,3.4vw,42px);margin:6px 0 12px}
 .wh-home .aw-invite p{color:rgba(243,232,211,.8);line-height:1.8;margin-bottom:22px}

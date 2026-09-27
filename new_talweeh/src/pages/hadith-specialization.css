@@ -240,7 +240,7 @@
   position:absolute;
   inset:0;
   z-index:-1;
-  background:url('/brand/talweeh-pattern-dark.png') center / 560px auto repeat;
+  background:url('/brand/talweeh-pattern-dark.webp') center / 560px auto repeat;
   opacity:.08;
   pointer-events:none;
 }
@@ -285,7 +285,7 @@
   inset:0;
   z-index:-1;
   pointer-events:none;
-  background:url('/brand/background-pattern.png') center / 620px auto repeat;
+  background:url('/brand/background-pattern.webp') center / 620px auto repeat;
   opacity:.14;
   mix-blend-mode:multiply;
 }

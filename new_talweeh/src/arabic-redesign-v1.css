@@ -5,7 +5,7 @@
   min-height:100vh;
   color:var(--academy-text,#31503e);
   background-color:var(--academy-canvas,#fbfaf6);
-  background-image:url('/brand/talweeh-pattern-light.png');
+  background-image:url('/brand/talweeh-pattern-light.webp');
   background-repeat:repeat;
   background-size:720px auto;
   background-position:top center;
@@ -13,7 +13,7 @@
 
 [data-theme="dark"] .academy-arabic-v2 {
   background-color:var(--academy-canvas,#111b15);
-  background-image:url('/brand/talweeh-pattern-dark.png');
+  background-image:url('/brand/talweeh-pattern-dark.webp');
 }
 
 .academy-arabic-v2 main {

@@ -1,0 +1,5 @@
+/* The header cart link, on every page (split out of commerce-checkout.css, which only the old checkout pages load). */
+.academy-cart-link{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 13px;border:1px solid rgba(185,147,61,.35);border-radius:999px;color:inherit;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap}
+.academy-cart-link b{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#9a772c;color:#fff;font-size:10px}
+.academy-cart-mobile{display:none}
+@media(max-width:760px){.academy-cart-mobile{display:inline-flex}.nav-actions .academy-cart-link{display:none}}

@@ -22,7 +22,7 @@ export const SITE_ORIGIN = 'https://talweehacademy.com'
 const SITE_NAME = 'Talweeh Academy'
 const DEFAULT_DESCRIPTION =
   'At Talweeh Academy, our mission is to elevate academic awareness across all levels, offering comprehensive programs tailored for laypersons, students, and scholars.'
-const DEFAULT_IMAGE = `${SITE_ORIGIN}/brand/talweeh-logo-refined.png`
+const DEFAULT_IMAGE = `${SITE_ORIGIN}/brand/talweeh-og.jpg`
 
 // Static routes. Detail routes are absent on purpose: they call the hook
 // themselves once their data has loaded, which overrides whatever is set here.

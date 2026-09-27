@@ -23,7 +23,7 @@
   --gold:#d7b373;--gold-b:#f0dcb4;--gold-d:#b8894c;
   --clay:#e3a58a;--clay-d:#b0654a;--sage:#9cc2a6;--cream:#f3e8d3;--muted:#b2c2b4;
 
-  --bg:#f6faf8;--tile:url('/brand/talweeh-pattern-light.png');
+  --bg:#f6faf8;--tile:url('/brand/talweeh-pattern-light.webp');
   --p-head:#183428;--p-text:#1b2c24;--p-mut:#4c6158;--p-gold:#b8894c;
   --c:rgba(24,52,40,.98);--c-solid:#183428;--c-hi:rgba(31,64,50,.98);
   /* glass: a lit-from-above emerald rather than a flat tint */
@@ -39,7 +39,7 @@
   --c-grad:var(--c);
   --g:#1e3d2e;--g2:#173827;--g3:#24493a;--g4:#2f5a43;--g-deep:#10271c;
   --g-rgb:30,61,46;--g2-rgb:23,56,39;--g3-rgb:36,73,58;--gd-rgb:15,34,25;--sh-rgb:8,20,14;
-  --bg:#0a1811;--tile:url('/brand/talweeh-pattern-dark.png');
+  --bg:#0a1811;--tile:url('/brand/talweeh-pattern-dark.webp');
   --p-head:#f3e8d3;--p-text:#dbe4dc;--p-mut:#9db0a3;--p-gold:#d7b373;
   --c:rgba(31,62,47,.74);--c-solid:#1b372a;--c-hi:rgba(39,77,59,.9);
   --c-line:rgba(215,179,115,.16);--c-in:rgba(243,232,211,.06);
@@ -214,7 +214,7 @@
 
 /* about + why */
 .wh-aw{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:stretch}
-.wh-about{border-radius:30px;padding:50px;color:#fff;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(145deg,var(--g4),var(--g2));position:relative;overflow:hidden;border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.wh-about{border-radius:30px;padding:50px;color:#fff;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(145deg,var(--g4),var(--g2));position:relative;overflow:hidden;border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .wh-about .wh-pill{background:rgba(243,232,211,.08)}
 .wh-home .wh-about h2{color:var(--cream);font-size:42px;margin:18px 0}
 .wh-about p{color:rgba(243,232,211,.8)}
@@ -235,7 +235,7 @@
 
 /* society */
 .wh-society{border-radius:34px;padding:60px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:radial-gradient(520px 320px at 100% 0%,rgba(215,179,115,.3),transparent 62%),radial-gradient(480px 300px at 0% 100%,rgba(215,179,115,.3),transparent 62%),linear-gradient(120deg,var(--g2),var(--g4));border:1px solid rgba(215,179,115,.3);box-shadow:var(--shadow);position:relative;overflow:hidden}
-.wh-society::before{content:'';position:absolute;inset:0;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto;opacity:.9}
+.wh-society::before{content:'';position:absolute;inset:0;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto;opacity:.9}
 .wh-society>*{position:relative}
 .wh-society .wh-ic{width:70px;height:70px;border-radius:22px;display:grid;place-items:center;font-size:34px;background:var(--gold);color:var(--g2);margin-bottom:16px}
 .wh-society .wh-pill{background:rgba(243,232,211,.08);border:1px solid rgba(215,179,115,.3)}
@@ -275,7 +275,7 @@
 .wh-tcar-ctl button:hover{transform:scale(1.1);color:var(--gold)}
 
 /* footer */
-.wh-footer{margin:60px 14px 0;border-radius:34px;background:url('/brand/talweeh-pattern-dark.png') repeat top center/720px auto,linear-gradient(160deg,var(--g3),var(--foot));border:1px solid rgba(215,179,115,.2);color:rgba(243,232,211,.72);padding:60px 0 26px;overflow:hidden}
+.wh-footer{margin:60px 14px 0;border-radius:34px;background:url('/brand/talweeh-pattern-dark.webp') repeat top center/720px auto,linear-gradient(160deg,var(--g3),var(--foot));border:1px solid rgba(215,179,115,.2);color:rgba(243,232,211,.72);padding:60px 0 26px;overflow:hidden}
 .wh-fg{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:30px}
 .wh-fb{display:flex;gap:16px;align-items:flex-start}
 .wh-fb img{width:88px;height:88px;flex:none;object-fit:contain}

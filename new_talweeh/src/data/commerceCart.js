@@ -96,6 +96,19 @@ export function rememberCommerceHandoff(value) {
   return handoff
 }
 
+/** Drops ?handoff= from the address bar once it is in session storage, so the token stays out of history. */
+export function stripHandoffFromUrl() {
+  if (typeof window === 'undefined') return
+  try {
+    const url = new URL(window.location.href)
+    if (!url.searchParams.has('handoff')) return
+    url.searchParams.delete('handoff')
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`)
+  } catch {
+    // Leaving the address as it is only costs tidiness.
+  }
+}
+
 export function readCommerceHandoff() {
   if (typeof window === 'undefined') return ''
   try {

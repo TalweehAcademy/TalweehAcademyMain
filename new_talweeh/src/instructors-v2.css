@@ -5,13 +5,13 @@
   min-height:100vh;
   color:var(--academy-text,#40594a);
   background:
-    url('/brand/talweeh-pattern-light.png') repeat center top / 720px auto,
+    url('/brand/talweeh-pattern-light.webp') repeat center top / 720px auto,
     var(--academy-canvas,#fbfaf6);
 }
 
 [data-theme="dark"] .academy-instructors-v2-page {
   background:
-    url('/brand/talweeh-pattern-dark.png') repeat center top / 720px auto,
+    url('/brand/talweeh-pattern-dark.webp') repeat center top / 720px auto,
     var(--academy-canvas,#111b15);
 }
 

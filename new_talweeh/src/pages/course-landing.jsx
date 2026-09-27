@@ -9,6 +9,7 @@ import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCom
 import { addCommerceCartOption } from '../data/commerceCart'
 import { money, optionBillingLabel } from '../data/commerceCheckout'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
+import '../commerce-checkout.css'
 
 
 function BookIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3-.8 5.5-.2 8 1.5v12c-2.5-1.7-5-2.3-8-1.5v-12Zm16 0c-3-.8-5.5-.2-8 1.5v12c2.5-1.7 5-2.3 8-1.5v-12Z"/></svg> }

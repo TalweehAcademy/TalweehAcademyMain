@@ -7,7 +7,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { fetchCheckoutCatalog, money, optionBillingLabel, requestCommerceQuote } from '../data/commerceCheckout'
-import { addCommerceCartOption, clearCommerceCart, readCommerceCartItems, readCommerceHandoff, rememberCommerceHandoff, removeCommerceCartOption, subscribeCommerceCart } from '../data/commerceCart'
+import { addCommerceCartOption, clearCommerceCart, readCommerceCartItems, readCommerceHandoff, rememberCommerceHandoff, removeCommerceCartOption, stripHandoffFromUrl, subscribeCommerceCart } from '../data/commerceCart'
 import { Nudge, Recommendations, Steps, categoryLabel, courseUrl, lessonsOf, pct, posterOf, recommend } from '../commerce/commerceKit'
 import '../commerce-waha-v1.css'
 
@@ -25,7 +25,7 @@ export default function CartWahaPage() {
 
   const queryHandoff = String(params.get('handoff') || '').trim()
   const handoff = queryHandoff || readCommerceHandoff()
-  useEffect(() => { if (queryHandoff) rememberCommerceHandoff(queryHandoff) }, [queryHandoff])
+  useEffect(() => { if (queryHandoff) { rememberCommerceHandoff(queryHandoff); stripHandoffFromUrl() } }, [queryHandoff])
   useEffect(() => subscribeCommerceCart(setItems), [])
   useEffect(() => () => clearTimeout(toastTimer.current), [])
 
@@ -63,7 +63,6 @@ export default function CartWahaPage() {
   const blocked = subscriptions.length > 1
   const checkoutQuery = new URLSearchParams()
   if (rows.length) checkoutQuery.set('options', optionIds.join(','))
-  if (handoff) checkoutQuery.set('handoff', handoff)
 
   const pool = useMemo(() => (rows.length ? recommend(catalog, rows.map((r) => r.course), { currency, hasSubscription: subscriptions.length > 0 }) : []), [catalog, idKey]) // eslint-disable-line react-hooks/exhaustive-deps
 

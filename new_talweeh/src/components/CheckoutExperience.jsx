@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import {
+import '../commerce-checkout.css'
   fetchCheckoutCatalog,
   money,
   optionBillingLabel,

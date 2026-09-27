@@ -8,9 +8,17 @@ The **public Talweeh Academy website** (`talweehacademy.com`): a static React 18
 single-page app in [`new_talweeh/`](new_talweeh/). Marketing/brochure pages, a public course
 catalog, articles, media, instructor profiles, and a Qur'an reader.
 
-It has **no backend of its own**. No auth, no database, no commerce, no serverless functions.
-"Enroll" is an outbound link to a Google Form or to the student portal. The build actively
-enforces this (see *Static-only enforcement*).
+It has **no backend of its own**. No auth, no database, no serverless functions. The build
+actively enforces this (see *Static-only enforcement*).
+
+**Commerce runs against Legacy.** `/cart` and `/checkout` (`cart-waha.jsx`, `checkout-waha.jsx`) sell
+courses and programmes with Stripe Embedded Checkout, but every price, coupon and session comes from
+Legacy's public endpoints (`src/data/liveCommerceCatalog.js`, `src/data/commerceCheckout.js`):
+`/api/commerce/public-catalog`, `public-quote`, `public-checkout` on `legacy.talweehacademy.com`
+(`VITE_TALWEEH_PORTAL_BASE_URL` overrides; `localhost:3000` in dev). Those endpoints are open to any
+origin and rate-limited per visitor on the Legacy side. A signed-in student arrives with a short-lived
+`?handoff=` token; the pages move it to sessionStorage and strip it from the address bar. The Stripe
+publishable key is `VITE_STRIPE_PUBLISHABLE_KEY`.
 
 Content is edited in a **separate repository** — the Talweeh Academic System (Next.js +
 Supabase) — which contains the Website CMS. Content reaches this site as a JSON snapshot
@@ -158,9 +166,9 @@ live. Both env vars are build-time only — never `VITE_*`.
 If you need to add a runtime data source, expect to argue with this file — and prefer the
 build-time snapshot pipeline instead.
 
-The one legitimate outbound-fetch exception is `src/pages/quran.jsx`, which calls public
-Qur'an providers (`api.alquran.cloud`, `mp3quran.net`, `cdn.jsdelivr.net`). Those hosts are
-allowlisted in the CSP.
+The legitimate outbound fetches are the Qurʾān pages (`src/pages/quran.jsx`, `src/quran/`), which call
+public Qurʾān providers (`api.alquran.cloud`, `mp3quran.net`, `cdn.jsdelivr.net`), and the commerce
+calls to Legacy described above. Those hosts, and Stripe's, are allowlisted in the CSP.
 
 ## Layout and conventions
 

@@ -12,7 +12,7 @@
 .mw-tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
 .mw-tile{position:relative;display:flex;flex-direction:column;min-height:300px;border-radius:28px;overflow:hidden;color:var(--cream);text-decoration:none;border:1px solid rgba(215,179,115,.3);background:linear-gradient(160deg,var(--g4),var(--g2) 75%);box-shadow:var(--shadow);transition:transform .45s var(--spring),border-color .3s}
 .mw-tile:hover{transform:translateY(-6px);border-color:var(--gold)}
-.mw-tile-bg{position:absolute;inset:0;background:url('/brand/talweeh-pattern-dark.png') repeat center/560px auto;opacity:.55}
+.mw-tile-bg{position:absolute;inset:0;background:url('/brand/talweeh-pattern-dark.webp') repeat center/560px auto;opacity:.55}
 .mw-tile .in{position:relative;display:flex;flex-direction:column;gap:8px;padding:26px 26px 18px;flex:1}
 .mw-tile .ar{font-size:34px;color:var(--gold);line-height:1.4;align-self:flex-start}
 .mw-tile strong{font-family:'Lora',serif;font-weight:600;font-size:26px;line-height:1.15;color:var(--cream)}
@@ -71,7 +71,7 @@
 .mw-others .mw-tgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:0}
 
 /* ── watch page ── */
-.mw-stage{position:relative;margin-top:26px;padding:34px 34px 30px;border-radius:34px;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.mw-stage{position:relative;margin-top:26px;padding:34px 34px 30px;border-radius:34px;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(160deg,var(--g4),var(--g2) 70%);border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .mw-stage .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
 .mw-stage .cw-kicker{color:var(--gold)}
 .wh-home .mw-stage h1{color:var(--cream);font-size:clamp(28px,3.8vw,50px);max-width:24ch;margin-top:6px}

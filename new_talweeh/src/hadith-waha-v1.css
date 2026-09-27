@@ -79,7 +79,7 @@
 .hw-cc small{display:block;color:var(--p-mut);font-size:13px;margin:2px 0 10px}
 .hw-cc .tags{display:flex;gap:6px;flex-wrap:wrap}
 .hw-cc .solo{font-size:11px;font-weight:800;color:var(--p-gold);padding:4px 10px;border-radius:999px;border:1px dashed color-mix(in srgb,var(--gold) 60%,transparent)}
-.hw-cta{margin:100px 0 20px;padding:54px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.png') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
+.hw-cta{margin:100px 0 20px;padding:54px 30px;border-radius:36px;text-align:center;background:url('/brand/talweeh-pattern-dark.webp') repeat center/720px auto,linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .hw-cta .ar{font-size:30px;color:var(--gold-b);line-height:1.7}
 .hw-cta .cw-kicker{color:var(--gold)}
 .wh-home .hw-cta h2{color:var(--cream);font-size:clamp(30px,4vw,50px);margin:8px 0 12px}

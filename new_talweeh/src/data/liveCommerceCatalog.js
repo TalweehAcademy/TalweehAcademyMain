@@ -63,7 +63,8 @@ export async function fetchLiveCommerceCatalog({ force = false, signal } = {}) {
     method: 'GET',
     credentials: 'omit',
     mode: 'cors',
-    cache: 'no-store',
+    // Browsing pages may reuse the portal's 30-second public cache; checkout (force) always asks afresh.
+    cache: force ? 'no-store' : 'default',
     headers: { Accept: 'application/json' },
     signal,
   })
