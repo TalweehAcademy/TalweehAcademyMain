@@ -94,7 +94,7 @@ function Hero() {
       <div className="ai-explain" aria-live="polite"><small>{LENSES.find((l) => l[0] === lens)[1]} · word {word + 1} of {WORDS.length}</small><strong>{head}</strong><p>{body}</p></div>
       <div className="foot">
         <p>Don’t just Recite the Qur’an — Understand it! In just 6 hours per week over two years, students confidently understand Qur’anic passages, navigate Arabic dictionaries, and read unvowelized texts.</p>
-        <div className="acts"><Link className="wh-btn wh-btn-g" to={ARABIC_PROGRAM_ENROL}>Enroll now →</Link><a className="wh-btn wh-btn-glass" href="#ladder" onClick={seeTexts}>See the texts</a><Link className="wh-btn wh-btn-glass" to="/arabic/learning">See My Learning</Link></div>
+        <div className="acts"><Link className="wh-btn wh-btn-g" to={ARABIC_PROGRAM_ENROL}>Enroll now →</Link><Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the assessment</Link><a className="wh-btn wh-btn-glass" href="#ladder" onClick={seeTexts}>See the texts</a><Link className="wh-btn wh-btn-glass" to="/arabic/learning">See My Learning</Link></div>
       </div>
     </section>
   )
@@ -195,6 +195,7 @@ export default function ArabicWahaPage() {
           <p>{R.INVITATION}</p>
           <div className="acts">
             <Link className="wh-btn wh-btn-g" to={ARABIC_PROGRAM_ENROL}>Enroll now →</Link>
+            <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Not sure where to start? Take the assessment</Link>
             <Link className="wh-btn wh-btn-glass" to="/arabic/learning">See the programme month by month</Link>
             <a className="wh-btn wh-btn-glass" href={R.LINKS.telegram} target="_blank" rel="noreferrer">Talweeh Society on Telegram</a>
           </div>

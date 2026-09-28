@@ -40,6 +40,7 @@ const ROUTE_META = {
   '/arabic': { title: 'Arabic Programme', description: 'The Talweeh Academy two-year Arabic programme, built to take students to independent reading of classical texts.' },
   '/arabic/program': { title: 'Arabic Programme Curriculum', description: 'Module-by-module curriculum for the Talweeh Academy two-year Arabic programme.' },
   '/arabic/faq': { title: 'Arabic Programme FAQ', description: 'Common questions about the Talweeh Academy Arabic programme: entry level, pacing, workload and assessment.' },
+  '/arabic/assessment': { title: 'Arabic Assessment', description: 'A free, question-by-question check of your Arabic that tells you which module of the two-year programme to start with.' },
   '/arabic/about': { title: 'About the Arabic Programme', description: 'The approach, teaching method and goals behind the Talweeh Academy Arabic programme.' },
   '/p/terms-conditions': { title: 'Terms & Conditions', description: 'Terms and conditions for using the Talweeh Academy website and enrolling in its programmes.' },
 }

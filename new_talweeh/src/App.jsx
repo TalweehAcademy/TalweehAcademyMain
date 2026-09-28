@@ -39,6 +39,7 @@ const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith
 const HadithLearningPage = lazy(() => import('./pages/hadith-learning'))
 const ArabicLearningPage = lazy(() => import('./pages/arabic-learning'))
 const ArabicEnrolPage = lazy(() => import('./pages/arabic-enrol'))
+const ArabicAssessmentPage = lazy(() => import('./pages/arabic-assessment'))
 const HadithEnrolPage = lazy(() => import('./pages/hadith-enrol'))
 const AlimiyyahPage = lazy(() => import('./pages/alimiyyah-waha'))
 const NavigationPreviewPage = lazy(() => import('./pages/navigation-preview'))
@@ -533,6 +534,7 @@ function AppInner() {
         <Route path="/arabic/program" element={<ArabicProgramPage />} />
         <Route path="/arabic/learning" element={<ArabicLearningPage />} />
         <Route path="/arabic/enroll" element={<ArabicEnrolPage />} />
+        <Route path="/arabic/assessment" element={<ArabicAssessmentPage />} />
         <Route path="/arabic/faq" element={<ArabicFaqPage />} />
         <Route path="/arabic/about" element={<ArabicAboutPage />} />
         <Route path="/p/terms-conditions" element={<AboutWahaPage tab="terms" />} />
