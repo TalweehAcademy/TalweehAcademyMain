@@ -81,3 +81,19 @@ html[data-theme="light"] .wh-home{
 html .wh-home .cw-vp{background:linear-gradient(155deg,#173A27,#0F271B 55%,#06110B);border-color:rgba(242,214,158,.4)}
 /* Older pages on the --academy-* tokens: the same deep green for brand surfaces in light mode. */
 html[data-theme="light"]{--academy-brand:rgb(15 39 27);--academy-brand-strong:rgb(23 58 39);--academy-deep:rgb(6 17 11);--green:#0F271B;--green-dark:#0B1F15}
+
+/* ── Backgrounds that stay still while the page scrolls, on every phone ──
+   iPhones ignore background-attachment:fixed, so the pattern used to scroll and jump with the page. It is now drawn
+   on a layer pinned to the screen behind the page (same look on computers). */
+html .wh-home{isolation:isolate;background:var(--bg)!important}
+html .wh-home::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--tile) repeat top center/720px auto}
+html[data-theme="dark"] .wh-home::before{background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)),url('/brand/lattice-gold.webp') 0 0/620px auto repeat}
+html[data-theme="dark"] .academy-home{background:#06110B!important}
+html[data-theme="dark"] .academy-home::before{position:fixed;background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)),url('/brand/lattice-gold.webp') 0 0/620px auto repeat;mix-blend-mode:normal;opacity:1}
+
+/* ── Sections and cards appear with their backgrounds already there; only what is inside them fades in ── */
+html .wh-home [data-r],html .wh-home [data-stagger]>*{opacity:1;transform:none;filter:none;transition:none}
+html .wh-home [data-r]>*,html .wh-home [data-stagger]>*>*{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+html .wh-home [data-stagger]>*>*{transition-delay:calc(var(--i,0) * 90ms)}
+html .wh-home [data-r].in>*,html .wh-home [data-stagger].in>*>*{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html .wh-home [data-r]>*,html .wh-home [data-stagger]>*>*{opacity:1!important;transform:none!important}}
