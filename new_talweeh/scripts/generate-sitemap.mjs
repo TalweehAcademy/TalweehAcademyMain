@@ -23,6 +23,7 @@ const staticPaths = [
   '/hadith-specialization/learning',
   '/hadith-specialization/enroll',
   '/p/terms-conditions',
+  '/p/privacy-policy',
 ]
 
 const coursePaths = PUBLIC_COURSES.map((course) => `/courses/${course.slug}`)

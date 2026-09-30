@@ -61,7 +61,7 @@ export const TERMS = {
     {
       "n": 11,
       "title": "Privacy & Data Protection",
-      "html": "<p> Personal information is collected, used, and stored in accordance with our Privacy Policy and applicable Canadian privacy legislation, including PIPEDA. By using our services, you consent to such collection and use. </p>"
+      "html": "<p> Personal information is collected, used, and stored in accordance with our <a href=\"/p/privacy-policy\">Privacy Policy</a> and applicable Canadian privacy legislation, including PIPEDA. By using our services, you consent to such collection and use. </p>"
     },
     {
       "n": 12,

@@ -538,6 +538,7 @@ function AppInner() {
         <Route path="/arabic/faq" element={<ArabicFaqPage />} />
         <Route path="/arabic/about" element={<ArabicAboutPage />} />
         <Route path="/p/terms-conditions" element={<AboutWahaPage tab="terms" />} />
+        <Route path="/p/privacy-policy" element={<AboutWahaPage tab="privacy" />} />
         <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

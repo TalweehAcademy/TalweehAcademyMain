@@ -43,6 +43,7 @@ const ROUTE_META = {
   '/arabic/assessment': { title: 'Arabic Assessment', description: 'A free, question-by-question check of your Arabic that tells you which module of the two-year programme to start with.' },
   '/arabic/about': { title: 'About the Arabic Programme', description: 'The approach, teaching method and goals behind the Talweeh Academy Arabic programme.' },
   '/p/terms-conditions': { title: 'Terms & Conditions', description: 'Terms and conditions for using the Talweeh Academy website and enrolling in its programmes.' },
+  '/p/privacy-policy': { title: 'Privacy Policy', description: 'How Talweeh Academy collects, uses, stores and protects personal information, in line with PIPEDA.' },
 }
 
 function upsert(selector, create, apply) {

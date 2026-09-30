@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-// The About menu's four pages as tabs of one house — "Dār" (mockups/about-waha-dar.html):
+// The About menu's pages as tabs of one house — "Dār" (mockups/about-waha-dar.html):
 // What is Talweeh (/about-us), Instructors (/instructors, /instructors/:slug), Contact (/contact-us)
-// and Terms & Conditions (/p/terms-conditions). Each tab is its own route. Content stays where the CMS
-// edits it: useContent('about'), useContent('contact'), data/instructors.js; terms from data/termsContent.js.
+// Terms & Conditions (/p/terms-conditions) and Privacy Policy (/p/privacy-policy). Each tab is its own route. Content stays where the CMS
+// edits it: useContent('about'), useContent('contact'), data/instructors.js; terms and privacy from data/termsContent.js
+// and data/privacyContent.js.
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
@@ -10,6 +11,7 @@ import { useContent } from '../hooks/useContent'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 import { INSTRUCTORS } from '../data/instructors'
 import { TERMS } from '../data/termsContent'
+import { PRIVACY } from '../data/privacyContent'
 import '../about-waha-v1.css'
 
 const TABS = [
@@ -17,6 +19,7 @@ const TABS = [
   { k: 'instructors', to: '/instructors', label: 'Instructors', title: 'Our Instructors', sub: 'Qualified scholars holding ijāzāt, teaching with clarity, depth and relevance.' },
   { k: 'contact', to: '/contact-us', label: 'Contact', title: 'Contact Us', sub: 'Reach Talweeh Academy on Telegram or by email.' },
   { k: 'terms', to: '/p/terms-conditions', label: 'Terms & Conditions', title: 'Terms & Conditions', sub: 'How access to and use of Talweeh Academy’s courses, services and content is governed.' },
+  { k: 'privacy', to: '/p/privacy-policy', label: 'Privacy Policy', title: 'Privacy Policy', sub: 'How Talweeh Academy collects, uses, stores and protects personal information.' },
 ]
 const SEAL = '/brand/talweeh-seal-gold.png'
 const ICONS = [
@@ -119,7 +122,8 @@ function Contact({ ct, social }) {
   )
 }
 
-function Terms() {
+// Terms & Conditions and the Privacy Policy: the same document layout with an "On this page" list.
+function LegalDoc({ doc, name }) {
   const [on, setOn] = useState('t1')
   useEffect(() => {
     const els = [...document.querySelectorAll('.aw-doc section, #tq')]
@@ -129,15 +133,15 @@ function Terms() {
   }, [])
   return (
     <div className="aw-legal">
-      <nav className="wh-glass" aria-label="Terms and Conditions contents"><span className="cw-kicker">On this page</span>
-        {TERMS.sections.map((s) => <button type="button" key={s.n} className={on === `t${s.n}` ? 'on' : ''} onClick={() => scrollTo(`t${s.n}`)}><b>{s.n}</b>{s.title}</button>)}
+      <nav className="wh-glass" aria-label={`${name} contents`}><span className="cw-kicker">On this page</span>
+        {doc.sections.map((s) => <button type="button" key={s.n} className={on === `t${s.n}` ? 'on' : ''} onClick={() => scrollTo(`t${s.n}`)}><b>{s.n}</b>{s.title}</button>)}
         <button type="button" className={on === 'tq' ? 'on' : ''} onClick={() => scrollTo('tq')}><b>?</b>Contact Us</button>
       </nav>
       <article className="aw-doc">
-        <span className="eff">Effective Date · {TERMS.effective}</span>
-        <div className="open">{TERMS.opening.map((p, i) => <p key={i} dangerouslySetInnerHTML={{ __html: p }} />)}</div>
-        {TERMS.sections.map((s) => <section id={`t${s.n}`} key={s.n}><h2><b>{s.n}.</b>{s.title}</h2><div dangerouslySetInnerHTML={{ __html: s.html }} /></section>)}
-        <div className="aw-ask" id="tq"><div><span className="cw-kicker">Questions about these terms?</span><h3>Contact Us</h3><p><span dangerouslySetInnerHTML={{ __html: TERMS.contact }} /> <a href={`mailto:${TERMS.email}`}>{TERMS.email}</a></p></div><Link className="wh-btn wh-btn-g aw-btn-sm" to="/contact-us">Contact Talweeh Academy →</Link></div>
+        <span className="eff">Effective Date · {doc.effective}</span>
+        <div className="open">{doc.opening.map((p, i) => <p key={i} dangerouslySetInnerHTML={{ __html: p }} />)}</div>
+        {doc.sections.map((s) => <section id={`t${s.n}`} key={s.n}><h2><b>{s.n}.</b>{s.title}</h2><div dangerouslySetInnerHTML={{ __html: s.html }} /></section>)}
+        <div className="aw-ask" id="tq"><div><span className="cw-kicker">Questions about {name === 'Privacy Policy' ? 'this policy' : 'these terms'}?</span><h3>Contact Us</h3><p><span dangerouslySetInnerHTML={{ __html: doc.contact }} /> <a href={`mailto:${doc.email}`}>{doc.email}</a></p></div><Link className="wh-btn wh-btn-g aw-btn-sm" to="/contact-us">Contact Talweeh Academy →</Link></div>
       </article>
     </div>
   )
@@ -157,7 +161,8 @@ export default function AboutWahaPage({ tab = 'talweeh' }) {
   if (missing) room = <div className="aw-missing"><h2>Instructor not found</h2><p>This instructor page is unavailable.</p><Link className="wh-btn wh-btn-g" to="/instructors">Return to instructors</Link></div>
   else if (tab === 'instructors') room = person ? <Bio x={person} instructors={INSTRUCTORS} /> : <Instructors a={a} instructors={INSTRUCTORS} />
   else if (tab === 'contact') room = <Contact ct={ct} social={g.footer.social} />
-  else if (tab === 'terms') room = <Terms />
+  else if (tab === 'terms') room = <LegalDoc doc={TERMS} name="Terms & Conditions" />
+  else if (tab === 'privacy') room = <LegalDoc doc={PRIVACY} name="Privacy Policy" />
   else room = <Talweeh a={a} instructors={INSTRUCTORS} />
 
   return (
