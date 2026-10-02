@@ -3,11 +3,12 @@
 // email, totals) beside the payment panel with Stripe's embedded checkout, then "Add courses & save".
 // The commerce behaviour is the previous CheckoutExperience's, unchanged: the quote is re-checked on
 // every change, and the Stripe session is created with the same option ids, email, code and handoff.
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import { WahaPage } from '../components/WahaShell'
+import TurnstileCheck from '../components/TurnstileCheck'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { fetchCheckoutCatalog, money, optionBillingLabel, requestCommerceCheckout, requestCommerceQuote } from '../data/commerceCheckout'
 import { commerceCartOptionIds, readCommerceHandoff, rememberCommerceHandoff, stripHandoffFromUrl } from '../data/commerceCart'
@@ -16,6 +17,7 @@ import '../commerce-waha-v1.css'
 
 const publishableKey = String(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '').trim()
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null
+const turnstileSiteKey = String(import.meta.env.VITE_TURNSTILE_SITE_KEY || '').trim()
 
 const normalizeOptions = (value) => Array.from(new Set(String(value || '').split(',').map((x) => x.trim()).filter(Boolean))).slice(0, 20)
 const identityFrom = (payload) => ({
@@ -49,6 +51,10 @@ export default function CheckoutWahaPage() {
   const [shown, setShown] = useState(3)
   const [identity, setIdentity] = useState(() => ({ authenticated: Boolean(initialHandoff), email: '', ownedCheckoutSlugs: [] }))
   const [ownershipResolved, setOwnershipResolved] = useState(() => !initialHandoff)
+  // Turnstile token for the next payment session, kept with the key it was issued for: each token works once, so a
+  // changed cart, email or code (a new sessionKey) or a refused token (a new round) needs a fresh one.
+  const [captcha, setCaptcha] = useState({ key: '', token: null })
+  const [captchaRound, setCaptchaRound] = useState(0)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -104,6 +110,11 @@ export default function CheckoutWahaPage() {
   const savings = Math.round(subtotal * percent / 100)
   const total = Math.max(0, subtotal - savings)
   const sessionKey = `${selectionKey}|${studentEmail}|${couponCode}|${initialHandoff ? 'handoff' : 'guest'}`
+  const captchaKey = `${sessionKey}|${captchaRound}`
+  const captchaReady = !turnstileSiteKey || (captcha.key === captchaKey && Boolean(captcha.token))
+  const captchaTokenRef = useRef('')
+  captchaTokenRef.current = captchaReady && captcha.token ? captcha.token : ''
+  const handleCaptchaToken = useCallback((token) => setCaptcha({ key: captchaKey, token }), [captchaKey])
   const ownedKey = (identity.ownedCheckoutSlugs || []).join('|')
   const sources = Array.isArray(promotion?.applied?.sources) ? promotion.applied.sources : []
 
@@ -116,12 +127,13 @@ export default function CheckoutWahaPage() {
   const fetchClientSecret = useCallback(async () => {
     setCheckoutError('')
     try {
-      const payload = await requestCommerceCheckout({ optionIds: selectedIds, email: studentEmail, couponCode, handoff: initialHandoff })
+      const payload = await requestCommerceCheckout({ optionIds: selectedIds, email: studentEmail, couponCode, handoff: initialHandoff, captchaToken: captchaTokenRef.current })
       if (payload?.promotion?.valid) setPromotion(payload.promotion)
       if (payload?.checkout_identity) { setIdentity(identityFrom(payload)); setOwnershipResolved(true) }
       return payload.clientSecret
     } catch (e) {
       setCheckoutError(e instanceof Error ? e.message : 'Secure payment could not be loaded.')
+      if (e?.captcha) setCaptchaRound((n) => n + 1)
       throw e
     }
   }, [sessionKey, initialHandoff]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -183,11 +195,15 @@ export default function CheckoutWahaPage() {
           <div><span className="cw-kicker">Payment</span><h2>Pay securely</h2></div>
           {!publishableKey
             ? <div className="ew-error" role="alert"><strong>Stripe publishable key is not configured.</strong> Add <code>VITE_STRIPE_PUBLISHABLE_KEY=pk_…</code> to the public-site <code>.env.local</code>, then restart Vite.</div>
-            : <div className="ew-stripe" key={sessionKey}>
+            : <div className="ew-stripe" key={captchaKey}>
                 {checkoutError && <div className="ew-error" role="alert">{checkoutError}</div>}
-                <EmbeddedCheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
-                  <EmbeddedCheckout />
-                </EmbeddedCheckoutProvider>
+                {turnstileSiteKey && !captchaReady && <p className="ew-checking">Running a quick security check…</p>}
+                {turnstileSiteKey && !captchaReady && <TurnstileCheck onToken={handleCaptchaToken} resetKey={captchaKey} />}
+                {captchaReady && (
+                  <EmbeddedCheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
+                    <EmbeddedCheckout />
+                  </EmbeddedCheckoutProvider>
+                )}
               </div>}
           <div className="ew-secure">
             <span><b>✓</b>Your card details go directly to Stripe; Talweeh never sees them.</span>

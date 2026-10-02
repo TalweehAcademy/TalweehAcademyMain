@@ -89,15 +89,19 @@ export async function requestCommerceQuote({ optionIds, email = '', couponCode =
   return payload
 }
 
-export async function requestCommerceCheckout({ optionIds, email = '', couponCode = '', handoff = '' }) {
+export async function requestCommerceCheckout({ optionIds, email = '', couponCode = '', handoff = '', captchaToken = '' }) {
   const { response, payload } = await postCommerce('/api/commerce/public-checkout', {
     option_ids: optionIds,
     student_email: email,
     coupon_code: couponCode,
     handoff,
+    captcha_token: captchaToken,
   })
   if (!response.ok || !payload?.clientSecret) {
-    throw new Error(payload?.error || 'Secure payment could not be loaded.')
+    const error = new Error(payload?.error || 'Secure payment could not be loaded.')
+    // The portal refused the Turnstile token: the page asks for a fresh one.
+    error.captcha = payload?.captcha === true
+    throw error
   }
   return payload
 }
