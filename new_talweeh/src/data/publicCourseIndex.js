@@ -100,7 +100,7 @@ export const PUBLIC_COURSES = [
     "poster": "/catalog-posters/takhri-j-al-h-adi-th-q2zxxj.webp",
     "description": "This course trains students in the science of takhrīj — sourcing ḥadīth back to their original references. Students will learn to locate a narration based on partial or full isnād, partial or complete matn, keywords, or thematic subject.\nThe course covers the primary reference works of takhrīj and teaches how to utilize modern digital tools that facilitate this process. Instruction includes the proper formatting of a takhrīj, alongside creating visual charts mapping the various transmission routes of a ḥadīth.",
     "primaryText": "تــخريـج الـحـديـث – بـإشـراف مـركـز إحـسـان للـدراسـات فـي الـسـنـة الـنـبـويـة",
-    "lessonCount": 0
+    "lessonCount": 9
   },
   {
     "slug": "al-adab-al-mufrad",
@@ -445,7 +445,7 @@ export const PUBLIC_COURSES = [
     "poster": "/catalog-posters/tadrib-al-rawi.webp",
     "description": "This course provides an in-depth study of al-Suyūṭī’s extensive masterpiece Tadrīb al-Rāwī, one of the most comprehensive works on ḥadīth nomenclature. Building upon the foundational principles acquired in Muṣṭalaḥ 1, students will explore the full spectrum of terminology, classifications, and technical discussions governing the authentication, transmission, and preservation of ḥadīth.\nThe course emphasizes advanced applications of ḥadīth terminology, examining case studies drawn from classical literature and demonstrating how the rules outlined by earlier scholars are applied in practice. The depth and breadth of Tadrīb al-Rāwī along with Sh. Awwamh’s extensive footnotes will enable students to approach higher-level ḥadīth research with methodological precision.",
     "primaryText": "",
-    "lessonCount": 35
+    "lessonCount": 46
   },
   {
     "slug": "tadwin-al-sunnah",

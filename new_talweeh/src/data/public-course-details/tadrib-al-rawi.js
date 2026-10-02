@@ -213,6 +213,12 @@ export default {
       "topic": ""
     },
     {
+      "portalId": "46d857b5-5e12-4f8b-84ea-cf989e7f8842",
+      "title": "Tadrīb al-Rāwī Lesson 31 | The Condition of Freedom from Shudhūdh and Nakārah Part 2",
+      "overview": "In previous discussions, the scholars examined the famous definition of al-Ḥadīth al-Ṣaḥīḥ formulated by Imām Ibn al-Ṣalāḥ رحمه الله. That definition became one of the most influential definitions in the science of ḥadīth and was adopted by many later scholars. However, despite its widespread acceptance, scholars continued to analyze its wording and identify possible objections. The purpose of these objections was not necessarily to reject the definition, but rather to refine it and determine whether its wording accurately encompassed all forms of authentic narrations.\nThis lesson begins with the fourth objection raised against Ibn al-Ṣalāḥ’s definition and continues with the fifth objection. The discussion then expands into an important methodological issue concerning narrations accepted by the scholars despite apparent weaknesses in their chains of transmission.",
+      "topic": ""
+    },
+    {
       "portalId": "fe32bd8b-df30-421f-81b4-8fb70a3776d6",
       "title": "Lesson 32 | Further Objections to Ibn al-Ṣalāḥ’s Definition of Ṣaḥīḥ Ḥadīth",
       "overview": "In previous discussions, the scholars examined the famous definition of al-Ḥadīth al-Ṣaḥīḥ formulated by Imām Ibn al-Ṣalāḥ رحمه الله. That definition became one of the most influential definitions in the science of ḥadīth and was adopted by many later scholars. However, despite its widespread acceptance, scholars continued to analyze its wording and identify possible objections. The purpose of these objections was not necessarily to reject the definition, but rather to refine it and determine whether its wording accurately encompassed all forms of authentic narrations.\nThis lesson begins with the fourth objection raised against Ibn al-Ṣalāḥ’s definition and continues with the fifth objection. The discussion then expands into an important methodological issue concerning narrations accepted by the scholars despite apparent weaknesses in their chains of transmission.",
@@ -241,7 +247,67 @@ export default {
       "title": "Lesson 36 | The Methodology of Imām al-Bukhārī in Establishing Connected Chains",
       "overview": "Among the greatest contributions to the science of Ḥadīth criticism is the meticulous methodology developed by the early scholars for determining whether a chain of transmission (isnād) is genuinely connected. Every authentic narration depends not only upon the reliability of its narrators but also upon establishing that each narrator actually received the narration from the person above him in the chain. This lesson examines one of the most significant discussions in this field: the condition employed by Imām al-Bukhārī (رحمه الله) regarding ثُبُوتُ السَّمَاعِ (Thubūt al-Samāʿ – proven hearing) and how this differs from the methodology of Imām Muslim (رحمه الله).\nThe discussion is one of precision rather than disagreement over the foundations of ḥadīth authenticity. Both Imām al-Bukhārī and Imām Muslim agreed upon the essential principles governing authentic narrations. Their discussion concerns the level of evidence required before accepting narrations that are transmitted using indirect wording such as عَنْ (ʿan – \"from\"). Understanding this distinction enables students to appreciate why Ṣaḥīḥ al-Bukhārī has traditionally been regarded as the most rigorously authenticated collection of ḥadīth.",
       "topic": ""
+    },
+    {
+      "portalId": "4d8257eb-730a-447c-9a54-a1dd7c402964",
+      "title": "Tadrīb al-Rāwī Lesson 37 | The Methodology of Imām al-Bukhārī in Establishing Connected Chains 2",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "d31351e9-18a5-4e8c-bf04-82369e873a6d",
+      "title": "Tadrīb al-Rāwī Lesson 38 | The Condition of Multiplicity",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "9b9487b5-3a9f-4fac-af66-5b6fd635480d",
+      "title": "Tadrīb al-Rāwī Lesson 39 | Does Authenticity imply definitiveness?",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "5031d805-e6b4-4537-8c2c-3f23fd2f9f07",
+      "title": "Tadrīb al-Rāwī Lesson 40 | Does Authenticity imply definitiveness? Part 2",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "c8b8b90c-13c7-4373-9114-2563f67a2a50",
+      "title": "Tadrīb al-Rāwī Lesson 41 | Is there a chain considered the most authentic?",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "21abe360-44cd-4406-aacc-f8a57c986c67",
+      "title": "Tadrīb al-Rāwī Lesson 42 | Is there a chain considered the most authentic? Part 2",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "2726f9e5-0758-49b8-84ed-aa2661c69962",
+      "title": "Tadrīb al-Rāwī Lesson 43 | Is there a chain considered the most authentic? Part 3",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "e2fbcca8-b4ab-43f7-86f0-2e54dc0e0ec1",
+      "title": "Tadrīb al-Rāwī Lesson 44 | Is there a chain considered the most authentic? Part 4",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "8ad86dd1-fbdc-422f-a952-83de030177f9",
+      "title": "Tadrīb al-Rāwī Lesson 45 | The First Compilation for only Authentic Narrations",
+      "overview": "",
+      "topic": ""
+    },
+    {
+      "portalId": "c35d7859-d738-494c-9332-2337ee6a0222",
+      "title": "Tadrīb al-Rāwī Lesson 46 | The First Compilation for only Authentic Narrations Part 2",
+      "overview": "",
+      "topic": ""
     }
   ],
-  "lessonCount": 35
+  "lessonCount": 46
 }
