@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { PageHeader, PageFooter } from './_shared'
 import './alimiyyah.css'
-const APPLY = 'https://forms.gle/cLhxh5YUck96fCPc6'
+const APPLY = 'https://legacy.talweehacademy.com/apply/alimiyyah'
 const years = {
 // TALWEEH_ALIMIYYAH_CURRICULUM_10Y_V1_1_FIX
   1: {

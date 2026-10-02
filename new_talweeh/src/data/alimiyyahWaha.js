@@ -3,8 +3,8 @@
 // subject labels so subjects can be colour-coded by discipline family.
 
 export const ALIM = {
-  "APPLY": "https://forms.gle/cLhxh5YUck96fCPc6",
-  "ENROL": "https://forms.gle/cLhxh5YUck96fCPc6",
+  "APPLY": "https://legacy.talweehacademy.com/apply/alimiyyah",
+  "ENROL": "https://legacy.talweehacademy.com/apply/alimiyyah",
   "YEARS": [
     {
       "n": 1,
