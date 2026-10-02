@@ -155,7 +155,7 @@ export default function CheckoutWahaPage() {
             )
           })}
           <div className="ew-save">
-            <Nudge promotion={promotion} count={rows.length} />
+            <Nudge promotion={promotion} count={rows.length} hasSubscription={hasSubscription} />
             <details className={`ew-promo${promotion?.coupon?.applied ? ' ok' : ''}`}>
               <summary>
                 <div><small>Promo code</small><strong>{promotion?.coupon?.applied ? `${promotion.coupon.code} applied` : 'Have a promo code?'}</strong></div>

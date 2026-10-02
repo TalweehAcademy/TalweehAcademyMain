@@ -67,7 +67,19 @@ export function bundleInfo(promotion, count) {
   return { eligible: Boolean(promotion?.bundle?.eligible), next, need: next ? Math.max(1, next.count - count) : 0 }
 }
 
-export function Nudge({ promotion, count, dark = false }) {
+export function Nudge({ promotion, count, hasSubscription = false, dark = false }) {
+  // A monthly plan in the order switches the multi-course saving off for the whole order (Talweeh quote rule).
+  if (hasSubscription) {
+    return (
+      <div className={`ew-nudge${dark ? ' dark' : ''}`}>
+        <i aria-hidden="true">%</i>
+        <div>
+          <strong>Multi-course savings don&rsquo;t apply with a monthly plan</strong>
+          <span>Savings apply when two or more one-time courses are bought together, in an order without a monthly plan. To save on your one-time courses, check them out on their own.</span>
+        </div>
+      </div>
+    )
+  }
   const { eligible, next, need } = bundleInfo(promotion, count)
   const applied = Number(promotion?.applied?.percent_off || 0)
   const title = next

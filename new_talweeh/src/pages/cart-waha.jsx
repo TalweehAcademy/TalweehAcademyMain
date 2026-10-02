@@ -109,7 +109,7 @@ export default function CartWahaPage() {
               )
             })}
           </div>
-          <Nudge promotion={promotion} count={rows.length} />
+          <Nudge promotion={promotion} count={rows.length} hasSubscription={subscriptions.length > 0} />
         </div>
         <aside className="ew-sum wh-glass" aria-label="Order summary">
           <div><span className="cw-kicker">Order summary</span><h2>Due today</h2></div>
