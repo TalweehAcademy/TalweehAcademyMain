@@ -1,0 +1,47 @@
+/* Social links in every header and footer: one round outline button per network, the thin line icon centred in it.
+   Loaded after the older theme sheets, which each sized these differently (the footer's showed as narrow boxes). */
+:is(.social-links, .top-bar-social, .wh-socials) {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+:is(.social-links, .top-bar-social, .wh-socials) a {
+  display: grid !important;
+  place-items: center;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0;
+  border-radius: 50% !important;
+  border: 1px solid color-mix(in srgb, currentColor 34%, transparent) !important;
+  background: transparent !important;
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+:is(.social-links, .top-bar-social, .wh-socials) a:hover,
+:is(.social-links, .top-bar-social, .wh-socials) a:focus-visible {
+  opacity: 1 !important;
+  background: color-mix(in srgb, currentColor 12%, transparent) !important;
+  border-color: color-mix(in srgb, currentColor 70%, transparent) !important;
+  transform: translateY(-2px);
+}
+
+:is(.social-links, .top-bar-social, .wh-socials) a .social-glyph {
+  width: 17px !important;
+  height: 17px !important;
+  fill: none !important;
+  stroke: currentColor;
+}
+
+:is(.social-links, .top-bar-social, .wh-socials) a .social-glyph .dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* The header's row is a little smaller than the footer's. */
+:is(.top-bar-social, .wh-tr .wh-socials) { gap: 8px; }
+:is(.top-bar-social, .wh-tr .wh-socials) a { width: 34px !important; height: 34px !important; }
+:is(.top-bar-social, .wh-tr .wh-socials) a .social-glyph { width: 16px !important; height: 16px !important; }

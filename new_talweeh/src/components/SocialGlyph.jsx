@@ -1,15 +1,44 @@
 /* eslint-disable react/prop-types */
-// Social icons, drawn the same way in every header and footer (the Wāḥa shell and the older
-// PageHeader / PageFooter). Unknown labels fall back to the CMS "icon" glyph.
-const SOCIAL_SVGS = {
-  'X / Twitter': 'M17.8 3h3.1l-6.8 7.7 8 10.3h-6.3l-4.9-6.4L5.3 21H2.2l7.3-8.3L1.8 3h6.4l4.4 5.9L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z',
-  YouTube: 'M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15V9l5.8 3-5.8 3z',
-  Telegram: 'M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1.1-1 .2-1.6L20.5 2.8c.9-.3 1.7.2 1.4 1.5z',
-  Instagram: 'M12 2.2c3.2 0 3.6 0 4.8.1 3.2.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 4 3.9 2.4 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z',
-  WhatsApp: 'M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1l-.9 1.2c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.2 6.6 6.6 2.2 12 2.2s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zM12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0z',
+// Social icons, drawn the same way in every header and footer (the Wāḥa shell and the older PageHeader / PageFooter):
+// thin line drawings that take the link's colour (styles in social-icons.css). Unknown labels fall back to the CMS
+// "icon" glyph.
+const SOCIAL_ICONS = {
+  'X / Twitter': (
+    <>
+      <path d="M4.5 4h4.2l10.8 16h-4.2z" />
+      <path d="M19.2 4l-6.4 7.1M4.8 20l6.4-7.1" />
+    </>
+  ),
+  YouTube: (
+    <>
+      <path d="M2.6 7.6a3 3 0 0 1 2.6-2.5C7.4 4.8 9.7 4.7 12 4.7s4.6.1 6.8.4a3 3 0 0 1 2.6 2.5c.2 1.4.3 2.9.3 4.4s-.1 3-.3 4.4a3 3 0 0 1-2.6 2.5c-2.2.3-4.5.4-6.8.4s-4.6-.1-6.8-.4a3 3 0 0 1-2.6-2.5C2.4 15 2.3 13.5 2.3 12s.1-3 .3-4.4z" />
+      <path d="M10.2 9.3v5.4l4.6-2.7z" />
+    </>
+  ),
+  Telegram: (
+    <>
+      <path d="M20.8 4.2 3.4 10.9c-.8.3-.8 1.4 0 1.7l4.4 1.4 1.7 5.3c.2.7 1.1.9 1.6.4l2.5-2.4 4.4 3.2c.6.5 1.5.1 1.7-.6l3-14.4c.2-.9-.7-1.6-1.6-1.3z" />
+      <path d="m7.8 14 9.4-6.7-6.6 7.6" />
+    </>
+  ),
+  Instagram: (
+    <>
+      <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" />
+      <circle cx="12" cy="12" r="4.1" />
+      <circle className="dot" cx="17.3" cy="6.7" r="1.1" />
+    </>
+  ),
+  WhatsApp: (
+    <>
+      <path d="M3.6 20.4l1.2-4.1A8.6 8.6 0 1 1 8 19.3z" />
+      <path d="M9.1 8.7c-.3.9 0 2.2 1 3.4s2.4 2.1 3.4 2.3c.6.1 1.1-.2 1.4-.7l.3-.5-1.8-1-.8.6c-.7-.3-1.4-1-1.8-1.8l.6-.8-1-1.8-.5.3c-.4.2-.7.5-.8 1z" />
+    </>
+  ),
 }
 
 export default function SocialGlyph({ label, fallback = '' }) {
-  const d = SOCIAL_SVGS[label]
-  return d ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d={d} /></svg> : fallback
+  const icon = SOCIAL_ICONS[label]
+  return icon
+    ? <svg className="social-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{icon}</svg>
+    : fallback
 }
