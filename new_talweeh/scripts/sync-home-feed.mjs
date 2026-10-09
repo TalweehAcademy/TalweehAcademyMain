@@ -101,7 +101,17 @@ async function main() {
       })
     }
   }
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}) }, null, 2)}\n`)
+  // Contact details and footer: the contact email, Telegram, social links (known networks, https only), copyright.
+  const NETWORKS = ['X / Twitter', 'YouTube', 'Telegram', 'Instagram', 'WhatsApp', 'TikTok', 'Facebook']
+  const https = (v) => { try { const u = new URL(String(v || '')); return u.protocol === 'https:' ? u.toString() : '' } catch { return '' } }
+  const f = feed.site && typeof feed.site === 'object' ? feed.site : null
+  const site = f ? {
+    contactEmail: /^\S+@\S+\.\S+$/.test(String(f.contactEmail || '')) ? clean(f.contactEmail, 120) : '',
+    telegramUrl: https(f.telegramUrl),
+    social: (Array.isArray(f.social) ? f.social : []).filter((x) => NETWORKS.includes(x?.label)).map((x) => ({ label: x.label, href: https(x.href) })).filter((x) => x.href),
+    copyright: clean(f.copyright, 160),
+  } : null
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}) }, null, 2)}\n`)
   console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.

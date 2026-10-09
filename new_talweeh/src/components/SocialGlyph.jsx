@@ -34,6 +34,19 @@ const SOCIAL_ICONS = {
       <path d="M9.1 8.7c-.3.9 0 2.2 1 3.4s2.4 2.1 3.4 2.3c.6.1 1.1-.2 1.4-.7l.3-.5-1.8-1-.8.6c-.7-.3-1.4-1-1.8-1.8l.6-.8-1-1.8-.5.3c-.4.2-.7.5-.8 1z" />
     </>
   ),
+  // TikTok: the note with its curl; Facebook: the "f" in a rounded square (same thin line style).
+  TikTok: (
+    <>
+      <path d="M13.5 4v10.6a3.6 3.6 0 1 1-3.6-3.6" />
+      <path d="M13.5 4c.4 2.5 2.2 4.3 5 4.5" />
+    </>
+  ),
+  Facebook: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="4" />
+      <path d="M15.5 8.2h-1.6c-1 0-1.7.8-1.7 1.8V20M10 12.8h5" />
+    </>
+  ),
 }
 
 export default function SocialGlyph({ label, fallback = '' }) {
