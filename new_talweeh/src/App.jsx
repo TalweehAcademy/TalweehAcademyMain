@@ -16,6 +16,7 @@ import { StudyListHost } from './courses/StudyList'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
+import HOME_FEED from './data/homeFeed.json'
 const MediaPage = lazy(() => import('./pages/media-waha'))
 const MediaDetailPage = lazy(() => import('./pages/media-watch-waha'))
 const ArticleDetailPage = lazy(() => import('./pages/article-waha'))
@@ -231,13 +232,85 @@ function TestimonialCarousel({ testimonials }) {
   )
 }
 
-function VideoCard({ src, index }) {
+function VideoCard({ src, index, title }) {
   const id = extractVideoId(src)
   if (!id) return null
   return (
     <article className="wh-vid">
-      <WahaVideoPlayer videoId={id} title={`Talweeh Academy featured lecture ${index + 1}`} kicker="Talweeh Media" />
+      <WahaVideoPlayer videoId={id} title={title || `Talweeh Academy featured lecture ${index + 1}`} kicker="Talweeh Media" />
     </article>
+  )
+}
+
+// The home page videos: three at a time on wider screens, moving on by one every few seconds (paused while the
+// pointer or keyboard focus is on them, so a video being watched is never moved away) with ‹ › buttons; phones
+// swipe through them and they move on by themselves until touched. Three or fewer: a still row.
+function VideoCarousel({ videos }) {
+  const narrow = useNarrow()
+  const count = videos.length
+  const [index, setIndex] = useState(0)
+  const [instant, setInstant] = useState(false)
+  const [held, setHeld] = useState(false)
+  const rowRef = useRef(null)
+  const touched = useRef(false)
+  const moves = count > (narrow ? 1 : 3)
+  // Wider screens: the list is shown twice, and index runs past the end into the copy; once there it jumps back
+  // to the same place in the first copy without animating, so the row keeps moving the same way.
+  const settle = (to) => {
+    setInstant(true)
+    setIndex(to)
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => setInstant(false)))
+  }
+  const next = () => setIndex((i) => Math.min(i + 1, count))
+  const prev = () => {
+    if (index > 0) { setIndex(index - 1); return }
+    settle(count)
+    window.setTimeout(() => setIndex(count - 1), 40)
+  }
+
+  useEffect(() => {
+    if (!moves || held || prefersReducedMotion()) return undefined
+    const timer = window.setTimeout(() => {
+      if (!narrow) { next(); return }
+      if (touched.current) return
+      const to = (index + 1) % count
+      const el = rowRef.current, card = el?.children[to]
+      if (el && card) el.scrollTo({ left: card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2, behavior: 'smooth' })
+      setIndex(to)
+    }, 5500)
+    return () => window.clearTimeout(timer)
+  }, [index, held, moves, narrow, count])
+
+  if (narrow) {
+    return (
+      <>
+        <div className="wh-vg wh-swipe-m" ref={rowRef} onTouchStart={() => { touched.current = true }}>
+          {videos.map((v, i) => <VideoCard key={`${v.src}-${i}`} src={v.src} title={v.title} index={i} />)}
+        </div>
+        <div className="wh-dots-m"><SwipeDots targetRef={rowRef} count={count} /></div>
+      </>
+    )
+  }
+  if (!moves) {
+    return <div className="wh-vg" data-stagger>{videos.map((v, i) => <VideoCard key={`${v.src}-${i}`} src={v.src} title={v.title} index={i} />)}</div>
+  }
+  const loop = [...videos, ...videos]
+  return (
+    <div className="wh-vcar" onMouseEnter={() => setHeld(true)} onMouseLeave={() => setHeld(false)}
+      onFocus={() => setHeld(true)} onBlur={() => setHeld(false)}>
+      <div className="wh-vcar-view">
+        <div className={`wh-vcar-track${instant ? ' is-instant' : ''}`} style={{ transform: `translateX(calc(${-index} * (100% + 18px) / 3))` }}
+          onTransitionEnd={(event) => { if (event.target === event.currentTarget && index >= count) settle(index - count) }}>
+          {loop.map((v, i) => <div key={`${v.src}-${i}`} className="wh-vcar-item" aria-hidden={i < index || i >= index + 3 ? true : undefined}>
+            <VideoCard src={v.src} title={v.title} index={i % count} />
+          </div>)}
+        </div>
+      </div>
+      <div className="wh-tcar-ctl">
+        <button type="button" className="wh-glass" aria-label="Previous video" onClick={prev}>‹</button>
+        <button type="button" className="wh-glass" aria-label="Next video" onClick={next}>›</button>
+      </div>
+    </div>
   )
 }
 
@@ -252,9 +325,12 @@ function LandingPage() {
   const [slide, setSlide] = useState(0)
   const rootRef = useRef(null)
   const artsRef = useRef(null)
-  const vidsRef = useRef(null)
   const latestArticles = ARTICLES.slice(0, 3)
-  const videos = (c.youtube.videos || []).filter(Boolean).slice(0, 6)
+  // From the portal (Admin → Website CMS → Home page) when published there, else the site's own defaults.
+  const videos = HOME_FEED.videos.length
+    ? HOME_FEED.videos.map((v) => ({ src: `https://www.youtube.com/embed/${v.youtubeId}`, title: v.title }))
+    : (c.youtube.videos || []).filter(Boolean).map((src) => ({ src, title: '' }))
+  const testimonials = HOME_FEED.testimonials.length ? HOME_FEED.testimonials : c.testimonials
 
   const heroSlides = c.heroSlides
   const currentSlide = heroSlides[slide % heroSlides.length] || heroSlides[0]
@@ -386,10 +462,7 @@ function LandingPage() {
             <section className="wh-s">
               <div className="wh-wrap">
                 <SectionHeading title={c.youtube.heading} text="Selected lessons, academic benefits, and discussions from Talweeh Academy." />
-                <div className="wh-vg wh-swipe-m" data-stagger ref={vidsRef}>
-                  {videos.map((src, i) => <VideoCard key={`${src}-${i}`} src={src} index={i} />)}
-                </div>
-                <div className="wh-dots-m"><SwipeDots targetRef={vidsRef} count={videos.length} /></div>
+                <VideoCarousel videos={videos} />
                 <div className="wh-center" data-r>
                   <a className="wh-btn wh-btn-glass" href={c.youtube.url} target="_blank" rel="noreferrer">{c.youtube.buttonLabel}</a>
                 </div>
@@ -436,7 +509,7 @@ function LandingPage() {
           <section className="wh-s">
             <div className="wh-wrap">
               <SectionHeading title="What our students say" text="Reflections from learners studying with Talweeh Academy around the world." />
-              <TestimonialCarousel testimonials={c.testimonials} />
+              <TestimonialCarousel testimonials={testimonials} />
             </div>
           </section>
         </Editable>

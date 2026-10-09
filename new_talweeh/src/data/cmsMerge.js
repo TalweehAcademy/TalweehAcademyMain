@@ -59,10 +59,14 @@ function imageAliases(out, url) {
   return out
 }
 
+// CMS articles are added to the site's own articles. An article the site already has (same slug) keeps the site's
+// version untouched (its rich blocks would otherwise be flattened), and none of the site's own is ever dropped, so
+// publishing from the portal can only add articles. Newest first.
 export function mergeCmsArticles(snapshot, fallback = []) {
-  const entries = snapshot?.articles || []
+  const own = new Set(fallback.map((article) => article.slug))
+  const entries = (snapshot?.articles || []).filter((entry) => !own.has(entry.slug))
   if (!entries.length) return fallback
-  return entries.map((entry) => {
+  const fromCms = entries.map((entry) => {
     const base = { ...findFallback(fallback, entry.slug), ...rawObject(entry) }
     const data = entry.data || {}
     const names = categories(entry)
@@ -81,6 +85,11 @@ export function mergeCmsArticles(snapshot, fallback = []) {
     }
     return imageAliases(out, asset(entry, base))
   })
+  const dated = (article) => String(article.publishedAt || article.published_date || article.date || '')
+  return [...fromCms, ...fallback]
+    .map((article, index) => ({ article, index }))
+    .sort((a, b) => dated(b.article).localeCompare(dated(a.article)) || a.index - b.index)
+    .map(({ article }) => article)
 }
 
 // CMS categories arrive as display names or { slug, name } rows. mediaCatalog.js

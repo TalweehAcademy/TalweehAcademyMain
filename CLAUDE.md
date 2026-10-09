@@ -132,6 +132,16 @@ Two of the five bindings currently do nothing:
 Articles, instructors, and site content do flow through. Do not assume the course/media path
 works because the pipeline runs cleanly.
 
+## Home page feed (videos, testimonials, new articles)
+
+`scripts/sync-home-feed.mjs` (a build step after the course catalogue sync) pulls
+`/api/website/public-home-feed` from Legacy (same bearer token): the home page videos and testimonials edited in
+Admin → Website CMS → Home page, written to `src/data/homeFeed.json` (committed with empty lists, which keep the
+defaults in `siteContent.js`), and the CMS's published articles, imported as an articles-only snapshot. Pressing
+Publish there starts this build. `mergeCmsArticles` only **adds** articles whose slug the site does not already have;
+the site's own articles are never replaced or dropped. Nothing else from the CMS (homepage sections, pages,
+instructors, media, settings) is applied by this step.
+
 ## Qurʾān Study auto-publish
 
 Study content is edited in Legacy (`talweeh-academic-system`) and published per āyah range from

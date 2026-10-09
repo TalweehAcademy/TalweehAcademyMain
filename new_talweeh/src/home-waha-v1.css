@@ -382,3 +382,10 @@
   .wh-home .wh-society h3{font-size:clamp(26px,2.6vw,34px);margin:6px 0}
   .wh-society p{font-size:15px}
 }
+
+/* video carousel (more than three videos): three in view, sliding by one */
+.wh-vcar-view{overflow:hidden;margin:0 -2px;padding:2px}
+.wh-vcar-track{display:flex;gap:18px;transition:transform .8s var(--spring, cubic-bezier(.2,.8,.2,1))}
+.wh-vcar-item{flex:0 0 calc((100% - 36px) / 3);min-width:0}
+@media (prefers-reduced-motion:reduce){.wh-vcar-track{transition:none}}
+.wh-vcar-track.is-instant{transition:none}
