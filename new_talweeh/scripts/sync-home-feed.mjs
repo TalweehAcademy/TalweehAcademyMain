@@ -1,5 +1,5 @@
 // Build step: pulls the home page videos and testimonials and the published CMS articles from the Academic System
-// (Admin → Website CMS → Home page → Publish starts this build), before vite build.
+// and Media (Admin → Website CMS → Home page / Media → Publish starts this build), before vite build.
 //
 // The feed is /api/website/public-home-feed on Legacy, with the same bearer token as the course feed
 // (QURAN_STUDY_PUBLIC_SYNC_TOKEN). Videos and testimonials are written to src/data/homeFeed.json (empty lists keep
@@ -56,8 +56,24 @@ async function main() {
   const videos = feed.videos.map((v) => ({ youtubeId: clean(v.youtubeId, 11), title: clean(v.title, 120) })).filter((v) => YOUTUBE_ID.test(v.youtubeId))
   const testimonials = feed.testimonials.map((t) => ({ name: clean(t.name, 80), location: clean(t.location, 80), quote: String(t.quote ?? '').trim().slice(0, 1200) }))
     .filter((t) => t.name && t.quote)
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials }, null, 2)}\n`)
-  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials.`)
+  // Media (/media pages): kept only when the portal sends it; an empty list keeps the site's own catalogue.
+  const m = feed.media && typeof feed.media === 'object' ? feed.media : null
+  const SLUG = /^[a-z0-9_-]{2,120}$/
+  const media = m ? {
+    topics: (Array.isArray(m.topics) ? m.topics : []).map((t) => ({ slug: clean(t.slug, 60), label: clean(t.label, 60), arabic: clean(t.arabic, 60), blurb: clean(t.blurb, 300) }))
+      .filter((t) => SLUG.test(t.slug) && t.label),
+    items: (Array.isArray(m.items) ? m.items : []).map((x) => ({
+      slug: clean(x.slug, 120), youtubeId: clean(x.youtubeId, 11), title: clean(x.title, 200), speaker: clean(x.speaker, 80),
+      topics: (Array.isArray(x.topics) ? x.topics : []).map((t) => clean(t, 60)).filter((t) => SLUG.test(t)),
+      course: x.course && SLUG.test(String(x.course)) ? String(x.course) : null,
+      courseId: /^[0-9a-f-]{36}$/i.test(String(x.courseId || '')) ? String(x.courseId) : null,
+      overview: String(x.overview ?? '').trim().slice(0, 6000), shortOverview: String(x.shortOverview ?? '').trim().slice(0, 600),
+      featured: x.featured === true, addedAt: clean(x.addedAt, 40),
+    })).filter((x) => SLUG.test(x.slug) && YOUTUBE_ID.test(x.youtubeId) && x.title && x.topics.length),
+    shorts: (Array.isArray(m.shorts) ? m.shorts : []).map((x) => ({ youtubeId: clean(x.youtubeId, 11), title: clean(x.title, 120) })).filter((x) => YOUTUBE_ID.test(x.youtubeId)),
+  } : null
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}) }, null, 2)}\n`)
+  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.
   const cms = feed.cms

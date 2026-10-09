@@ -8,7 +8,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import WahaVideoPlayer from '../courses/WahaVideoPlayer'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
-import { SUBSCRIBE_URL, VIDEOS, findVideo, topicLabel, topicUrl, topicVideos, watchUrl } from '../media/mediaKit'
+import { SUBSCRIBE_URL, VIDEOS, rememberWatched, findVideo, topicLabel, topicUrl, topicVideos, watchUrl } from '../media/mediaKit'
 import '../media-waha-v1.css'
 
 const PlayIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
@@ -31,7 +31,7 @@ export default function MediaWatchWahaPage() {
   const [copied, setCopied] = useState(false)
   const [autoplay, setAutoplay] = useState(false)
   useDocumentMeta({ title: video?.title, description: video?.shortOverview, image: absoluteUrl(video?.thumbnail), path: video ? `/media/${video.slug}` : undefined })
-  useEffect(() => { setCopied(false) }, [slug])
+  useEffect(() => { setCopied(false); if (slug) rememberWatched(slug) }, [slug])
 
   if (!video) {
     return (
