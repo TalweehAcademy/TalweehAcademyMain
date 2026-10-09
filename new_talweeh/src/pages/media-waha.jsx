@@ -57,8 +57,20 @@ function Row({ kicker, title, arabic, count, seeAll, children }) {
 }
 
 // Short reminders: vertical cards; one plays in a window over the page (YouTube, no cookies until played).
+// A new order on each visit (after the first paint, so the prerendered page and the browser agree).
+const shuffled = (list) => {
+  const out = [...list]
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+
 function Shorts() {
   const [open, setOpen] = useState(null)
+  const [list, setList] = useState(SHORTS)
+  useEffect(() => { setList(shuffled(SHORTS)) }, [])
   useEffect(() => {
     if (!open) return undefined
     const onKey = (e) => { if (e.key === 'Escape') setOpen(null) }
@@ -69,11 +81,13 @@ function Shorts() {
   return (
     <>
       <Row kicker="In a minute" title="Short reminders">
-        {SHORTS.map((s) => (
-          <button key={s.youtubeId} type="button" className="mv-short" onClick={() => setOpen(s)}>
-            <img src={`https://i.ytimg.com/vi/${s.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />
+        {list.map((s) => (
+          <button key={s.youtubeId} type="button" className={s.upright ? 'mv-short' : 'mv-short mv-short--wide'} onClick={() => setOpen(s)}>
+            {/* The upright picture fills the card; without one, the wide picture is shown whole over a blurred copy of itself. */}
+            {!s.upright && <img className="mv-short-bg" src={`https://i.ytimg.com/vi/${s.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />}
+            <img src={`https://i.ytimg.com/vi/${s.youtubeId}/${s.upright || 'hqdefault'}.jpg`} alt="" loading="lazy" />
             <span className="mv-pl"><PlayIcon /></span>
-            {s.title && <span className="mv-short-t">{s.title}</span>}
+            {s.title && <span className="mv-short-t"><span>{s.title}</span></span>}
           </button>
         ))}
       </Row>

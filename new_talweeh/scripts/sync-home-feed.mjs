@@ -71,7 +71,7 @@ async function main() {
       overview: String(x.overview ?? '').trim().slice(0, 6000), shortOverview: String(x.shortOverview ?? '').trim().slice(0, 600),
       featured: x.featured === true, addedAt: clean(x.addedAt, 40),
     })).filter((x) => SLUG.test(x.slug) && YOUTUBE_ID.test(x.youtubeId) && x.title && x.topics.length),
-    shorts: (Array.isArray(m.shorts) ? m.shorts : []).map((x) => ({ youtubeId: clean(x.youtubeId, 11), title: clean(x.title, 120) })).filter((x) => YOUTUBE_ID.test(x.youtubeId)),
+    shorts: (Array.isArray(m.shorts) ? m.shorts : []).map((x) => ({ youtubeId: clean(x.youtubeId, 11), title: clean(x.title, 120), upright: ['oar2', 'oardefault'].includes(x.upright) ? x.upright : null })).filter((x) => YOUTUBE_ID.test(x.youtubeId)),
   } : null
   // Instructors (/instructors pages): an uploaded photo is downloaded into public/feed-assets/instructors (built with
   // the site, never committed; not cms-assets, which the article importer below empties); else the site's own picture.

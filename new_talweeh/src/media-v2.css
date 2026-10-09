@@ -67,10 +67,14 @@
 /* short reminders */
 .mv-track:has(.mv-short){grid-auto-columns:calc((100% - 5*14px)/6);gap:14px}
 .mv-short{position:relative;display:block;aspect-ratio:9/16;border-radius:20px;overflow:hidden;border:1px solid rgba(215,179,115,.4);background:#10251c;cursor:pointer;padding:0;text-align:left;transition:transform .4s var(--spring),border-color .3s}
-.mv-short img{position:absolute;inset:0;width:100%;height:100% !important;object-fit:cover;display:block;transform:scale(1.34)} /* YouTube's thumbnail has bars around a vertical video: cropped to it */
+.mv-short img{position:absolute;inset:0;width:100%;height:100% !important;object-fit:cover;display:block}
+/* No upright picture from YouTube: the wide one whole (cropping it cut the words off), over a blurred copy */
+.mv-short--wide img{object-fit:contain}
+.mv-short--wide img.mv-short-bg{object-fit:cover;filter:blur(18px) brightness(.55);transform:scale(1.2)}
 .mv-short:hover{transform:translateY(-5px);border-color:var(--gold)}
 .mv-short .mv-pl{right:auto;left:12px;top:12px;bottom:auto;width:34px;height:34px}
 .mv-short-t{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 12px;background:linear-gradient(transparent,rgba(5,14,10,.85));color:var(--cream);font-size:13px;font-weight:700;line-height:1.35}
+.mv-short-t > span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .mv-modal{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:20px;background:rgba(5,14,10,.82);backdrop-filter:blur(6px)}
 .mv-modal-in{position:relative;width:min(380px,100%);aspect-ratio:9/16;max-height:82vh;border-radius:22px;border:1px solid rgba(215,179,115,.5);box-shadow:0 30px 80px rgba(0,0,0,.5);background:#000}
 .mv-modal-in iframe{width:100%;height:100%;border:0;border-radius:21px;display:block}
