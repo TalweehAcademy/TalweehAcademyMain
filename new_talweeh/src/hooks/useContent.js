@@ -9,9 +9,19 @@ import HOME_FEED from '../data/homeFeed.json'
 // scripts/sync-home-feed.mjs) replace these few fields only; everything else stays as written in siteContent.js.
 const SITE = HOME_FEED.site || null
 const ICON = { 'X / Twitter': '𝕏', YouTube: '▶', Telegram: '◉', Instagram: '◎', WhatsApp: '✆', TikTok: '♪', Facebook: 'f' }
-const PAGES = SITE ? {
+// Home page sections from the portal (Admin → Website CMS → Home page sections): a section's fields replace the
+// written ones (lists such as the hero slides are replaced whole); the YouTube section keeps its videos list.
+const HOME = HOME_FEED.homeSections || null
+const LANDING = HOME ? Object.fromEntries(Object.entries(CONTENT_DEFAULTS.landing).map(([key, written]) => {
+  const v = HOME[key]
+  if (!v) return [key, written]
+  if (Array.isArray(written)) return [key, Array.isArray(v) && v.length ? v : written]
+  return [key, typeof written === 'object' && written && !Array.isArray(v) ? { ...written, ...Object.fromEntries(Object.entries(v).filter(([, x]) => x !== '')) } : written]
+})) : CONTENT_DEFAULTS.landing
+const PAGES = SITE || HOME ? {
   ...CONTENT_DEFAULTS,
-  global: {
+  landing: LANDING,
+  ...(SITE ? { global: {
     ...CONTENT_DEFAULTS.global,
     footer: {
       ...CONTENT_DEFAULTS.global.footer,
@@ -23,7 +33,7 @@ const PAGES = SITE ? {
     ...CONTENT_DEFAULTS.contact,
     telegram: { ...CONTENT_DEFAULTS.contact.telegram, ...(SITE.telegramUrl ? { url: SITE.telegramUrl } : {}) },
     email: { ...CONTENT_DEFAULTS.contact.email, ...(SITE.contactEmail ? { address: SITE.contactEmail } : {}) },
-  },
+  } } : {}),
 } : CONTENT_DEFAULTS
 
 export function useContent(page) {

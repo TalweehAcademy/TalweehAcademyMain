@@ -111,7 +111,39 @@ async function main() {
     social: (Array.isArray(f.social) ? f.social : []).filter((x) => NETWORKS.includes(x?.label)).map((x) => ({ label: x.label, href: https(x.href) })).filter((x) => x.href),
     copyright: clean(f.copyright, 160),
   } : null
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}) }, null, 2)}\n`)
+  // Home page sections: only text values (cut to size), links as site paths or https; an uploaded picture
+  // ({ download, name }) is saved into public/feed-assets/home and replaced by its path.
+  const hs = feed.homeSections && typeof feed.homeSections === 'object' ? feed.homeSections : null
+  let homeSections = null
+  if (hs) {
+    await rm(path.join(publicDir, 'feed-assets', 'home'), { recursive: true, force: true })
+    await mkdir(path.join(publicDir, 'feed-assets', 'home'), { recursive: true })
+    const value = async (v) => {
+      if (v && typeof v === 'object' && v.download) {
+        const response = await fetch(v.download, { cache: 'no-store' })
+        const type = (response.headers.get('content-type') || '').split(';')[0].trim()
+        const ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[type]
+        if (!response.ok || !ext) fail(`a home page picture could not be downloaded (${response.status} ${type})`)
+        const name = `${String(v.name || 'picture').replace(/[^\w.-]/g, '').replace(/\.\w+$/, '').slice(0, 80) || 'picture'}.${ext}`
+        await writeFile(path.join(publicDir, 'feed-assets', 'home', name), Buffer.from(await response.arrayBuffer()))
+        return `/feed-assets/home/${name}`
+      }
+      return typeof v === 'string' ? v.slice(0, 2000) : ''
+    }
+    homeSections = {}
+    for (const [key, v] of Object.entries(hs)) {
+      if (!/^[a-zA-Z]{2,40}$/.test(key)) continue
+      if (Array.isArray(v)) {
+        const rows = []
+        for (const row of v.slice(0, 8)) { const out = {}; for (const [k, x] of Object.entries(row || {})) if (/^[a-zA-Z]{1,40}$/.test(k)) out[k] = await value(x); rows.push(out) }
+        homeSections[key] = rows
+      } else if (v && typeof v === 'object') {
+        const out = {}; for (const [k, x] of Object.entries(v)) if (/^[a-zA-Z]{1,40}$/.test(k)) out[k] = await value(x)
+        homeSections[key] = out
+      }
+    }
+  }
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}), ...(homeSections ? { homeSections } : {}) }, null, 2)}\n`)
   console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.
