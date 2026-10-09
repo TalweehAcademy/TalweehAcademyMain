@@ -1,4 +1,8 @@
-export const INSTRUCTORS = [
+import HOME_FEED from './homeFeed.json'
+
+// The site's own instructors; the portal's (Admin → Website CMS → Instructors, pulled by scripts/sync-home-feed.mjs)
+// replace them once published there.
+const SITE_INSTRUCTORS = [
   {
     slug: 'sheikh-omer-khurshid',
     name: 'Sheikh Omer Khurshid',
@@ -120,6 +124,8 @@ export const INSTRUCTORS = [
     ]
   }
 ]
+
+export const INSTRUCTORS = Array.isArray(HOME_FEED.instructors) && HOME_FEED.instructors.length ? HOME_FEED.instructors : SITE_INSTRUCTORS
 
 export function getInstructor(slug) {
   return INSTRUCTORS.find((instructor) => instructor.slug === slug)

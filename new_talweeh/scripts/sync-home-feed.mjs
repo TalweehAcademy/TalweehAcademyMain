@@ -9,13 +9,14 @@
 // Nothing configured: does nothing, so local builds keep the committed content. Feed not on the Academic System yet
 // (404): the same. Any other failure fails the build, leaving the previous deploy live.
 import { execFileSync } from 'node:child_process'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url))
 const outFile = path.join(scriptsDir, '..', 'src', 'data', 'homeFeed.json')
+const publicDir = path.join(scriptsDir, '..', 'public')
 const token = String(process.env.QURAN_STUDY_PUBLIC_SYNC_TOKEN || '').trim()
 const explicit = String(process.env.PORTAL_HOME_FEED_URL || '').trim()
 const studyFeed = String(process.env.QURAN_STUDY_PUBLICATION_URL || '').trim()
@@ -72,8 +73,36 @@ async function main() {
     })).filter((x) => SLUG.test(x.slug) && YOUTUBE_ID.test(x.youtubeId) && x.title && x.topics.length),
     shorts: (Array.isArray(m.shorts) ? m.shorts : []).map((x) => ({ youtubeId: clean(x.youtubeId, 11), title: clean(x.title, 120) })).filter((x) => YOUTUBE_ID.test(x.youtubeId)),
   } : null
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}) }, null, 2)}\n`)
-  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}.`)
+  // Instructors (/instructors pages): an uploaded photo is downloaded into public/feed-assets/instructors (built with
+  // the site, never committed; not cms-assets, which the article importer below empties); else the site's own picture.
+  const people = Array.isArray(feed.instructors) ? feed.instructors : null
+  const instructors = []
+  if (people) {
+    await rm(path.join(publicDir, 'feed-assets', 'instructors'), { recursive: true, force: true })
+    await mkdir(path.join(publicDir, 'feed-assets', 'instructors'), { recursive: true })
+    for (const x of people) {
+      const slug = clean(x.slug, 80)
+      if (!/^[a-z0-9-]{2,80}$/.test(slug) || !clean(x.name, 120)) continue
+      let image = typeof x.image === 'string' && /^\/[\w./-]+$/.test(x.image) ? x.image : ''
+      if (x.imageDownload) {
+        const response = await fetch(x.imageDownload, { cache: 'no-store' })
+        const type = response.headers.get('content-type') || ''
+        const ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[type.split(';')[0].trim()]
+        if (!response.ok || !ext) fail(`the photo of ${slug} could not be downloaded (${response.status} ${type})`)
+        const version = clean(x.imageVersion, 80).replace(/[^\w.-]/g, '').replace(/\.\w+$/, '')
+        const name = `${version.startsWith(slug) ? version : `${slug}-${version || 'photo'}`}.${ext}`
+        await writeFile(path.join(publicDir, 'feed-assets', 'instructors', name), Buffer.from(await response.arrayBuffer()))
+        image = `/feed-assets/instructors/${name}`
+      }
+      instructors.push({
+        slug, name: clean(x.name, 120), role: clean(x.role, 160), image, imagePosition: clean(x.imagePosition, 40) || 'center top',
+        summary: String(x.summary ?? '').trim().slice(0, 800),
+        sections: (Array.isArray(x.sections) ? x.sections : []).map((sec) => ({ title: clean(sec?.title, 120), body: String(sec?.body ?? '').trim().slice(0, 6000) })).filter((sec) => sec.body),
+      })
+    }
+  }
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}) }, null, 2)}\n`)
+  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.
   const cms = feed.cms
