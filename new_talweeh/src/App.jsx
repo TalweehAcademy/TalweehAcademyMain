@@ -306,9 +306,11 @@ function VideoCarousel({ videos }) {
           </div>)}
         </div>
       </div>
-      <div className="wh-tcar-ctl">
-        <button type="button" className="wh-glass" aria-label="Previous video" onClick={prev}>‹</button>
-        <button type="button" className="wh-glass" aria-label="Next video" onClick={next}>›</button>
+      <button type="button" className="wh-vcar-nav is-prev" aria-label="Previous video" onClick={prev}><span aria-hidden="true">‹</span></button>
+      <button type="button" className="wh-vcar-nav is-next" aria-label="Next video" onClick={next}><span aria-hidden="true">›</span></button>
+      <div className="wh-vcar-dots" role="tablist" aria-label="Videos">
+        {videos.map((v, i) => <button key={`${v.src}-${i}`} type="button" role="tab" aria-selected={i === index % count} aria-label={`Video ${i + 1} of ${count}`}
+          className={i === index % count ? 'on' : ''} onClick={() => setIndex(i)} />)}
       </div>
     </div>
   )
