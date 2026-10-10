@@ -1,66 +1,74 @@
 /* eslint-disable react/prop-types */
 // /courses — "Maktabah + Fihrist" (mockups/courses-waha-combined.html): hero, counts and pathway
-// tiles on top; a pinned search + sort bar, a sidebar (access + every subject) and detailed course
-// rows below. URL: ?category=<slug>, ?free=1 (as the header menu links) or ?access=paid.
+// tiles on top; one filter panel (access, search, sort, subjects) above a grid of course cards that
+// turn cream on hover to show the description. URL: ?category=<slug>, ?free=1 (as the header menu links) or ?access=paid.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
 import { formatCommercePrice, primaryPurchaseOption } from '../data/liveCommerceCatalog'
 import { canEnrol, plainText, purchaseOptions, useCourseCatalog, useStudyList } from '../courses/courseKit'
 import { addToStudyList, openStudyList } from '../courses/StudyList'
-import { loadPublicCourse } from '../data/publicCourseDetails'
+import { INSTRUCTORS } from '../data/instructors'
 
 const SearchIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
 
-function CurriculumPreview({ slug }) {
-  const [lessons, setLessons] = useState(null)
-  return (
-    <details onToggle={(e) => { if (e.currentTarget.open && !lessons) loadPublicCourse(slug).then((c) => setLessons(c?.lessons || [])).catch(() => setLessons([])) }}>
-      <summary>Preview curriculum ▾</summary>
-      {lessons === null ? <p className="cw-keys" style={{ marginTop: 8 }}>Loading…</p> : lessons.length ? (
-        <ol>
-          {lessons.slice(0, 8).map((l, i) => <li key={i}>{typeof l === 'string' ? l : l.title}</li>)}
-          {lessons.length > 8 && <li style={{ listStyle: 'none', color: 'var(--p-mut)' }}>…and {lessons.length - 8} more</li>}
-        </ol>
-      ) : <p className="cw-keys" style={{ marginTop: 8 }}>The curriculum will be listed soon.</p>}
-    </details>
-  )
-}
+const ChevronIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+const BookmarkIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" /><path d="M12 7v6M9 10h6" /></svg>
+const CheckIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
 
-function Row({ course, inList }) {
+// "Fiqh (Islamic jurisprudence)" → "Fiqh" for chips; related subjects sit together (Fiqh, then Uṣūl al-Fiqh).
+const shortLabel = (label = '') => label.replace(/\s*\([^)]*\)\s*$/, '')
+const subjectOrder = (slug = '') => `${slug.replace(/^usul-al-/, '')}${slug.startsWith('usul-al-') ? '~' : ''}`
+
+// The teacher's photo: course rows name "Sh. Omer Khurshid", the instructor list "Sheikh Omer Khurshid".
+const personKey = (name = '') => name.toLowerCase().replace(/\b(sh|sheikh|shaykh|shaikh|mufti|ustadh|imam)\b\.?/g, '').replace(/[^a-z]+/g, ' ').trim()
+const TEACHERS = new Map(INSTRUCTORS.filter((i) => i.image).map((i) => [personKey(i.name), i]))
+
+function Card({ course, inList }) {
   const href = `/courses/${course.slug}`
   const options = purchaseOptions(course)
   const lessons = Number(course.lessonCount || 0)
+  const subject = shortLabel(course.categoryLabel)
+  const price = formatCommercePrice(course)
+  const teacher = TEACHERS.get(personKey(course.instructor))
+  const about = plainText(course.description || course.primaryText || '')
   return (
-    <article className="cw-row cw-card">
-      <Link to={href} tabIndex={-1} aria-hidden="true">{course.poster ? <img src={course.poster} alt="" loading="lazy" /> : <span className="ph" />}</Link>
-      <div>
-        <span className="cat">{course.categoryLabel}</span>
-        <h3><Link to={href}>{course.title}</Link></h3>
-        {course.description && <p>{plainText(course.description)}</p>}
-        <div className="facts"><span>{course.instructor}</span><span>{lessons ? `${lessons} lessons` : 'Curriculum coming soon'}</span><span>{course.free ? 'Watch on this site' : 'Student Portal'}</span></div>
+    <article className="cw-cc">
+      <div className="cw-cc-top">
+        <Link className="cw-cc-media" to={href} tabIndex={-1} aria-hidden="true">
+          {course.poster ? <img src={course.poster} alt="" loading="lazy" /> : <span className="ph" />}
+          {subject && <span className="cw-chip cw-chip-sub">{subject}</span>}
+          <span className={`cw-chip cw-chip-price${course.free ? ' free' : ''}`}>{price}</span>
+        </Link>
+        <div className="cw-cc-more" aria-hidden="true">
+          <div className="cw-cc-chips">{subject && <span>{subject}</span>}{lessons > 0 && <span>{lessons} lessons</span>}<span className={course.free ? 'free' : ''}>{price}</span></div>
+          <h3>{course.title}</h3>
+          {about && <p>{about}</p>}
+        </div>
       </div>
-      <div className="end">
-        <span className={`cw-price${course.free ? ' free' : ''}`}>{formatCommercePrice(course)}</span>
+      <h3 className="cw-cc-t"><Link to={href}>{course.title}</Link></h3>
+      <div className="cw-cc-who">
+        {teacher ? <img src={teacher.image} alt="" loading="lazy" style={{ objectPosition: teacher.imagePosition || 'center top' }} /> : <span className="ph" aria-hidden="true" />}
+        <div><b>{course.instructor}</b><span>{lessons ? `${lessons} lessons` : 'Curriculum coming soon'} · {course.free ? 'watch on this site' : 'Student Portal'}</span></div>
+      </div>
+      <div className="cw-cc-act">
         {course.free
           ? <Link className="wh-btn wh-btn-g" to={href}>▶ Start free course</Link>
           : <>
             <Link className="wh-btn wh-btn-glass" to={href}>View course</Link>
             {inList
-              ? <button type="button" className="wh-btn cw-in-list" onClick={openStudyList}>✓ In your study list</button>
+              ? <button type="button" className="cw-cc-icon on" onClick={openStudyList} aria-label={`${course.title} is in your study list`}><CheckIcon /></button>
               : canEnrol(course) && (options.length > 1
-                ? <Link className="wh-btn wh-btn-g" to={`${href}#enrol`}>Choose a plan</Link>
-                : <button type="button" className="wh-btn wh-btn-g" onClick={() => addToStudyList(course, primaryPurchaseOption(course))}>Add to study list</button>)}
+                ? <Link className="cw-cc-icon" to={`${href}#enrol`} aria-label={`Choose a plan for ${course.title}`}><BookmarkIcon /></Link>
+                : <button type="button" className="cw-cc-icon" onClick={() => addToStudyList(course, primaryPurchaseOption(course))} aria-label={`Add ${course.title} to your study list`}><BookmarkIcon /></button>)}
           </>}
       </div>
-      {lessons > 0 && <CurriculumPreview slug={course.slug} />}
     </article>
   )
 }
 
 export default function CoursesWahaPage() {
   const rootRef = useRef(null)
-  const bandRef = useRef(null)
   const libRef = useRef(null)
   const [params, setParams] = useSearchParams()
   const { courses, categories } = useCourseCatalog()
@@ -84,13 +92,6 @@ export default function CoursesWahaPage() {
   useEffect(() => {
     if (access || cat) setTimeout(() => libRef.current?.scrollIntoView({ block: 'start' }), 80)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-  // Paint the band behind the search bar only while it is pinned.
-  useEffect(() => {
-    const on = () => bandRef.current?.classList.toggle('stuck', bandRef.current.getBoundingClientRect().top <= 0 && window.scrollY > 200)
-    window.addEventListener('scroll', on, { passive: true }); on()
-    return () => window.removeEventListener('scroll', on)
-  }, [])
-
   const inList = useMemo(() => new Set(studyList.map((i) => i.productKey)), [studyList])
   const needle = q.trim().toLowerCase()
   const base = useMemo(() => courses.filter((c) => !needle || `${c.title} ${c.arabicTitle || ''} ${c.instructor} ${c.categoryLabel} ${plainText(c.description)} ${c.primaryText || ''}`.toLowerCase().includes(needle)), [courses, needle])
@@ -106,7 +107,8 @@ export default function CoursesWahaPage() {
   const title = access === 'free' ? 'Free Courses' : catLabel || (access === 'paid' ? 'Paid Courses' : 'All Courses')
   const totalLessons = courses.reduce((s, c) => s + Number(c.lessonCount || 0), 0)
   const subjects = categories.filter((k) => courses.some((c) => c.category === k.slug)).length
-  const Opt = ({ on, count, label, onClick }) => <button type="button" className={`cw-opt${on ? ' on' : ''}`} onClick={onClick} disabled={!count && !on}>{label}<b>{count}</b></button>
+  const subjectList = categories.filter((k) => courses.some((c) => c.category === k.slug)).sort((a, b) => subjectOrder(a.slug).localeCompare(subjectOrder(b.slug)))
+  const Opt = ({ on, count, label, onClick }) => <button type="button" className={on ? 'on' : ''} aria-pressed={on} onClick={onClick} disabled={!count && !on}>{label}<b>{count}</b></button>
 
   const pickPath = (a) => { setFilter({ access: a, cat: '' }); libRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
 
@@ -129,29 +131,29 @@ export default function CoursesWahaPage() {
         </div>
 
         <section className="cw-lib" ref={libRef} style={{ scrollMarginTop: 0 }}>
-          <div className="cw-lib-h"><span className="cw-kicker">Course Library</span><h2>{title}</h2></div>
-          <div className="cw-band" ref={bandRef}>
-            <div className="cw-fbar wh-glass">
-              <label className="cw-search"><SearchIcon /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search courses, instructors or subjects" aria-label="Search courses" /></label>
-              <select value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort courses"><option value="">Recommended</option><option value="free">Free first</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
-              <span className="cnt">{list.length} of {courses.length}</span>
+          <div className="cw-fpanel wh-glass" role="search">
+            <div className="cw-ftop">
+              <h2>{title}<small>{list.length} of {courses.length}</small></h2>
+              <div className="cw-seg" role="group" aria-label="Access">
+                <Opt on={!access} count={n((c) => pass(c, 'access'))} label="All" onClick={() => setFilter({ access: '' })} />
+                <Opt on={access === 'free'} count={n((c) => c.free && pass(c, 'access'))} label="Free" onClick={() => setFilter({ access: access === 'free' ? '' : 'free' })} />
+                <Opt on={access === 'paid'} count={n((c) => !c.free && pass(c, 'access'))} label="Paid" onClick={() => setFilter({ access: access === 'paid' ? '' : 'paid' })} />
+              </div>
+              <label className="cw-search"><SearchIcon /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search a book, teacher or subject" aria-label="Search courses" /></label>
+              <label className="cw-sort">
+                <select value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort courses"><option value="">Recommended</option><option value="free">Free first</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
+                <ChevronIcon />
+              </label>
+            </div>
+            <div className="cw-subs" role="group" aria-label="Subject">
+              <Opt on={!cat} count={n((c) => pass(c, 'cat'))} label="All subjects" onClick={() => setFilter({ cat: '' })} />
+              {subjectList.map((k) => <Opt key={k.slug} on={cats.includes(k.slug)} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={shortLabel(k.label)} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
+              {(access || cat || q) && <button type="button" className="cw-clear" onClick={() => { setQ(''); setFilter({ access: '', cat: '' }) }}>Clear filters</button>}
             </div>
           </div>
-          <div className="cw-fx">
-            <aside className="cw-side wh-glass" aria-label="Filter courses">
-              <h4>Access</h4>
-              <Opt on={!access} count={n((c) => pass(c, 'access'))} label="All courses" onClick={() => setFilter({ access: '' })} />
-              <Opt on={access === 'free'} count={n((c) => c.free && pass(c, 'access'))} label="Free — watch here" onClick={() => setFilter({ access: access === 'free' ? '' : 'free' })} />
-              <Opt on={access === 'paid'} count={n((c) => !c.free && pass(c, 'access'))} label="Paid — Student Portal" onClick={() => setFilter({ access: access === 'paid' ? '' : 'paid' })} />
-              <h4>Subject</h4>
-              <Opt on={!cat} count={n((c) => pass(c, 'cat'))} label="All subjects" onClick={() => setFilter({ cat: '' })} />
-              {categories.map((k) => <Opt key={k.slug} on={cats.includes(k.slug)} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={k.label} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
-              <button type="button" className="wh-btn wh-btn-glass cw-reset" onClick={() => { setQ(''); setFilter({ access: '', cat: '' }) }}>Clear filters</button>
-            </aside>
-            <div className="cw-rows">
-              {list.map((c) => <Row key={c.slug} course={c} inList={inList.has(c.checkoutSlug || c.slug)} />)}
-              {!list.length && <p className="cw-empty">No course matches these filters. Try another subject or clear the search.</p>}
-            </div>
+          <div className="cw-cards">
+            {list.map((c) => <Card key={c.slug} course={c} inList={inList.has(c.checkoutSlug || c.slug)} />)}
+            {!list.length && <p className="cw-empty">No course matches these filters. Try another subject or clear the search.</p>}
           </div>
         </section>
       </div>
