@@ -35,6 +35,19 @@ function feedUrl() {
 const YOUTUBE_ID = /^[A-Za-z0-9_-]{11}$/
 const clean = (value, max) => String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max)
 
+// A home video saved in the portal without a title: ask YouTube's public oEmbed for it, so the home page can show
+// the title and teacher under the thumbnail. Best effort only; no answer leaves the title empty.
+async function youTubeTitle(id) {
+  try {
+    const res = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(`https://www.youtube.com/watch?v=${id}`)}`, { signal: AbortSignal.timeout(6000) })
+    if (!res.ok) return ''
+    const data = await res.json().catch(() => null)
+    return clean(data?.title, 120)
+  } catch {
+    return ''
+  }
+}
+
 async function main() {
   const endpoint = feedUrl()
   if (!endpoint || !token) {
@@ -55,6 +68,7 @@ async function main() {
   if (!feed || feed.version !== 1 || !Array.isArray(feed.videos) || !Array.isArray(feed.testimonials)) fail('unexpected feed format')
 
   const videos = feed.videos.map((v) => ({ youtubeId: clean(v.youtubeId, 11), title: clean(v.title, 120) })).filter((v) => YOUTUBE_ID.test(v.youtubeId))
+  await Promise.all(videos.filter((v) => !v.title).map(async (v) => { v.title = await youTubeTitle(v.youtubeId) }))
   const testimonials = feed.testimonials.map((t) => ({ name: clean(t.name, 80), location: clean(t.location, 80), quote: String(t.quote ?? '').trim().slice(0, 1200) }))
     .filter((t) => t.name && t.quote)
   // Media (/media pages): kept only when the portal sends it; an empty list keeps the site's own catalogue.
