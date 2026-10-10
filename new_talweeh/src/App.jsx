@@ -10,8 +10,6 @@ import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { RouteMeta } from './hooks/useDocumentMeta'
 import { extractVideoId } from './utils/youtube'
 import WahaVideoPlayer from './courses/WahaVideoPlayer'
-import { LEGACY_PORTAL } from './constants/links'
-import SwipeDots from './components/SwipeDots'
 import { StudyListHost } from './courses/StudyList'
 import { PUBLIC_COURSES } from './data/publicCourseIndex'
 import { formatCommercePrice } from './data/liveCommerceCatalog'
@@ -38,7 +36,7 @@ const ArabicFaqPage = lazy(() => import('./pages/arabic-faq'))
 const ArabicAboutPage = lazy(() => import('./pages/arabic-about'))
 import { useContent } from './hooks/useContent'
 import { EditModeProvider, EditModeToggle, Editable } from './components/ContentEditor'
-import { LOGO, SmartLink, WahaHeader, WahaFooter, WahaPage, prefersReducedMotion, useWahaMotion } from './components/WahaShell'
+import { LOGO, SmartLink, WahaHeader, WahaFooter, WahaPage, useWahaMotion } from './components/WahaShell'
 const HadithSpecializationPage = talweehProgramLazy(() => import('./pages/hadith-waha'))
 const HadithLearningPage = lazy(() => import('./pages/hadith-learning'))
 const ArabicLearningPage = lazy(() => import('./pages/arabic-learning'))
@@ -51,17 +49,6 @@ const NavigationPreviewPage = lazy(() => import('./pages/navigation-preview'))
 // ═══ Homepage — Wāḥa Forest design (mockups/landing-waha-forest.html) ═══
 // Styles live in home-waha-v1.css, every class prefixed `wh-`.
 
-function PeopleIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 64 64" aria-hidden="true">
-      <circle cx="22" cy="24" r="8" />
-      <path d="M8 52c0-9 6-14 14-14s14 5 14 14v2H8v-2z" />
-      <circle cx="45" cy="22" r="6.5" />
-      <path d="M40 37.5c1.6-.7 3.3-1 5-1 7 0 12 4.4 12 12.4V50H40.6a19 19 0 0 0-.6-12.5z" />
-    </svg>
-  )
-}
-
 function useNarrow(breakpoint = 700) {
   const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.innerWidth < breakpoint)
   useEffect(() => {
@@ -70,21 +57,6 @@ function useNarrow(breakpoint = 700) {
     return () => window.removeEventListener('resize', onResize)
   }, [breakpoint])
   return narrow
-}
-
-// 3D carousel layout: side items rotate back, blur and fade; items two or more away are hidden.
-function carouselStyle(index, current, count, { spread, rot, depth, side, sideFilter }) {
-  let offset = index - current
-  if (offset > count / 2) offset -= count
-  if (offset < -count / 2) offset += count
-  const distance = Math.abs(offset)
-  return {
-    transform: `translateX(${offset * spread}px) translateZ(${-distance * depth}px) rotateY(${-offset * rot}deg)`,
-    opacity: distance > 1 ? 0 : distance ? side : 1,
-    filter: distance ? sideFilter : 'none',
-    zIndex: 10 - distance,
-    pointerEvents: distance > 1 ? 'none' : undefined,
-  }
 }
 
 function SectionHeading({ title, text }) {
@@ -230,163 +202,137 @@ function CourseShelf() {
   )
 }
 
-function TestimonialCarousel({ testimonials }) {
-  const [current, setCurrent] = useState(0)
+function formatLandingDate(date) {
+  if (!date) return ''
+  return new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+}
+
+// ── What our students say: three at a time, all readable (one on phones), ‹ › and dots ──
+function StudentReflections({ testimonials }) {
   const narrow = useNarrow()
   const count = testimonials.length
-  const layout = { spread: narrow ? 40 : 360, rot: 0, depth: 120, side: .6, sideFilter: 'blur(3px) saturate(.7)' }
-  const go = (step) => setCurrent((c) => (c + step + count) % count)
-  const rowRef = useRef(null)
-
-  useEffect(() => {
-    if (narrow || count < 2 || prefersReducedMotion()) return undefined
-    const timer = window.setTimeout(() => setCurrent((c) => (c + 1) % count), 6500)
-    return () => window.clearTimeout(timer)
-  }, [current, count])
-
+  const per = Math.min(narrow ? 1 : 3, count)
+  const [start, setStart] = useState(0)
   if (!count) return null
-  const cardBody = (item) => {
-    const initials = item.name.split(/\s+/).filter(Boolean)
-    return <>
-      <div className="wh-q">“</div>
-      <p>{item.quote}</p>
-      <div className="wh-who">
-        <span className="wh-av">{(initials[0]?.[0] || '') + (initials.length > 1 ? initials[initials.length - 1][0] : '')}</span>
-        <div><h4>{item.name}</h4><small>{item.location}</small></div>
-      </div>
-    </>
-  }
-  // Phones: swipe through the testimonials; no arrows, no auto-advance.
-  if (narrow) {
-    return (
-      <>
-        <div className="wh-swipe wh-swipe-tc" ref={rowRef}>
-          {testimonials.map((item) => <article key={item.name} className="wh-tc wh-glass flat">{cardBody(item)}</article>)}
-        </div>
-        <SwipeDots targetRef={rowRef} count={count} />
-      </>
-    )
-  }
+  const shown = Array.from({ length: per }, (_, k) => testimonials[(start + k) % count])
+  const go = (step) => setStart((i) => (i + step + count) % count)
+  const initials = (name) => { const w = name.split(/\s+/).filter(Boolean); return (w[0]?.[0] || '') + (w.length > 1 ? w[w.length - 1][0] : '') }
   return (
     <>
-      <div className="wh-tcar" data-r>
-        {testimonials.map((item, i) => {
-          const initials = item.name.split(/\s+/).filter(Boolean)
-          return (
-            <article key={item.name} className="wh-tc wh-glass" style={carouselStyle(i, current, count, layout)}
-              onClick={() => { if (i !== current) setCurrent(i) }}>
-              <div className="wh-q">“</div>
-              <p>{item.quote}</p>
-              <div className="wh-who">
-                <span className="wh-av">{(initials[0]?.[0] || '') + (initials.length > 1 ? initials[initials.length - 1][0] : '')}</span>
-                <div><h4>{item.name}</h4><small>{item.location}</small></div>
-              </div>
-            </article>
-          )
-        })}
+      <div className="wh-refl" data-r aria-live="polite">
+        {shown.map((item) => (
+          <figure key={item.name} className="wh-refl-q wh-glass">
+            <span className="wh-refl-mark" aria-hidden="true">“</span>
+            <blockquote>{item.quote}</blockquote>
+            <figcaption><span className="wh-refl-av" aria-hidden="true">{initials(item.name)}</span><div><b>{item.name}</b><span>{item.location}</span></div></figcaption>
+          </figure>
+        ))}
       </div>
-      <div className="wh-tcar-ctl">
-        <button type="button" className="wh-glass" aria-label="Previous testimonial" onClick={() => go(-1)}>‹</button>
-        <button type="button" className="wh-glass" aria-label="Next testimonial" onClick={() => go(1)}>›</button>
-      </div>
+      {count > per && (
+        <div className="wh-refl-nav">
+          <button type="button" aria-label="Previous reflections" onClick={() => go(-1)}>‹</button>
+          <div className="wh-refl-dots" aria-hidden="true">{testimonials.map((t, i) => <span key={t.name} className={i === start ? 'on' : ''} />)}</div>
+          <button type="button" aria-label="More reflections" onClick={() => go(1)}>›</button>
+        </div>
+      )}
     </>
   )
 }
 
-function VideoCard({ src, index, title }) {
-  const id = extractVideoId(src)
-  if (!id) return null
+// ── Read & reflect: the newest article large with its cover, the next two beside it ──
+function ReadReflect({ articles }) {
+  const [lead, ...rest] = articles
+  const Meta = ({ a }) => <div className="wh-rr-meta">{a.category && <span className="wh-rr-tag">{a.category}</span>}<span>{formatLandingDate(a.publishedAt)}</span>{a.readTime && <span>{a.readTime}</span>}</div>
   return (
-    <article className="wh-vid">
-      <WahaVideoPlayer videoId={id} title={title || `Talweeh Academy featured lecture ${index + 1}`} kicker="Talweeh Media" />
-    </article>
-  )
-}
-
-// The home page videos: three at a time on wider screens, moving on by one every few seconds (paused while the
-// pointer or keyboard focus is on them, so a video being watched is never moved away) with ‹ › buttons; phones
-// swipe through them and they move on by themselves until touched. Three or fewer: a still row.
-function VideoCarousel({ videos }) {
-  const narrow = useNarrow()
-  const count = videos.length
-  const [index, setIndex] = useState(0)
-  const [instant, setInstant] = useState(false)
-  const [held, setHeld] = useState(false)
-  const rowRef = useRef(null)
-  const touched = useRef(false)
-  const moves = count > (narrow ? 1 : 3)
-  // Wider screens: the list is shown twice, and index runs past the end into the copy; once there it jumps back
-  // to the same place in the first copy without animating, so the row keeps moving the same way.
-  const settle = (to) => {
-    setInstant(true)
-    setIndex(to)
-    window.requestAnimationFrame(() => window.requestAnimationFrame(() => setInstant(false)))
-  }
-  const next = () => setIndex((i) => Math.min(i + 1, count))
-  const prev = () => {
-    if (index > 0) { setIndex(index - 1); return }
-    settle(count)
-    window.setTimeout(() => setIndex(count - 1), 40)
-  }
-
-  useEffect(() => {
-    if (!moves || held || prefersReducedMotion()) return undefined
-    const timer = window.setTimeout(() => {
-      if (!narrow) { next(); return }
-      if (touched.current) return
-      const to = (index + 1) % count
-      const el = rowRef.current, card = el?.children[to]
-      if (el && card) el.scrollTo({ left: card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2, behavior: 'smooth' })
-      setIndex(to)
-    }, 5500)
-    return () => window.clearTimeout(timer)
-  }, [index, held, moves, narrow, count])
-
-  if (narrow) {
-    return (
-      <>
-        <div className="wh-vg wh-swipe-m" ref={rowRef} onTouchStart={() => { touched.current = true }}>
-          {videos.map((v, i) => <VideoCard key={`${v.src}-${i}`} src={v.src} title={v.title} index={i} />)}
+    <div className={`wh-rr${rest.length ? '' : ' is-one'}`} data-r>
+      <Link className="wh-rr-lead wh-glass" to={`/articles/${lead.slug}`}>
+        {lead.imageUrl && <img src={lead.imageUrl} alt="" loading="lazy" />}
+        <div className="wh-rr-b"><Meta a={lead} /><h3>{lead.title}</h3>{lead.excerpt && <p>{lead.excerpt}</p>}<span className="wh-rr-more">Read the article →</span></div>
+      </Link>
+      {rest.length > 0 && (
+        <div className="wh-rr-side">
+          {rest.map((a) => (
+            <Link key={a.id} className="wh-rr-item wh-glass" to={`/articles/${a.slug}`}>
+              {a.imageUrl ? <img src={a.imageUrl} alt="" loading="lazy" /> : <span className="ph" aria-hidden="true" />}
+              <div className="wh-rr-b"><Meta a={a} /><h4>{a.title}</h4>{a.excerpt && <p>{a.excerpt}</p>}<span className="wh-rr-more">Read →</span></div>
+            </Link>
+          ))}
         </div>
-        <div className="wh-dots-m"><SwipeDots targetRef={rowRef} count={count} /></div>
-      </>
-    )
-  }
-  if (!moves) {
-    return <div className="wh-vg" data-stagger>{videos.map((v, i) => <VideoCard key={`${v.src}-${i}`} src={v.src} title={v.title} index={i} />)}</div>
-  }
-  const loop = [...videos, ...videos]
-  return (
-    <div className="wh-vcar" onMouseEnter={() => setHeld(true)} onMouseLeave={() => setHeld(false)}
-      onFocus={() => setHeld(true)} onBlur={() => setHeld(false)}>
-      <div className="wh-vcar-view">
-        <div className={`wh-vcar-track${instant ? ' is-instant' : ''}`} style={{ transform: `translateX(calc(${-index} * (100% + 18px) / 3))` }}
-          onTransitionEnd={(event) => { if (event.target === event.currentTarget && index >= count) settle(index - count) }}>
-          {loop.map((v, i) => <div key={`${v.src}-${i}`} className="wh-vcar-item" aria-hidden={i < index || i >= index + 3 ? true : undefined}>
-            <VideoCard src={v.src} title={v.title} index={i % count} />
-          </div>)}
-        </div>
-      </div>
-      <button type="button" className="wh-vcar-nav is-prev" aria-label="Previous video" onClick={prev}><span aria-hidden="true">‹</span></button>
-      <button type="button" className="wh-vcar-nav is-next" aria-label="Next video" onClick={next}><span aria-hidden="true">›</span></button>
-      <div className="wh-vcar-dots" role="tablist" aria-label="Videos">
-        {videos.map((v, i) => <button key={`${v.src}-${i}`} type="button" role="tab" aria-selected={i === index % count} aria-label={`Video ${i + 1} of ${count}`}
-          className={i === index % count ? 'on' : ''} onClick={() => setIndex(i)} />)}
-      </div>
+      )}
     </div>
   )
 }
 
-function formatLandingDate(date) {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+// ── Watch a lesson: clean thumbnails, the title and teacher under each; the player opens in place on click ──
+// Titles come as "Topic | Teacher | Talweeh Academy"; the channel name is dropped and a teacher part shown on its own.
+const TEACHER_PART = /^(sh\.?|sheikh|shaykh|mufti|ustadh)\s/i
+function splitVideoTitle(raw = '') {
+  const parts = raw.split('|').map((p) => p.trim()).filter((p) => p && !/^talweeh academy$/i.test(p))
+  const teacher = parts.find((p) => TEACHER_PART.test(p)) || ''
+  return { title: parts.filter((p) => p !== teacher).join(' · ') || raw, teacher }
+}
+
+function WatchLessons({ videos }) {
+  const [playing, setPlaying] = useState(null)
+  const items = videos.map((v, i) => ({ ...v, id: extractVideoId(v.src), i })).filter((v) => v.id).slice(0, 4)
+  return (
+    <div className={`wh-watch is-${items.length}`} data-r>
+      {items.map((v) => {
+        const { title, teacher } = splitVideoTitle(v.title)
+        const label = title || `Talweeh Academy lesson ${v.i + 1}`
+        return (
+          <article key={v.id} className="wh-watch-c">
+            {playing === v.id
+              ? <div className="wh-watch-p"><WahaVideoPlayer videoId={v.id} title={label} kicker="Talweeh Media" autoplay /></div>
+              : <button type="button" className="wh-watch-t" onClick={() => setPlaying(v.id)} aria-label={`Play ${label}`}>
+                <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+                <span className="wh-watch-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z" /></svg></span>
+              </button>}
+            {title && <h4>{title}</h4>}
+            {teacher && <span>{teacher}</span>}
+          </article>
+        )
+      })}
+    </div>
+  )
+}
+
+// ── Begin today: three free first steps (the Society card keeps its text and link from the portal) ──
+function BeginToday({ society }) {
+  const Icon = ({ d }) => <span className="wh-bt-ic" aria-hidden="true"><svg viewBox="0 0 24 24">{d}</svg></span>
+  return (
+    <div className="wh-bt wh-glass" data-r="scale">
+      <div className="wh-ar" aria-hidden="true">رَبِّ زِدْنِي عِلْمًا</div>
+      <h2 id="wh-begin-heading">Begin <em>today.</em></h2>
+      <p className="wh-bt-lead">Three free ways to take your first step, whichever path you choose.</p>
+      <div className="wh-bt-ways">
+        <div className="wh-bt-w">
+          <Icon d={<><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z" /><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z" /></>} />
+          <small>Free course</small><h3>Arabic Crash Course</h3>
+          <p>Nine short lessons that give you a clear overview of the Arabic language.</p>
+          <Link className="wh-btn wh-btn-g" to="/courses/arabic-crash-course">Start the course →</Link>
+        </div>
+        <div className="wh-bt-w">
+          <Icon d={<><path d="M9 11l3 3 8-8" /><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9" /></>} />
+          <small>Free assessment</small><h3>Find your Arabic level</h3>
+          <p>A short test that shows where to start in the Arabic Program.</p>
+          <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the assessment →</Link>
+        </div>
+        <div className="wh-bt-w">
+          <Icon d={<><path d="m22 3-9.5 18-2.5-8-8-2.5z" /><path d="M22 3 10 13" /></>} />
+          <small>Free community</small><h3>{society.heading || 'Talweeh Society'}</h3>
+          <p>{society.text}</p>
+          <SmartLink className="wh-btn wh-btn-glass" to={society.buttonHref}>{society.buttonLabel || 'Join us'} →</SmartLink>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function LandingPage() {
   const { content: c } = useContent('landing')
   const { content: g } = useContent('global')
   const rootRef = useRef(null)
-  const artsRef = useRef(null)
   const latestArticles = ARTICLES.slice(0, 3)
   // From the portal (Admin → Website CMS → Home page) when published there, else the site's own defaults.
   const videos = HOME_FEED.videos.length
@@ -445,106 +391,53 @@ function LandingPage() {
           </div>
         </section>
 
-        {/* ── Latest Articles ──────────────────────── */}
+        {/* ── What our students say ───────────────── */}
+        <Editable page="landing" sectionKey="testimonials">
+          <section className="wh-s">
+            <div className="wh-wrap">
+              <SectionHeading title="What our students say." text="Reflections from learners studying with Talweeh Academy around the world." />
+              <StudentReflections testimonials={testimonials} />
+            </div>
+          </section>
+        </Editable>
+
+        {/* ── Read & reflect (latest articles) ─────── */}
         {latestArticles.length > 0 && (
           <Editable page="landing" sectionKey="latestArticles">
             <section className="wh-s">
               <div className="wh-wrap">
-                <SectionHeading title={c.latestArticles.heading} text="Short academic benefits and reflections to support continued reading beyond the classroom." />
-                <div className="wh-arts wh-swipe-m" data-stagger ref={artsRef}>
-                  {latestArticles.map((article) => (
-                    <article key={article.id} className="wh-art wh-glass">
-                      <div className="wh-meta">
-                        <span>{formatLandingDate(article.publishedAt)}</span>
-                        {article.readTime && <span>{article.readTime}</span>}
-                      </div>
-                      <h3>{article.title}</h3>
-                      {article.excerpt && <p>{article.excerpt}</p>}
-                      <Link className="wh-more" to={`/articles/${article.slug}`}>Read More..... <i aria-hidden="true">→</i></Link>
-                    </article>
-                  ))}
-                </div>
-                <div className="wh-dots-m"><SwipeDots targetRef={artsRef} count={latestArticles.length} /></div>
-                <div className="wh-center" data-r><Link className="wh-btn wh-btn-glass" to="/articles">{c.latestArticles.buttonLabel} →</Link></div>
+                <SectionHeading title="Read & reflect." text="Short academic benefits and reflections to support your reading beyond the classroom." />
+                <ReadReflect articles={latestArticles} />
+                <div className="wh-center" data-r><Link className="wh-btn wh-btn-glass" to="/articles">All articles →</Link></div>
               </div>
             </section>
           </Editable>
         )}
 
-        {/* ── About + Why ──────────────────────────── */}
-        <Editable page="landing" sectionKey="aboutWhy">
-          <section className="wh-s">
-            <div className="wh-wrap wh-aw">
-              <div className="wh-about" data-r="left">
-                <span className="wh-pill">Why Talweeh</span>
-                <h2>{c.aboutWhy.aboutHeading}</h2>
-                <p>{c.aboutWhy.aboutText}</p>
-                <Link className="wh-btn wh-btn-g" to="/about-us">{c.aboutWhy.aboutButtonLabel} →</Link>
-              </div>
-              <div className="wh-why wh-glass" data-r="right">
-                <h3>{c.aboutWhy.whyHeading}</h3>
-                <p>{c.aboutWhy.whyText}</p>
-                <div className="wh-pts"><span>Structured progression</span><span>Qualified instruction</span><span>Purposeful learning</span></div>
-                <SmartLink className="wh-btn wh-btn-g" to={c.aboutWhy.whyButtonHref}>{c.aboutWhy.whyButtonLabel} →</SmartLink>
-              </div>
-            </div>
-          </section>
-        </Editable>
-
-        {/* ── YouTube ──────────────────────────────── */}
+        {/* ── Watch a lesson ───────────────────────── */}
         {videos.length > 0 && (
           <Editable page="landing" sectionKey="youtube">
             <section className="wh-s">
               <div className="wh-wrap">
-                <SectionHeading title={c.youtube.heading} text="Selected lessons, academic benefits, and discussions from Talweeh Academy." />
-                <VideoCarousel videos={videos} />
-                <div className="wh-center" data-r>
-                  <a className="wh-btn wh-btn-glass" href={c.youtube.url} target="_blank" rel="noreferrer">{c.youtube.buttonLabel}</a>
+                <SectionHeading title="Watch a lesson." text="Lessons, benefits and discussions from our YouTube channel." />
+                <WatchLessons videos={videos} />
+                <div className="wh-shelf-foot" data-r>
+                  <Link className="wh-btn wh-btn-g" to="/media" data-magnet>All videos in Media →</Link>
+                  <a className="wh-btn wh-btn-glass" href={c.youtube.url} target="_blank" rel="noreferrer">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" /><path d="m10 9 5 3-5 3z" /></svg>
+                    Subscribe on YouTube
+                  </a>
                 </div>
               </div>
             </section>
           </Editable>
         )}
 
-        {/* ── Join Talweeh Society ─────────────────── */}
+        {/* ── Begin today ──────────────────────────── */}
         <Editable page="landing" sectionKey="joinSociety">
-          <section className="wh-s">
+          <section className="wh-s" aria-labelledby="wh-begin-heading">
             <div className="wh-wrap">
-              <div className="wh-society" data-r="scale">
-                <div>
-                  <div className="wh-ic"><PeopleIcon className="wh-ico" /></div>
-                  <span className="wh-pill wh-glass">Community · continued learning</span>
-                  <h3>{c.joinSociety.heading}</h3>
-                  <p>{c.joinSociety.text}</p>
-                </div>
-                <SmartLink className="wh-btn wh-btn-g" to={c.joinSociety.buttonHref} data-magnet>{c.joinSociety.buttonLabel} →</SmartLink>
-              </div>
-            </div>
-          </section>
-        </Editable>
-
-        {/* ── Final call to action ─────────────────── */}
-        <section className="wh-s" aria-labelledby="wh-final-heading">
-          <div className="wh-wrap">
-            <div className="wh-final wh-glass" data-r="scale">
-              <div className="wh-fimg" aria-hidden="true"><i /><i /></div>
-              <span className="wh-pill">Begin your next chapter</span>
-              <h2 id="wh-final-heading">Study with clarity, structure, and <em>purpose.</em></h2>
-              <p>Explore Talweeh Academy&apos;s programs and courses, then continue your learning through your student portal.</p>
-              <div className="wh-acts">
-                <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Explore courses →</Link>
-                <a className="wh-btn wh-btn-glass" href={LEGACY_PORTAL}>Legacy Portal</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Testimonials ─────────────────────────── */}
-        <Editable page="landing" sectionKey="testimonials">
-          <section className="wh-s">
-            <div className="wh-wrap">
-              <SectionHeading title="What our students say" text="Reflections from learners studying with Talweeh Academy around the world." />
-              <TestimonialCarousel testimonials={testimonials} />
+              <BeginToday society={c.joinSociety} />
             </div>
           </section>
         </Editable>
