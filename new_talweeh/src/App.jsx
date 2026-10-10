@@ -13,6 +13,8 @@ import WahaVideoPlayer from './courses/WahaVideoPlayer'
 import { LEGACY_PORTAL } from './constants/links'
 import SwipeDots from './components/SwipeDots'
 import { StudyListHost } from './courses/StudyList'
+import { PUBLIC_COURSES } from './data/publicCourseIndex'
+import { formatCommercePrice } from './data/liveCommerceCatalog'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
@@ -48,19 +50,6 @@ const NavigationPreviewPage = lazy(() => import('./pages/navigation-preview'))
 
 // ═══ Homepage — Wāḥa Forest design (mockups/landing-waha-forest.html) ═══
 // Styles live in home-waha-v1.css, every class prefixed `wh-`.
-
-const PROGRAMS = [
-  { to: '/arabic', image: '/brand/program-arabic-manuscript.webp', arabic: 'العربية', kicker: 'Language & understanding', title: 'Arabic', text: 'A step-by-step, two-year program designed to build lasting understanding of the Arabic language.' },
-  { to: '/alimiyyah', image: '/brand/program-alimiyyah.webp', arabic: 'العالمية', kicker: 'Islamic scholarship', title: 'Alimiyyah', text: 'Explore a guided path through the Islamic sciences with structured progression and serious study.' },
-  { to: '/hadith-specialization', image: '/brand/program-hadith-books.webp', arabic: 'الحديث', kicker: 'Specialized study', title: 'Hadith Specialization', text: 'Advance into focused study of Hadith through a dedicated pathway built for deeper engagement.' },
-]
-
-const FORMATS = [
-  { arabic: 'مباشر', title: 'Live', text: 'Join guided classes with scheduled instruction.', to: '/alimiyyah' },
-  { arabic: 'حسب الطلب', title: 'On Demand', text: 'Study structured lessons at your own pace.', to: '/courses' },
-  { arabic: 'مجاني', title: 'Free', text: 'Begin with accessible courses and resources.', to: '/courses?free=1' },
-  { arabic: 'تخصص', title: 'Specialization', text: 'Advance into focused study through dedicated specialist pathways.', to: '/hadith-specialization' },
-]
 
 function PeopleIcon({ className }) {
   return (
@@ -108,62 +97,118 @@ function SectionHeading({ title, text }) {
   )
 }
 
-function ProgramCoverflow() {
-  const [current, setCurrent] = useState(0)
-  const narrow = useNarrow()
-  const layout = { spread: narrow ? 60 : 300, rot: 30, depth: 180, side: .3, sideFilter: 'blur(5px) saturate(.5)' }
-  const go = (step) => setCurrent((c) => (c + step + PROGRAMS.length) % PROGRAMS.length)
-  const rowRef = useRef(null)
+// ── Choose how you learn: the two routes, side by side (rows line up across both columns) ──
+const CHECK = <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+const COURSE_COUNT = PUBLIC_COURSES.length
+const FREE_COUNT = PUBLIC_COURSES.filter((course) => course.free).length
+const SUBJECT_COUNT = new Set(PUBLIC_COURSES.map((course) => course.category)).size
+const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+const inWords = (n) => NUMBER_WORDS[n] || String(n)
 
-  // Phones: a flat row of cards you swipe through, with dots instead of arrows.
-  if (narrow) {
-    return (
-      <>
-        <div className="wh-swipe wh-swipe-cv" ref={rowRef}>
-          {PROGRAMS.map((program, i) => (
-            <article key={program.title} className="wh-cv flat">
-              <div className="wh-img" style={{ backgroundImage: `url('${program.image}')` }} />
-              <span className="wh-n wh-glass">{String(i + 1).padStart(2, '0')}</span>
-              <div className="wh-bd">
-                <div className="wh-ar">{program.arabic}</div>
-                <small>{program.kicker}</small>
-                <h3>{program.title}</h3>
-                <p>{program.text}</p>
-                <Link className="wh-btn wh-btn-cream" to={program.to}>Explore the program →</Link>
-              </div>
-            </article>
-          ))}
+function RouteProgram({ to, image, posters, kicker, arabic, title, text, facts, more }) {
+  const Tag = to.startsWith('#') ? 'a' : Link
+  const target = to.startsWith('#') ? { href: to } : { to }
+  return (
+    <Tag className="wh-rp" {...target}>
+      {posters
+        ? <div className="wh-rp-fan" aria-hidden="true">{posters.map((src) => <img key={src} src={src} alt="" loading="lazy" />)}</div>
+        : <img className="wh-rp-img" src={image} alt="" loading="lazy" />}
+      <div className="wh-rp-b">
+        <div className="wh-rp-k"><span>{kicker}</span><span className="wh-ar">{arabic}</span></div>
+        <h4>{title}</h4>
+        <p>{text}</p>
+        <div className="wh-rp-facts">{facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
+        <span className="wh-rp-more">{more}</span>
+      </div>
+    </Tag>
+  )
+}
+
+function StudyRoutes() {
+  return (
+    <div className="wh-routes" data-r>
+      <div className="wh-route" id="self-paced">
+        <div className="wh-route-h">
+          <div><span className="wh-way-tag">Self-paced · Recorded lessons</span></div>
+          <h3>At your own pace</h3>
+          <p>Watch, pause and rewatch. Start on any day and keep your place.</p>
         </div>
-        <SwipeDots targetRef={rowRef} count={PROGRAMS.length} />
-      </>
-    )
-  }
+        <RouteProgram to="/arabic" image="/brand/program-arabic-manuscript.webp" kicker="Program" arabic="العربية"
+          title="2-Year Arabic Program" text="Step by step from your first lesson to reading the Qurʾān and classical texts."
+          facts={['2 years', 'About 6 hrs a week', 'Start any time']} more="Explore the program →" />
+        <RouteProgram to="#courses" kicker="Courses" arabic="حسب الطلب"
+          posters={['/catalog-posters/al-shamail-al-muhammadiyyah.webp', '/catalog-posters/introduction-to-usul-al-hadith.webp', '/catalog-posters/usul-al-shashi.webp']}
+          title="On-demand courses" text="Single courses on one book or one science: Ḥadīth, Fiqh, Uṣūl, Naḥw, Adab and more."
+          facts={[`${COURSE_COUNT} courses`, `${SUBJECT_COUNT} subjects`, `${FREE_COUNT} free`]} more="See the courses ↓" />
+        <div className="wh-route-x"><span>Also: {inWords(FREE_COUNT)} courses free to begin today.</span><Link to="/courses?free=1">See free courses →</Link></div>
+        <div className="wh-route-s">{CHECK}<span>Suits you if you study around work, family or a changing timetable.</span></div>
+      </div>
+      <div className="wh-route" id="live">
+        <div className="wh-route-h">
+          <div><span className="wh-way-tag is-live">Live · With scholars</span></div>
+          <h3>Live with scholars</h3>
+          <p>Scheduled online classes, taught and followed by our teachers.</p>
+        </div>
+        <RouteProgram to="/alimiyyah" image="/brand/program-alimiyyah.webp" kicker="Program" arabic="العالمية"
+          title="ʿĀlimiyyah" text="Preparing future scholars: a full path through the Islamic sciences, beginning with Arabic."
+          facts={['10-year path', 'Starts with Arabic', 'By application']} more="Explore ʿĀlimiyyah →" />
+        <RouteProgram to="/hadith-specialization" image="/brand/program-hadith-books.webp" kicker="Specialization" arabic="الحديث"
+          title="Hadith Specialization" text="Advanced study of the Ḥadīth sciences, from the preservation of the Sunnah to Tadrīb al-Rāwī."
+          facts={['2 years', 'Advanced', 'Live classes']} more="Explore the specialization →" />
+        <div className="wh-route-x"><span>Also: standalone live courses each term.</span><Link to="/contact-us">Ask about live courses →</Link></div>
+        <div className="wh-route-s">{CHECK}<span>Suits you if you want fixed class times and a teacher guiding you.</span></div>
+      </div>
+    </div>
+  )
+}
 
+// ── Start with a course: nine courses, a new pick on each visit, in a row that moves by itself ──
+const shuffledCourses = (list) => {
+  const out = [...list]
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+const SHELF_POOL = PUBLIC_COURSES.filter((course) => course.poster)
+
+function ShelfCard({ course, hidden }) {
+  const lessons = Number(course.lessonCount || 0)
+  return (
+    <Link className="wh-shc" to={`/courses/${course.slug}`} tabIndex={hidden ? -1 : undefined}>
+      <div className="wh-shc-p"><img src={course.poster} alt="" loading="lazy" /><span className={`wh-shc-price${course.free ? ' free' : ''}`}>{formatCommercePrice(course)}</span></div>
+      <div className="wh-shc-b">
+        <span className="wh-shc-sub">{course.categoryLabel}</span>
+        <h4>{course.title}</h4>
+        <span className="wh-shc-meta">{course.instructor}{lessons ? ` · ${lessons} lessons` : ''}</span>
+      </div>
+    </Link>
+  )
+}
+
+function CourseShelf() {
+  // First paint keeps the catalogue order so the prerendered page and the browser agree; then shuffle.
+  const [picks, setPicks] = useState(() => SHELF_POOL.slice(0, 9))
+  const [paused, setPaused] = useState(false)
+  useEffect(() => { setPicks(shuffledCourses(SHELF_POOL).slice(0, 9)) }, [])
   return (
     <>
-      <div className="wh-cover" data-r="blur">
-        {PROGRAMS.map((program, i) => (
-          <article key={program.title} className={`wh-cv${i === current ? ' on' : ''}`}
-            style={carouselStyle(i, current, PROGRAMS.length, layout)}
-            onClick={() => { if (i !== current) setCurrent(i) }}>
-            <div className="wh-img" style={{ backgroundImage: `url('${program.image}')` }} />
-            <span className="wh-n wh-glass">{String(i + 1).padStart(2, '0')}</span>
-            <div className="wh-bd">
-              <div className="wh-ar">{program.arabic}</div>
-              <small>{program.kicker}</small>
-              <h3>{program.title}</h3>
-              <p>{program.text}</p>
-              <Link className="wh-btn wh-btn-cream" to={program.to} tabIndex={i === current ? 0 : -1}
-                onClick={(event) => { if (i !== current) event.preventDefault() }}>
-                Explore the program →
-              </Link>
-            </div>
-          </article>
-        ))}
+      <div className="wh-rail" aria-label="Featured courses" data-r>
+        <div className={`wh-rail-track${paused ? ' paused' : ''}`}>
+          <div className="wh-rail-set">{picks.map((course) => <ShelfCard key={course.slug} course={course} />)}</div>
+          <div className="wh-rail-set" aria-hidden="true">{picks.map((course) => <ShelfCard key={course.slug} course={course} hidden />)}</div>
+        </div>
       </div>
-      <div className="wh-cv-ctl">
-        <button type="button" className="wh-glass" aria-label="Previous program" onClick={() => go(-1)}>‹</button>
-        <button type="button" className="wh-glass" aria-label="Next program" onClick={() => go(1)}>›</button>
+      <div className="wh-wrap">
+        <div className="wh-rail-bar">
+          <button type="button" className="wh-rail-pause" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Play the course row' : 'Pause the course row'}>
+            {paused
+              ? <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z" /></svg>
+              : <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>}
+          </button>
+          <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Browse all {COURSE_COUNT} courses →</Link>
+        </div>
       </div>
     </>
   )
@@ -368,34 +413,21 @@ function LandingPage() {
           </section>
         </Editable>
 
-        {/* ── Programs ─────────────────────────────── */}
+        {/* ── Choose how you learn: self-paced or live ── */}
         <section className="wh-s" id="programs">
           <div className="wh-wrap">
-            <SectionHeading title="Find your next chapter." text="Build your foundations. Deepen your study. Choose a program that meets your goals." />
-            <ProgramCoverflow />
+            <SectionHeading title="Choose how you learn." text="Recorded lessons you take whenever suits you, or scheduled classes with our scholars." />
+            <StudyRoutes />
           </div>
         </section>
 
-        {/* ── Flexible Studies ─────────────────────── */}
-        <Editable page="landing" sectionKey="featured">
-          <section className="wh-s">
-            <div className="wh-wrap">
-              <SectionHeading title="Flexible Studies" text="Choose the format and subject that best fits your current stage of learning." />
-              <div className="wh-formats wh-glass" data-r>
-                {FORMATS.map((format) => (
-                  <Link key={format.title} className="wh-fmt" to={format.to}>
-                    <div className="wh-ar">{format.arabic}</div>
-                    <span className="wh-rule" />
-                    <h3>{format.title}</h3>
-                    <p>{format.text}</p>
-                    <span className="wh-go">View courses →</span>
-                  </Link>
-                ))}
-              </div>
-              <div className="wh-center" data-r><Link className="wh-btn wh-btn-g" to="/courses" data-magnet>{c.featured.buttonLabel} →</Link></div>
-            </div>
-          </section>
-        </Editable>
+        {/* ── Start with a course ─────────────────── */}
+        <section className="wh-s" id="courses">
+          <div className="wh-wrap">
+            <SectionHeading title="Start with a course." text={`Recorded courses taught by our scholars. ${inWords(FREE_COUNT).replace(/^./, (l) => l.toUpperCase())} of them are free to begin today.`} />
+          </div>
+          <CourseShelf />
+        </section>
 
         {/* ── Latest Articles ──────────────────────── */}
         {latestArticles.length > 0 && (
