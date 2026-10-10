@@ -453,6 +453,9 @@ div.cw-next-c{cursor:default}
   .cw-about{padding:18px}
   .cw-lay-head{padding:16px 2px 14px}
   .cw-lay-nav{flex-direction:column}
+  .cw-wu-tabs{width:100%;gap:2px;padding:4px}
+  .cw-wu-tabs button{flex:1 1 auto;justify-content:center;gap:5px;padding:6px 8px;font-size:13.5px}
+  .cw-wu-tabs button b{padding:1px 6px}
   .cw-wu-pane{padding:20px 18px;border-radius:18px}
   .cw-wu-read p,.cw-wu-notes p{font-size:15px}
   .cw-wu-read p.lead{font-size:16.5px}
