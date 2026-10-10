@@ -344,9 +344,8 @@ function LandingPage() {
         {/* ── Hero: the promise, two free ways in, and the two ways to study ── */}
         <Editable page="landing" sectionKey="hero">
           <section className="wh-hero" id="hero">
-            <div className="wh-hero-ghost ar" aria-hidden="true">{c.hero?.arabic || 'رَبِّ زِدْنِي عِلْمًا'}</div>
             <div className="wh-wrap">
-              <span className="wh-kick" data-r>Talweeh Academy</span>
+              <div className="wh-ar" data-r>{c.hero?.arabic || 'رَبِّ زِدْنِي عِلْمًا'}</div>
               <h1>Classical Islamic scholarship, <em>taught with clarity.</em></h1>
               <p className="wh-lead" data-r>Study at your own pace, or live with qualified scholars. From your first Arabic lesson to specialist study.</p>
               <div className="wh-acts" data-r>

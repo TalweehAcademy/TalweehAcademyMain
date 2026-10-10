@@ -140,30 +140,42 @@
 .wh-home .wh-btn-clay{background:linear-gradient(135deg,#ecbba3,var(--clay),var(--clay-d));color:#2a150d;box-shadow:0 12px 28px rgba(176,101,74,.32)}
 .wh-btn-clay:hover{transform:translateY(-3px)}
 
-/* hero: centred promise with the duʿāʾ large and faint behind it; two free ways in; the two ways to study as cards */
-.wh-hero{position:relative;padding:84px 0 70px;text-align:center;overflow:hidden}
-.wh-hero-ghost{position:absolute;inset:0;display:grid;place-items:center;font-family:'Amiri',serif;font-size:clamp(110px,17vw,230px);line-height:1;color:var(--gold);opacity:.07;pointer-events:none;white-space:nowrap;direction:rtl}
-.wh-hero .wh-wrap{position:relative}
-.wh-kick{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--p-gold)}
-.wh-home .wh-hero h1{font-size:clamp(38px,5vw,66px);line-height:1.06;font-weight:500;max-width:16ch;margin:14px auto 0;color:var(--h1a);animation:wh-pop .9s var(--spring) both}
+/* hero: the duʿāʾ, the promise, two free ways in, and the two ways to study. Sized by the screen's height as well as its
+   width, so all of it fits on the first screen of a laptop. */
+.wh-hero{position:relative;padding:clamp(28px,6vh,72px) 0 clamp(28px,5vh,56px);text-align:center}
+.wh-hero .wh-ar{font-size:clamp(28px,min(3.4vw,5.4vh),44px);line-height:1.5;color:var(--p-gold);margin:0}
+.wh-home .wh-hero h1{font-size:clamp(32px,min(4.6vw,7.2vh),62px);line-height:1.06;font-weight:500;max-width:17ch;margin:clamp(4px,1vh,10px) auto 0;color:var(--h1a);animation:wh-pop .9s var(--spring) both}
 .wh-home .wh-hero h1 em{font-style:italic;color:var(--p-gold)}
 [data-theme="dark"] .wh-home .wh-hero h1{color:var(--cream)}
 [data-theme="dark"] .wh-home .wh-hero h1 em{color:var(--gold-b)}
 @keyframes wh-pop{from{opacity:0;transform:scale(.96);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
-.wh-hero p.wh-lead{max-width:52ch;margin:20px auto 30px;color:var(--p-mut);font-size:17px}
+.wh-hero p.wh-lead{max-width:54ch;margin:clamp(10px,2vh,20px) auto clamp(16px,3vh,28px);color:var(--p-mut);font-size:clamp(15px,min(1.3vw,2.2vh),17px)}
 .wh-hero .wh-acts{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.wh-ways{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;margin:52px auto 0;text-align:left}
-.wh-way{position:relative;display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px;border-radius:22px;color:var(--c-text);background:var(--c-grad,var(--c));box-shadow:0 30px 60px -30px rgba(var(--sh-rgb),.8),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .35s var(--spring)}
+.wh-ways{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:880px;margin:clamp(22px,4.5vh,48px) auto 0;text-align:left}
+.wh-way{position:relative;display:grid;grid-template-columns:clamp(60px,9vh,84px) minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px;border-radius:20px;color:var(--c-text);background:var(--c-grad,var(--c));box-shadow:0 30px 60px -30px rgba(var(--sh-rgb),.8),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .35s var(--spring)}
 .wh-way::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(150deg,rgba(242,214,158,.7),rgba(242,214,158,.12) 40%,rgba(242,214,158,.12) 60%,rgba(242,214,158,.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 .wh-way:hover{transform:translateY(-3px)}
-.wh-way img{width:96px;height:96px;border-radius:16px;object-fit:cover}
-.wh-home .wh-way h3{font-size:21px;margin:6px 0 2px;color:var(--c-head)}
+.wh-way img{width:100%;aspect-ratio:1;border-radius:14px;object-fit:cover}
+.wh-home .wh-way h3{font-size:clamp(17px,min(1.6vw,2.6vh),21px);margin:5px 0 1px;color:var(--c-head)}
 .wh-way p{font-size:13px;color:var(--c-mut);margin:0}
-.wh-way-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(215,179,115,.14);color:var(--gold-b)}
+.wh-way-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 10px;border-radius:999px;background:rgba(215,179,115,.14);color:var(--gold-b)}
 .wh-way-tag.is-live{background:rgba(227,165,138,.15);color:var(--clay)}
 .wh-way-go{color:var(--gold-b);font-size:20px;padding-right:8px;transition:transform .35s var(--spring)}
 .wh-way:hover .wh-way-go{transform:translateX(4px)}
-@media (max-width:760px){.wh-hero{padding:56px 0 50px}.wh-ways{grid-template-columns:1fr;margin-top:38px}.wh-way{grid-template-columns:72px minmax(0,1fr) auto}.wh-way img{width:72px;height:72px}}
+@media (max-width:760px){
+  .wh-hero{padding:22px 0 30px}
+  .wh-hero .wh-ar{font-size:28px}
+  .wh-home .wh-hero h1{font-size:33px}
+  .wh-hero p.wh-lead{font-size:15px;margin:10px auto 18px}
+  .wh-hero .wh-acts{gap:8px}
+  .wh-hero .wh-acts .wh-btn{width:100%;justify-content:center;padding-block:12px}
+  /* the two ways as compact side-by-side tiles, so they still show on the first screen */
+  .wh-ways{gap:10px;margin-top:18px}
+  .wh-way{grid-template-columns:1fr;gap:0;padding:12px 14px;border-radius:16px}
+  .wh-way img,.wh-way-go{display:none}
+  .wh-home .wh-way h3{font-size:16px}
+  .wh-way p{font-size:11.5px;line-height:1.4}
+}
 .wh-feats{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 26px;margin-top:26px;font-size:13.5px;font-weight:600;color:var(--p-mut)}
 .wh-feats span{display:inline-flex;align-items:center;gap:8px}
 .wh-feats span+span::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);margin-right:18px;opacity:.7}
