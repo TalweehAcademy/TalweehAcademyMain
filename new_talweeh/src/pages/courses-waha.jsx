@@ -71,6 +71,7 @@ export default function CoursesWahaPage() {
 
   const access = params.get('free') === '1' ? 'free' : params.get('access') === 'paid' ? 'paid' : ''
   const cat = params.get('category') || ''
+  const cats = cat.split(',').filter(Boolean) // the home page links a topic as two subjects, e.g. hadith,hadith-sciences
   const setFilter = (next) => {
     const p = new URLSearchParams()
     const a = 'access' in next ? next.access : access, c = 'cat' in next ? next.cat : cat
@@ -93,7 +94,7 @@ export default function CoursesWahaPage() {
   const inList = useMemo(() => new Set(studyList.map((i) => i.productKey)), [studyList])
   const needle = q.trim().toLowerCase()
   const base = useMemo(() => courses.filter((c) => !needle || `${c.title} ${c.arabicTitle || ''} ${c.instructor} ${c.categoryLabel} ${plainText(c.description)} ${c.primaryText || ''}`.toLowerCase().includes(needle)), [courses, needle])
-  const pass = (c, skip) => (skip === 'access' || !access || (access === 'free' ? c.free : !c.free)) && (skip === 'cat' || !cat || c.category === cat)
+  const pass = (c, skip) => (skip === 'access' || !access || (access === 'free' ? c.free : !c.free)) && (skip === 'cat' || !cat || cats.includes(c.category))
   let list = base.filter((c) => pass(c))
   if (sort === 'free') list = [...list].sort((a, b) => Number(b.free) - Number(a.free))
   if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title))
@@ -101,7 +102,7 @@ export default function CoursesWahaPage() {
   if (sort === 'lessons') list = [...list].sort((a, b) => Number(b.lessonCount || 0) - Number(a.lessonCount || 0))
 
   const n = (pred) => base.filter(pred).length
-  const catLabel = categories.find((k) => k.slug === cat)?.label
+  const catLabel = categories.filter((k) => cats.includes(k.slug)).map((k) => k.label).join(' & ')
   const title = access === 'free' ? 'Free Courses' : catLabel || (access === 'paid' ? 'Paid Courses' : 'All Courses')
   const totalLessons = courses.reduce((s, c) => s + Number(c.lessonCount || 0), 0)
   const subjects = categories.filter((k) => courses.some((c) => c.category === k.slug)).length
@@ -144,7 +145,7 @@ export default function CoursesWahaPage() {
               <Opt on={access === 'paid'} count={n((c) => !c.free && pass(c, 'access'))} label="Paid — Student Portal" onClick={() => setFilter({ access: access === 'paid' ? '' : 'paid' })} />
               <h4>Subject</h4>
               <Opt on={!cat} count={n((c) => pass(c, 'cat'))} label="All subjects" onClick={() => setFilter({ cat: '' })} />
-              {categories.map((k) => <Opt key={k.slug} on={cat === k.slug} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={k.label} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
+              {categories.map((k) => <Opt key={k.slug} on={cats.includes(k.slug)} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={k.label} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
               <button type="button" className="wh-btn wh-btn-glass cw-reset" onClick={() => { setQ(''); setFilter({ access: '', cat: '' }) }}>Clear filters</button>
             </aside>
             <div className="cw-rows">

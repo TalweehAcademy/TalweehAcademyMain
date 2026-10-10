@@ -162,7 +162,7 @@ function StudyRoutes() {
   )
 }
 
-// ── Start with a course: nine courses, a new pick on each visit, in a row that moves by itself ──
+// ── Start with a course: four topics, each a big poster and two more, a new pick on each visit ──
 const shuffledCourses = (list) => {
   const out = [...list]
   for (let i = out.length - 1; i > 0; i -= 1) {
@@ -171,44 +171,58 @@ const shuffledCourses = (list) => {
   }
   return out
 }
-const SHELF_POOL = PUBLIC_COURSES.filter((course) => course.poster)
+const COURSE_TOPICS = [
+  { key: 'free', title: 'Begin free', arabic: 'مجاني', match: (c) => c.free, lead: 'arabic-crash-course', more: 'All free courses →', to: '/courses?free=1' },
+  { key: 'hadith', title: 'Ḥadīth', arabic: 'الحديث', cats: ['hadith', 'hadith-sciences'], more: 'All Ḥadīth courses →' },
+  { key: 'fiqh', title: 'Fiqh & Uṣūl', arabic: 'الفقه', cats: ['fiqh', 'usul-al-fiqh'], more: 'All Fiqh & Uṣūl courses →' },
+  { key: 'arabic', title: 'Arabic', arabic: 'العربية', cats: ['arabic-language', 'nahw-sarf'], more: 'All Arabic courses →' },
+].map((t) => ({ ...t, match: t.match || ((c) => t.cats.includes(c.category)), to: t.to || `/courses?category=${t.cats.join(',')}` }))
+  .map((t) => ({ ...t, count: PUBLIC_COURSES.filter(t.match).length }))
 
-function ShelfCard({ course, hidden }) {
-  const lessons = Number(course.lessonCount || 0)
-  return (
-    <Link className="wh-shc" to={`/courses/${course.slug}`} tabIndex={hidden ? -1 : undefined}>
-      <div className="wh-shc-p"><img src={course.poster} alt="" loading="lazy" /><span className={`wh-shc-price${course.free ? ' free' : ''}`}>{formatCommercePrice(course)}</span></div>
-      <div className="wh-shc-b">
-        <span className="wh-shc-sub">{course.categoryLabel}</span>
-        <h4>{course.title}</h4>
-        <span className="wh-shc-meta">{course.instructor}{lessons ? ` · ${lessons} lessons` : ''}</span>
-      </div>
-    </Link>
-  )
+// Three per topic, the lead first; a course already shown in an earlier topic is not repeated.
+function pickTopicCourses(order) {
+  const used = new Set()
+  return COURSE_TOPICS.map((topic) => {
+    const pool = order.filter((c) => c.poster && topic.match(c) && !used.has(c.slug))
+    const lead = pool.find((c) => c.slug === topic.lead) || pool[0]
+    const picks = lead ? [lead, ...pool.filter((c) => c !== lead).slice(0, 2)] : []
+    picks.forEach((c) => used.add(c.slug))
+    return { ...topic, picks }
+  })
 }
 
 function CourseShelf() {
   // First paint keeps the catalogue order so the prerendered page and the browser agree; then shuffle.
-  const [picks, setPicks] = useState(() => SHELF_POOL.slice(0, 9))
-  const [paused, setPaused] = useState(false)
-  useEffect(() => { setPicks(shuffledCourses(SHELF_POOL).slice(0, 9)) }, [])
+  const [topics, setTopics] = useState(() => pickTopicCourses(PUBLIC_COURSES))
+  useEffect(() => { setTopics(pickTopicCourses(shuffledCourses(PUBLIC_COURSES))) }, [])
   return (
     <>
-      <div className="wh-rail" aria-label="Featured courses" data-r>
-        <div className={`wh-rail-track${paused ? ' paused' : ''}`}>
-          <div className="wh-rail-set">{picks.map((course) => <ShelfCard key={course.slug} course={course} />)}</div>
-          <div className="wh-rail-set" aria-hidden="true">{picks.map((course) => <ShelfCard key={course.slug} course={course} hidden />)}</div>
-        </div>
+      <div className="wh-topics" data-r>
+        {topics.filter((t) => t.picks.length).map(({ key, title, arabic, count, picks: [lead, ...rest], more, to }) => (
+          <div key={key} className="wh-topic">
+            <div className="wh-topic-h"><div><h3>{title}</h3><small>{count} course{count === 1 ? '' : 's'}</small></div><span className="wh-ar">{arabic}</span></div>
+            <Link className="wh-tpc" to={`/courses/${lead.slug}`}>
+              <div className="wh-tpc-p"><img src={lead.poster} alt="" loading="lazy" /><span className={`wh-tp-price${lead.free ? ' free' : ''}`}>{formatCommercePrice(lead)}</span></div>
+              <div className="wh-tpc-b">
+                <span className="wh-tpc-sub">{lead.categoryLabel}</span>
+                <h4>{lead.title}</h4>
+                <span className="wh-tpc-meta">{lead.instructor}</span>
+                <span className="wh-tpc-meta is-n">{lead.lessonCount ? `${lead.lessonCount} lessons` : '\u00a0'}</span>
+              </div>
+            </Link>
+            {[0, 1].map((i) => rest[i]
+              ? <Link key={rest[i].slug} className="wh-tpl" to={`/courses/${rest[i].slug}`}><div><h4>{rest[i].title}</h4><span>{rest[i].lessonCount ? `${rest[i].lessonCount} lessons` : rest[i].categoryLabel}</span></div><span className={`wh-tp-price${rest[i].free ? ' free' : ''}`}>{formatCommercePrice(rest[i])}</span></Link>
+              : <span key={i} className="wh-tpl is-empty" aria-hidden="true" />)}
+            <Link className="wh-topic-more" to={to}>{more}</Link>
+          </div>
+        ))}
       </div>
-      <div className="wh-wrap">
-        <div className="wh-rail-bar">
-          <button type="button" className="wh-rail-pause" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Play the course row' : 'Pause the course row'}>
-            {paused
-              ? <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z" /></svg>
-              : <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>}
-          </button>
-          <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Browse all {COURSE_COUNT} courses →</Link>
-        </div>
+      <div className="wh-shelf-foot" data-r>
+        <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Browse all {COURSE_COUNT} courses →</Link>
+        <Link className="wh-btn wh-btn-glass" to="/courses/roadmap">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2.5" /><circle cx="18" cy="5" r="2.5" /><path d="M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.5" /></svg>
+          See the study roadmap
+        </Link>
       </div>
     </>
   )
@@ -423,10 +437,10 @@ function LandingPage() {
 
         {/* ── Start with a course ─────────────────── */}
         <section className="wh-s" id="courses">
-          <div className="wh-wrap">
-            <SectionHeading title="Start with a course." text={`Recorded courses taught by our scholars. ${inWords(FREE_COUNT).replace(/^./, (l) => l.toUpperCase())} of them are free to begin today.`} />
+          <div className="wh-wrap wh-wrap-wide">
+            <SectionHeading title="Start with a course." text="Recorded courses taught by our scholars. Pick a starting point." />
+            <CourseShelf />
           </div>
-          <CourseShelf />
         </section>
 
         {/* ── Latest Articles ──────────────────────── */}
