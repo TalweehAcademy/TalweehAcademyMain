@@ -324,7 +324,6 @@ function formatLandingDate(date) {
 function LandingPage() {
   const { content: c } = useContent('landing')
   const { content: g } = useContent('global')
-  const [slide, setSlide] = useState(0)
   const rootRef = useRef(null)
   const artsRef = useRef(null)
   const latestArticles = ARTICLES.slice(0, 3)
@@ -334,17 +333,7 @@ function LandingPage() {
     : (c.youtube.videos || []).filter(Boolean).map((src) => ({ src, title: '' }))
   const testimonials = HOME_FEED.testimonials.length ? HOME_FEED.testimonials : c.testimonials
 
-  const heroSlides = c.heroSlides
-  const currentSlide = heroSlides[slide % heroSlides.length] || heroSlides[0]
-
   useWahaMotion(rootRef)
-
-  // Restarts on every change, so a manual pick gets a full 5s before auto-advancing.
-  useEffect(() => {
-    if (heroSlides.length < 2 || prefersReducedMotion()) return undefined
-    const t = setTimeout(() => setSlide((s) => (s + 1) % heroSlides.length), 5000)
-    return () => clearTimeout(t)
-  }, [slide, heroSlides.length])
 
   return (
     <div className="wh-home" ref={rootRef}>
@@ -352,33 +341,30 @@ function LandingPage() {
       <WahaHeader social={g.footer.social} />
 
       <main>
-        {/* ── Hero ─────────────────────────────────── */}
-        <Editable page="landing" sectionKey="heroSlides">
+        {/* ── Hero: the promise, two free ways in, and the two ways to study ── */}
+        <Editable page="landing" sectionKey="hero">
           <section className="wh-hero" id="hero">
+            <div className="wh-hero-ghost ar" aria-hidden="true">{c.hero?.arabic || 'رَبِّ زِدْنِي عِلْمًا'}</div>
             <div className="wh-wrap">
-              <div className="wh-ar" data-r>{c.hero?.arabic || 'رَبِّ زِدْنِي عِلْمًا'}</div>
-              <h1 key={slide}>{currentSlide.heading}</h1>
-              <p className="wh-lead" data-r>Explore the Islamic sciences through structured programs, guided study, and beneficial knowledge for every stage of your journey.</p>
+              <span className="wh-kick" data-r>Talweeh Academy</span>
+              <h1>Classical Islamic scholarship, <em>taught with clarity.</em></h1>
+              <p className="wh-lead" data-r>Study at your own pace, or live with qualified scholars. From your first Arabic lesson to specialist study.</p>
               <div className="wh-acts" data-r>
-                <SmartLink className="wh-btn wh-btn-g" to={currentSlide.ctaHref && currentSlide.ctaHref !== '#' ? currentSlide.ctaHref : '/arabic'} data-magnet>
-                  <span>{currentSlide.cta}</span> →
-                </SmartLink>
-                <a className="wh-btn wh-btn-glass" href="#programs">Explore our programs</a>
+                <Link className="wh-btn wh-btn-g" to="/courses/arabic-crash-course" data-magnet>Start the free Arabic Crash Course →</Link>
+                <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the free assessment</Link>
               </div>
-              <div className="wh-feats" data-r><span>Structured curricula</span><span>Traditional texts</span><span>Live &amp; on-demand study</span></div>
-              {heroSlides.length > 1 && (
-                <div data-r>
-                  <div className="wh-ctl wh-glass">
-                    <button type="button" className="wh-a" aria-label="Previous slide" onClick={() => setSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length)}>‹</button>
-                    <div className="wh-dots">
-                      {heroSlides.map((_, i) => (
-                        <button key={i} type="button" className={`wh-dot${i === slide ? ' active' : ''}`} aria-label={`Slide ${i + 1}`} onClick={() => setSlide(i)} />
-                      ))}
-                    </div>
-                    <button type="button" className="wh-a" aria-label="Next slide" onClick={() => setSlide((s) => (s + 1) % heroSlides.length)}>›</button>
-                  </div>
-                </div>
-              )}
+              <div className="wh-ways" data-r>
+                <Link className="wh-way" to="/courses">
+                  <img src="/brand/program-arabic-manuscript.webp" alt="" loading="eager" />
+                  <div><span className="wh-way-tag">Self-paced</span><h3>At your own pace</h3><p>Arabic Program · courses in every science</p></div>
+                  <span className="wh-way-go" aria-hidden="true">→</span>
+                </Link>
+                <Link className="wh-way" to="/alimiyyah">
+                  <img src="/brand/program-alimiyyah.webp" alt="" loading="eager" />
+                  <div><span className="wh-way-tag is-live">Live</span><h3>Live with scholars</h3><p>ʿĀlimiyyah · live courses · Hadith</p></div>
+                  <span className="wh-way-go" aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
           </section>
         </Editable>
