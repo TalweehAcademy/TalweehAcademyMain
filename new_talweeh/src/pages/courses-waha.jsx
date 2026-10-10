@@ -103,7 +103,7 @@ export default function CoursesWahaPage() {
   if (sort === 'lessons') list = [...list].sort((a, b) => Number(b.lessonCount || 0) - Number(a.lessonCount || 0))
 
   const n = (pred) => base.filter(pred).length
-  const catLabel = categories.filter((k) => cats.includes(k.slug)).map((k) => k.label).join(' & ')
+  const catLabel = categories.filter((k) => cats.includes(k.slug)).map((k) => shortLabel(k.label)).join(' & ')
   const title = access === 'free' ? 'Free Courses' : catLabel || (access === 'paid' ? 'Paid Courses' : 'All Courses')
   const totalLessons = courses.reduce((s, c) => s + Number(c.lessonCount || 0), 0)
   const subjects = categories.filter((k) => courses.some((c) => c.category === k.slug)).length
@@ -133,7 +133,7 @@ export default function CoursesWahaPage() {
         <section className="cw-lib" ref={libRef} style={{ scrollMarginTop: 0 }}>
           <div className="cw-fpanel wh-glass" role="search">
             <div className="cw-ftop">
-              <h2>{title}<small>{list.length} of {courses.length}</small></h2>
+              <h2><span className="cw-ftitle" title={title}>{title}</span><small>{list.length} of {courses.length}</small>{(access || cat || q) && <button type="button" className="cw-clear" onClick={() => { setQ(''); setFilter({ access: '', cat: '' }) }}>Clear</button>}</h2>
               <div className="cw-seg" role="group" aria-label="Access">
                 <Opt on={!access} count={n((c) => pass(c, 'access'))} label="All" onClick={() => setFilter({ access: '' })} />
                 <Opt on={access === 'free'} count={n((c) => c.free && pass(c, 'access'))} label="Free" onClick={() => setFilter({ access: access === 'free' ? '' : 'free' })} />
@@ -148,7 +148,6 @@ export default function CoursesWahaPage() {
             <div className="cw-subs" role="group" aria-label="Subject">
               <Opt on={!cat} count={n((c) => pass(c, 'cat'))} label="All subjects" onClick={() => setFilter({ cat: '' })} />
               {subjectList.map((k) => <Opt key={k.slug} on={cats.includes(k.slug)} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={shortLabel(k.label)} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
-              {(access || cat || q) && <button type="button" className="cw-clear" onClick={() => { setQ(''); setFilter({ access: '', cat: '' }) }}>Clear filters</button>}
             </div>
           </div>
           <div className="cw-cards">
