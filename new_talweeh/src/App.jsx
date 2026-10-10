@@ -171,11 +171,13 @@ const shuffledCourses = (list) => {
   }
   return out
 }
+// Subject slugs as both catalogues name them: the build's course index (hadith-sciences, nahw-sarf) and the
+// portal's live catalogue that /courses loads in the browser (usul-al-hadith, nahw).
 const COURSE_TOPICS = [
   { key: 'free', title: 'Begin free', arabic: 'مجاني', match: (c) => c.free, lead: 'arabic-crash-course', more: 'All free courses →', to: '/courses?free=1' },
-  { key: 'hadith', title: 'Ḥadīth', arabic: 'الحديث', cats: ['hadith', 'hadith-sciences'], more: 'All Ḥadīth courses →' },
+  { key: 'hadith', title: 'Ḥadīth', arabic: 'الحديث', cats: ['hadith', 'hadith-sciences', 'usul-al-hadith'], more: 'All Ḥadīth courses →' },
   { key: 'fiqh', title: 'Fiqh & Uṣūl', arabic: 'الفقه', cats: ['fiqh', 'usul-al-fiqh'], more: 'All Fiqh & Uṣūl courses →' },
-  { key: 'arabic', title: 'Arabic', arabic: 'العربية', cats: ['arabic-language', 'nahw-sarf'], more: 'All Arabic courses →' },
+  { key: 'arabic', title: 'Arabic', arabic: 'العربية', cats: ['arabic-language', 'nahw-sarf', 'nahw'], more: 'All Arabic courses →' },
 ].map((t) => ({ ...t, match: t.match || ((c) => t.cats.includes(c.category)), to: t.to || `/courses?category=${t.cats.join(',')}` }))
   .map((t) => ({ ...t, count: PUBLIC_COURSES.filter(t.match).length }))
 
