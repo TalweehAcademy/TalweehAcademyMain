@@ -393,5 +393,13 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 60
+  "lessonCount": 60,
+  "reviews": [
+    {
+      "name": "Ectrie N.",
+      "rating": 5,
+      "body": "Great course, took a deep dive into a lot of subjects but the ustadh still balanced it nicely with giving a summarized overview at the end of each dars.",
+      "date": "2026-03-16"
+    }
+  ]
 }

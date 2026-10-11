@@ -463,3 +463,26 @@ div.cw-next-c{cursor:default}
   .cw-next-c{flex-direction:column;align-items:stretch}
   .cw-next-c>img{width:100%}
 }
+
+/* ── Student reviews (src/courses/CourseReviews.jsx): course pages and /hadith-specialization ── */
+.cw-reviews{margin-top:64px;scroll-margin-top:110px}
+.cw-reviews-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.wh-home .cw-reviews-h h2{font-size:clamp(26px,3vw,36px);margin-top:4px}
+.cw-rv-sum{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:var(--p-card);border:1px solid var(--p-line)}
+.cw-rv-sum b{font-family:'Lora',serif;font-size:22px;line-height:1;color:var(--p-head)}
+.cw-rv-sum span{font-size:13px;color:var(--p-mut)}
+.cw-rv-stars{display:inline-flex;gap:2px}
+.cw-rv-stars svg{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linejoin:round}
+.cw-rv-stars svg.on{fill:var(--gold)}
+.cw-rv-grid{columns:3 300px;column-gap:14px}
+.cw-rv-grid.n1{columns:1;max-width:760px}
+.cw-rv-grid.n2{columns:2 300px}
+.cw-rv{break-inside:avoid;display:flex;flex-direction:column;gap:12px;margin:0 0 14px;padding:20px 22px;border-radius:22px}
+.cw-rv blockquote{margin:0;white-space:pre-line;font-family:'Lora',serif;font-size:15.5px;line-height:1.7;color:var(--c-head);overflow-wrap:anywhere}
+.cw-rv blockquote.clip{max-height:11.9em;overflow:hidden;-webkit-mask:linear-gradient(#000 60%,transparent);mask:linear-gradient(#000 60%,transparent)}
+.cw-rv .cw-more{align-self:flex-start;margin-top:-6px}
+.cw-rv figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--c-line)}
+.cw-rv figcaption b{font-size:13.5px;color:var(--c-head)}
+.cw-rv figcaption span{font-size:12px;color:var(--c-mut)}
+.wh-home .cw-rv-note{margin:14px auto 0;max-width:72ch;text-align:center;font-size:12.5px;line-height:1.6;color:var(--p-mut)}
+@media (max-width:640px){.cw-reviews{margin-top:48px}.cw-rv{padding:16px 18px}.cw-rv-sum{padding:8px 14px}}

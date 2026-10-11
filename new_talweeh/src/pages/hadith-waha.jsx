@@ -15,6 +15,8 @@ import { money } from '../data/commerceCheckout'
 import { lessonTitle } from '../courses/courseKit'
 import { HADITH_PROGRAM_ENROL } from '../constants/links'
 import { warmProgramEnrol } from '../data/programEnrol'
+import CourseReviews from '../courses/CourseReviews'
+import PROGRAMME_REVIEWS from '../data/programmeReviews.json'
 import '../hadith-waha-v1.css'
 
 const by = (title) => H.COURSES.find((c) => c.title === title)
@@ -227,6 +229,8 @@ export default function HadithWahaPage() {
             </button>
           ))}</div>
         </section>
+
+        <CourseReviews reviews={PROGRAMME_REVIEWS.hadith_specialization} kicker="Student reviews" title="From students in the programme" />
 
         <section className="hw-cta">
           <div className="ar" lang="ar">وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ</div>

@@ -17,6 +17,18 @@ const backupDir = path.join(root, 'src/data/catalog-backups')
 const posterDir = path.join(root, 'public/catalog-posters')
 
 const payload = JSON.parse(await fs.readFile(path.resolve(input), 'utf8'))
+
+// A review as the website shows it: name, 1–5 stars, plain text and the date it was written (YYYY-MM-DD).
+function cleanReviews(rows) {
+  return (Array.isArray(rows) ? rows : [])
+    .map((r) => ({
+      name: String(r?.name || '').replace(/\s+/g, ' ').trim().slice(0, 60),
+      rating: Math.max(1, Math.min(5, Math.round(Number(r?.rating) || 0))),
+      body: String(r?.body || '').replace(/\r/g, '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim().slice(0, 4000),
+      date: /^\d{4}-\d{2}-\d{2}$/.test(String(r?.date || '')) ? String(r.date) : '',
+    }))
+    .filter((r) => r.name && r.body && r.rating)
+}
 let overrides = { categories: [], courses: {} }
 try {
   overrides = JSON.parse(await fs.readFile(overridesPath, 'utf8'))
@@ -298,7 +310,16 @@ for (const source of payload.courses) {
     learningOutcomes: cleanText(source.learning_outcomes || existing.learningOutcomes || ''),
     lessons,
     lessonCount: lessons.length,
+    // Approved course reviews (portal Admin → On-Demand → Reviews). A feed from before reviews existed has no
+    // reviews key: the committed ones are kept.
+    reviews: Array.isArray(source.reviews) ? cleanReviews(source.reviews) : (Array.isArray(existing.reviews) ? existing.reviews : []),
   })
+}
+
+// Programme reviews (the Ḥadīth Specialization has no course of its own): their own file, kept when the feed has none.
+if (payload.programmeReviews && typeof payload.programmeReviews === 'object') {
+  const programmeReviews = Object.fromEntries(Object.entries(payload.programmeReviews).map(([key, rows]) => [key, cleanReviews(rows)]))
+  await fs.writeFile(path.join(root, 'src/data/programmeReviews.json'), `${JSON.stringify(programmeReviews, null, 2)}\n`)
 }
 
 const courses = imported.sort((a, b) => (a.sortOrder ?? 999999) - (b.sortOrder ?? 999999) || a.title.localeCompare(b.title))

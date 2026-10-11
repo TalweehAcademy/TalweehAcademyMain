@@ -525,5 +525,6 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 82
+  "lessonCount": 82,
+  "reviews": []
 }

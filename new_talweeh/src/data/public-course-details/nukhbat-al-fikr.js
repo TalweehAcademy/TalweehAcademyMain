@@ -225,5 +225,31 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 32
+  "lessonCount": 32,
+  "reviews": [
+    {
+      "name": "Mohammad M.",
+      "rating": 5,
+      "body": "This was a very humbling course, especially given that the matn is a primer. There was a wealth of discussion into the nuances of specific topics, divisions of sub-topics and related benefits. As I told Sheikh Omar, taking this course felt as if I've never read a book on the topic of hadith ever before. So in summary, I've come away with a far greater appreciation for our scholarly tradition and it's intricacies. Where previously I held a high regard for it in abstraction, I can now say with a level of certainty that the breadth of this field is far more substantial than popularly imagined - especially in the West.\n\nI can not recommend this course enough to any aspiring students with an interest in the traditions of the Prophet - salla Allahu alayhi wa salam.",
+      "date": "2025-12-06"
+    },
+    {
+      "name": "A I.",
+      "rating": 5,
+      "body": "I found this course to be very beneficial. Thoroughly researched discussions were presented, paired with examples that brought those dicussions to life.\n\nI would recommend this course to all students that are interested in Hadith and want to gain a deeper understanding of Hadith terminology.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Mohammed A.",
+      "rating": 5,
+      "body": "This is an incredibly insightful and informative course. Every student should seize the opportunity to learn Hadith and its related sciences, regardless of whether they’re a beginner or an expert. This course is a valuable resource for both! I particularly appreciate how every term in the science of Hadith is followed by a practical example, making the content extremely applicable. There are also moments when the Sheikh shares meaningful and heart-touching advice, which not only motivates students like myself to continue learning but also provides guidance on the well-paved path to becoming a true student of Hadith.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Alfaarisi",
+      "rating": 5,
+      "body": "A very beneficial course, it gives insight into the sacred science of hadith nomenclature, the examples regarding the minute ilal found in the chains of ahadith mentioned by the likes of al-tirmizi and al-bukhari are especially beneficial, not only is the course very informative, it gives motivation to study further into the science of Hadith, definitely worth it",
+      "date": "2024-10-19"
+    }
+  ]
 }

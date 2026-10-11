@@ -123,5 +123,6 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 15
+  "lessonCount": 15,
+  "reviews": []
 }

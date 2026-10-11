@@ -99,5 +99,31 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 11
+  "lessonCount": 11,
+  "reviews": [
+    {
+      "name": "AbdulHamid H.",
+      "rating": 5,
+      "body": "Mashallah excellent indept analysis. While I am at a beginner's level the course was still beneficial, Alhamdulillah.",
+      "date": "2025-10-21"
+    },
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "I found this course to be incredibly insightful and beneficial. It has not only helped me enhance my Arabic skills but also given me a deeper and more comprehensive understanding of the lineage of the Messenger ﷺ. I highly recommend it to anyone looking to strengthen their knowledge in both language and Islamic history.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Muhammad H.",
+      "rating": 5,
+      "body": "This was truly an amazing course and really helped my Arabic understanding and grammar.",
+      "date": "2025-02-09"
+    },
+    {
+      "name": "Zakera J.",
+      "rating": 5,
+      "body": "Very detailed explanation of the lines. Thoroughly benefited from the analysis and explanation.",
+      "date": "2025-01-05"
+    }
+  ]
 }

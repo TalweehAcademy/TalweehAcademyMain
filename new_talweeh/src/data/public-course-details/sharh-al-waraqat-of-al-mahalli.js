@@ -303,5 +303,19 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 45
+  "lessonCount": 45,
+  "reviews": [
+    {
+      "name": "Shehryar D.",
+      "rating": 5,
+      "body": "Mashā Allāh, what an incredible course. It gives you Taṣwīr of the Masā'il of Uṣūl al-Fiqh perfectly, and gives you the prerequisites to access the more advanced books in the science from both strands, the Hanafī and Mutakallim strands. In particular, the breakdown of the types of Qiyās was very beneficial.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Amir P.",
+      "rating": 5,
+      "body": "Alhamdulillah, I had the privilege to complete Shaikh Omer's Sharh al-Waraqat course, and I can definitely say that it was an amazing learning experience. Many students often struggle to fully grasp the concepts in Usul al-Fiqh as it is one of the more difficult subjects to grasp, but Shaikh is able to break down and explain each concept in a beautiful manner. I really like how Shaikh brings many examples to drill each concept in our minds and fully clarify them. I believe that anyone who completes this course will be able to see the discipline in a new light, and will find it much easier to access the more advanced texts.",
+      "date": "2025-02-09"
+    }
+  ]
 }

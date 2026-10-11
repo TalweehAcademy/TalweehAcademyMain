@@ -231,5 +231,37 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 33
+  "lessonCount": 33,
+  "reviews": [
+    {
+      "name": "Ectrie N.",
+      "rating": 5,
+      "body": "Glad to have done this course, it gave me lots of confidence in reading and breaking sentences and even words apart in way that is useful for further studies. May Allah the Most High bless the teacher, the author of the book that is covered and everyone involved in the process.",
+      "date": "2026-04-08"
+    },
+    {
+      "name": "Mizan A.",
+      "rating": 5,
+      "body": "The level in which Mufti Dawood Saheb breaks down sentences in this course for both fields of grammar, i haven't witnessed that in any other course. Within his grammatical analysis he will constantly be mentioning the way to analyse the text grammatically. He  also mentions why you can't analyse it in a specific way. I would highly recommend this to anyone who has studied nahw and sarf and are trying to get into implementing what has been learnt in both beginner and intermediate level whilst doing grammatical analyses of sentences.",
+      "date": "2025-02-16"
+    },
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "I highly recommend these classes on \"Min Adab Al-Islām\", which have been incredibly beneficial for me. I found them to be ideal for improving my Arabic reading skills, particularly with texts lacking harakāt and Iʿrāb. Mawlana Mufti Muhammad Dawood's explanations of complex structures are clear, concise, and easy to understand, with a strong emphasis on accurate Arabic text reading, comprehension, and translation. He also delves into essential Naḥw and Sarf rules, and occasionally shares beautiful Balāghah benefits, which keeps me engaged and motivated. Moreover, the book itself instills valuable Islamic etiquettes and beautiful manners that are essential in our daily lives. Overall, I have gained immensely from these classes.",
+      "date": "2025-02-11"
+    },
+    {
+      "name": "Muhammad D.",
+      "rating": 5,
+      "body": "The course on من أدب الإسلام offers valuable lessons, particularly for those who struggle with reading Arabic without tashkeel. Shaykh Mufti Mohammad Daud Al Madani provides an in-depth analysis of Arabic sentences, focusing on the i'raab (grammatical structure) of each word and its impact on translation. He emphasizes how small mistakes can change the meaning of a sentence. The course also teaches accurate reading and vocabulary expansion. Something I really liked is the Shaykh's inclusion of insights helpful for students in balāgha (rhetoric) and tafsīr (Quranic exegesis)!",
+      "date": "2025-02-11"
+    },
+    {
+      "name": "Motala A.",
+      "rating": 5,
+      "body": "Alhamdulillah, this course was both highly beneficial and enjoyable. Mufti Daud ensured that it wasn’t just a reading of the book but a comprehensive study of Arabic sentence structure and grammatical rules. He consistently introduced additional valuable points and provided examples from various Quranic verses to deepen our understanding of specific grammatical concepts. He also asked questions to engage us further. Overall, this course is extremely beneficial for all intermediate-level students learning the Arabic language.",
+      "date": "2025-02-10"
+    }
+  ]
 }

@@ -357,5 +357,55 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 54
+  "lessonCount": 54,
+  "reviews": [
+    {
+      "name": "Tajrian I.",
+      "rating": 5,
+      "body": "Wish I took this course earlier. It was amazing learning the theory and rules of Nahw and applying them as well as recognizing them in texts.",
+      "date": "2026-04-16"
+    },
+    {
+      "name": "Ectrie N.",
+      "rating": 5,
+      "body": "الحمد لله \n\nLearnt a lot from the ustadh, very beneficial. I would recommend everyone eager to study Arabic Nahw to enroll for this course.",
+      "date": "2026-01-27"
+    },
+    {
+      "name": "Patel F.",
+      "rating": 5,
+      "body": "ماشالله\nvery nice and clear explanations \ngood for anyone wanting to break out the beginner stage and learn how to do irab",
+      "date": "2026-01-26"
+    },
+    {
+      "name": "Wasim K.",
+      "rating": 5,
+      "body": "جميل",
+      "date": "2025-05-25"
+    },
+    {
+      "name": "Abdullah P.",
+      "rating": 5,
+      "body": "Mashallah it was a very good and profound book.it went into detail for everything.",
+      "date": "2025-03-29"
+    },
+    {
+      "name": "Ahmed B.",
+      "rating": 5,
+      "body": "Al Tuhfat al-Saniyyah is an excellent course for learning the rules of Arabic grammar and how to apply them. The Shaykh explains the concepts very clearly, breaking down complex grammatical rules in a way that is easy to understand. His use of examples and detailed explanations makes the lessons engaging and practical, helping students apply what they learn in Arabic. This course is highly beneficial for anyone looking to build a strong foundation in nahw, and I found it incredibly helpful in improving my understanding of Arabic.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "The Al-Tuḥfah Al-Saniyyah classes provide a solid introduction to Arabic grammar, focusing on the fundamentals of Naḥw to build a strong foundation. I found the course well-structured, with a clear emphasis on applying Iʿrāb principles. A key highlight was Shaykh ʿOmer’s ability to simplify complex concepts, making them easy to grasp. Shaykh Muḥyī Al-Dīn thoroughly explained Al-Muqaddimah Al-Ājurrūmiyyah, while Shaykh ʿOmer further clarified and expanded on his insights, making the material even more accessible. After completing these classes, I feel more confident in pursuing higher-level Arabic studies.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Muhammad H.",
+      "rating": 5,
+      "body": "I benefited immensely from this course, it explains the concept of Arabic very well.",
+      "date": "2025-02-09"
+    }
+  ]
 }

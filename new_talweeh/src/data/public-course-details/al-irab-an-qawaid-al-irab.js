@@ -153,5 +153,13 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 20
+  "lessonCount": 20,
+  "reviews": [
+    {
+      "name": "Ectrie N.",
+      "rating": 5,
+      "body": "AlhamdulilLah, great course and nice overview of the i'rab of sentences, usage of certain words and many other things to be aware of, under the pleasant guidance of the ustadh mufti Mohammad Daud!",
+      "date": "2026-04-22"
+    }
+  ]
 }

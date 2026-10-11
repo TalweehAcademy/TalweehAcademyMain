@@ -849,5 +849,43 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 136
+  "lessonCount": 136,
+  "reviews": [
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "I loved Part 2 of the Nur al-Idah course! I found it as beneficial than Part 1 if not more and felt like it really helped me take the next step in my studies. This part helped me see how the different principles connect with each other, which made the subject so much more meaningful. Mufti Muhammad Daud and Mawlana Omer are both amazing teachers — they explain concepts so clearly and break down difficult masā’il in a way that makes them super easy to understand. This course really deepened my appreciation for how fiqh works and motivated me to keep learning.",
+      "date": "2025-09-23"
+    },
+    {
+      "name": "Mustafa H.",
+      "rating": 5,
+      "body": "Alhamdulillah, by the tawfiq of Allah SWT I was able to start and complete this course under the instruction of Shaikh Omar and Mufti Dawood, may Allah preserve them. I highly recommend this course to whoever is looking to immerse themselves into the Hanafi Madhab while still being a beginner in the science. The way the rulings were broken down and made digestible for the students while also providing an in-depth understanding of the framework of the madhab really brought out the sweetness of this book.",
+      "date": "2025-09-22"
+    },
+    {
+      "name": "Abdullah A.",
+      "rating": 5,
+      "body": "I had the opportunity to take and complete this course. This is course is an extension of the first part. The class is taught in a well structured manner. I will recommend this course to anyone who wants to learn and start implementing what they learn. This class helped me improve myself and has inspired me to learn more. The teachers Shaykh Omer and Mufti Muhammad Dawood were very understanding; they want the best for their students. This class will give you as it has given me; a framework and foundation to lean on and build further.  I would highly recommend you take both courses",
+      "date": "2025-09-21"
+    },
+    {
+      "name": "Abdullah A.",
+      "rating": 5,
+      "body": "I had the opportunity to take and complete this course. This was the first time I had taken any Fiqh courses. The class is taught in a well structured manner. I will recommend this course to anyone who wants to learn and start implementing what they learn. This class helped me improve myself and has inspired me to learn more. The teachers Shaykh Omer and Mufti Muhammad Dawood were very understanding; they want the best for their students. This class will give you as it has given me; a framework and foundation to lean on and build further. All the classes are recorded so that you can rewatch and review any materials.",
+      "date": "2025-09-12"
+    },
+    {
+      "name": "Motala A.",
+      "rating": 5,
+      "body": "This course provides a clear and structured study of Nūr al-Īḍāḥ and is a great gateway to studying the Hanafi madhab. It simplifies complex topics and explains Qawāʿid Fiqhiyyah in a beginner freindly way, helping students understand not only the legal rulings but the structure of Hanafi fiqh and how the Fuqaha derive ruleing. Highly recommended for anyone looking to build a strong foundation in Hanafi fiqh.",
+      "date": "2025-02-10"
+    },
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "I truly benefited immensely from these classes on Nūr al-Īḍāḥ. They provided me with a clear understanding of Qawāʿid Fiqhiyyah along with the Furūʿ derived from these Qawāʿid and Ḍawābiṭ, giving me a much deeper and more structured comprehension of Fiqh. The course not only strengthened my foundational knowledge but also helped me recognize how these legal principles shape various rulings and their practical applications. I especially appreciated how the explanations broke down complex rulings in a way that was both accessible and thought-provoking. These classes have given me greater confidence in my Fiqh studies, and I highly recommend them to anyone looking to develop a strong and well-rounded understanding of Islamic jurisprudence.",
+      "date": "2025-02-10"
+    }
+  ]
 }

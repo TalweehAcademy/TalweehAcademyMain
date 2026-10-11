@@ -10,6 +10,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { PUBLIC_COURSES, PUBLIC_COURSE_CATEGORIES } from '../data/publicCourseIndex'
 import { loadPublicCourse } from '../data/publicCourseDetails'
+import CourseReviews from '../courses/CourseReviews'
 import { fetchLiveCommerceCatalog, findLiveCourse, formatCommercePrice, mergeCommerceCatalog, mergeCourseWithLive, primaryPurchaseOption } from '../data/liveCommerceCatalog'
 import { money, optionBillingLabel } from '../data/commerceCheckout'
 import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
@@ -208,6 +209,8 @@ export default function CourseWahaPage() {
             )}
           </div>
 
+          <CourseReviews reviews={course.reviews} />
+
           {related.length > 0 && (
             <section className="cw-related"><span className="cw-kicker">More in {course.categoryLabel}</span>
               <div className="grid">{related.map((c) => <Link key={c.slug} className="cw-card" to={`/courses/${c.slug}`}><small>{c.free ? 'Free' : formatCommercePrice(c)}</small><strong>{c.title}</strong><span>{c.instructor}</span></Link>)}</div>
@@ -274,6 +277,8 @@ export default function CourseWahaPage() {
           <div className="cw-lgrid">{cards.length ? cards : <p className="cw-empty">The curriculum for this course will be listed soon.</p>}</div>
           {lessons.length > PREVIEW && !showAll && <div className="cw-showall"><button type="button" className="wh-btn wh-btn-glass" onClick={() => setShowAll(true)}>Show all {lessons.length} lessons</button></div>}
         </section>
+
+        <CourseReviews reviews={course.reviews} />
 
         {extras.length > 0 && <section className="cw-extra">{extras.map(([h, v]) => <div key={h}><h3>{h}</h3><p>{v}</p></div>)}</section>}
 

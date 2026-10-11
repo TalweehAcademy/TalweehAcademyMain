@@ -105,5 +105,19 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 12
+  "lessonCount": 12,
+  "reviews": [
+    {
+      "name": "Farhan K.",
+      "rating": 5,
+      "body": "A very beneficial course that I highly recommend for any student seeking to understand how the madhāhib connect back to the Ṣaḥābah and ultimately to our beloved Prophet ﷺ. It deepens one’s appreciation for all the madhāhib and fosters a greater respect for the immense efforts of the Four Imāms and the scholars who came after them in preserving, refining, and systematizing these schools.",
+      "date": "2026-02-16"
+    },
+    {
+      "name": "Muhammad R.",
+      "rating": 5,
+      "body": "Alhamdulilah, this course was simply extraordinary. Sh. Omer has thoroughly researched the lessons before presenting them and managed to explain certain complex points in very simple words. The lessons were detailed and very beneficial. May Allah accept from us all and allow us to benefit even more from Sh. Omer and the asaatidha at Talweeh.",
+      "date": "2026-01-13"
+    }
+  ]
 }

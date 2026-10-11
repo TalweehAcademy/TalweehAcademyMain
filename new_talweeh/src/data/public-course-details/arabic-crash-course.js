@@ -96,5 +96,6 @@ export default {
       "youtubeUrl": "https://www.youtube.com/watch?v=HsIKBM4GyOg"
     }
   ],
-  "lessonCount": 9
+  "lessonCount": 9,
+  "reviews": []
 }

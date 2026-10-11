@@ -96,5 +96,25 @@ export default {
       "youtubeUrl": "https://www.youtube.com/watch?v=8Nc_H9RK-zk"
     }
   ],
-  "lessonCount": 9
+  "lessonCount": 9,
+  "reviews": [
+    {
+      "name": "Arshid Bashir B.",
+      "rating": 5,
+      "body": "بارك الله فيك و جزاك الله خير \nI have listened to introduction to muwatta from other shyookh but this introduction opened new doors of understanding for me",
+      "date": "2026-01-04"
+    },
+    {
+      "name": "AbdulHamid H.",
+      "rating": 5,
+      "body": "Alhamdulillah this was an excellent dive into the background before starting the study of the Muwatta. Jazakallahu khairan. May Allah subahana wataala bless you. Ameen.",
+      "date": "2025-12-01"
+    },
+    {
+      "name": "Swapan K.",
+      "rating": 5,
+      "body": "good",
+      "date": "2025-02-26"
+    }
+  ]
 }

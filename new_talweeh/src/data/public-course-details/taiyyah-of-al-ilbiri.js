@@ -93,5 +93,19 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 10
+  "lessonCount": 10,
+  "reviews": [
+    {
+      "name": "Ectrie N.",
+      "rating": 5,
+      "body": "Great course, benefitted a lot from the insights given by the ustadh during the lessons.",
+      "date": "2026-05-13"
+    },
+    {
+      "name": "Hussain M.",
+      "rating": 5,
+      "body": "These lessons on Tāʾiyyah al-Ilbīrī are full of wisdom, beautiful advice, and encouragement to seek knowledge. I especially love how Shaykh ʿOmer provided a linguistic breakdown of the poem’s difficult words, making it easier to understand. What stood out to me the most was the profound way in which the author, Abū Isḥāq al-Ilbīrī, inspires the reader to embark on the path of seeking knowledge with sincerity and dedication.",
+      "date": "2025-02-10"
+    }
+  ]
 }

@@ -264,5 +264,13 @@ export default {
       "youtubeUrl": "https://www.youtube.com/watch?v=aHPcdGIkeN8"
     }
   ],
-  "lessonCount": 33
+  "lessonCount": 33,
+  "reviews": [
+    {
+      "name": "Ahmed K.",
+      "rating": 5,
+      "body": "Alhamdulillah I am very grateful and blessed to have been able to study this noble kitaab with my respected teacher Shaykh Omer Khurshid.\n\nShaykh has studied and received Ijaazaat from multiple different shuyukh and this becomes apparent when delving into certain discussions throughout the lessons. \n\n\nFor an English audience, very few have completed a study and reading of the entire Shamaail, الحمد لله. InshaAllah this course will be very beneficial for others as well \nجَزَاكَ ٱللَّٰهُ خَيْرًا",
+      "date": "2025-12-17"
+    }
+  ]
 }

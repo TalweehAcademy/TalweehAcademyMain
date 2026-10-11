@@ -152,7 +152,27 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=8Nc_H9RK-zk"
       }
     ],
-    "lessonCount": 9
+    "lessonCount": 9,
+    "reviews": [
+      {
+        "name": "Arshid Bashir B.",
+        "rating": 5,
+        "body": "بارك الله فيك و جزاك الله خير \nI have listened to introduction to muwatta from other shyookh but this introduction opened new doors of understanding for me",
+        "date": "2026-01-04"
+      },
+      {
+        "name": "AbdulHamid H.",
+        "rating": 5,
+        "body": "Alhamdulillah this was an excellent dive into the background before starting the study of the Muwatta. Jazakallahu khairan. May Allah subahana wataala bless you. Ameen.",
+        "date": "2025-12-01"
+      },
+      {
+        "name": "Swapan K.",
+        "rating": 5,
+        "body": "good",
+        "date": "2025-02-26"
+      }
+    ]
   },
   {
     "portalId": "567a2277-dd8b-4286-aa68-cb8c74e4ebf2",
@@ -384,7 +404,8 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=PGHnrJB47t8"
       }
     ],
-    "lessonCount": 28
+    "lessonCount": 28,
+    "reviews": []
   },
   {
     "portalId": "2e9f956e-5feb-47f1-b416-15534213980e",
@@ -478,7 +499,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 9
+    "lessonCount": 9,
+    "reviews": []
   },
   {
     "portalId": "f8b5ba39-cd5b-4e1e-b443-bfccbdd29c4c",
@@ -843,7 +865,15 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=PyFDM7bEOYs"
       }
     ],
-    "lessonCount": 47
+    "lessonCount": 47,
+    "reviews": [
+      {
+        "name": "Farhan I.",
+        "rating": 5,
+        "body": "The adab al mufrad lessons were detailed and well structured, with amazing fawaid and advices.",
+        "date": "2025-12-17"
+      }
+    ]
   },
   {
     "portalId": "c29ec92c-4b89-402a-b431-7e875c7cde27",
@@ -1110,7 +1140,15 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=aHPcdGIkeN8"
       }
     ],
-    "lessonCount": 33
+    "lessonCount": 33,
+    "reviews": [
+      {
+        "name": "Ahmed K.",
+        "rating": 5,
+        "body": "Alhamdulillah I am very grateful and blessed to have been able to study this noble kitaab with my respected teacher Shaykh Omer Khurshid.\n\nShaykh has studied and received Ijaazaat from multiple different shuyukh and this becomes apparent when delving into certain discussions throughout the lessons. \n\n\nFor an English audience, very few have completed a study and reading of the entire Shamaail, الحمد لله. InshaAllah this course will be very beneficial for others as well \nجَزَاكَ ٱللَّٰهُ خَيْرًا",
+        "date": "2025-12-17"
+      }
+    ]
   },
   {
     "portalId": "79af6d0a-3f6e-47eb-9ee8-d37c5ce8b972",
@@ -1470,7 +1508,57 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 54
+    "lessonCount": 54,
+    "reviews": [
+      {
+        "name": "Tajrian I.",
+        "rating": 5,
+        "body": "Wish I took this course earlier. It was amazing learning the theory and rules of Nahw and applying them as well as recognizing them in texts.",
+        "date": "2026-04-16"
+      },
+      {
+        "name": "Ectrie N.",
+        "rating": 5,
+        "body": "الحمد لله \n\nLearnt a lot from the ustadh, very beneficial. I would recommend everyone eager to study Arabic Nahw to enroll for this course.",
+        "date": "2026-01-27"
+      },
+      {
+        "name": "Patel F.",
+        "rating": 5,
+        "body": "ماشالله\nvery nice and clear explanations \ngood for anyone wanting to break out the beginner stage and learn how to do irab",
+        "date": "2026-01-26"
+      },
+      {
+        "name": "Wasim K.",
+        "rating": 5,
+        "body": "جميل",
+        "date": "2025-05-25"
+      },
+      {
+        "name": "Abdullah P.",
+        "rating": 5,
+        "body": "Mashallah it was a very good and profound book.it went into detail for everything.",
+        "date": "2025-03-29"
+      },
+      {
+        "name": "Ahmed B.",
+        "rating": 5,
+        "body": "Al Tuhfat al-Saniyyah is an excellent course for learning the rules of Arabic grammar and how to apply them. The Shaykh explains the concepts very clearly, breaking down complex grammatical rules in a way that is easy to understand. His use of examples and detailed explanations makes the lessons engaging and practical, helping students apply what they learn in Arabic. This course is highly beneficial for anyone looking to build a strong foundation in nahw, and I found it incredibly helpful in improving my understanding of Arabic.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "The Al-Tuḥfah Al-Saniyyah classes provide a solid introduction to Arabic grammar, focusing on the fundamentals of Naḥw to build a strong foundation. I found the course well-structured, with a clear emphasis on applying Iʿrāb principles. A key highlight was Shaykh ʿOmer’s ability to simplify complex concepts, making them easy to grasp. Shaykh Muḥyī Al-Dīn thoroughly explained Al-Muqaddimah Al-Ājurrūmiyyah, while Shaykh ʿOmer further clarified and expanded on his insights, making the material even more accessible. After completing these classes, I feel more confident in pursuing higher-level Arabic studies.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Muhammad H.",
+        "rating": 5,
+        "body": "I benefited immensely from this course, it explains the concept of Arabic very well.",
+        "date": "2025-02-09"
+      }
+    ]
   },
   {
     "portalId": "a03f814e-1984-413f-a39f-8824c51a13b7",
@@ -1590,7 +1678,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 14
+    "lessonCount": 14,
+    "reviews": []
   },
   {
     "portalId": "d908de7f-660a-4109-818a-6f4d3fa9b354",
@@ -1746,7 +1835,15 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 20
+    "lessonCount": 20,
+    "reviews": [
+      {
+        "name": "Ectrie N.",
+        "rating": 5,
+        "body": "AlhamdulilLah, great course and nice overview of the i'rab of sentences, usage of certain words and many other things to be aware of, under the pleasant guidance of the ustadh mufti Mohammad Daud!",
+        "date": "2026-04-22"
+      }
+    ]
   },
   {
     "portalId": "ebe05692-0f18-4e40-b8a6-13b90f0b3541",
@@ -1920,7 +2017,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 23
+    "lessonCount": 23,
+    "reviews": []
   },
   {
     "portalId": "53c79200-a776-439e-8cc3-3e2abd7c7f30",
@@ -2019,7 +2117,8 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=HsIKBM4GyOg"
       }
     ],
-    "lessonCount": 9
+    "lessonCount": 9,
+    "reviews": []
   },
   {
     "portalId": "529b893d-0f0c-4fa3-85c1-e82ad56ffbfb",
@@ -2127,7 +2226,21 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 12
+    "lessonCount": 12,
+    "reviews": [
+      {
+        "name": "Adel I.",
+        "rating": 5,
+        "body": "The Experience was very nice and informative, especially regarding the Ulama رحمهم الله and their most important works. The pace was good and the information given was a satisfying amount. Allah bless you.",
+        "date": "2026-04-21"
+      },
+      {
+        "name": "Muhammad H.",
+        "rating": 5,
+        "body": "Mashallah, this was a great course. Alhamdulillah, I benefited from this a lot, this was a very great introduction to Al Fiqh Al Hanafi, and it has enhanced my understanding in it as well.",
+        "date": "2025-02-09"
+      }
+    ]
   },
   {
     "portalId": "5711d551-aa64-49ef-b82e-595c4bb07054",
@@ -2223,7 +2336,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 10
+    "lessonCount": 10,
+    "reviews": []
   },
   {
     "portalId": "2e858da9-52b4-49d6-b45b-66e88f899b6d",
@@ -2331,7 +2445,21 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 12
+    "lessonCount": 12,
+    "reviews": [
+      {
+        "name": "Farhan K.",
+        "rating": 5,
+        "body": "A very beneficial course that I highly recommend for any student seeking to understand how the madhāhib connect back to the Ṣaḥābah and ultimately to our beloved Prophet ﷺ. It deepens one’s appreciation for all the madhāhib and fosters a greater respect for the immense efforts of the Four Imāms and the scholars who came after them in preserving, refining, and systematizing these schools.",
+        "date": "2026-02-16"
+      },
+      {
+        "name": "Muhammad R.",
+        "rating": 5,
+        "body": "Alhamdulilah, this course was simply extraordinary. Sh. Omer has thoroughly researched the lessons before presenting them and managed to explain certain complex points in very simple words. The lessons were detailed and very beneficial. May Allah accept from us all and allow us to benefit even more from Sh. Omer and the asaatidha at Talweeh.",
+        "date": "2026-01-13"
+      }
+    ]
   },
   {
     "portalId": "bc568b1a-13ba-4186-9cde-bdddcf4833db",
@@ -2421,7 +2549,15 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 9
+    "lessonCount": 9,
+    "reviews": [
+      {
+        "name": "Amir",
+        "rating": 5,
+        "body": "Amazing Ma Sha Allah. Very enlightening!",
+        "date": "2024-10-19"
+      }
+    ]
   },
   {
     "portalId": "10eff8a7-5ed1-4b6a-98d2-348ce8996dda",
@@ -2523,7 +2659,33 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 11
+    "lessonCount": 11,
+    "reviews": [
+      {
+        "name": "AbdulHamid H.",
+        "rating": 5,
+        "body": "Mashallah excellent indept analysis. While I am at a beginner's level the course was still beneficial, Alhamdulillah.",
+        "date": "2025-10-21"
+      },
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "I found this course to be incredibly insightful and beneficial. It has not only helped me enhance my Arabic skills but also given me a deeper and more comprehensive understanding of the lineage of the Messenger ﷺ. I highly recommend it to anyone looking to strengthen their knowledge in both language and Islamic history.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Muhammad H.",
+        "rating": 5,
+        "body": "This was truly an amazing course and really helped my Arabic understanding and grammar.",
+        "date": "2025-02-09"
+      },
+      {
+        "name": "Zakera J.",
+        "rating": 5,
+        "body": "Very detailed explanation of the lines. Thoroughly benefited from the analysis and explanation.",
+        "date": "2025-01-05"
+      }
+    ]
   },
   {
     "portalId": "8d2513d3-48b6-4073-bf62-d14a3208863d",
@@ -2649,7 +2811,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 15
+    "lessonCount": 15,
+    "reviews": []
   },
   {
     "portalId": "28775b60-b5a4-4855-bb22-7e450713255d",
@@ -2883,7 +3046,39 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 33
+    "lessonCount": 33,
+    "reviews": [
+      {
+        "name": "Ectrie N.",
+        "rating": 5,
+        "body": "Glad to have done this course, it gave me lots of confidence in reading and breaking sentences and even words apart in way that is useful for further studies. May Allah the Most High bless the teacher, the author of the book that is covered and everyone involved in the process.",
+        "date": "2026-04-08"
+      },
+      {
+        "name": "Mizan A.",
+        "rating": 5,
+        "body": "The level in which Mufti Dawood Saheb breaks down sentences in this course for both fields of grammar, i haven't witnessed that in any other course. Within his grammatical analysis he will constantly be mentioning the way to analyse the text grammatically. He  also mentions why you can't analyse it in a specific way. I would highly recommend this to anyone who has studied nahw and sarf and are trying to get into implementing what has been learnt in both beginner and intermediate level whilst doing grammatical analyses of sentences.",
+        "date": "2025-02-16"
+      },
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "I highly recommend these classes on \"Min Adab Al-Islām\", which have been incredibly beneficial for me. I found them to be ideal for improving my Arabic reading skills, particularly with texts lacking harakāt and Iʿrāb. Mawlana Mufti Muhammad Dawood's explanations of complex structures are clear, concise, and easy to understand, with a strong emphasis on accurate Arabic text reading, comprehension, and translation. He also delves into essential Naḥw and Sarf rules, and occasionally shares beautiful Balāghah benefits, which keeps me engaged and motivated. Moreover, the book itself instills valuable Islamic etiquettes and beautiful manners that are essential in our daily lives. Overall, I have gained immensely from these classes.",
+        "date": "2025-02-11"
+      },
+      {
+        "name": "Muhammad D.",
+        "rating": 5,
+        "body": "The course on من أدب الإسلام offers valuable lessons, particularly for those who struggle with reading Arabic without tashkeel. Shaykh Mufti Mohammad Daud Al Madani provides an in-depth analysis of Arabic sentences, focusing on the i'raab (grammatical structure) of each word and its impact on translation. He emphasizes how small mistakes can change the meaning of a sentence. The course also teaches accurate reading and vocabulary expansion. Something I really liked is the Shaykh's inclusion of insights helpful for students in balāgha (rhetoric) and tafsīr (Quranic exegesis)!",
+        "date": "2025-02-11"
+      },
+      {
+        "name": "Motala A.",
+        "rating": 5,
+        "body": "Alhamdulillah, this course was both highly beneficial and enjoyable. Mufti Daud ensured that it wasn’t just a reading of the book but a comprehensive study of Arabic sentence structure and grammatical rules. He consistently introduced additional valuable points and provided examples from various Quranic verses to deepen our understanding of specific grammatical concepts. He also asked questions to engage us further. Overall, this course is extremely beneficial for all intermediate-level students learning the Arabic language.",
+        "date": "2025-02-10"
+      }
+    ]
   },
   {
     "portalId": "0a023517-560c-43c6-9b46-8674425c2498",
@@ -3411,7 +3606,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 82
+    "lessonCount": 82,
+    "reviews": []
   },
   {
     "portalId": "da23d295-c60f-4646-84ab-1622c878c79c",
@@ -3747,7 +3943,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 50
+    "lessonCount": 50,
+    "reviews": []
   },
   {
     "portalId": "3b22cbfe-eb2d-4428-88e9-c4bdd1d04074",
@@ -4119,7 +4316,15 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 56
+    "lessonCount": 56,
+    "reviews": [
+      {
+        "name": "Shehryar D.",
+        "rating": 5,
+        "body": "Mashā Allāh, an amazing course, despite the text of the book being so difficult, its explained and broken down by the Shaikh in such an excellent manner that everything is understandable. I highly suggest students who have studied a good amount of Uṣūl al-Fiqh to join the course.",
+        "date": "2025-02-09"
+      }
+    ]
   },
   {
     "portalId": "ce86e2e6-f17a-4e17-9fe9-6e11f166a5f5",
@@ -4515,7 +4720,15 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 60
+    "lessonCount": 60,
+    "reviews": [
+      {
+        "name": "Ectrie N.",
+        "rating": 5,
+        "body": "Great course, took a deep dive into a lot of subjects but the ustadh still balanced it nicely with giving a summarized overview at the end of each dars.",
+        "date": "2026-03-16"
+      }
+    ]
   },
   {
     "portalId": "5c00a4c6-a95e-40c5-894e-fd1a324f28d1",
@@ -4743,7 +4956,33 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 32
+    "lessonCount": 32,
+    "reviews": [
+      {
+        "name": "Mohammad M.",
+        "rating": 5,
+        "body": "This was a very humbling course, especially given that the matn is a primer. There was a wealth of discussion into the nuances of specific topics, divisions of sub-topics and related benefits. As I told Sheikh Omar, taking this course felt as if I've never read a book on the topic of hadith ever before. So in summary, I've come away with a far greater appreciation for our scholarly tradition and it's intricacies. Where previously I held a high regard for it in abstraction, I can now say with a level of certainty that the breadth of this field is far more substantial than popularly imagined - especially in the West.\n\nI can not recommend this course enough to any aspiring students with an interest in the traditions of the Prophet - salla Allahu alayhi wa salam.",
+        "date": "2025-12-06"
+      },
+      {
+        "name": "A I.",
+        "rating": 5,
+        "body": "I found this course to be very beneficial. Thoroughly researched discussions were presented, paired with examples that brought those dicussions to life.\n\nI would recommend this course to all students that are interested in Hadith and want to gain a deeper understanding of Hadith terminology.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Mohammed A.",
+        "rating": 5,
+        "body": "This is an incredibly insightful and informative course. Every student should seize the opportunity to learn Hadith and its related sciences, regardless of whether they’re a beginner or an expert. This course is a valuable resource for both! I particularly appreciate how every term in the science of Hadith is followed by a practical example, making the content extremely applicable. There are also moments when the Sheikh shares meaningful and heart-touching advice, which not only motivates students like myself to continue learning but also provides guidance on the well-paved path to becoming a true student of Hadith.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Alfaarisi",
+        "rating": 5,
+        "body": "A very beneficial course, it gives insight into the sacred science of hadith nomenclature, the examples regarding the minute ilal found in the chains of ahadith mentioned by the likes of al-tirmizi and al-bukhari are especially beneficial, not only is the course very informative, it gives motivation to study further into the science of Hadith, definitely worth it",
+        "date": "2024-10-19"
+      }
+    ]
   },
   {
     "portalId": "1d8c5b5a-0807-4ef0-90cb-a55df82b8177",
@@ -5595,7 +5834,45 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 136
+    "lessonCount": 136,
+    "reviews": [
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "I loved Part 2 of the Nur al-Idah course! I found it as beneficial than Part 1 if not more and felt like it really helped me take the next step in my studies. This part helped me see how the different principles connect with each other, which made the subject so much more meaningful. Mufti Muhammad Daud and Mawlana Omer are both amazing teachers — they explain concepts so clearly and break down difficult masā’il in a way that makes them super easy to understand. This course really deepened my appreciation for how fiqh works and motivated me to keep learning.",
+        "date": "2025-09-23"
+      },
+      {
+        "name": "Mustafa H.",
+        "rating": 5,
+        "body": "Alhamdulillah, by the tawfiq of Allah SWT I was able to start and complete this course under the instruction of Shaikh Omar and Mufti Dawood, may Allah preserve them. I highly recommend this course to whoever is looking to immerse themselves into the Hanafi Madhab while still being a beginner in the science. The way the rulings were broken down and made digestible for the students while also providing an in-depth understanding of the framework of the madhab really brought out the sweetness of this book.",
+        "date": "2025-09-22"
+      },
+      {
+        "name": "Abdullah A.",
+        "rating": 5,
+        "body": "I had the opportunity to take and complete this course. This is course is an extension of the first part. The class is taught in a well structured manner. I will recommend this course to anyone who wants to learn and start implementing what they learn. This class helped me improve myself and has inspired me to learn more. The teachers Shaykh Omer and Mufti Muhammad Dawood were very understanding; they want the best for their students. This class will give you as it has given me; a framework and foundation to lean on and build further.  I would highly recommend you take both courses",
+        "date": "2025-09-21"
+      },
+      {
+        "name": "Abdullah A.",
+        "rating": 5,
+        "body": "I had the opportunity to take and complete this course. This was the first time I had taken any Fiqh courses. The class is taught in a well structured manner. I will recommend this course to anyone who wants to learn and start implementing what they learn. This class helped me improve myself and has inspired me to learn more. The teachers Shaykh Omer and Mufti Muhammad Dawood were very understanding; they want the best for their students. This class will give you as it has given me; a framework and foundation to lean on and build further. All the classes are recorded so that you can rewatch and review any materials.",
+        "date": "2025-09-12"
+      },
+      {
+        "name": "Motala A.",
+        "rating": 5,
+        "body": "This course provides a clear and structured study of Nūr al-Īḍāḥ and is a great gateway to studying the Hanafi madhab. It simplifies complex topics and explains Qawāʿid Fiqhiyyah in a beginner freindly way, helping students understand not only the legal rulings but the structure of Hanafi fiqh and how the Fuqaha derive ruleing. Highly recommended for anyone looking to build a strong foundation in Hanafi fiqh.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "I truly benefited immensely from these classes on Nūr al-Īḍāḥ. They provided me with a clear understanding of Qawāʿid Fiqhiyyah along with the Furūʿ derived from these Qawāʿid and Ḍawābiṭ, giving me a much deeper and more structured comprehension of Fiqh. The course not only strengthened my foundational knowledge but also helped me recognize how these legal principles shape various rulings and their practical applications. I especially appreciated how the explanations broke down complex rulings in a way that was both accessible and thought-provoking. These classes have given me greater confidence in my Fiqh studies, and I highly recommend them to anyone looking to develop a strong and well-rounded understanding of Islamic jurisprudence.",
+        "date": "2025-02-10"
+      }
+    ]
   },
   {
     "portalId": "d2f759de-45e3-444a-aeb1-2ffbf7115d8d",
@@ -5823,7 +6100,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 32
+    "lessonCount": 32,
+    "reviews": []
   },
   {
     "portalId": "8a624f37-5a0b-4c6a-8176-b3a78f999837",
@@ -6129,7 +6407,21 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 45
+    "lessonCount": 45,
+    "reviews": [
+      {
+        "name": "Shehryar D.",
+        "rating": 5,
+        "body": "Mashā Allāh, what an incredible course. It gives you Taṣwīr of the Masā'il of Uṣūl al-Fiqh perfectly, and gives you the prerequisites to access the more advanced books in the science from both strands, the Hanafī and Mutakallim strands. In particular, the breakdown of the types of Qiyās was very beneficial.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Amir P.",
+        "rating": 5,
+        "body": "Alhamdulillah, I had the privilege to complete Shaikh Omer's Sharh al-Waraqat course, and I can definitely say that it was an amazing learning experience. Many students often struggle to fully grasp the concepts in Usul al-Fiqh as it is one of the more difficult subjects to grasp, but Shaikh is able to break down and explain each concept in a beautiful manner. I really like how Shaikh brings many examples to drill each concept in our minds and fully clarify them. I believe that anyone who completes this course will be able to see the discipline in a new light, and will find it much easier to access the more advanced texts.",
+        "date": "2025-02-09"
+      }
+    ]
   },
   {
     "portalId": "d1bd9211-0a9b-43fd-a017-fe01afd8c93c",
@@ -6441,7 +6733,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 46
+    "lessonCount": 46,
+    "reviews": []
   },
   {
     "portalId": "d8bf9579-755e-494b-a51d-06f1a2609535",
@@ -6537,7 +6830,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 10
+    "lessonCount": 10,
+    "reviews": []
   },
   {
     "portalId": "e7243496-8e3c-4bed-ab63-78d3e4d6e4fc",
@@ -6692,7 +6986,39 @@ export const PUBLIC_COURSES = [
         "youtubeUrl": "https://www.youtube.com/watch?v=3nnljudcGRc"
       }
     ],
-    "lessonCount": 17
+    "lessonCount": 17,
+    "reviews": [
+      {
+        "name": "Riaz S.",
+        "rating": 5,
+        "body": "May Allah accept this effort. ameen.",
+        "date": "2026-05-03"
+      },
+      {
+        "name": "Tajrian I.",
+        "rating": 5,
+        "body": "A level of depth into the Surah that I have not experienced before.",
+        "date": "2026-04-16"
+      },
+      {
+        "name": "Muhammad Saad M.",
+        "rating": 5,
+        "body": "JazakallahuKahiran Sh.",
+        "date": "2025-12-31"
+      },
+      {
+        "name": "Swapan K.",
+        "rating": 5,
+        "body": "good",
+        "date": "2025-02-25"
+      },
+      {
+        "name": "Muhammad H.",
+        "rating": 5,
+        "body": "Very detailed and explains the verses along with Arabic grammar in an amazing manner.",
+        "date": "2025-02-09"
+      }
+    ]
   },
   {
     "portalId": "0bcc9a56-e159-4844-9cdf-e1fea3cef614",
@@ -6788,7 +7114,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 10
+    "lessonCount": 10,
+    "reviews": []
   },
   {
     "portalId": "0842d2c1-c358-47e1-9235-d711524e2bf1",
@@ -6906,7 +7233,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 13
+    "lessonCount": 13,
+    "reviews": []
   },
   {
     "portalId": "0cfd32e1-8704-452d-9b0b-b488611bd3e4",
@@ -7002,7 +7330,21 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 10
+    "lessonCount": 10,
+    "reviews": [
+      {
+        "name": "Ectrie N.",
+        "rating": 5,
+        "body": "Great course, benefitted a lot from the insights given by the ustadh during the lessons.",
+        "date": "2026-05-13"
+      },
+      {
+        "name": "Hussain M.",
+        "rating": 5,
+        "body": "These lessons on Tāʾiyyah al-Ilbīrī are full of wisdom, beautiful advice, and encouragement to seek knowledge. I especially love how Shaykh ʿOmer provided a linguistic breakdown of the poem’s difficult words, making it easier to understand. What stood out to me the most was the profound way in which the author, Abū Isḥāq al-Ilbīrī, inspires the reader to embark on the path of seeking knowledge with sincerity and dedication.",
+        "date": "2025-02-10"
+      }
+    ]
   },
   {
     "portalId": "99794138-0bb1-4969-9259-1b238f67f01f",
@@ -7242,7 +7584,8 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 34
+    "lessonCount": 34,
+    "reviews": []
   },
   {
     "portalId": "805b4f9a-fbd2-45e4-97b6-b7d8c96f08fd",
@@ -7458,7 +7801,15 @@ export const PUBLIC_COURSES = [
         "topic": ""
       }
     ],
-    "lessonCount": 30
+    "lessonCount": 30,
+    "reviews": [
+      {
+        "name": "Tajrian I.",
+        "rating": 5,
+        "body": "Amazing course. Gave me a brand new perspective of Madhabs and a greater appreciation for the scholars of Usul.",
+        "date": "2026-04-16"
+      }
+    ]
   }
 ]
 

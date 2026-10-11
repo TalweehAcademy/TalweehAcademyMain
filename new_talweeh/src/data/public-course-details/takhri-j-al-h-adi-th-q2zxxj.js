@@ -91,5 +91,6 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 9
+  "lessonCount": 9,
+  "reviews": []
 }

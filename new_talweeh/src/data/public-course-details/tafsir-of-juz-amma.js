@@ -152,5 +152,37 @@ export default {
       "youtubeUrl": "https://www.youtube.com/watch?v=3nnljudcGRc"
     }
   ],
-  "lessonCount": 17
+  "lessonCount": 17,
+  "reviews": [
+    {
+      "name": "Riaz S.",
+      "rating": 5,
+      "body": "May Allah accept this effort. ameen.",
+      "date": "2026-05-03"
+    },
+    {
+      "name": "Tajrian I.",
+      "rating": 5,
+      "body": "A level of depth into the Surah that I have not experienced before.",
+      "date": "2026-04-16"
+    },
+    {
+      "name": "Muhammad Saad M.",
+      "rating": 5,
+      "body": "JazakallahuKahiran Sh.",
+      "date": "2025-12-31"
+    },
+    {
+      "name": "Swapan K.",
+      "rating": 5,
+      "body": "good",
+      "date": "2025-02-25"
+    },
+    {
+      "name": "Muhammad H.",
+      "rating": 5,
+      "body": "Very detailed and explains the verses along with Arabic grammar in an amazing manner.",
+      "date": "2025-02-09"
+    }
+  ]
 }

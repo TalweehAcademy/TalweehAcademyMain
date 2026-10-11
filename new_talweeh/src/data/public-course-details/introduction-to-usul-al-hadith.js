@@ -87,5 +87,13 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 9
+  "lessonCount": 9,
+  "reviews": [
+    {
+      "name": "Amir",
+      "rating": 5,
+      "body": "Amazing Ma Sha Allah. Very enlightening!",
+      "date": "2024-10-19"
+    }
+  ]
 }

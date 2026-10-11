@@ -105,5 +105,19 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 12
+  "lessonCount": 12,
+  "reviews": [
+    {
+      "name": "Adel I.",
+      "rating": 5,
+      "body": "The Experience was very nice and informative, especially regarding the Ulama رحمهم الله and their most important works. The pace was good and the information given was a satisfying amount. Allah bless you.",
+      "date": "2026-04-21"
+    },
+    {
+      "name": "Muhammad H.",
+      "rating": 5,
+      "body": "Mashallah, this was a great course. Alhamdulillah, I benefited from this a lot, this was a very great introduction to Al Fiqh Al Hanafi, and it has enhanced my understanding in it as well.",
+      "date": "2025-02-09"
+    }
+  ]
 }

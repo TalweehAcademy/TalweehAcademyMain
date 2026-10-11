@@ -213,5 +213,13 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 30
+  "lessonCount": 30,
+  "reviews": [
+    {
+      "name": "Tajrian I.",
+      "rating": 5,
+      "body": "Amazing course. Gave me a brand new perspective of Madhabs and a greater appreciation for the scholars of Usul.",
+      "date": "2026-04-16"
+    }
+  ]
 }

@@ -369,5 +369,13 @@ export default {
       "topic": ""
     }
   ],
-  "lessonCount": 56
+  "lessonCount": 56,
+  "reviews": [
+    {
+      "name": "Shehryar D.",
+      "rating": 5,
+      "body": "Mashā Allāh, an amazing course, despite the text of the book being so difficult, its explained and broken down by the Shaikh in such an excellent manner that everything is understandable. I highly suggest students who have studied a good amount of Uṣūl al-Fiqh to join the course.",
+      "date": "2025-02-09"
+    }
+  ]
 }

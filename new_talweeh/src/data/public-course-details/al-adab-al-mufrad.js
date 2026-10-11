@@ -362,5 +362,13 @@ export default {
       "youtubeUrl": "https://www.youtube.com/watch?v=PyFDM7bEOYs"
     }
   ],
-  "lessonCount": 47
+  "lessonCount": 47,
+  "reviews": [
+    {
+      "name": "Farhan I.",
+      "rating": 5,
+      "body": "The adab al mufrad lessons were detailed and well structured, with amazing fawaid and advices.",
+      "date": "2025-12-17"
+    }
+  ]
 }
