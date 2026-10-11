@@ -88,6 +88,18 @@ html[data-theme="light"]{--academy-brand:rgb(15 39 27);--academy-brand-strong:rg
 html .wh-home{isolation:isolate;background:var(--bg)!important}
 html .wh-home::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--tile) repeat top center/720px auto}
 html[data-theme="dark"] .wh-home::before{background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)),url('/brand/lattice-gold.webp') 0 0/620px auto repeat}
+/* Moving like the portal (AlimDash.css .ald-pat / .ald-sheen): the pinned pattern drifts slowly and seamlessly (the
+   layer is one tile larger than the screen and glides exactly one tile per loop, 160 s), and a soft blurred glow glides
+   across every 12 s. Tile sizes are set exactly so the loop has no jump: light 720 × 1022, dark 620 × 880. */
+@keyframes wh-pat-drift-light{from{transform:translate3d(0,0,0)}to{transform:translate3d(720px,1022px,0)}}
+@keyframes wh-pat-drift-dark{from{transform:translate3d(0,0,0)}to{transform:translate3d(620px,880px,0)}}
+html .wh-home::before{inset:-1022px 0 0 -720px;background-size:720px 1022px;background-position:0 0;animation:wh-pat-drift-light 160s linear infinite;will-change:transform}
+html[data-theme="dark"] .wh-home::before{inset:-880px 0 0 -620px;background-size:auto,620px 880px;animation-name:wh-pat-drift-dark}
+@keyframes wh-sheen-glide{0%{transform:translate3d(0,0,0) rotate(14deg)}60%,100%{transform:translate3d(380%,0,0) rotate(14deg)}}
+html .wh-home::after{content:"";position:fixed;top:-35vh;height:170vh;left:-45vw;width:42vw;z-index:-1;pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side,rgb(255 244 214 / .11),rgb(246 221 165 / .06) 45%,rgb(246 221 165 / .02) 72%,transparent 100%);
+  filter:blur(28px);transform:translate3d(0,0,0) rotate(14deg);animation:wh-sheen-glide 12s ease-in-out infinite;will-change:transform}
+@media (prefers-reduced-motion:reduce){html .wh-home::before,html[data-theme="dark"] .wh-home::before,html .wh-home::after{animation:none}html .wh-home::after{opacity:0}}
 html[data-theme="dark"] .academy-home{background:#06110B!important}
 html[data-theme="dark"] .academy-home::before{position:fixed;background:linear-gradient(rgb(6 17 11 / .84),rgb(6 17 11 / .84)),url('/brand/lattice-gold.webp') 0 0/620px auto repeat;mix-blend-mode:normal;opacity:1}
 
