@@ -25,7 +25,8 @@ const PAGES = SITE || HOME ? {
     ...CONTENT_DEFAULTS.global,
     footer: {
       ...CONTENT_DEFAULTS.global.footer,
-      ...(SITE.copyright ? { copyright: SITE.copyright } : {}),
+      // A year at the end of the portal's copyright line follows the calendar.
+      ...(SITE.copyright ? { copyright: SITE.copyright.replace(/\b(19|20)\d{2}\s*$/, String(new Date().getFullYear())) } : {}),
       ...(SITE.social?.length ? { social: SITE.social.map((s) => ({ label: s.label, icon: ICON[s.label] || '•', href: s.href })) } : {}),
     },
   },
