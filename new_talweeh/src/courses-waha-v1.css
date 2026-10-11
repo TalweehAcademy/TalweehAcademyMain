@@ -478,7 +478,8 @@ div.cw-next-c{cursor:default}
 .cw-rv-grid.n1{columns:1;max-width:760px}
 .cw-rv-grid.n2{columns:2 300px}
 .cw-rv{break-inside:avoid;display:flex;flex-direction:column;gap:12px;margin:0 0 14px;padding:20px 22px;border-radius:22px}
-.cw-rv blockquote{margin:0;white-space:pre-line;font-family:'Lora',serif;font-size:15.5px;line-height:1.7;color:var(--c-head);overflow-wrap:anywhere}
+.cw-rv blockquote{margin:0;font-family:'Lora',serif;font-size:15.5px;line-height:1.7;color:var(--c-head);overflow-wrap:anywhere}
+.cw-rv blockquote span{display:block;unicode-bidi:plaintext}
 .cw-rv blockquote.clip{max-height:11.9em;overflow:hidden;-webkit-mask:linear-gradient(#000 60%,transparent);mask:linear-gradient(#000 60%,transparent)}
 .cw-rv .cw-more{align-self:flex-start;margin-top:-6px}
 .cw-rv figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--c-line)}
@@ -486,3 +487,17 @@ div.cw-next-c{cursor:default}
 .cw-rv figcaption span{font-size:12px;color:var(--c-mut)}
 .wh-home .cw-rv-note{margin:14px auto 0;max-width:72ch;text-align:center;font-size:12.5px;line-height:1.6;color:var(--p-mut)}
 @media (max-width:640px){.cw-reviews{margin-top:48px}.cw-rv{padding:16px 18px}.cw-rv-sum{padding:8px 14px}}
+
+/* ── Paid course page: Curriculum · About the course · Reviews as tabs (course-waha.jsx, same tabs as .cw-wu) ── */
+.cw-ptabs{margin-top:56px;scroll-margin-top:110px}
+.cw-ptabs .cw-wu-tabs{background:var(--c-grad,var(--c))}
+.cw-ptabs-pane{margin-top:18px}
+.wh-home .cw-ptabs-note{margin:0 0 14px;font-size:14px;color:var(--p-mut)}
+.cw-ptabs-about{display:flex;flex-direction:column;gap:24px}
+.cw-ptabs-sec{max-width:72ch;padding-top:22px;border-top:1px solid var(--c-line)}
+.wh-home .cw-ptabs-sec h3{font-size:20px;margin-bottom:8px;color:var(--c-head)}
+.wh-home .cw-ptabs-sec p{white-space:pre-line;font-size:15.5px;line-height:1.8;color:var(--c-text)}
+.cw-reviews.bare{margin-top:0}
+.cw-reviews.bare .cw-reviews-h{align-items:center}
+.wh-home .cw-rv-lead{margin:0;font-size:15px;color:var(--p-mut)}
+@media (max-width:640px){.cw-ptabs{margin-top:40px}.cw-ptabs .cw-wu-tabs{width:100%}.cw-ptabs .cw-wu-tabs button{flex:1;justify-content:center;padding:6px 10px;font-size:13.5px}.cw-ptabs-about{padding:22px 18px}}

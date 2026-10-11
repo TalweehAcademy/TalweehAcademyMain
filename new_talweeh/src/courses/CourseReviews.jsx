@@ -30,23 +30,25 @@ function Review({ review }) {
   return (
     <figure className="cw-rv wh-glass">
       <Stars rating={review.rating} />
-      <blockquote dir="auto" className={long && !open ? 'clip' : ''}>{review.body}</blockquote>
+      {/* Each line keeps its own direction: a review can open with an Arabic phrase and go on in English. */}
+      <blockquote className={long && !open ? 'clip' : ''}>{review.body.split('\n').map((line, i) => line.trim() ? <span key={i} dir="auto">{line}</span> : <br key={i} />)}</blockquote>
       {long && <button type="button" className="cw-more" onClick={() => setOpen((v) => !v)}>{open ? 'Show less ▴' : 'Read more ▾'}</button>}
       <figcaption><b>{review.name}</b>{review.date && <span>{monthYear(review.date)}</span>}</figcaption>
     </figure>
   )
 }
 
-export default function CourseReviews({ reviews, title = 'What students say', kicker = 'Student reviews' }) {
+// bare: inside a tab (paid course page), without the section heading; the rating summary stays.
+export default function CourseReviews({ reviews, title = 'What students say', kicker = 'Student reviews', bare = false }) {
   const [all, setAll] = useState(false)
   const list = Array.isArray(reviews) ? reviews : []
   if (!list.length) return null
   const average = Math.round((list.reduce((t, r) => t + Number(r.rating || 0), 0) / list.length) * 10) / 10
   const shown = all ? list : list.slice(0, FIRST)
   return (
-    <section className="cw-reviews" id="reviews" aria-labelledby="cw-reviews-h">
+    <section className={`cw-reviews${bare ? ' bare' : ''}`} id={bare ? undefined : 'reviews'} aria-labelledby={bare ? undefined : 'cw-reviews-h'} aria-label={bare ? 'Student reviews' : undefined}>
       <div className="cw-reviews-h">
-        <div><span className="cw-kicker">{kicker}</span><h2 id="cw-reviews-h">{title}</h2></div>
+        {bare ? <p className="cw-rv-lead">What students who took the course say.</p> : <div><span className="cw-kicker">{kicker}</span><h2 id="cw-reviews-h">{title}</h2></div>}
         <div className="cw-rv-sum"><b>{average.toFixed(1)}</b><Stars rating={Math.round(average)} size={17} /><span>{list.length} {list.length === 1 ? 'review' : 'reviews'}</span></div>
       </div>
       <div className={`cw-rv-grid${list.length < 3 ? ` n${list.length}` : ''}`}>{shown.map((r, i) => <Review key={`${r.name}-${r.date}-${i}`} review={r} />)}</div>

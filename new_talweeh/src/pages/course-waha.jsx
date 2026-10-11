@@ -96,6 +96,7 @@ export default function CourseWahaPage() {
   const [planId, setPlanId] = useState('')
   const [autoplay, setAutoplay] = useState(false)
   const [about, setAbout] = useState(false)
+  const [pageTab, setPageTab] = useState('curriculum')
   const stageRef = useRef(null)
   useDocumentMeta({ title: course?.title, description: course?.description, image: absoluteUrl(course?.poster) })
 
@@ -105,7 +106,7 @@ export default function CourseWahaPage() {
   const cur = playable.includes(requested) ? requested : (playable[0] ?? -1)
   const options = purchaseOptions(course)
   const plan = options.find((o) => String(o.id) === planId) || primaryPurchaseOption(course)
-  useEffect(() => { setPlanId(''); setShowAll(false); setFullDesc(false); setAutoplay(false); setAbout(false) }, [slug])
+  useEffect(() => { setPlanId(''); setShowAll(false); setFullDesc(false); setAutoplay(false); setAbout(false); setPageTab(window.location.hash === '#reviews' ? 'reviews' : 'curriculum') }, [slug])
   useEffect(() => {
     if (window.location.hash === '#enrol') document.getElementById('enrol')?.scrollIntoView({ block: 'center' })
   }, [course?.slug])
@@ -125,6 +126,9 @@ export default function CourseWahaPage() {
   const related = catalog.filter((c) => c.category === course.category && c.slug !== course.slug).slice(0, 3)
   const extras = [['Course introduction', course.courseIntroduction], ['Who it is for', course.audience], ['Learning outcomes', course.learningOutcomes], ['Teaching methodology', course.teachingMethodology], ['Prerequisites', course.prerequisites]]
     .map(([h, v]) => [h, plainText(v)]).filter(([, v]) => v && v !== description)
+
+  const reviewCount = Array.isArray(course.reviews) ? course.reviews.length : 0
+  const pageTabs = [['curriculum', 'Curriculum', lessons.length], (description || extras.length) && ['about', 'About the course', 0], reviewCount && ['reviews', 'Reviews', reviewCount]].filter(Boolean)
 
   // Lesson cards, grouped under their topic headings.
   const shown = showAll ? lessons : lessons.slice(0, PREVIEW)
@@ -272,15 +276,26 @@ export default function CourseWahaPage() {
           </section>
         )}
 
-        <section className="cw-lessons" id="lessons">
-          <div className="cw-lessons-h"><div><span className="cw-kicker">Curriculum</span><h2>{lessons.length ? `${lessons.length} lessons` : 'Curriculum'}</h2></div>{!course.free && <p>Lessons for this course are delivered in the Talweeh Student Portal after enrolment.</p>}</div>
-          <div className="cw-lgrid">{cards.length ? cards : <p className="cw-empty">The curriculum for this course will be listed soon.</p>}</div>
-          {lessons.length > PREVIEW && !showAll && <div className="cw-showall"><button type="button" className="wh-btn wh-btn-glass" onClick={() => setShowAll(true)}>Show all {lessons.length} lessons</button></div>}
+        {/* Below the hero: one tab bar, like the free lesson page (Curriculum · About the course · Reviews). */}
+        <section className="cw-ptabs" id="lessons">
+          <div className="cw-wu-tabs" role="tablist" aria-label="About this course">
+            {pageTabs.map(([id, label, n]) => <button key={id} type="button" role="tab" id={`pt-${id}`} aria-selected={pageTab === id} aria-controls="pt-pane" className={pageTab === id ? 'on' : ''} onClick={() => setPageTab(id)}>{label}{n ? <b>{n}</b> : null}</button>)}
+          </div>
+          <div className="cw-ptabs-pane" role="tabpanel" id="pt-pane" aria-labelledby={`pt-${pageTab}`}>
+            {pageTab === 'curriculum' && <>
+              {!course.free && <p className="cw-ptabs-note">🔒 Lessons for this course are delivered in the Talweeh Student Portal after enrolment.</p>}
+              <div className="cw-lgrid">{cards.length ? cards : <p className="cw-empty">The curriculum for this course will be listed soon.</p>}</div>
+              {lessons.length > PREVIEW && !showAll && <div className="cw-showall"><button type="button" className="wh-btn wh-btn-glass" onClick={() => setShowAll(true)}>Show all {lessons.length} lessons</button></div>}
+            </>}
+            {pageTab === 'about' && (
+              <div className="cw-wu-pane wh-glass cw-ptabs-about">
+                {description && <div className="cw-wu-read"><p className="lead">{description}</p></div>}
+                {extras.map(([h, v]) => <div key={h} className="cw-ptabs-sec"><h3>{h}</h3><p>{v}</p></div>)}
+              </div>
+            )}
+            {pageTab === 'reviews' && <CourseReviews reviews={course.reviews} bare />}
+          </div>
         </section>
-
-        <CourseReviews reviews={course.reviews} />
-
-        {extras.length > 0 && <section className="cw-extra">{extras.map(([h, v]) => <div key={h}><h3>{h}</h3><p>{v}</p></div>)}</section>}
 
         {related.length > 0 && (
           <section className="cw-related"><span className="cw-kicker">More in {course.categoryLabel}</span>
