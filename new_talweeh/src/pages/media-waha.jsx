@@ -5,7 +5,10 @@
 // Each card opens the watch page, /media/:slug. Data: src/media/mediaKit.js (the portal's Media when published).
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { createPortal } from 'react-dom'
 import { WahaPage } from '../components/WahaShell'
+import { loadYouTubeApi } from '../courses/WahaVideoPlayer'
+import { useScrollLock } from '../hooks/useScrollLock'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import {
   FEATURED, LATEST, SHORTS, TOPICS, VIDEOS, findTopic, matches, plural, recentlyWatched, topicUrl, topicVideos, watchUrl,
@@ -67,38 +70,155 @@ const shuffled = (list) => {
   return out
 }
 
+// Short reminders: tap one and it opens upright, already playing; swipe up (or ↓ / the arrow buttons) for the next,
+// down for the one before; tap the picture to pause. One YouTube player is kept ready (made when the row nears the
+// screen) so the tap itself starts the Short — a phone refuses sound once the tap is over. The viewer lives at the
+// end of <body>, above the site header.
 function Shorts() {
-  const [open, setOpen] = useState(null)
   const [list, setList] = useState(SHORTS)
-  useEffect(() => { setList(shuffled(SHORTS)) }, [])
+  const [at, setAt] = useState(-1)
+  const [host, setHost] = useState(null)
+  const [state, setState] = useState(-1)
+  const [quiet, setQuiet] = useState(false)
+  const [prog, setProg] = useState(0)
+  // YouTube lays its title and logo over the first seconds: the Short's own picture covers them, then fades.
+  const [lead, setLead] = useState(null)
+  const leadArmed = useRef(false)
+  const leadTimer = useRef(null)
+  const rowRef = useRef(null)
+  const viewRef = useRef(null)
+  const mountRef = useRef(null)
+  const ytRef = useRef(null)
+  const readyRef = useRef(false)
+  const loadedRef = useRef(null)
+  const pendingRef = useRef(null)
+  const atRef = useRef(-1)
+  const listRef = useRef(list)
+  listRef.current = list
+  atRef.current = at
+  useEffect(() => { setList(shuffled(SHORTS)); setHost(document.body) }, [])
+  useScrollLock(at >= 0)
+
+  const refused = () => setTimeout(() => {
+    const p = ytRef.current
+    if (!readyRef.current || pendingRef.current) return
+    const st = p.getPlayerState()
+    if (st !== 1 && st !== 3) { p.mute(); setQuiet(true); p.playVideo() }
+  }, 1400)
+  const warm = () => {
+    if (ytRef.current) return
+    ytRef.current = { pending: true }
+    loadYouTubeApi().then(() => {
+      if (!mountRef.current) return
+      loadedRef.current = pendingRef.current?.id || listRef.current[0]?.youtubeId
+      ytRef.current = new window.YT.Player(mountRef.current, {
+        host: 'https://www.youtube-nocookie.com',
+        videoId: loadedRef.current,
+        playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0 },
+        events: {
+          onReady: (e) => { readyRef.current = true; const job = pendingRef.current; pendingRef.current = null; if (job) { e.target.playVideo(); refused() } },
+          onStateChange: (e) => {
+            setState(e.data)
+            if (e.data === 1 && leadArmed.current) { leadArmed.current = false; setLead(Date.now()); clearTimeout(leadTimer.current); leadTimer.current = setTimeout(() => setLead(null), 2600) }
+            // At the end, on to the next Short (the last one stays, with "Watch again").
+            if (e.data === 0 && atRef.current >= 0 && atRef.current < listRef.current.length - 1) show(atRef.current + 1)
+          },
+        },
+      })
+    })
+  }
   useEffect(() => {
-    if (!open) return undefined
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(null) }
+    const el = rowRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined
+    const io = new IntersectionObserver((entries) => { if (entries.some((x) => x.isIntersecting)) { warm(); io.disconnect() } }, { rootMargin: '500px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => { clearTimeout(leadTimer.current); try { ytRef.current?.destroy?.() } catch { /* already gone */ } }, [])
+
+  // Show Short i, playing. Called straight from the tap or swipe.
+  function show(i) {
+    const s = listRef.current[i]
+    if (!s) return
+    setAt(i); setProg(0)
+    leadArmed.current = true
+    const p = ytRef.current
+    if (p && readyRef.current) { if (loadedRef.current !== s.youtubeId) { loadedRef.current = s.youtubeId; p.loadVideoById(s.youtubeId) } else { p.seekTo(0, true); p.playVideo() } }
+    else { pendingRef.current = { id: s.youtubeId }; warm() }
+  }
+  const close = () => { try { if (readyRef.current) ytRef.current.pauseVideo() } catch { /* not ready */ } setAt(-1); setQuiet(false) }
+  const tapPicture = () => {
+    const p = ytRef.current
+    if (!readyRef.current) return
+    if (quiet) { p.unMute(); setQuiet(false); return }
+    if (state === 0) { p.seekTo(0, true); p.playVideo() } else if (state === 1) p.pauseVideo(); else p.playVideo()
+  }
+  useEffect(() => {
+    if (at < 0 || state !== 1) return undefined
+    const id = setInterval(() => { const p = ytRef.current; if (readyRef.current && p.getDuration) setProg((p.getCurrentTime() || 0) / (p.getDuration() || 1)) }, 200)
+    return () => clearInterval(id)
+  }, [at, state])
+  useEffect(() => {
+    if (at < 0) return undefined
+    const onKey = (e) => {
+      if (e.key === 'Escape') close()
+      else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); show(Math.min(list.length - 1, at + 1)) }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); show(Math.max(0, at - 1)) }
+      else if (e.key === ' ') { e.preventDefault(); tapPicture() }
+    }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open])
+  })
+  useEffect(() => { if (viewRef.current) viewRef.current.inert = at < 0 }, [at, host])
+  // Swipe on the picture: up for the next Short, down for the one before; a short touch is a tap.
+  const touch = useRef(null)
+  const onTouchStart = (e) => { touch.current = { y: e.touches[0].clientY, x: e.touches[0].clientX, t: Date.now() } }
+  const onTouchEnd = (e) => {
+    const t = touch.current; touch.current = null
+    if (!t) return
+    const dy = e.changedTouches[0].clientY - t.y, dx = e.changedTouches[0].clientX - t.x
+    e.preventDefault()
+    if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) { if (dy < 0) show(Math.min(list.length - 1, at + 1)); else if (at > 0) show(at - 1); else close() }
+    else if (Math.abs(dy) < 12 && Math.abs(dx) < 12) tapPicture()
+  }
   if (!SHORTS.length) return null
+  const cur = list[at] || list[0]
   return (
     <>
-      <Row kicker="In a minute" title="Short reminders">
-        {list.map((s) => (
-          <button key={s.youtubeId} type="button" className={s.upright ? 'mv-short' : 'mv-short mv-short--wide'} onClick={() => setOpen(s)}>
-            {/* The upright picture fills the card; without one, the wide picture is shown whole over a blurred copy of itself. */}
-            {!s.upright && <img className="mv-short-bg" src={`https://i.ytimg.com/vi/${s.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />}
-            <img src={`https://i.ytimg.com/vi/${s.youtubeId}/${s.upright || 'hqdefault'}.jpg`} alt="" loading="lazy" />
-            <span className="mv-pl"><PlayIcon /></span>
-            {s.title && <span className="mv-short-t"><span>{s.title}</span></span>}
-          </button>
-        ))}
-      </Row>
-      {open && (
-        <div className="mv-modal" role="dialog" aria-modal="true" aria-label={open.title || 'Short reminder'} onClick={() => setOpen(null)}>
-          <div className="mv-modal-in" onClick={(e) => e.stopPropagation()}>
-            <iframe src={`https://www.youtube-nocookie.com/embed/${open.youtubeId}?autoplay=1&rel=0`} title={open.title || 'Short reminder'} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
-            <button type="button" className="mv-modal-x" aria-label="Close" onClick={() => setOpen(null)}>×</button>
+      <div ref={rowRef}>
+        <Row kicker="In a minute" title="Short reminders">
+          {list.map((s, i) => (
+            <button key={s.youtubeId} type="button" className={s.upright ? 'mv-short' : 'mv-short mv-short--wide'} onClick={() => show(i)}>
+              {/* The upright picture fills the card; without one, the wide picture is shown whole over a blurred copy of itself. */}
+              {!s.upright && <img className="mv-short-bg" src={`https://i.ytimg.com/vi/${s.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />}
+              <img src={`https://i.ytimg.com/vi/${s.youtubeId}/${s.upright || 'hqdefault'}.jpg`} alt="" loading="lazy" />
+              <span className="mv-pl"><PlayIcon /></span>
+              {s.title && <span className="mv-short-t"><span>{s.title}</span></span>}
+            </button>
+          ))}
+        </Row>
+      </div>
+      {host && createPortal(
+        <div className={`mv-sv vp-vars${at >= 0 ? ' on' : ''}`} ref={viewRef} role="dialog" aria-modal="true" aria-label={cur?.title || 'Short reminder'} aria-hidden={at < 0}>
+          <div className="mv-sv-dim" onClick={close} />
+          <div className="mv-sv-frame">
+            <div className="mv-sv-yt"><div ref={mountRef} /></div>
+            <div className="mv-sv-tap" onClick={(e) => { if (e.detail) tapPicture() }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} aria-hidden="true" />
+            {lead && state === 1 && cur && <div key={lead} className={`mv-sv-lead${cur.upright ? '' : ' wide'}`} style={{ backgroundImage: `url(https://i.ytimg.com/vi/${cur.youtubeId}/${cur.upright || 'hqdefault'}.jpg)` }} aria-hidden="true"><span className="cw-vp-eq"><i /><i /><i /></span></div>}
+            {(state === 2 || state === 0) && <span className="mv-sv-paused" aria-hidden="true"><PlayIcon /></span>}
+            {quiet && state === 1 && <button type="button" className="cw-vp-sound" onClick={tapPicture}>Tap for sound</button>}
+            <div className="mv-sv-foot">
+              {cur?.title && <strong>{cur.title}</strong>}
+              <span className="mv-sv-prog"><i style={{ width: `${Math.min(100, prog * 100)}%` }} /></span>
+              <small>{at + 1} of {list.length} · swipe up for the next</small>
+            </div>
+            <button type="button" className="mv-sv-x" onClick={close} aria-label="Close">×</button>
           </div>
-        </div>
-      )}
+          <div className="mv-sv-nav">
+            <button type="button" onClick={() => show(Math.max(0, at - 1))} disabled={at <= 0} aria-label="Previous reminder">↑</button>
+            <button type="button" onClick={() => show(Math.min(list.length - 1, at + 1))} disabled={at >= list.length - 1} aria-label="Next reminder">↓</button>
+          </div>
+        </div>, host)}
     </>
   )
 }

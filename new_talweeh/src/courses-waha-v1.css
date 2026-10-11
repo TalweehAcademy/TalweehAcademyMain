@@ -233,7 +233,7 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 /* small frames (phones): the caption would sit under the play button, so the poster shows the play button alone */
 @container (max-width:380px){.cw-vp-poster .cap{display:none}}
 /* iPhone full screen (no Fullscreen API for page elements): the frame fills the screen itself */
-.cw-vp.is-fs{position:fixed;inset:0;z-index:10000;margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);border:0;border-radius:0;display:flex;flex-direction:column;justify-content:center;background:#000;box-shadow:none}
+.cw-vp.is-fs{position:fixed;inset:0;z-index:2147483001;margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);border:0;border-radius:0;display:flex;flex-direction:column;justify-content:center;background:#000;box-shadow:none}
 .cw-vp.is-fs::before{display:none}
 .cw-vp.is-fs .cw-vp-screen{flex:1;min-height:0;aspect-ratio:auto;border-radius:0}
 .cw-vp.is-fs .cw-vp-bar{padding:8px 12px 10px}
@@ -514,3 +514,37 @@ div.cw-next-c{cursor:default}
   .cw-ebar-space{display:block;height:84px}
 }
 @media(prefers-reduced-motion:reduce){.cw-ebar{transition:none}}
+
+/* ── Player (WahaVideoPlayer.jsx): paused cover, "Tap for sound", full screen with fading controls ── */
+/* Pages outside the Wāḥa shell (e.g. /arabic/program) wrap the player in .vp-vars for its colours. */
+.vp-vars{--gold:#d7b373;--gold-b:#f0dcb4;--gold-d:#b8894c;--g2:#10251c;--cream:#f3e8d3;--sage:#9cc2a6;--c-solid:#183428;--c-in:rgba(243,232,211,.06);--c-text:#dfe7df}
+.cw-vp-poster.is-paused::before{background:radial-gradient(circle at 50% 50%,rgba(5,13,9,.45),rgba(5,13,9,.82))}
+.cw-vp-poster.is-paused{animation:cw-vp-in .18s ease-out}
+@keyframes cw-vp-in{from{opacity:0}}
+.cw-vp-sound{position:absolute;left:14px;top:14px;z-index:6;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;border:0;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);font:800 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.cw-vp-sound svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cw-vp-top{position:absolute;left:0;right:0;top:0;z-index:6;display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 26px;background:linear-gradient(rgba(0,0,0,.72),transparent);color:#fbf5ea;font:600 14px 'Plus Jakarta Sans',sans-serif;transition:opacity .3s}
+.cw-vp-top span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cw-vp-top .b{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);color:#fff;cursor:pointer}
+.cw-vp-top .b svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.cw-vp-turn{position:absolute;left:50%;bottom:28%;z-index:6;transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;padding:9px 15px;border-radius:999px;background:rgba(16,37,28,.92);border:1px solid rgba(215,179,115,.4);color:var(--gold-b);font:600 13px 'Plus Jakarta Sans',sans-serif;pointer-events:none;animation:cw-vp-turn 4s ease forwards}
+.cw-vp-turn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@keyframes cw-vp-turn{0%{opacity:0;transform:translate(-50%,6px)}10%,80%{opacity:1;transform:translateX(-50%)}100%{opacity:0}}
+/* Full screen (iPhone's own and the browser's): the picture fills the screen, the controls lie over its foot and
+   fade 3 s after the last touch while the video plays. */
+.cw-vp.is-fs .cw-vp-screen,.cw-vp:fullscreen .cw-vp-screen{flex:1;min-height:0}
+.cw-vp.is-fs .cw-vp-bar,.cw-vp:fullscreen .cw-vp-bar{position:absolute;left:0;right:0;bottom:0;z-index:6;padding:28px max(14px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,rgba(0,0,0,.78));transition:opacity .3s}
+.cw-vp.is-idle .cw-vp-bar,.cw-vp.is-idle .cw-vp-top{opacity:0;pointer-events:none}
+.cw-vp.is-idle .cw-vp-screen{cursor:none}
+/* While a phone shows a video full screen, the site's own bars stay out of the way. */
+html.vp-full .wh-head,html.vp-full .wh-topbar,html.vp-full .cw-ebar,html.vp-full .academy-header,html.vp-full .top-bar{visibility:hidden}
+@media(prefers-reduced-motion:reduce){.cw-vp-turn,.cw-vp-poster.is-paused{animation:none}}
+/* The video's picture over YouTube's opening labels while it starts (sound already playing), then it fades away. */
+.cw-vp-lead{position:absolute;inset:0;z-index:3;background:#050d09 center/cover no-repeat;pointer-events:none;animation:cw-vp-lead 2.6s ease forwards}
+.cw-vp-lead::before{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(5,13,9,.6))}
+.cw-vp-eq{position:absolute;left:16px;bottom:14px;display:inline-flex;align-items:flex-end;gap:3px;height:16px}
+.cw-vp-eq i{width:4px;border-radius:2px;background:var(--gold-b);animation:cw-vp-eq .9s ease-in-out infinite}
+.cw-vp-eq i:nth-child(2){animation-delay:-.3s}.cw-vp-eq i:nth-child(3){animation-delay:-.6s}
+@keyframes cw-vp-eq{0%,100%{height:4px}50%{height:16px}}
+@keyframes cw-vp-lead{0%,72%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.cw-vp-lead{animation:none}.cw-vp-eq i{animation:none;height:10px}}

@@ -8,6 +8,8 @@ import './night-portal-v1.css'
 import './social-icons.css'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { RouteMeta } from './hooks/useDocumentMeta'
+import { useScrollLock } from './hooks/useScrollLock'
+import { createPortal } from 'react-dom'
 import { extractVideoId } from './utils/youtube'
 import WahaVideoPlayer from './courses/WahaVideoPlayer'
 import { StudyListHost } from './courses/StudyList'
@@ -297,28 +299,90 @@ function splitVideoTitle(raw = '') {
   return { title: parts.filter((p) => p !== teacher).join(' · ') || raw, teacher }
 }
 
+// Tapping a lesson opens it over the page, already playing: a panel that slides up on a phone, a popup on larger
+// screens, with the other lessons under it. One player is kept ready in the closed panel (warmed when this section
+// comes near the screen) so the tap itself starts the video; phones refuse sound when it starts any later.
 function WatchLessons({ videos }) {
-  const [playing, setPlaying] = useState(null)
   const items = videos.map((v, i) => ({ ...v, id: extractVideoId(v.src), i })).filter((v) => v.id).slice(0, 4)
+  const [openId, setOpenId] = useState(null)
+  // The panel lives at the end of <body>, above the site header (first paint has none, as the prerendered page).
+  const [host, setHost] = useState(null)
+  useEffect(() => setHost(document.body), [])
+  const playerRef = useRef(null)
+  const gridRef = useRef(null)
+  const panelRef = useRef(null)
+  const returnRef = useRef(null)
+  useScrollLock(Boolean(openId))
+  useEffect(() => {
+    const el = gridRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined
+    const io = new IntersectionObserver((entries) => { if (entries.some((x) => x.isIntersecting)) { playerRef.current?.warm(); io.disconnect() } }, { rootMargin: '500px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  useEffect(() => { if (panelRef.current) panelRef.current.inert = !openId }, [openId, host])
+  const close = () => { playerRef.current?.pause(); setOpenId(null); returnRef.current?.focus({ preventScroll: true }) }
+  useEffect(() => {
+    if (!openId) return undefined
+    const onKey = (e) => { if (e.key === 'Escape' && !document.documentElement.classList.contains('vp-full')) close() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [openId])
+  // Phone: pulling the panel down by its handle closes it.
+  const drag = useRef(null)
+  const onGrabStart = (e) => { drag.current = { y: e.touches[0].clientY, dy: 0 } }
+  const onGrabMove = (e) => { if (!drag.current) return; drag.current.dy = Math.max(0, e.touches[0].clientY - drag.current.y); panelRef.current.querySelector('.wh-vs-panel').style.transform = `translateY(${drag.current.dy}px)` }
+  const onGrabEnd = () => { const d = drag.current; drag.current = null; panelRef.current.querySelector('.wh-vs-panel').style.transform = ''; if (d && d.dy > 90) close() }
+  if (!items.length) return null
+  const open = (v, e) => { returnRef.current = e?.currentTarget || returnRef.current; playerRef.current?.play(v.id); setOpenId(v.id) }
+  const current = items.find((v) => v.id === openId) || items[0]
+  const cur = splitVideoTitle(current.title)
+  const curLabel = cur.title || `Talweeh Academy lesson ${current.i + 1}`
   return (
-    <div className={`wh-watch is-${items.length}`} data-r>
-      {items.map((v) => {
-        const { title, teacher } = splitVideoTitle(v.title)
-        const label = title || `Talweeh Academy lesson ${v.i + 1}`
-        return (
-          <article key={v.id} className="wh-watch-c">
-            {playing === v.id
-              ? <div className="wh-watch-p"><WahaVideoPlayer videoId={v.id} title={label} kicker="Talweeh Media" autoplay /></div>
-              : <button type="button" className="wh-watch-t" onClick={() => setPlaying(v.id)} aria-label={`Play ${label}`}>
+    <>
+      <div className={`wh-watch is-${items.length}`} data-r ref={gridRef}>
+        {items.map((v) => {
+          const { title, teacher } = splitVideoTitle(v.title)
+          const label = title || `Talweeh Academy lesson ${v.i + 1}`
+          return (
+            <article key={v.id} className="wh-watch-c">
+              <button type="button" className="wh-watch-t" onClick={(e) => open(v, e)} aria-label={`Play ${label}`}>
                 <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
                 <span className="wh-watch-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z" /></svg></span>
-              </button>}
-            {title && <h4>{title}</h4>}
-            {teacher && <span>{teacher}</span>}
-          </article>
-        )
-      })}
-    </div>
+              </button>
+              {title && <h4>{title}</h4>}
+              {teacher && <span>{teacher}</span>}
+            </article>
+          )
+        })}
+      </div>
+      {host && createPortal(<div className={`wh-vs${openId ? ' on' : ''}`} ref={panelRef} aria-hidden={!openId}>
+        <div className="wh-vs-dim" onClick={close} />
+        <div className="wh-vs-panel" role="dialog" aria-modal="true" aria-label={curLabel}>
+          <div className="wh-vs-grab" onTouchStart={onGrabStart} onTouchMove={onGrabMove} onTouchEnd={onGrabEnd}><span /></div>
+          <button type="button" className="wh-vs-x" onClick={close} aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <WahaVideoPlayer ref={playerRef} videoId={current.id} title={curLabel} kicker="Talweeh Media" warmOnView={false} />
+          <div className="wh-vs-meta">
+            <div><h3>{curLabel}</h3>{cur.teacher && <span>{cur.teacher}</span>}</div>
+            <Link to="/media" className="wh-vs-more" onClick={close}>More lessons in Media →</Link>
+          </div>
+          {items.length > 1 && (
+            <div className="wh-vs-list">
+              <b>More lessons</b>
+              {items.filter((v) => v.id !== current.id).map((v) => {
+                const { title, teacher } = splitVideoTitle(v.title)
+                return (
+                  <button type="button" key={v.id} className="wh-vs-row" onClick={() => open(v)}>
+                    <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+                    <span><strong>{title || `Talweeh Academy lesson ${v.i + 1}`}</strong>{teacher && <small>{teacher}</small>}</span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>, host)}
+    </>
   )
 }
 

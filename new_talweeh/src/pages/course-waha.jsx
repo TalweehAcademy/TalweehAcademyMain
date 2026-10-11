@@ -101,6 +101,7 @@ export default function CourseWahaPage() {
   const [barOn, setBarOn] = useState(false)
   const barRef = useRef(null)
   const stageRef = useRef(null)
+  const vpRef = useRef(null)
   useDocumentMeta({ title: course?.title, description: course?.description, image: absoluteUrl(course?.poster) })
 
   const lessons = useMemo(() => (Array.isArray(course?.lessons) ? course.lessons : []), [course])
@@ -129,12 +130,14 @@ export default function CourseWahaPage() {
   const canWatch = course.free && playable.length > 0
   const inList = studyList.some((i) => i.productKey === (course.checkoutSlug || course.slug))
   const description = plainText(course.description)
-  const openLesson = (i) => {
+  const openLesson = (i, fromTap = true) => {
+    // From a tap, start the video here and now (a phone refuses sound once the tap is over).
+    if (fromTap) vpRef.current?.play(lessonVideo(lessons[i]))
     const next = new URLSearchParams(params); next.set('lesson', String(i + 1)); setParams(next, { replace: true })
     setAutoplay(true)
     stageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
-  const step = (d) => { const p = playable[playable.indexOf(cur) + d]; if (p != null) openLesson(p) }
+  const step = (d, fromTap = true) => { const p = playable[playable.indexOf(cur) + d]; if (p != null) openLesson(p, fromTap) }
   const related = catalog.filter((c) => c.category === course.category && c.slug !== course.slug).slice(0, 3)
   const extras = [['Course introduction', course.courseIntroduction], ['Who it is for', course.audience], ['Learning outcomes', course.learningOutcomes], ['Teaching methodology', course.teachingMethodology], ['Prerequisites', course.prerequisites]]
     .map(([h, v]) => [h, plainText(v)]).filter(([, v]) => v && v !== description)
@@ -181,7 +184,7 @@ export default function CourseWahaPage() {
           )}
 
           <div className="cw-lay" id="watch" ref={stageRef}>
-            <div className="cw-lay-player"><WahaVideoPlayer videoId={lessonVideo(lessons[cur])} title={curTitle} kicker={`Lesson ${cur + 1}`} autoplay={autoplay} onEnded={() => step(1)} /></div>
+            <div className="cw-lay-player"><WahaVideoPlayer ref={vpRef} videoId={lessonVideo(lessons[cur])} title={curTitle} kicker={`Lesson ${cur + 1}`} autoplay={autoplay} onEnded={() => step(1, false)} /></div>
             <div className="cw-lay-head">
               <div><span className="cw-kicker">Lesson {cur + 1} of {lessons.length}</span><h2>{curTitle}</h2><p>{course.instructor} · {course.title}</p></div>
               <div className="cw-lay-nav">
@@ -278,7 +281,7 @@ export default function CourseWahaPage() {
         {canWatch && cur >= 0 && (
           <section className="cw-stage" id="watch" ref={stageRef}>
             <div className="now"><span className="cw-kicker">Now playing · Lesson {cur + 1} of {lessons.length}</span><h2>{lessonTitle(lessons[cur])}</h2></div>
-            <WahaVideoPlayer videoId={lessonVideo(lessons[cur])} title={lessonTitle(lessons[cur])} kicker={`Lesson ${cur + 1}`} autoplay={autoplay} onEnded={() => step(1)} />
+            <WahaVideoPlayer ref={vpRef} videoId={lessonVideo(lessons[cur])} title={lessonTitle(lessons[cur])} kicker={`Lesson ${cur + 1}`} autoplay={autoplay} onEnded={() => step(1, false)} />
             <div className="ctl">
               <button type="button" className="wh-btn wh-btn-glass" disabled={playable.indexOf(cur) <= 0} onClick={() => step(-1)}>‹ Previous lesson</button>
               <p className="cw-keys"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen</p>

@@ -3,7 +3,7 @@
 // Title over a green stage band, the Talweeh video frame, previous / next and "up next" within the
 // topic the viewer came from (?category=, else the video's own topic), then the overview beside a
 // card with the teacher, topic, source course and Subscribe; more from the course and topic close it.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import WahaVideoPlayer from '../courses/WahaVideoPlayer'
@@ -30,6 +30,7 @@ export default function MediaWatchWahaPage() {
   const video = findVideo(slug)
   const [copied, setCopied] = useState(false)
   const [autoplay, setAutoplay] = useState(false)
+  const vpRef = useRef(null)
   useDocumentMeta({ title: video?.title, description: video?.shortOverview, image: absoluteUrl(video?.thumbnail), path: video ? `/media/${video.slug}` : undefined })
   useEffect(() => { setCopied(false); if (slug) rememberWatched(slug) }, [slug])
 
@@ -48,8 +49,9 @@ export default function MediaWatchWahaPage() {
   const prev = list[i - 1], next = list[i + 1]
   const fromCourse = video.course ? VIDEOS.filter((v) => v.slug !== video.slug && v.course?.slug === video.course.slug) : []
   const more = list.filter((v) => v.slug !== video.slug && !fromCourse.includes(v)).slice(0, 6)
-  // Navigating on is a click, so the next video may start on its own.
-  const go = (v) => { setAutoplay(true); navigate(watchUrl(v, topic)) }
+  // Navigating on is a click, so the next video starts here and now (a phone refuses sound once the tap is over); the
+  // same player stays on the page and takes the next video.
+  const go = (v, fromTap = true) => { if (fromTap) vpRef.current?.play(v.youtubeId); setAutoplay(true); navigate(watchUrl(v, topic)) }
   const copyLink = () => {
     navigator.clipboard?.writeText(window.location.href)
     setCopied(true)
@@ -70,7 +72,7 @@ export default function MediaWatchWahaPage() {
               {next && <button type="button" className="wh-btn wh-btn-g mw-btn-sm" onClick={() => go(next)}>Next ›</button>}
             </div>
           </div>
-          <WahaVideoPlayer key={video.slug} videoId={video.youtubeId} title={video.title} kicker={video.speaker} autoplay={autoplay} onEnded={() => next && go(next)} />
+          <WahaVideoPlayer ref={vpRef} videoId={video.youtubeId} title={video.title} kicker={video.speaker} autoplay={autoplay} onEnded={() => next && go(next, false)} />
           <div className="foot">
             <p className="cw-keys"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen</p>
             {next && (

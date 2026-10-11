@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 import '../App-legacy-pages.css'
 import '../public-theme-legacy-pages.css'
 import { PageHeader, PageFooter } from './_shared'
-import VideoFacade from '../components/VideoFacade'
+import WahaVideoPlayer from '../courses/WahaVideoPlayer'
+import { extractVideoId } from '../utils/youtube'
+import '../courses-waha-v1.css'
 import './arabic-single-page.css'
 import { ARABIC_PROGRAM_ENROL } from '../constants/links'
 import {
@@ -70,7 +72,8 @@ export default function ArabicProgramPage() {
           <img className="arb-hero-bismillah" src="/legacy-assets/talweeharabic/2025/12/bismilla-e1755384561119-300.webp" alt="Bismillah al-Rahman al-Rahim" />
           <h1>Unlock the Language of the Qur’an Beyond Translation</h1>
           <div className="arb-welcome-video">
-            <VideoFacade src={PROGRAM_HERO.video.src} title="About the 2-Year Arabic Program" thumbnail={PROGRAM_HERO.video.thumbnail} />
+            {/* The site's one player (one tap plays); .vp-vars gives it its colours outside the Wāḥa pages. */}
+            {extractVideoId(PROGRAM_HERO.video.src) && <div className="vp-vars"><WahaVideoPlayer videoId={extractVideoId(PROGRAM_HERO.video.src)} title="About the 2-Year Arabic Program" kicker="Talweeh Arabic" /></div>}
           </div>
         </section>
 

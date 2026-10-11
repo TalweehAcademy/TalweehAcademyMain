@@ -671,3 +671,44 @@
   .wh-home .wh-rr-lead h3{font-size:19px;line-height:1.25}
   .wh-rr-lead p{font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 }
+
+/* ── Watch a lesson: the lesson opens over the page (App.jsx WatchLessons). A panel that slides up from the foot of
+   a phone, a popup on larger screens. It sits at the end of <body>, so it carries its own colours. ── */
+.wh-vs{--gold:#d7b373;--gold-b:#f0dcb4;--gold-d:#b8894c;--g2:#10251c;--cream:#f3e8d3;--sage:#9cc2a6;--c-solid:#183428;--c-in:rgba(243,232,211,.06);--c-text:#dfe7df;--c-head:#f3e8d3;--c-mut:#a9bbad;--c-line:rgba(215,179,115,.2);
+  position:fixed;inset:0;z-index:2147482000;pointer-events:none;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--c-text)}
+html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;--g2:#0B1F15;--cream:#F6F0E2;--c-solid:#0F271B}
+.wh-vs.on{pointer-events:auto}
+.wh-vs-dim{position:absolute;inset:0;background:rgba(3,10,6,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
+.wh-vs.on .wh-vs-dim{opacity:1}
+.wh-vs-panel{position:absolute;left:50%;top:50%;width:min(920px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;overscroll-behavior:contain;padding:14px 14px 18px;border-radius:26px;border:1px solid rgba(242,214,158,.3);
+  background:linear-gradient(155deg,rgba(31,64,50,.99),rgba(17,40,31,.99));box-shadow:0 50px 120px -30px rgba(0,0,0,.9);opacity:0;transform:translate(-50%,-46%) scale(.94);transition:opacity .28s,transform .38s cubic-bezier(.2,.8,.2,1)}
+.wh-vs.on .wh-vs-panel{opacity:1;transform:translate(-50%,-50%)}
+.wh-vs-grab{display:none}
+.wh-vs-x{position:absolute;right:22px;top:22px;z-index:8;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);background:rgba(6,17,11,.72);color:#fff;cursor:pointer}
+.wh-vs-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.wh-vs .cw-vp{box-shadow:none}
+.wh-vs-meta{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 8px 4px}
+.wh-vs-meta h3{margin:0;font:600 21px/1.3 'Lora',Georgia,serif;color:var(--c-head)}
+.wh-vs-meta span{display:block;margin-top:4px;font-size:13px;color:var(--c-mut)}
+.wh-vs-more{flex:none;padding:10px 16px;border-radius:999px;border:1px solid var(--c-line);color:var(--gold-b);font-size:13.5px;font-weight:700;text-decoration:none}
+.wh-vs-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px 8px 0}
+.wh-vs-list>b{grid-column:1/-1;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.wh-vs-row{display:flex;flex-direction:column;gap:8px;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.wh-vs-row img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid var(--c-line)}
+.wh-vs-row strong{display:block;font-size:13.5px;line-height:1.3;color:var(--c-head);font-weight:600}
+.wh-vs-row small{display:block;margin-top:2px;font-size:12px;color:var(--c-mut)}
+.wh-vs-row:hover strong{color:var(--gold-b)}
+@media(max-width:720px){
+  .wh-vs-panel{left:0;right:0;top:auto;bottom:0;width:auto;max-height:92vh;padding:0 10px calc(14px + env(safe-area-inset-bottom,0px));border-radius:24px 24px 0 0;border-bottom:0;opacity:1;transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.85,.25,1)}
+  .wh-vs.on .wh-vs-panel{transform:none}
+  .wh-vs-grab{display:block;padding:10px 0 8px;touch-action:none}
+  .wh-vs-grab span{display:block;width:44px;height:5px;margin:0 auto;border-radius:9px;background:rgba(240,220,180,.42)}
+  .wh-vs-x{top:auto;right:14px;margin-top:-4px;position:absolute;top:6px;width:34px;height:34px}
+  .wh-vs .cw-vp{padding:6px;border-radius:18px}
+  .wh-vs-meta{flex-direction:column;align-items:flex-start;gap:10px;padding:12px 6px 2px}
+  .wh-vs-meta h3{font-size:18px}
+  .wh-vs-list{grid-template-columns:1fr;gap:0;padding:12px 6px 0}
+  .wh-vs-list>b{margin-bottom:6px}
+  .wh-vs-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--c-line)}
+}
+@media(prefers-reduced-motion:reduce){.wh-vs-panel,.wh-vs-dim{transition:none}}
