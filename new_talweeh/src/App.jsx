@@ -365,13 +365,11 @@ function LandingPage() {
                   <img src="/brand/program-arabic-manuscript.webp" alt="" loading="eager" />
                   <div><span className="wh-way-tag">Self-paced</span><h3><Link className="wh-way-main" to="/courses">At your own pace</Link></h3>
                     <p className="wh-way-links"><Link to="/arabic">Arabic Program</Link><span aria-hidden="true">·</span><Link to="/courses">On-demand courses</Link></p></div>
-                  <span className="wh-way-go" aria-hidden="true">→</span>
                 </div>
                 <div className="wh-way">
                   <img src="/brand/program-alimiyyah.webp" alt="" loading="eager" />
                   <div><span className="wh-way-tag is-live">Live</span><h3><Link className="wh-way-main" to="/alimiyyah">Live with scholars</Link></h3>
                     <p className="wh-way-links"><Link to="/alimiyyah">ʿĀlimiyyah</Link><span aria-hidden="true">·</span><Link to="/hadith-specialization">Hadith</Link><span aria-hidden="true">·</span><Link to="/contact-us">Live courses</Link></p></div>
-                  <span className="wh-way-go" aria-hidden="true">→</span>
                 </div>
               </div>
             </div>
