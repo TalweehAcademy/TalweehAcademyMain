@@ -109,3 +109,11 @@ html .wh-home [data-r]>*,html .wh-home [data-stagger]>*>*{opacity:0;transform:tr
 html .wh-home [data-stagger]>*>*{transition-delay:calc(var(--i,0) * 90ms)}
 html .wh-home [data-r].in>*,html .wh-home [data-stagger].in>*>*{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html .wh-home [data-r]>*,html .wh-home [data-stagger]>*>*{opacity:1!important;transform:none!important}}
+
+/* Phone: small links get a finger-sized tap area (about 44 px tall) without changing how they look: an invisible
+   layer around the link takes the tap. Footer links get more space between them. */
+@media(max-width:720px){
+  .wh-portal,.top-bar-btn,.mv-all,.cw-crumbs a,.wh-way-links a,.wh-route-x a{position:relative}
+  .wh-portal::after,.top-bar-btn::after,.mv-all::after,.cw-crumbs a::after,.wh-way-links a::after,.wh-route-x a::after{content:'';position:absolute;inset:-12px -4px}
+  .wh-fcol a,.footer-column a{padding-block:10px}
+}

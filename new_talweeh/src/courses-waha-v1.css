@@ -501,3 +501,16 @@ div.cw-next-c{cursor:default}
 .cw-reviews.bare .cw-reviews-h{align-items:center}
 .wh-home .cw-rv-lead{margin:0;font-size:15px;color:var(--p-mut)}
 @media (max-width:640px){.cw-ptabs{margin-top:40px}.cw-ptabs .cw-wu-tabs{width:100%}.cw-ptabs .cw-wu-tabs button{flex:1;justify-content:center;padding:6px 10px;font-size:13.5px}.cw-ptabs-about{padding:22px 18px}}
+
+/* Phone: the price and "Add to study list" stay at the bottom of the screen once the course's own button scrolls
+   away (course-waha.jsx, barOn). */
+.cw-ebar,.cw-ebar-space{display:none}
+@media(max-width:720px){
+  .cw-ebar{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 16px;border-radius:18px;background:var(--c-solid,var(--c-in));transform:translateY(calc(100% + 24px));opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+  .cw-ebar.on{transform:none;opacity:1}
+  .cw-ebar .pr{display:flex;flex-direction:column;min-width:0;font:600 19px 'Lora',serif;line-height:1.15;color:var(--gold-b)}
+  .cw-ebar .pr small{font:600 11.5px 'Plus Jakarta Sans',sans-serif;color:var(--c-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cw-ebar .wh-btn{flex:none;padding:12px 18px}
+  .cw-ebar-space{display:block;height:84px}
+}
+@media(prefers-reduced-motion:reduce){.cw-ebar{transition:none}}

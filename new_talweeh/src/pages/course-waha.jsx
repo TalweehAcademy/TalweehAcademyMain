@@ -97,6 +97,9 @@ export default function CourseWahaPage() {
   const [autoplay, setAutoplay] = useState(false)
   const [about, setAbout] = useState(false)
   const [pageTab, setPageTab] = useState('curriculum')
+  // Phone: once the price and button scroll away, a slim bar keeps them at the bottom of the screen.
+  const [barOn, setBarOn] = useState(false)
+  const barRef = useRef(null)
   const stageRef = useRef(null)
   useDocumentMeta({ title: course?.title, description: course?.description, image: absoluteUrl(course?.poster) })
 
@@ -110,6 +113,15 @@ export default function CourseWahaPage() {
   useEffect(() => {
     if (window.location.hash === '#enrol') document.getElementById('enrol')?.scrollIntoView({ block: 'center' })
   }, [course?.slug])
+  useEffect(() => {
+    const el = document.getElementById('enrol')
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined
+    const io = new IntersectionObserver(([e]) => setBarOn(!e.isIntersecting && e.boundingClientRect.top < 0))
+    io.observe(el)
+    return () => { io.disconnect(); setBarOn(false) }
+  }, [course?.slug, course?.free])
+  // Out of reach for keyboard and screen readers while it is hidden.
+  useEffect(() => { if (barRef.current) barRef.current.inert = !barOn }, [barOn, course?.slug])
 
   if (loading && !course) return <WahaPage className="cw"><div className="wh-wrap cw-status"><span className="cw-kicker">Courses</span><h1>Loading course…</h1></div></WahaPage>
   if (!course) return <WahaPage className="cw"><div className="wh-wrap cw-status"><span className="cw-kicker">Courses</span><h1>Course not found</h1><p>This course page is unavailable.</p><p style={{ marginTop: 18 }}><Link className="wh-btn wh-btn-g" to="/courses">Return to all courses</Link></p></div></WahaPage>
@@ -139,7 +151,7 @@ export default function CourseWahaPage() {
     if (topic && topic !== lastTopic) { cards.push(<div className="cw-topic" key={`t-${i}`}>{topic}</div>); lastTopic = topic }
     const play = canWatch && playable.includes(i)
     const overview = lessonCardText(lessonOverview(l))
-    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{cleanLessonTitle(lessonTitle(l))}</strong>{overview && <small>{overview}</small>}<span className="tag">{play ? '▶ Watch lesson' : course.free ? 'Video coming soon' : '🔒 Student Portal'}</span></span></>
+    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{cleanLessonTitle(lessonTitle(l))}</strong>{overview && <small>{overview}</small>}{(play || course.free) && <span className="tag">{play ? '▶ Watch lesson' : 'Video coming soon'}</span>}</span></>
     cards.push(play
       ? <button type="button" key={i} className={`cw-lc cw-card${i === cur ? ' on' : ''}`} onClick={() => openLesson(i)}>{inner}</button>
       : <div key={i} className="cw-lc cw-card">{inner}</div>)
@@ -303,6 +315,17 @@ export default function CourseWahaPage() {
           </section>
         )}
       </div>
+      {!course.free && (canEnrol(course) || inList) && <>
+        <div className={`cw-ebar wh-glass${barOn ? ' on' : ''}`} ref={barRef}>
+          <span className="pr">{plan ? money(plan.amount_cents, plan.currency) : formatCommercePrice(course)}{plan && <small>{optionBillingLabel(plan)}</small>}</span>
+          {inList
+            ? <button type="button" className="wh-btn cw-in-list" onClick={openStudyList}>✓ In your study list</button>
+            : options.length > 1
+              ? <button type="button" className="wh-btn wh-btn-g" onClick={() => document.getElementById('enrol')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>Choose a plan</button>
+              : <button type="button" className="wh-btn wh-btn-g" onClick={() => addToStudyList(course, plan)}>Add to study list</button>}
+        </div>
+        <div className="cw-ebar-space" aria-hidden="true" />
+      </>}
     </WahaPage>
   )
 }

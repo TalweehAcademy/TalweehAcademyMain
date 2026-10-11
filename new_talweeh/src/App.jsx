@@ -191,6 +191,7 @@ function CourseShelf() {
           </div>
         ))}
       </div>
+      <p className="wh-swipe-hint" aria-hidden="true">Swipe for more subjects →</p>
       <div className="wh-shelf-foot" data-r>
         <Link className="wh-btn wh-btn-g" to="/courses" data-magnet>Browse all {COURSE_COUNT} courses →</Link>
         <Link className="wh-btn wh-btn-glass" to="/courses/roadmap">

@@ -529,6 +529,28 @@
   .wh-shelf-foot .wh-btn{justify-content:center}
 }
 
+.wh-swipe-hint{display:none}
+/* Phone: the two longest home sections take about a third of the height. The four ways to study are rows with a
+   small picture; the course subjects sit side by side in a row you swipe (the next one peeks in at the edge). */
+@media(max-width:720px){
+  .wh-rp{grid-template-columns:88px minmax(0,1fr);gap:12px;padding:10px}
+  .wh-rp-img{width:88px;height:100%;min-height:118px}
+  .wh-rp-fan{width:88px;min-height:118px}
+  .wh-rp-fan img{width:54px}
+  .wh-rp-fan img:nth-child(1){left:0;top:16px}
+  .wh-rp-fan img:nth-child(2){left:17px;top:6px}
+  .wh-rp-fan img:nth-child(3){left:34px;top:16px}
+  .wh-rp-b{padding:2px 2px 2px 0;gap:6px}
+  .wh-rp-k .wh-ar{font-size:19px}
+  .wh-home .wh-rp h4{font-size:19px}
+  .wh-rp p{font-size:13px;line-height:1.5}
+  .wh-rp-facts span{font-size:11px;padding:3px 8px}
+  .wh-topics{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:2px 16px 10px;scroll-padding-inline:16px;scrollbar-width:none;overscroll-behavior-x:contain}
+  .wh-topics::-webkit-scrollbar{display:none}
+  .wh-topic{flex:0 0 84%;scroll-snap-align:start}
+  .wh-swipe-hint{display:block;margin:2px 0 0;text-align:center;font-size:12.5px;color:var(--c-mut)}
+}
+
 /* ── What our students say: three readable quotes ── */
 .wh-refl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .wh-refl-q{margin:0;display:flex;flex-direction:column;gap:18px;padding:28px 26px;border-radius:24px}
