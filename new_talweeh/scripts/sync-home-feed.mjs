@@ -9,7 +9,7 @@
 // Nothing configured: does nothing, so local builds keep the committed content. Feed not on the Academic System yet
 // (404): the same. Any other failure fails the build, leaving the previous deploy live.
 import { execFileSync } from 'node:child_process'
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -71,6 +71,11 @@ async function main() {
   await Promise.all(videos.filter((v) => !v.title).map(async (v) => { v.title = await youTubeTitle(v.youtubeId) }))
   const testimonials = feed.testimonials.map((t) => ({ name: clean(t.name, 80), location: clean(t.location, 80), quote: String(t.quote ?? '').trim().slice(0, 1200) }))
     .filter((t) => t.name && t.quote)
+  // Parts of course reviews picked for the home page (portal Admin → On-Demand → Reviews), shown after the testimonials.
+  // A portal from before they existed sends none: the committed ones are kept.
+  const reviewQuotes = Array.isArray(feed.reviewQuotes)
+    ? feed.reviewQuotes.map((q) => ({ name: clean(q.name, 80), course: clean(q.course, 120), quote: String(q.quote ?? '').trim().slice(0, 600) })).filter((q) => q.name && q.quote)
+    : await readFile(outFile, 'utf8').then((text) => JSON.parse(text).reviewQuotes ?? []).catch(() => [])
   // Media (/media pages): kept only when the portal sends it; an empty list keeps the site's own catalogue.
   const m = feed.media && typeof feed.media === 'object' ? feed.media : null
   const SLUG = /^[a-z0-9_-]{2,120}$/
@@ -157,8 +162,8 @@ async function main() {
       }
     }
   }
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}), ...(homeSections ? { homeSections } : {}) }, null, 2)}\n`)
-  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, reviewQuotes, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}), ...(homeSections ? { homeSections } : {}) }, null, 2)}\n`)
+  console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials, ${reviewQuotes.length} review quotes${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.
   const cms = feed.cms

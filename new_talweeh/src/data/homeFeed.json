@@ -1,4 +1,56 @@
 {
   "videos": [],
-  "testimonials": []
+  "testimonials": [],
+  "reviewQuotes": [
+    {
+      "name": "Mohammad M.",
+      "course": "Ḥadīth Specialization",
+      "quote": "It wouldn’t be an exaggeration to say I’ve learned more about traditional Hadith sciences in this one year than I had over several years accessing books without dedicated mentorship within this niche."
+    },
+    {
+      "name": "Mizan A.",
+      "course": "Min Adab al-Islām",
+      "quote": "The level in which Mufti Dawood Saheb breaks down sentences in this course for both fields of grammar, i haven't witnessed that in any other course."
+    },
+    {
+      "name": "Muhammad R.",
+      "course": "Introduction to Uṣūl al-Fiqh",
+      "quote": "Sh. Omer has thoroughly researched the lessons before presenting them and managed to explain certain complex points in very simple words."
+    },
+    {
+      "name": "Arshid Bashir B.",
+      "course": "Introduction to Al-Muwaṭṭaʾayn",
+      "quote": "I have listened to introduction to muwatta from other shyookh but this introduction opened new doors of understanding for me."
+    },
+    {
+      "name": "Tajrian I.",
+      "course": "Al-Tuḥfat al-Saniyyah",
+      "quote": "Wish I took this course earlier. It was amazing learning the theory and rules of Nahw and applying them as well as recognizing them in texts."
+    },
+    {
+      "name": "Mohammed A.",
+      "course": "Nukhbat al-Fikar",
+      "quote": "I particularly appreciate how every term in the science of Hadith is followed by a practical example, making the content extremely applicable."
+    },
+    {
+      "name": "Shehryar D.",
+      "course": "Musallam al-Thubūt",
+      "quote": "Despite the text of the book being so difficult, its explained and broken down by the Shaikh in such an excellent manner that everything is understandable."
+    },
+    {
+      "name": "Mustafa H.",
+      "course": "Nūr al-Īḍāḥ",
+      "quote": "The way the rulings were broken down and made digestible for the students while also providing an in-depth understanding of the framework of the madhab really brought out the sweetness of this book."
+    },
+    {
+      "name": "Amir P.",
+      "course": "Sharḥ al-Waraqāt of al-Maḥallī",
+      "quote": "Many students often struggle to fully grasp the concepts in Usul al-Fiqh … but Shaikh is able to break down and explain each concept in a beautiful manner."
+    },
+    {
+      "name": "Hussain M.",
+      "course": "Lāmiyyat Abī Ṭālib",
+      "quote": "It has not only helped me enhance my Arabic skills but also given me a deeper and more comprehensive understanding of the lineage of the Messenger ﷺ."
+    }
+  ]
 }

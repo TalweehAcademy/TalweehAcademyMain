@@ -220,8 +220,8 @@ function StudentReflections({ testimonials }) {
   return (
     <>
       <div className="wh-refl" data-r aria-live="polite">
-        {shown.map((item) => (
-          <figure key={item.name} className="wh-refl-q wh-glass">
+        {shown.map((item, k) => (
+          <figure key={`${(start + k) % count}-${item.name}`} className="wh-refl-q wh-glass">
             <span className="wh-refl-mark" aria-hidden="true">“</span>
             <blockquote>{item.quote}</blockquote>
             <figcaption><span className="wh-refl-av" aria-hidden="true">{initials(item.name)}</span><div><b>{item.name}</b><span>{item.location}</span></div></figcaption>
@@ -231,7 +231,7 @@ function StudentReflections({ testimonials }) {
       {count > per && (
         <div className="wh-refl-nav">
           <button type="button" aria-label="Previous reflections" onClick={() => go(-1)}>‹</button>
-          <div className="wh-refl-dots" aria-hidden="true">{testimonials.map((t, i) => <span key={t.name} className={i === start ? 'on' : ''} />)}</div>
+          <div className="wh-refl-dots" aria-hidden="true">{testimonials.map((t, i) => <span key={i} className={i === start ? 'on' : ''} />)}</div>
           <button type="button" aria-label="More reflections" onClick={() => go(1)}>›</button>
         </div>
       )}
@@ -338,7 +338,8 @@ function LandingPage() {
   const videos = HOME_FEED.videos.length
     ? HOME_FEED.videos.map((v) => ({ src: `https://www.youtube.com/embed/${v.youtubeId}`, title: v.title }))
     : (c.youtube.videos || []).filter(Boolean).map((src) => ({ src, title: '' }))
-  const testimonials = HOME_FEED.testimonials.length ? HOME_FEED.testimonials : c.testimonials
+  // Then the parts of course reviews picked in the portal, with the course under the name.
+  const testimonials = [...(HOME_FEED.testimonials.length ? HOME_FEED.testimonials : c.testimonials), ...(HOME_FEED.reviewQuotes || []).map((q) => ({ name: q.name, location: q.course, quote: q.quote }))]
 
   useWahaMotion(rootRef)
 
