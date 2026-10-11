@@ -332,11 +332,39 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
     return () => document.removeEventListener('pointerdown', close)
   }, [menu])
 
-  const frac = time.d ? time.t / time.d : 0
+  // The seek bar follows a finger or the mouse: press anywhere on it and drag; the video jumps there on release.
+  const [drag, setDrag] = useState(null) // fraction while dragging
   const seekFrac = (e) => { const r = e.currentTarget.getBoundingClientRect(); return Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) }
-  // Tapping the picture: in full screen with the controls faded it only brings them back; otherwise play/pause.
-  const tapScreen = () => { if (hidden) { wake(); return } if (full) wake(); toggle() }
-  const cover = started && (state === 2 || state === 0)
+  const seekDown = (e) => {
+    if (!readyRef.current || !time.d) return
+    e.preventDefault()
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* old browser */ }
+    const f = seekFrac(e); setDrag(f); setHover({ x: f, t: f * time.d }); if (full) wake()
+  }
+  const seekMove = (e) => {
+    const f = seekFrac(e)
+    if (drag !== null) { setDrag(f); if (full) wake() }
+    setHover({ x: f, t: f * time.d })
+  }
+  const seekUp = () => {
+    if (drag === null) return
+    playerRef.current.seekTo(drag * time.d, true)
+    setTime((x) => ({ ...x, t: drag * time.d }))
+    setDrag(null)
+    setTimeout(tick, 120)
+  }
+  const frac = drag !== null ? drag : time.d ? time.t / time.d : 0
+  // Tapping the picture. Full screen works as on YouTube: a tap shows or hides the controls (with play/pause in the
+  // middle); paused, a tap carries on. Otherwise a tap plays or pauses.
+  const tapScreen = () => {
+    if (!full) { toggle(); return }
+    if (hidden) { wake(); return }
+    if (playing) { clearTimeout(idleTimer.current); setIdle(true); return }
+    toggle()
+  }
+  // Paused, our cover hides YouTube's labels (title, logo, "More videos") over the picture. In full screen those sit at
+  // the screen's edges, behind our solid top and bottom bars, so the paused picture itself stays in view.
+  const cover = started && !full && (state === 2 || state === 0)
   const thumb = `https://i.ytimg.com/vi/${shownId}/hqdefault.jpg`
 
   return (
@@ -356,8 +384,9 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
             <span className="cap"><small>{state === 0 ? 'Watch again' : `Paused · ${fmt(time.t)}`}</small><strong>{title}</strong></span>
           </button>
         )}
-        {lead && playing && <div key={lead.k} className="cw-vp-lead" style={{ backgroundImage: `url(${thumb})`, animationDuration: `${lead.ms}ms` }} aria-hidden="true"><span className="cw-vp-eq"><i /><i /><i /></span></div>}
+        {lead && playing && <div key={lead.k} className={`cw-vp-lead${full ? ' fit' : ''}`} style={{ backgroundImage: `url(${thumb})`, animationDuration: `${lead.ms}ms` }} aria-hidden="true"><span className="cw-vp-eq"><i /><i /><i /></span></div>}
         {quietStart && playing && <button type="button" className="cw-vp-sound" onClick={toggleMute}>{I.mute}Tap for sound</button>}
+        {full && started && <button type="button" className="cw-vp-mid" onClick={() => { wake(); toggle() }} aria-label={playing ? 'Pause' : 'Play'}>{playing ? I.pause : I.play}</button>}
         {fs && <div className="cw-vp-top"><button type="button" className="b" onClick={exitFs} aria-label="Leave full screen">{I.close}</button><span>{title}</span></div>}
         {turnHint && <div className="cw-vp-turn" aria-hidden="true">{I.turn}Turn your phone for a bigger picture</div>}
         {flash && <div key={flash.k} className={`cw-vp-flash ${flash.side}`}>{flash.text}</div>}
@@ -368,10 +397,10 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
         <button type="button" className="b skip" onClick={() => skip(10)} aria-label="Forward 10 seconds" title="Forward 10 s (→)"><span>10</span>{I.fwd}</button>
         <span className="cw-vp-time">{fmt(time.t)} / {fmt(time.d)}</span>
         <div className="cw-vp-prog" role="slider" aria-label="Seek" aria-valuemin={0} aria-valuemax={Math.round(time.d)} aria-valuenow={Math.round(time.t)} tabIndex={-1}
-          onMouseMove={(e) => { const f = seekFrac(e); setHover({ x: f, t: f * time.d }) }}
-          onClick={(e) => { if (readyRef.current && time.d) { playerRef.current.seekTo(seekFrac(e) * time.d, true); tick() } }}>
+          onPointerDown={seekDown} onPointerMove={seekMove} onPointerUp={seekUp} onPointerCancel={() => setDrag(null)}
+          data-drag={drag !== null || undefined}>
           <span className="tr"><span className="bf" style={{ width: `${time.b * 100}%` }} /><span className="pl" style={{ width: `${frac * 100}%` }} /></span>
-          <span className="kn" style={{ left: `${frac * 100}%` }} /><span className="tip" style={{ left: `${hover.x * 100}%` }}>{fmt(hover.t)}</span>
+          <span className="kn" style={{ left: `${frac * 100}%` }} /><span className="tip" style={{ left: `${(drag !== null ? drag : hover.x) * 100}%` }}>{fmt(drag !== null ? drag * time.d : hover.t)}</span>
         </div>
         <div className="cw-vp-speed">
           <button type="button" className="b" onClick={() => setMenu((m) => !m)} aria-haspopup="menu" aria-expanded={menu} aria-label="Playback speed">{rate === 1 ? '1' : rate}×</button>

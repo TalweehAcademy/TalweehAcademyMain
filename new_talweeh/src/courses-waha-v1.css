@@ -548,3 +548,19 @@ html.vp-full .wh-head,html.vp-full .wh-topbar,html.vp-full .cw-ebar,html.vp-full
 @keyframes cw-vp-eq{0%,100%{height:4px}50%{height:16px}}
 @keyframes cw-vp-lead{0%,72%{opacity:1}100%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.cw-vp-lead{animation:none}.cw-vp-eq i{animation:none;height:10px}}
+/* Seek bar: a finger or the mouse can press and drag it (WahaVideoPlayer seekDown/Move/Up); the knob always shows on
+   touch screens and while dragging. */
+.cw-vp-prog{touch-action:none;height:34px;-webkit-user-select:none;user-select:none}
+.cw-vp-prog[data-drag] .tr{height:8px}
+.cw-vp-prog[data-drag] .kn{transform:translateY(-50%) scale(1.15)}
+.cw-vp-prog[data-drag] .tip{opacity:1}
+@media(hover:none){.cw-vp-prog .kn{transform:translateY(-50%) scale(1)}.cw-vp-prog .tr{height:6px}}
+/* Full screen: solid bars top and bottom (YouTube puts its title, logo and "More videos" at the screen's edges, and
+   they showed through), play/pause in the middle while the controls show, the start cover shows the whole picture. */
+.cw-vp.is-fs .cw-vp-top{background:#000;padding-bottom:14px;min-height:calc(66px + env(safe-area-inset-top,0px))}
+.cw-vp.is-fs .cw-vp-bar,.cw-vp:fullscreen .cw-vp-bar{background:#000;padding-top:16px;min-height:calc(100px + env(safe-area-inset-bottom,0px))}
+.cw-vp-mid{position:absolute;left:50%;top:50%;z-index:5;width:76px;height:76px;margin:-38px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(240,220,180,.94);color:var(--g2);cursor:pointer;box-shadow:0 0 0 10px rgba(215,179,115,.18),0 20px 40px rgba(0,0,0,.45);transition:opacity .3s}
+.cw-vp-mid svg{width:30px;height:30px}
+.cw-vp.is-idle .cw-vp-mid{opacity:0;pointer-events:none}
+.cw-vp-lead.fit{background-size:contain;background-color:#000}
+.cw-vp-lead.fit::before{display:none}
