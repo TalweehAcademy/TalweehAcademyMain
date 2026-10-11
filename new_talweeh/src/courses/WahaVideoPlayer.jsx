@@ -333,7 +333,9 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
   }, [menu])
 
   // The seek bar follows a finger or the mouse: press anywhere on it and drag; the video jumps there on release.
-  const [drag, setDrag] = useState(null) // fraction while dragging
+  const [drag, setDragState] = useState(null) // fraction while dragging (shown)
+  const dragRef = useRef(null) // the same, read at once: a quick tap lifts the finger before React has re-rendered
+  const setDrag = (f) => { dragRef.current = f; setDragState(f) }
   const seekFrac = (e) => { const r = e.currentTarget.getBoundingClientRect(); return Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) }
   const seekDown = (e) => {
     if (!readyRef.current || !time.d) return
@@ -343,13 +345,15 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
   }
   const seekMove = (e) => {
     const f = seekFrac(e)
-    if (drag !== null) { setDrag(f); if (full) wake() }
+    if (dragRef.current !== null) { setDrag(f); if (full) wake() }
     setHover({ x: f, t: f * time.d })
   }
-  const seekUp = () => {
-    if (drag === null) return
-    playerRef.current.seekTo(drag * time.d, true)
-    setTime((x) => ({ ...x, t: drag * time.d }))
+  const seekUp = (e) => {
+    const f = dragRef.current
+    if (f === null) return
+    const to = (e && e.clientX ? seekFrac(e) : f) * time.d
+    playerRef.current.seekTo(to, true)
+    setTime((x) => ({ ...x, t: to }))
     setDrag(null)
     setTimeout(tick, 120)
   }
