@@ -544,11 +544,21 @@
   .wh-rp-k .wh-ar{font-size:19px}
   .wh-home .wh-rp h4{font-size:19px}
   .wh-rp p{font-size:13px;line-height:1.5}
-  .wh-rp-facts span{font-size:11px;padding:3px 8px}
+  .wh-rp-facts{gap:0}
+  .wh-rp-facts span{padding:0;border:0;font-size:12px;color:var(--c-mut)}
+  .wh-rp-facts span:not(:last-child)::after{content:'·';margin:0 7px;color:var(--gold)}
   .wh-topics{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:2px 16px 10px;scroll-padding-inline:16px;scrollbar-width:none;overscroll-behavior-x:contain}
   .wh-topics::-webkit-scrollbar{display:none}
   .wh-topic{flex:0 0 84%;scroll-snap-align:start}
   .wh-swipe-hint{display:block;margin:2px 0 0;text-align:center;font-size:12.5px;color:var(--c-mut)}
+  .wh-routes{row-gap:16px}
+  .wh-route{gap:12px;padding:16px}
+  .wh-route-h{gap:6px;padding:0 2px 2px}
+  .wh-route-h p{font-size:14px}
+  .wh-rp p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .wh-rp-more{padding-top:2px;font-size:13.5px}
+  .wh-route-x{flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:10px 14px;font-size:13.5px}
+  .wh-route-s{padding:8px 12px;font-size:13px}
 }
 
 /* ── What our students say: three readable quotes ── */
@@ -651,4 +661,13 @@
   .wh-home .wh-bt-lead{font-size:15px}
   .wh-bt-ways{grid-template-columns:1fr;gap:12px}
   .wh-bt-w .wh-btn{align-self:stretch;justify-content:center}
+}
+
+/* Phone: Read & reflect — the newest article keeps its cover on top (it is often a title graphic, which a small
+   thumbnail would cut) but with a smaller heading and two lines of its summary. */
+@media(max-width:720px){
+  .wh-rr-lead img{aspect-ratio:2.2/1}
+  .wh-rr-lead .wh-rr-b{padding:14px 16px 16px;gap:8px}
+  .wh-home .wh-rr-lead h3{font-size:19px;line-height:1.25}
+  .wh-rr-lead p{font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 }
