@@ -28,31 +28,50 @@
 .pl-months button.empty{opacity:.55}
 .pl-months button.on{background:linear-gradient(135deg,var(--gold-b),var(--gold) 55%,var(--gold-d));border-color:transparent}
 .pl-months button.on b,.pl-months button.on small{color:var(--g2)}
-.pl-month-h{display:flex;align-items:baseline;gap:12px;margin:30px 0 14px}
-.wh-home .pl-month-h h2{font-size:clamp(26px,3vw,36px)}
-.pl-month-h small{color:var(--p-mut);font-size:14px}
-.pl-weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
-.pl-week{display:flex;flex-direction:column;gap:8px;min-width:0;padding:10px;border-radius:20px;background:var(--p-soft);border:1px solid var(--p-line)}
-.pl-week-h{display:flex;justify-content:space-between;align-items:baseline;padding:4px 6px}
-.pl-week-h b{font-family:'Lora',serif;font-size:17px;color:var(--p-head)}
-.pl-week-h small{font-size:12px;color:var(--p-mut)}
-.pl .pl-week .cw-lc{grid-template-columns:40px minmax(0,1fr);padding:12px;border-radius:16px}
-.pl .pl-week .cw-lc .n{width:36px;height:36px}
-.pl .pl-week .cw-lc strong{font-size:13.5px;overflow-wrap:anywhere}
-.pl-course{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:800;color:var(--sc,var(--p-gold));background:color-mix(in srgb,var(--sc,var(--gold)) 14%,transparent)}
-.pl-note{margin:0;padding:8px 10px;font-size:12.5px;color:var(--p-mut);font-style:italic}
+/* The chosen month, drawn like the portal's My Learning (Hadith.css .hj-month / .hj-path): one row per week, its
+   lessons as stops on a gold line, each a card with the book's poster, the book in gold and the topic in Lora. */
+.pl-month{margin-top:22px;padding:24px 26px 28px;border-radius:24px;background:var(--p-card);border:1px solid var(--p-line);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:24px;min-width:0}
+.pl-month-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.wh-home .pl-month-h h2{margin:0;font-size:clamp(26px,3vw,34px)}
+.pl-month-h span{font-size:13.5px;color:var(--p-mut)}
+.pl-week{display:grid;grid-template-columns:90px minmax(0,1fr);gap:16px;align-items:start}
+.pl-week-h{padding-top:6px}
+.pl-week-h b{font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--p-head)}
+.pl-path{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:18px 14px}
+.pl-path::before{content:"";position:absolute;left:18px;right:18px;top:17px;height:2px;background:linear-gradient(90deg,var(--gold),color-mix(in srgb,var(--gold) 20%,transparent))}
+.pl-stop{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
+.pl-mark{position:relative;z-index:1;width:36px;height:36px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;color:var(--p-gold);background:var(--p-card);box-shadow:inset 0 0 0 1.5px var(--gold)}
+.pl-mark.is-soon{color:var(--p-mut);box-shadow:inset 0 0 0 1.5px var(--p-line)}
+.pl-card{display:flex;gap:12px;width:100%;box-sizing:border-box;padding:12px;border-radius:16px;background:var(--p-soft);border:1px solid var(--p-line)}
+.pl-card.is-soon{opacity:.6}
+.pl-poster{width:40px;height:52px;flex-shrink:0;border-radius:7px;object-fit:cover;display:block}
+.pl-poster.is-blank{display:grid;place-items:center;font-family:'Lora',serif;font-size:16px;font-weight:700;color:#FFFAF0;background:#7A5B2A}
+.pl-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pl-course{font-size:11.5px;font-weight:700;color:var(--sc,var(--p-gold))}
+.pl-copy strong{font-family:'Lora',serif;font-size:14.5px;font-weight:600;line-height:1.35;color:var(--p-head);overflow-wrap:anywhere}
+.pl-copy small{margin-top:3px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--p-mut)}
+.pl-note{grid-column:2;margin:0;font-size:12.5px;color:var(--p-mut);font-style:italic}
 /* Hadith strands, as on /hadith-specialization. */
 .pl .s-history{--sc:#a8792f}.pl .s-narrators{--sc:#b0654a}.pl .s-isnad{--sc:#2f7a58}.pl .s-method{--sc:#6c5a9e}
 [data-theme="dark"] .pl .s-history{--sc:#d7b373}[data-theme="dark"] .pl .s-narrators{--sc:#e3a58a}[data-theme="dark"] .pl .s-isnad{--sc:#7fb89a}[data-theme="dark"] .pl .s-method{--sc:#b7a6d9}
-.pl .cw-lc[class*=" s-"]{box-shadow:inset 3px 0 0 var(--sc)}
+.pl .pl-stop[class*=" s-"] .pl-card{box-shadow:inset 3px 0 0 var(--sc)}
 
 .pl-cta{margin:90px 0 20px;padding:48px 28px;border-radius:32px;text-align:center;background:linear-gradient(150deg,var(--g4),var(--g2));border:1px solid rgba(215,179,115,.35);box-shadow:var(--shadow)}
 .pl-cta .cw-kicker{color:var(--gold)}
 .wh-home .pl-cta h2{color:var(--cream);font-size:clamp(30px,4vw,46px);margin:8px 0 10px}
 .wh-home .pl-cta p{color:rgba(243,232,211,.8);max-width:56ch;margin:0 auto}
 
-@media (max-width:1100px){.pl-weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.pl-weeks{grid-template-columns:minmax(0,1fr)}.pl-stats{grid-auto-flow:row;grid-template-columns:1fr 1fr}.pl-stats span:nth-child(2){border-right:0}}
+@media (max-width:1100px){.pl-path{grid-template-columns:repeat(2,minmax(0,1fr))}.pl-path::before{display:none}}
+@media (max-width:640px){
+  .pl-month{padding:18px 14px 20px;gap:18px}
+  .pl-week{grid-template-columns:minmax(0,1fr);gap:8px}
+  .pl-week-h{padding-top:0}
+  .pl-path{grid-template-columns:minmax(0,1fr);gap:10px}
+  .pl-path::before{display:block;left:17px;right:auto;top:18px;bottom:18px;width:2px;height:auto;background:linear-gradient(180deg,var(--gold),color-mix(in srgb,var(--gold) 20%,transparent))}
+  .pl-stop{flex-direction:row;align-items:center}
+  .pl-note{grid-column:1}
+}
+@media (max-width:620px){.pl-stats{grid-auto-flow:row;grid-template-columns:1fr 1fr}.pl-stats span:nth-child(2){border-right:0}}
 
 /* ── programme enrolment (ProgramEnrolPage): pe-* ── */
 .pe-offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;max-width:980px;margin:40px auto 0}

@@ -7,6 +7,9 @@ import { HADITH_PROGRAM_ENROL } from '../constants/links'
 
 const classes = HADITH_PLAN.years.reduce((s, y) => s + y.months.reduce((t, m) => t + m.weeks.reduce((u, w) => u + w.classes.length, 0), 0), 0)
 
+// Each course's poster, as on its /courses page (Ruwāt al-Ḥadīth has none yet: its card shows a plain tile).
+const POSTERS = { Intro: 'introduction-to-usul-al-hadith', Nukhbah: 'nukhbat-al-fikr', Tadwīn: 'tadwin-al-sunnah', Makānah: 'makanat-al-sunnah', Tadrīb: 'tadrib-al-rawi', Takwīn: 'takwin-al-asanid', Jarḥ: 'al-jarh-wa-l-tadil', Athbāt: 'al-athbat-wal-faharis' }
+
 const periods = HADITH_PLAN.years.map((y) => {
   const count = y.months.reduce((t, m) => t + m.weeks.reduce((u, w) => u + w.classes.length, 0), 0)
   return {
@@ -18,7 +21,7 @@ const periods = HADITH_PLAN.years.map((y) => {
       key: `y${y.year}-${m.month}`,
       label: `Month ${m.month}`,
       sub: '',
-      weeks: m.weeks.map((w) => ({ week: w.week, items: w.classes.map((c) => ({ title: c.title, course: c.course, accent: c.strand, number: c.n, ready: c.ready })) })),
+      weeks: m.weeks.map((w) => ({ week: w.week, items: w.classes.map((c, i) => ({ title: c.title.replace(/^lesson\s*\d+\s*\|\s*/i, ''), course: `Class ${i + 1} · ${c.course}`, accent: c.strand, poster: POSTERS[c.course] ? `/catalog-posters/${POSTERS[c.course]}.webp` : null, ready: c.ready })) })),
     })),
   }
 })
