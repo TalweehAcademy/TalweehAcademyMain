@@ -539,6 +539,9 @@ div.cw-next-c{cursor:default}
 .cw-vp.is-idle .cw-vp-screen{cursor:none}
 /* While a phone shows a video full screen, the site's own bars stay out of the way. */
 html.vp-full .wh-head,html.vp-full .wh-topbar,html.vp-full .cw-ebar,html.vp-full .academy-header,html.vp-full .top-bar{visibility:hidden}
+/* iPhone paints the strips outside the page (the home-bar strip below, the notch sides in landscape) with the page's
+   own background: black while a video fills the screen, or they showed as green bands. */
+html.vp-full,html.vp-full body{background:#000!important;background-image:none!important}
 @media(prefers-reduced-motion:reduce){.cw-vp-turn,.cw-vp-poster.is-paused{animation:none}}
 /* While a video starts, YouTube shows its title along the top and a big pause sign in the middle for ~4 s: our own
    band (with the lesson's name) and a gold "playing" badge cover just those, then fade; the picture moves meanwhile. */
