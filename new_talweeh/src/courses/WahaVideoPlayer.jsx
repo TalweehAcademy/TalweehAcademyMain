@@ -355,7 +355,8 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
     playerRef.current.seekTo(to, true)
     setTime((x) => ({ ...x, t: to }))
     setDrag(null)
-    setTimeout(tick, 120)
+    // YouTube reports the new time a moment later (longer when paused): read it again until it has caught up.
+    ;[150, 450, 1000].forEach((ms) => setTimeout(() => { const p = playerRef.current; if (readyRef.current && Math.abs((p.getCurrentTime() || 0) - to) < 3) tick() }, ms))
   }
   const frac = drag !== null ? drag : time.d ? time.t / time.d : 0
   // Tapping the picture. Full screen works as on YouTube: a tap shows or hides the controls (with play/pause in the
