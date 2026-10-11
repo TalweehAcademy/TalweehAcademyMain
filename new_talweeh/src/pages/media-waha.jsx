@@ -140,6 +140,8 @@ function Shorts() {
   function show(i) {
     const s = listRef.current[i]
     if (!s) return
+    // Shown at once (before React re-renders), so YouTube is visible when the tap starts it.
+    if (viewRef.current) { viewRef.current.classList.add('on'); viewRef.current.inert = false }
     setAt(i); setProg(0)
     leadArmed.current = true
     const p = ytRef.current

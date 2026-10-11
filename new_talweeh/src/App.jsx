@@ -334,7 +334,13 @@ function WatchLessons({ videos }) {
   const onGrabMove = (e) => { if (!drag.current) return; drag.current.dy = Math.max(0, e.touches[0].clientY - drag.current.y); panelRef.current.querySelector('.wh-vs-panel').style.transform = `translateY(${drag.current.dy}px)` }
   const onGrabEnd = () => { const d = drag.current; drag.current = null; panelRef.current.querySelector('.wh-vs-panel').style.transform = ''; if (d && d.dy > 90) close() }
   if (!items.length) return null
-  const open = (v, e) => { returnRef.current = e?.currentTarget || returnRef.current; playerRef.current?.play(v.id); setOpenId(v.id) }
+  // Shown at once (before React re-renders), so YouTube is visible when the tap starts it.
+  const open = (v, e) => {
+    returnRef.current = e?.currentTarget || returnRef.current
+    if (panelRef.current) { panelRef.current.classList.add('on'); panelRef.current.inert = false }
+    playerRef.current?.play(v.id)
+    setOpenId(v.id)
+  }
   const current = items.find((v) => v.id === openId) || items[0]
   const cur = splitVideoTitle(current.title)
   const curLabel = cur.title || `Talweeh Academy lesson ${current.i + 1}`
@@ -359,8 +365,10 @@ function WatchLessons({ videos }) {
       {host && createPortal(<div className={`wh-vs${openId ? ' on' : ''}`} ref={panelRef} aria-hidden={!openId}>
         <div className="wh-vs-dim" onClick={close} />
         <div className="wh-vs-panel" role="dialog" aria-modal="true" aria-label={curLabel}>
-          <div className="wh-vs-grab" onTouchStart={onGrabStart} onTouchMove={onGrabMove} onTouchEnd={onGrabEnd}><span /></div>
-          <button type="button" className="wh-vs-x" onClick={close} aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <div className="wh-vs-head">
+            <div className="wh-vs-grab" onTouchStart={onGrabStart} onTouchMove={onGrabMove} onTouchEnd={onGrabEnd}><span /></div>
+            <button type="button" className="wh-vs-x" onClick={close} aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          </div>
           <WahaVideoPlayer ref={playerRef} videoId={current.id} title={curLabel} kicker="Talweeh Media" warmOnView={false} />
           <div className="wh-vs-meta">
             <div><h3>{curLabel}</h3>{cur.teacher && <span>{cur.teacher}</span>}</div>

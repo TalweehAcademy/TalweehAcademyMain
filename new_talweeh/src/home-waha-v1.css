@@ -678,13 +678,16 @@
   position:fixed;inset:0;z-index:2147482000;pointer-events:none;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--c-text)}
 html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;--g2:#0B1F15;--cream:#F6F0E2;--c-solid:#0F271B}
 .wh-vs.on{pointer-events:auto}
+/* Closed, it is hidden outright: a waiting YouTube frame would otherwise catch touches meant for the page. */
+.wh-vs:not(.on){visibility:hidden;transition:visibility 0s .45s}
 .wh-vs-dim{position:absolute;inset:0;background:rgba(3,10,6,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
 .wh-vs.on .wh-vs-dim{opacity:1}
-.wh-vs-panel{position:absolute;left:50%;top:50%;width:min(920px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;overscroll-behavior:contain;padding:14px 14px 18px;border-radius:26px;border:1px solid rgba(242,214,158,.3);
+.wh-vs-panel{position:absolute;left:50%;top:50%;width:min(920px,calc(100vw - 48px));max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);overflow:auto;overscroll-behavior:contain;padding:14px 14px 18px;border-radius:26px;border:1px solid rgba(242,214,158,.3);
   background:linear-gradient(155deg,rgba(31,64,50,.99),rgba(17,40,31,.99));box-shadow:0 50px 120px -30px rgba(0,0,0,.9);opacity:0;transform:translate(-50%,-46%) scale(.94);transition:opacity .28s,transform .38s cubic-bezier(.2,.8,.2,1)}
 .wh-vs.on .wh-vs-panel{opacity:1;transform:translate(-50%,-50%)}
+.wh-vs-head{position:sticky;top:-14px;z-index:8;display:flex;justify-content:flex-end;margin:-14px -14px 0;padding:10px 12px;pointer-events:none}
 .wh-vs-grab{display:none}
-.wh-vs-x{position:absolute;right:22px;top:22px;z-index:8;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);background:rgba(6,17,11,.72);color:#fff;cursor:pointer}
+.wh-vs-x{pointer-events:auto;position:relative;z-index:8;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);background:rgba(6,17,11,.72);color:#fff;cursor:pointer}
 .wh-vs-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
 .wh-vs .cw-vp{box-shadow:none}
 .wh-vs-meta{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 8px 4px}
@@ -699,11 +702,13 @@ html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;
 .wh-vs-row small{display:block;margin-top:2px;font-size:12px;color:var(--c-mut)}
 .wh-vs-row:hover strong{color:var(--gold-b)}
 @media(max-width:720px){
-  .wh-vs-panel{left:0;right:0;top:auto;bottom:0;width:auto;max-height:92vh;padding:0 10px calc(14px + env(safe-area-inset-bottom,0px));border-radius:24px 24px 0 0;border-bottom:0;opacity:1;transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.85,.25,1)}
+  .wh-vs-panel{left:0;right:0;top:auto;bottom:0;width:auto;max-height:92vh;max-height:calc(100dvh - 24px);padding:0 10px calc(14px + env(safe-area-inset-bottom,0px));border-radius:24px 24px 0 0;border-bottom:0;opacity:1;transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.85,.25,1)}
   .wh-vs.on .wh-vs-panel{transform:none}
-  .wh-vs-grab{display:block;padding:10px 0 8px;touch-action:none}
-  .wh-vs-grab span{display:block;width:44px;height:5px;margin:0 auto;border-radius:9px;background:rgba(240,220,180,.42)}
-  .wh-vs-x{top:auto;right:14px;margin-top:-4px;position:absolute;top:6px;width:34px;height:34px}
+  /* The handle row stays at the top of the panel while it scrolls, with × on its right. */
+  .wh-vs-head{top:0;margin:0 -10px 6px;padding:8px 12px 8px;justify-content:space-between;align-items:center;background:linear-gradient(155deg,rgba(31,64,50,.99),rgba(24,52,40,.99));border-radius:24px 24px 0 0;pointer-events:auto}
+  .wh-vs-grab{display:block;flex:1;align-self:stretch;padding:12px 0;touch-action:none}
+  .wh-vs-grab span{display:block;width:44px;height:5px;margin:0 auto 0 calc(50% - 4px);border-radius:9px;background:rgba(240,220,180,.42)}
+  .wh-vs-x{width:38px;height:38px;flex:none}
   .wh-vs .cw-vp{padding:6px;border-radius:18px}
   .wh-vs-meta{flex-direction:column;align-items:flex-start;gap:10px;padding:12px 6px 2px}
   .wh-vs-meta h3{font-size:18px}

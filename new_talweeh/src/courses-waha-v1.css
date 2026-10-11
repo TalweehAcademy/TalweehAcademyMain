@@ -156,6 +156,7 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 .cw-vp-flash{position:absolute;top:50%;left:50%;z-index:5;transform:translate(-50%,-50%);padding:12px 18px;border-radius:16px;background:rgba(11,28,21,.72);border:1px solid rgba(215,179,115,.45);color:var(--gold-b);font-weight:800;font-size:18px;pointer-events:none;animation:cw-flash .65s var(--ease) forwards}
 .cw-vp-flash.l{left:22%}.cw-vp-flash.r{left:78%}
 @keyframes cw-flash{0%{opacity:0;transform:translate(-50%,-50%) scale(.8)}20%{opacity:1;transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0}}
+.cw-vp svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round} /* the player's own, wherever it sits (the home panel is outside .cw) */
 .cw-vp svg.fill{fill:currentColor;stroke:none}
 .cw-vp-bar{display:flex;align-items:center;gap:8px;padding:10px 4px 2px;color:var(--cream);flex-wrap:wrap}
 .cw-vp-bar .b{height:38px;min-width:38px;padding:0 10px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid rgba(215,179,115,.25);background:rgba(243,232,211,.06);color:var(--cream);cursor:pointer;font:inherit;font-size:12.5px;font-weight:800;transition:.2s}

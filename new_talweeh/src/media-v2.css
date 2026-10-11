@@ -121,6 +121,8 @@
 /* ── Short reminders viewer (media-waha.jsx Shorts): upright, playing from the tap; at the end of <body> ── */
 .mv-sv{position:fixed;inset:0;z-index:2147482000;display:grid;place-items:center;pointer-events:none;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
 .mv-sv.on{pointer-events:auto}
+/* Closed, hidden outright: the waiting YouTube frame covers the screen and would catch the swipes meant for the rows. */
+.mv-sv:not(.on){visibility:hidden;transition:visibility 0s .35s}
 .mv-sv-dim{position:absolute;inset:0;background:rgba(3,10,6,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .25s}
 .mv-sv.on .mv-sv-dim{opacity:1}
 .mv-sv-frame{position:relative;width:min(400px,calc((100vh - 60px) * 9 / 16),calc(100vw - 32px));aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;border:1px solid rgba(215,179,115,.45);box-shadow:0 30px 80px rgba(0,0,0,.6);opacity:0;transform:scale(.9);transition:opacity .22s,transform .32s cubic-bezier(.2,.8,.2,1)}
