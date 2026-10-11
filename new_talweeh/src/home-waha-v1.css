@@ -162,6 +162,14 @@
 .wh-way-tag.is-live{background:rgba(227,165,138,.15);color:var(--clay)}
 .wh-way-go{color:var(--gold-b);font-size:20px;padding-right:8px;transition:transform .35s var(--spring)}
 .wh-way:hover .wh-way-go{transform:translateX(4px)}
+.wh-way-main{color:inherit}
+.wh-way-main::after{content:"";position:absolute;inset:0;border-radius:20px;z-index:1}
+.wh-way-main:focus-visible{outline:none}
+.wh-way:has(.wh-way-main:focus-visible){outline:2px solid var(--gold);outline-offset:3px}
+.wh-way-links a{position:relative;z-index:2;color:var(--gold-b);font-weight:600;border-bottom:1px solid rgba(240,220,180,.35);padding-bottom:1px;transition:color .2s,border-color .2s}
+.wh-way-links a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.wh-way-links a:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+.wh-way-links span{margin:0 6px}
 @media (max-width:760px){
   .wh-hero{padding:22px 0 30px}
   .wh-hero .wh-ar{font-size:28px}
