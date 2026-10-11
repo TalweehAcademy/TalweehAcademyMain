@@ -17,7 +17,7 @@ import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 import { canEnrol, lessonOverview, lessonTitle, lessonVideo, plainText, purchaseOptions, useStudyList } from '../courses/courseKit'
 import { addToStudyList, openStudyList } from '../courses/StudyList'
 import WahaVideoPlayer from '../courses/WahaVideoPlayer'
-import { cleanLessonTitle, parseLessonOverview } from '../courses/lessonText'
+import { cleanLessonTitle, lessonCardText, parseLessonOverview } from '../courses/lessonText'
 
 const LEVEL = (v = '') => String(v).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 const PREVIEW = 24
@@ -138,8 +138,8 @@ export default function CourseWahaPage() {
     const topic = typeof l === 'string' ? '' : l?.topic
     if (topic && topic !== lastTopic) { cards.push(<div className="cw-topic" key={`t-${i}`}>{topic}</div>); lastTopic = topic }
     const play = canWatch && playable.includes(i)
-    const overview = lessonOverview(l)
-    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{lessonTitle(l)}</strong>{overview && <small>{overview}</small>}<span className="tag">{play ? '▶ Watch lesson' : course.free ? 'Video coming soon' : '🔒 Student Portal'}</span></span></>
+    const overview = lessonCardText(lessonOverview(l))
+    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{cleanLessonTitle(lessonTitle(l))}</strong>{overview && <small>{overview}</small>}<span className="tag">{play ? '▶ Watch lesson' : course.free ? 'Video coming soon' : '🔒 Student Portal'}</span></span></>
     cards.push(play
       ? <button type="button" key={i} className={`cw-lc cw-card${i === cur ? ' on' : ''}`} onClick={() => openLesson(i)}>{inner}</button>
       : <div key={i} className="cw-lc cw-card">{inner}</div>)

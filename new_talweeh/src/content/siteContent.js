@@ -43,7 +43,7 @@ export const CONTENT_REGISTRY = {
         },
       ],
       default: {
-        copyright: '© All rights reserved by Talweeh Academy 2025',
+        copyright: `© All rights reserved by Talweeh Academy ${new Date().getFullYear()}`,
         social: [
           { label: 'X / Twitter', icon: '𝕏', href: 'https://x.com/Talweeh_Academy' },
           { label: 'YouTube', icon: '▶', href: 'https://www.youtube.com/@Talweeh.Academy' },

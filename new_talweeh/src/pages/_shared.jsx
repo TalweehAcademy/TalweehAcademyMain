@@ -9,7 +9,6 @@ import { useContent } from '../hooks/useContent'
 import { Editable } from '../components/ContentEditor'
 import CommerceCartLink from '../components/CommerceCartLink'
 
-const preview = (label) => ({ label, to: `/navigation-preview/${encodeURIComponent(label)}` })
 const courseCategoryLink = (label, slug) => ({ label, to: `/courses?category=${encodeURIComponent(slug)}` })
 export const navLinks = [
   { label: 'Quran', to: '/quran' },
@@ -51,7 +50,7 @@ export const navLinks = [
       { label: 'Articles', to: '/articles' },
     ] },
   ] },
-  preview('Alimiyyah'),
+  { label: 'Alimiyyah', to: '/alimiyyah' },
   { label: 'Arabic', to: '/arabic' },
   { label: 'Hadith Specialization', to: '/hadith-specialization' },
   { label: 'About', groups: [{ title: 'Talweeh Academy', links: [
