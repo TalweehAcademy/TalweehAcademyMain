@@ -544,6 +544,16 @@
 .wh-refl-dots{display:flex;gap:8px}
 .wh-refl-dots span{width:8px;height:8px;border-radius:99px;background:rgba(215,179,115,.35);transition:width .3s}
 .wh-refl-dots span.on{width:26px;background:var(--gold)}
+/* Flip (StudentReflections): each column stacks its quotes in one cell; the shown one turns in, the next turn turns it out. */
+.wh-refl-flip .wh-refl-slot{display:grid;perspective:1200px}
+.wh-refl-flip .wh-refl-q{grid-area:1/1;visibility:hidden;position:relative;overflow:hidden;backface-visibility:hidden}
+.wh-refl-flip .wh-refl-q.on{visibility:visible;animation:refl-in 1.2s cubic-bezier(.3,.7,.3,1) both}
+.wh-refl-flip .wh-refl-q.on.out{animation:refl-out .52s cubic-bezier(.5,0,.75,0) both}
+.wh-refl-flip .wh-refl-q.on::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(240,220,180,.16) 50%,transparent 65%);transform:translateX(-120%);animation:refl-sheen 1.6s ease-out .5s both}
+@keyframes refl-in{0%{opacity:0;transform:rotateY(-90deg)}70%{opacity:1;transform:rotateY(6deg)}100%{opacity:1;transform:none}}
+@keyframes refl-out{from{opacity:1;transform:none}to{opacity:0;transform:rotateY(90deg)}}
+@keyframes refl-sheen{to{transform:translateX(120%)}}
+@media (prefers-reduced-motion:reduce){.wh-refl-flip .wh-refl-q.on,.wh-refl-flip .wh-refl-q.on::after{animation:none}}
 
 /* ── Read & reflect: one large article and two beside it ── */
 .wh-rr{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px}
@@ -598,6 +608,7 @@
 @media(max-width:1000px){
   .wh-refl{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wh-refl-q:nth-child(3){display:none}
+  .wh-refl-flip .wh-refl-q:nth-child(3){display:flex}
   .wh-watch,.wh-watch.is-3{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wh-rr{grid-template-columns:1fr}
 }

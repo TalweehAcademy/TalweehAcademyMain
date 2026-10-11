@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { lazy as talweehProgramLazy } from 'react'
-import { lazy, Suspense, useState, useEffect, useRef } from 'react'
+import { lazy, Suspense, useState, useEffect, useMemo, useRef } from 'react'
 import './App.css'
 import './public-theme.css'
 import './commerce-cart-link.css'
@@ -208,34 +208,58 @@ function formatLandingDate(date) {
 }
 
 // ── What our students say: three at a time, all readable (one on phones), ‹ › and dots ──
+// "What our students say": the testimonials, then the review quotes picked in the portal, dealt into one card per
+// column (1 on phones, 2 on tablets, 3 on desktop). The columns' cards turn over in turn, so each card holds a quote for
+// about 12 s (one turn every 4 s on desktop, 6 s on tablets; a phone's single card every 8 s). Hover or keyboard focus holds them; a hidden tab or "reduce motion" keeps
+// them still. Each column keeps all its quotes stacked in one cell (only one shown), so a card never changes height.
+const HOLD = 12000
+const PHONE_HOLD = 8000
+const TURN_OUT = 520
 function StudentReflections({ testimonials }) {
   const narrow = useNarrow()
+  const tablet = useNarrow(1001)
   const count = testimonials.length
-  const per = Math.min(narrow ? 1 : 3, count)
-  const [start, setStart] = useState(0)
+  const cols = Math.max(1, Math.min(narrow ? 1 : tablet ? 2 : 3, count))
+  const groups = useMemo(() => Array.from({ length: cols }, (_, c) => testimonials.filter((_, i) => i % cols === c)), [testimonials, cols])
+  const [pos, setPos] = useState(() => groups.map(() => 0))
+  const [turning, setTurning] = useState(-1)
+  const held = useRef(false)
+  useEffect(() => {
+    setPos(groups.map(() => 0)); setTurning(-1)
+    const still = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    if (still || !groups.some((g) => g.length > 1)) return undefined
+    let next = 0
+    let swap
+    const tick = setInterval(() => {
+      if (held.current || document.hidden) return
+      let c = next
+      for (let k = 0; k < cols && groups[c].length < 2; k += 1) c = (c + 1) % cols
+      next = (c + 1) % cols
+      setTurning(c)
+      swap = setTimeout(() => { setPos((p) => p.map((v, i) => (i === c ? (v + 1) % groups[c].length : v))); setTurning(-1) }, TURN_OUT)
+    }, cols === 1 ? PHONE_HOLD : HOLD / cols)
+    return () => { clearInterval(tick); clearTimeout(swap) }
+  }, [groups, cols])
   if (!count) return null
-  const shown = Array.from({ length: per }, (_, k) => testimonials[(start + k) % count])
-  const go = (step) => setStart((i) => (i + step + count) % count)
   const initials = (name) => { const w = name.split(/\s+/).filter(Boolean); return (w[0]?.[0] || '') + (w.length > 1 ? w[w.length - 1][0] : '') }
+  const hold = (on) => () => { held.current = on }
   return (
-    <>
-      <div className="wh-refl" data-r aria-live="polite">
-        {shown.map((item, k) => (
-          <figure key={`${(start + k) % count}-${item.name}`} className="wh-refl-q wh-glass">
-            <span className="wh-refl-mark" aria-hidden="true">“</span>
-            <blockquote>{item.quote}</blockquote>
-            <figcaption><span className="wh-refl-av" aria-hidden="true">{initials(item.name)}</span><div><b>{item.name}</b><span>{item.location}</span></div></figcaption>
-          </figure>
-        ))}
-      </div>
-      {count > per && (
-        <div className="wh-refl-nav">
-          <button type="button" aria-label="Previous reflections" onClick={() => go(-1)}>‹</button>
-          <div className="wh-refl-dots" aria-hidden="true">{testimonials.map((t, i) => <span key={i} className={i === start ? 'on' : ''} />)}</div>
-          <button type="button" aria-label="More reflections" onClick={() => go(1)}>›</button>
+    <div className="wh-refl wh-refl-flip" data-r onMouseEnter={hold(true)} onMouseLeave={hold(false)} onFocus={hold(true)} onBlur={hold(false)}>
+      {groups.map((group, c) => (
+        <div key={c} className="wh-refl-slot">
+          {group.map((item, k) => {
+            const on = k === (pos[c] ?? 0)
+            return (
+              <figure key={`${item.name}-${k}`} className={`wh-refl-q wh-glass${on ? (turning === c ? ' on out' : ' on') : ''}`} aria-hidden={on ? undefined : 'true'}>
+                <span className="wh-refl-mark" aria-hidden="true">“</span>
+                <blockquote>{item.quote}</blockquote>
+                <figcaption><span className="wh-refl-av" aria-hidden="true">{initials(item.name)}</span><div><b>{item.name}</b><span>{item.location}</span></div></figcaption>
+              </figure>
+            )
+          })}
         </div>
-      )}
-    </>
+      ))}
+    </div>
   )
 }
 
