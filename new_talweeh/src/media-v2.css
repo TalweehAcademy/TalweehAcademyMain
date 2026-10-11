@@ -148,6 +148,6 @@
   .mv-sv-nav{display:none}
 }
 @media(prefers-reduced-motion:reduce){.mv-sv-frame,.mv-sv-dim{transition:none}}
-.mv-sv-lead{position:absolute;inset:0;z-index:2;background:#000 center/cover no-repeat;pointer-events:none;animation:cw-vp-lead 2.6s ease forwards}
+.mv-sv-lead{position:absolute;inset:0;z-index:2;background:#000 center/cover no-repeat;pointer-events:none;animation:cw-vp-lead 4.8s ease forwards}
 .mv-sv-lead.wide{background-size:contain}
-.mv-sv-lead .cw-vp-eq{bottom:auto;top:18px}
+.mv-sv-lead .cw-vp-eq{position:absolute;left:16px;top:calc(18px + env(safe-area-inset-top,0px))}

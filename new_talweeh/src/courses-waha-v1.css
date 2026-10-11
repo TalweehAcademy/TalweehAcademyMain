@@ -540,15 +540,22 @@ div.cw-next-c{cursor:default}
 /* While a phone shows a video full screen, the site's own bars stay out of the way. */
 html.vp-full .wh-head,html.vp-full .wh-topbar,html.vp-full .cw-ebar,html.vp-full .academy-header,html.vp-full .top-bar{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.cw-vp-turn,.cw-vp-poster.is-paused{animation:none}}
-/* The video's picture over YouTube's opening labels while it starts (sound already playing), then it fades away. */
-.cw-vp-lead{position:absolute;inset:0;z-index:3;background:#050d09 center/cover no-repeat;pointer-events:none;animation:cw-vp-lead 2.6s ease forwards}
-.cw-vp-lead::before{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(5,13,9,.6))}
-.cw-vp-eq{position:absolute;left:16px;bottom:14px;display:inline-flex;align-items:flex-end;gap:3px;height:16px}
+/* While a video starts, YouTube shows its title along the top and a big pause sign in the middle for ~4 s: our own
+   band (with the lesson's name) and a gold "playing" badge cover just those, then fade; the picture moves meanwhile. */
+.cw-vp-lead{position:absolute;inset:0;z-index:3;pointer-events:none;animation:cw-vp-lead 4.8s ease forwards}
+.cw-vp-lead .band{position:absolute;left:0;right:0;top:0;height:max(64px,24%);display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 18px 6px;background:linear-gradient(#08150f 0,#08150f 78%,rgba(8,21,15,0));color:#fbf5ea;overflow:hidden}
+.cw-vp-lead .band small{font:800 10.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.cw-vp-lead .band strong{font:600 17px/1.25 'Lora',serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cw-vp-lead .badge{position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#10251c 0 62%,rgba(16,37,28,.85) 63% 100%);box-shadow:0 0 0 6px rgba(215,179,115,.25)}
+.cw-vp-lead .cw-vp-eq{position:static;height:26px;gap:4px}
+.cw-vp-lead .cw-vp-eq i{width:5px}
+.cw-vp-lead.in-fs .band{display:none}
+.cw-vp-eq{display:inline-flex;align-items:flex-end;gap:3px;height:16px}
 .cw-vp-eq i{width:4px;border-radius:2px;background:var(--gold-b);animation:cw-vp-eq .9s ease-in-out infinite}
 .cw-vp-eq i:nth-child(2){animation-delay:-.3s}.cw-vp-eq i:nth-child(3){animation-delay:-.6s}
-@keyframes cw-vp-eq{0%,100%{height:4px}50%{height:16px}}
-@keyframes cw-vp-lead{0%,72%{opacity:1}100%{opacity:0}}
-@media(prefers-reduced-motion:reduce){.cw-vp-lead{animation:none}.cw-vp-eq i{animation:none;height:10px}}
+@keyframes cw-vp-eq{0%,100%{height:30%}50%{height:100%}}
+@keyframes cw-vp-lead{0%,88%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.cw-vp-lead{animation:none}.cw-vp-eq i{animation:none;height:60%}}
 /* Seek bar: a finger or the mouse can press and drag it (WahaVideoPlayer seekDown/Move/Up); the knob always shows on
    touch screens and while dragging. */
 .cw-vp-prog{touch-action:none;height:34px;-webkit-user-select:none;user-select:none}
@@ -563,5 +570,3 @@ html.vp-full .wh-head,html.vp-full .wh-topbar,html.vp-full .cw-ebar,html.vp-full
 .cw-vp-mid{position:absolute;left:50%;top:50%;z-index:5;width:76px;height:76px;margin:-38px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(240,220,180,.94);color:var(--g2);cursor:pointer;box-shadow:0 0 0 10px rgba(215,179,115,.18),0 20px 40px rgba(0,0,0,.45);transition:opacity .3s}
 .cw-vp-mid svg{width:30px;height:30px}
 .cw-vp.is-idle .cw-vp-mid{opacity:0;pointer-events:none}
-.cw-vp-lead.fit{background-size:contain;background-color:#000}
-.cw-vp-lead.fit::before{display:none}

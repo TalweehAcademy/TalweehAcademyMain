@@ -9,8 +9,9 @@
 // a script has loaded, is refused and left YouTube's own paused screen behind (it took two taps). When a page asks to
 // start a video without a tap (the next lesson, a link that opens a video) and the phone refuses, it starts muted with
 // "Tap for sound". Paused or finished, our own cover sits over the video instead of YouTube's title, logo and "More
-// videos". YouTube also lays its title, logo and a big pause sign over the first seconds of playing, so the video's
-// picture stays over it for those seconds (the sound has already begun) and then fades into the moving picture.
+// videos". YouTube also lays its title and a big pause sign over the first ~4 seconds of playing: a band with our
+// own title and a gold "playing" badge cover just those, while the rest of the picture already moves. YouTube's
+// automatic captions ("[Music]", "uh… um") are turned off.
 // A parent can start a video from its own tap through the ref: ref.current.play(videoId).
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useScrollLock } from '../hooks/useScrollLock'
@@ -82,7 +83,7 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
   const [lead, setLead] = useState(null) // { k, ms } while the picture covers YouTube's opening labels
   const leadArmed = useRef(0) // how long to cover when playing next begins (ms), 0 for not at all
   const leadTimer = useRef(null)
-  const arm = (ms = 2600) => { leadArmed.current = ms }
+  const arm = (ms = 4800) => { leadArmed.current = ms }
   endedRef.current = onEnded
   const playing = state === 1
 
@@ -112,7 +113,7 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
       playerRef.current = new window.YT.Player(mountRef.current, {
         host: 'https://www.youtube-nocookie.com',
         videoId: loadedRef.current,
-        playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0 },
+        playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, cc_load_policy: 0 },
         events: {
           onReady: (e) => {
             readyRef.current = true
@@ -123,6 +124,7 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
           },
           onStateChange: (e) => {
             setState(e.data)
+            if (e.data === 1) { try { e.target.unloadModule?.('captions'); e.target.unloadModule?.('cc') } catch { /* no captions */ } }
             if (e.data === 1 && leadArmed.current) {
               const ms = leadArmed.current
               leadArmed.current = 0
@@ -210,7 +212,7 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
     const p = playerRef.current
     if (!started || !readyRef.current) return start(shownId)
     if (quietStart) { p.unMute(); setMuted(false); setQuietStart(false); return }
-    if (p.getPlayerState() === 1) p.pauseVideo(); else { arm(1500); p.playVideo() }
+    if (p.getPlayerState() === 1) p.pauseVideo(); else { arm(2200); p.playVideo() }
   }
   const skip = (sec) => {
     const p = playerRef.current; if (!readyRef.current) return
@@ -384,12 +386,12 @@ const WahaVideoPlayer = forwardRef(function WahaVideoPlayer({ videoId, title, ki
           </button>
         )}
         {cover && (
-          <button type="button" className="cw-vp-poster is-paused" style={{ backgroundImage: `url(${thumb})` }} onClick={() => { if (full) wake(); arm(state === 0 ? 2600 : 1500); if (state === 0) playerRef.current.seekTo(0, true); playerRef.current.playVideo() }} aria-label={state === 0 ? `Watch ${title} again` : `Carry on with ${title}`}>
+          <button type="button" className="cw-vp-poster is-paused" style={{ backgroundImage: `url(${thumb})` }} onClick={() => { if (full) wake(); arm(state === 0 ? 4800 : 2200); if (state === 0) playerRef.current.seekTo(0, true); playerRef.current.playVideo() }} aria-label={state === 0 ? `Watch ${title} again` : `Carry on with ${title}`}>
             <span className="big">{I.play}</span>
             <span className="cap"><small>{state === 0 ? 'Watch again' : `Paused · ${fmt(time.t)}`}</small><strong>{title}</strong></span>
           </button>
         )}
-        {lead && playing && <div key={lead.k} className={`cw-vp-lead${full ? ' fit' : ''}`} style={{ backgroundImage: `url(${thumb})`, animationDuration: `${lead.ms}ms` }} aria-hidden="true"><span className="cw-vp-eq"><i /><i /><i /></span></div>}
+        {lead && playing && <div key={lead.k} className={`cw-vp-lead${full ? ' in-fs' : ''}`} style={{ animationDuration: `${lead.ms}ms` }} aria-hidden="true"><span className="band"><small>{kicker}</small><strong>{title}</strong></span><span className="badge"><span className="cw-vp-eq"><i /><i /><i /></span></span></div>}
         {quietStart && playing && <button type="button" className="cw-vp-sound" onClick={toggleMute}>{I.mute}Tap for sound</button>}
         {full && started && <button type="button" className="cw-vp-mid" onClick={() => { wake(); toggle() }} aria-label={playing ? 'Pause' : 'Play'}>{playing ? I.pause : I.play}</button>}
         {fs && <div className="cw-vp-top"><button type="button" className="b" onClick={exitFs} aria-label="Leave full screen">{I.close}</button><span>{title}</span></div>}

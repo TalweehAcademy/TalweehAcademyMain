@@ -114,12 +114,13 @@ function Shorts() {
       ytRef.current = new window.YT.Player(mountRef.current, {
         host: 'https://www.youtube-nocookie.com',
         videoId: loadedRef.current,
-        playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0 },
+        playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, cc_load_policy: 0 },
         events: {
           onReady: (e) => { readyRef.current = true; const job = pendingRef.current; pendingRef.current = null; if (job) { e.target.playVideo(); refused() } },
           onStateChange: (e) => {
             setState(e.data)
-            if (e.data === 1 && leadArmed.current) { leadArmed.current = false; setLead(Date.now()); clearTimeout(leadTimer.current); leadTimer.current = setTimeout(() => setLead(null), 2600) }
+            if (e.data === 1) { try { e.target.unloadModule?.('captions'); e.target.unloadModule?.('cc') } catch { /* no captions */ } }
+            if (e.data === 1 && leadArmed.current) { leadArmed.current = false; setLead(Date.now()); clearTimeout(leadTimer.current); leadTimer.current = setTimeout(() => setLead(null), 4800) }
             // At the end, on to the next Short (the last one stays, with "Watch again").
             if (e.data === 0 && atRef.current >= 0 && atRef.current < listRef.current.length - 1) show(atRef.current + 1)
           },
