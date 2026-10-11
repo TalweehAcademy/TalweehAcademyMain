@@ -41,15 +41,12 @@
 .pl-path::before{content:"";position:absolute;left:18px;right:18px;top:17px;height:2px;background:linear-gradient(90deg,var(--gold),color-mix(in srgb,var(--gold) 20%,transparent))}
 .pl-stop{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
 .pl-mark{position:relative;z-index:1;width:36px;height:36px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;color:var(--p-gold);background:var(--p-card);box-shadow:inset 0 0 0 1.5px var(--gold)}
-.pl-mark.is-soon{color:var(--p-mut);box-shadow:inset 0 0 0 1.5px var(--p-line)}
 .pl-card{display:flex;gap:12px;width:100%;box-sizing:border-box;padding:12px;border-radius:16px;background:var(--p-soft);border:1px solid var(--p-line)}
-.pl-card.is-soon{opacity:.6}
 .pl-poster{width:40px;height:52px;flex-shrink:0;border-radius:7px;object-fit:cover;display:block}
 .pl-poster.is-blank{display:grid;place-items:center;font-family:'Lora',serif;font-size:16px;font-weight:700;color:#FFFAF0;background:#7A5B2A}
 .pl-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
 .pl-course{font-size:11.5px;font-weight:700;color:var(--sc,var(--p-gold))}
 .pl-copy strong{font-family:'Lora',serif;font-size:14.5px;font-weight:600;line-height:1.35;color:var(--p-head);overflow-wrap:anywhere}
-.pl-copy small{margin-top:3px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--p-mut)}
 .pl-note{grid-column:2;margin:0;font-size:12.5px;color:var(--p-mut);font-style:italic}
 /* Hadith strands, as on /hadith-specialization. */
 .pl .s-history{--sc:#a8792f}.pl .s-narrators{--sc:#b0654a}.pl .s-isnad{--sc:#2f7a58}.pl .s-method{--sc:#6c5a9e}

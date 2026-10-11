@@ -12,9 +12,9 @@ import { LEGACY_PORTAL } from '../constants/links'
 import { warmProgramEnrol } from '../data/programEnrol'
 import '../program-learning-v1.css'
 
-// The marks on the gold path, as in the portal's My Learning: a padlock (opens once enrolled) or a clock (coming soon).
+// The mark on the gold path, as in the portal's My Learning. This page is a guide to every class in the programme,
+// so all stops look the same: a padlock (lessons open in the Student Portal once enrolled), never "coming soon".
 const LOCK = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
-const CLOCK = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
 
 /**
  * periods: [{ key, label, sub, months: [{ key, label, sub, weeks: [{ week, items: [{ title, course?, book?, poster?, accent?, ready?, note? }] }] }] }]
@@ -80,13 +80,12 @@ export default function ProgramLearningPreview({ programKey, meta, kicker, title
                     <ol className="pl-path" style={{ '--n': stops.length > 4 ? Math.ceil(stops.length / 2) : Math.max(3, stops.length) }}>
                       {stops.map((item, i) => (
                         <li key={i} className={`pl-stop${item.accent ? ` s-${item.accent}` : ''}`}>
-                          <span className={`pl-mark${item.ready ? '' : ' is-soon'}`} aria-label={item.ready ? 'Opens in the Student Portal once you enroll' : 'Coming soon'}>{item.ready ? LOCK : CLOCK}</span>
-                          <div className={`pl-card${item.ready ? '' : ' is-soon'}`}>
+                          <span className="pl-mark" aria-label="Opens in the Student Portal once you enroll">{LOCK}</span>
+                          <div className="pl-card">
                             {item.poster ? <img className="pl-poster" src={item.poster} alt="" width={40} height={52} loading="lazy" decoding="async" /> : <span className="pl-poster is-blank" aria-hidden="true">ع</span>}
                             <span className="pl-copy">
                               {item.course ? <span className="pl-course">{item.course}</span> : null}
                               <strong>{item.title}</strong>
-                              {item.ready ? null : <small>Coming soon</small>}
                             </span>
                           </div>
                         </li>
