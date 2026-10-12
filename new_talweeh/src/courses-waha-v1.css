@@ -573,3 +573,15 @@ html.vp-full,html.vp-full body{background:#000!important;background-image:none!i
 .cw-vp-mid{position:absolute;left:50%;top:50%;z-index:5;width:76px;height:76px;margin:-38px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(240,220,180,.94);color:var(--g2);cursor:pointer;box-shadow:0 0 0 10px rgba(215,179,115,.18),0 20px 40px rgba(0,0,0,.45);transition:opacity .3s}
 .cw-vp-mid svg{width:30px;height:30px}
 .cw-vp.is-idle .cw-vp-mid{opacity:0;pointer-events:none}
+/* Course page hovers. The reveal (night-portal-v1.css: [data-stagger]>* transform:none;transition:none) outranked .cw-path:hover,
+   so the route cards never moved; these rules are more specific. Kept small: a short lift, a gold edge, a faint glow. */
+html .wh-home .cw-paths>.cw-path{transition:transform .35s var(--ease),border-color .3s,box-shadow .3s,background .3s}
+@media(hover:hover){
+  html .wh-home .cw-paths>.cw-path:hover{transform:translateY(-3px);border-color:rgba(215,179,115,.55);box-shadow:var(--shadow),0 10px 28px -14px rgba(215,179,115,.35),inset 0 1px 0 rgba(255,255,255,.08)}
+  html .wh-home .cw-paths>.cw-path.on:hover{box-shadow:0 0 0 2px var(--gold),var(--shadow)}
+  .cw-seg button{transition:background .25s,color .25s}
+  .cw-seg button:not(.on):hover{background:rgba(243,232,211,.07);color:var(--c-head)}
+  .cw-search,.cw-sort select{transition:border-color .25s,background .25s}
+  .cw-search:hover,.cw-sort select:hover{border-color:rgba(215,179,115,.4)}
+}
+html .wh-home .cw-paths>.cw-path:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
