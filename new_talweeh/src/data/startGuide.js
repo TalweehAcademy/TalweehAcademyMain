@@ -45,7 +45,7 @@ export const MODULES = ARB.MODULES.map((m) => ({ n: m.n, name: m.name, d: m.dura
 const CHAPTERS = ['takwin-al-asanid', 'tadwin-al-sunnah', 'al-athbat-wal-faharis', 'al-jarh-wa-l-tadil', 'talweeh-od-24-ruwatalhadith', 'makanat-al-sunnah', 'takhri-j-al-h-adi-th-q2zxxj']
 const BAYQUNI = 'talweeh-od-33-manzumahalbayquni'
 const AR_FIRST = 'Talweeh teaches this science from intermediate level, so start with Arabic first.'
-const NAWAWI = 'Al-Arbaʿūn al-Nawawiyyah, the first ḥadīth collection, is coming soon. Until then, begin with the ḥadīth sciences: al-Bayqūnī is free.'
+const NAWAWI = 'Al-Arbaʿūn al-Nawawiyyah, the first ḥadīth collection, is coming soon. Until then, begin with the ḥadīth sciences, starting with Manẓūmah al-Bayqūnī.'
 const nothing = (what) => `Talweeh’s ${what}, so there’s nothing at your level yet.`
 
 export const PLAN = {
