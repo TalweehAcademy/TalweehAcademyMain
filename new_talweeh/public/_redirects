@@ -1,1 +1,71 @@
+# Old WordPress addresses -> the new site (301). They only take effect for real visitors once talweehacademy.com points
+# here; until then they just work on beta, for testing. Netlify matches with or without the trailing slash.
+# Switch day, once WordPress lives at old.talweehacademy.com, add above the last line:
+#   /my-account/*           https://old.talweehacademy.com/my-account/:splat           301   (WooCommerce payers)
+#   /wp-content/uploads/*   https://old.talweehacademy.com/wp-content/uploads/:splat   302   (files not copied here)
+#   /wp-admin/*  and  /wp-login.php  -> old.talweehacademy.com
+
+# Pages
+/%CA%BFalimiyyah-arabic      /arabic                 301
+/%ca%bfalimiyyah-arabic      /arabic                 301
+/advanced-coursesdelivered-by-instructorsholding-ijazat-and-sanad   /courses   301
+/cart-2                      /cart                   301
+/checkout-2                  /checkout               301
+/course                      /courses                301
+/services                    /courses                301
+/shop                        /courses                301
+/our-service/*               /courses                301
+/mindmap                     /courses/roadmap        301
+/ramadhan-course-giveaway    /                       301
+/style-guide                 /                       301
+/privacy-policy              /p/privacy-policy       301
+/terms-conditions            /p/terms-conditions     301
+
+# Articles were at the root
+/the-legacy-of-mukhtasar-al-quduri   /articles/the-legacy-of-mukhtasar-al-quduri   301
+/the-nature-of-islamic-finance       /articles/the-nature-of-islamic-finance       301
+/ta%E1%B8%A5sin-taqbi%E1%B8%A5-reason-revelation-and-the-foundations-of-islamic-morality   /articles/tahsin-taqbih-reason-revelation-foundations-islamic-morality   301
+/ta%e1%b8%a5sin-taqbi%e1%b8%a5-reason-revelation-and-the-foundations-of-islamic-morality   /articles/tahsin-taqbih-reason-revelation-foundations-islamic-morality   301
+
+# Accounts: the portal's sign-in
+/dashboard                   https://legacy.talweehacademy.com/auth/login   301
+/tutor-login                 https://legacy.talweehacademy.com/auth/login   301
+/tutor-login-2               https://legacy.talweehacademy.com/auth/login   301
+/student-registration        https://legacy.talweehacademy.com/auth/login   301
+/instructor-registration     https://legacy.talweehacademy.com/auth/login   301
+/tutor-certificate           https://legacy.talweehacademy.com/auth/login   301
+
+# Courses whose address changed (same-name courses need no rule)
+/courses/a-critical-study-of-usul-al-sashi             /courses/usul-al-shashi                        301
+/courses/al-athbat-wa-al-faharis                        /courses/al-athbat-wal-faharis                 301
+/courses/al-tadhkirah-fi-ulum-al-hadith                 /courses                                       301
+/courses/al-tufat-al-saniyyah                           /courses/al-tuhfat-al-saniyyah                 301
+/courses/analytical-study-of-muwatta-imam-malik         /courses/muwatta-muhammad                      301
+/courses/hadith-specialization                          /hadith-specialization                         301
+/courses/hanafi-usul-al-fiqh-level-01                   /courses/hanafi-usul-al-fiqh-101               301
+/courses/introduction-to-al-fiqh-al-anafi               /courses/introduction-to-hanafi-fiqh           301
+/courses/introduction-to-almuwttaayn                    /courses/introduction-to-al-muwattayn          301
+/courses/introduction-to-the-discipline-of-uul-al-adith /courses/introduction-to-usul-al-hadith        301
+/courses/introduction-to-the-discipline-of-uul-al-din   /courses/introduction-to-usul-al-din           301
+/courses/introduction-to-the-discipline-of-uul-al-fiqh  /courses/introduction-to-usul-al-fiqh          301
+/courses/linguistic-tafsir-of-surah-abasa               /courses/tafsir-of-juz-amma                    301
+/courses/linguistic-tafsir-of-surah-an-naba             /courses/tafsir-of-juz-amma                    301
+/courses/linguistic-tafsir-of-surah-an-naziat           /courses/tafsir-of-juz-amma                    301
+/courses/mukhtasar-al-quduri-qism-al-uqubat             /courses/mukhtasar-al-quduri-al-uqubat         301
+/courses/mutammimah-al-aajrumiyyah                      /courses/mutammimah-al-ajurrumiyyah            301
+/courses/nur-al-ia                                      /courses/nur-al-idah                           301
+/courses/nur-al-idah-part-02                            /courses/nur-al-idah                           301
+/courses/online-alimiyyah-seminary-1st-year             /alimiyyah                                     301
+/courses/online-alimiyyah-seminary-3rd-year             /alimiyyah                                     301
+/courses/part-time-online-alimiyyah-seminary            /alimiyyah                                     301
+/courses/shamail-muhammadiyyah                          /courses/al-shamail-al-muhammadiyyah           301
+/courses/shar-al-waraqat                                /courses/sharh-al-waraqat-of-al-mahalli        301
+/courses/sharh-qatr-al-nada                             /courses/sharh-qatr-al-nada-wa-ball-al-sada    301
+/courses/tajwid-mastery-level-1                         /courses/tajwid-mastery-level-one              301
+/courses/takhrij-al-hadith                              /courses/takhri-j-al-h-adi-th-q2zxxj           301
+/courses/takwin-al-isnad                                /courses/takwin-al-asanid                      301
+/courses/talweeh-summer-intensive-2026                  /courses                                       301
+/courses/the-science-of-jarh-wa-tadil                   /courses/al-jarh-wa-l-tadil                    301
+
+# Everything else is the app
 /*    /index.html   200
