@@ -16,8 +16,8 @@ export const ROADMAP = [
     k: 'arabic', name: 'Arabic Language', ar: 'اللغة العربية',
     blurb: 'Reading and understanding classical Arabic, from a first overview to graded readers.',
     levels: [
-      [{ code: 'Arabic 101', text: 'Introduction to Arabic', note: 'Teacher’s notes', course: 'arabic-crash-course' }],
-      [{ code: 'Arabic 201', text: 'Qaṣaṣ al-Nabiyyīn' }],
+      [{ code: 'Arabic 101', text: 'Introduction to Arabic', note: 'Teacher’s notes', course: 'arabic-101-5kqdyb', courses: ['arabic-crash-course', 'arabic-101-5kqdyb'] }],
+      [{ code: 'Arabic 201', text: 'Qaṣaṣ al-Nabiyyīn', course: 'qasas-al-nabiyyin-ibrahim-alayhi-al-salam-5lvny9' }],
       [{ code: 'Arabic 301', text: 'Min Adab al-Islām', course: 'min-adab-al-islam' }],
     ],
   },
@@ -25,7 +25,7 @@ export const ROADMAP = [
     k: 'nahw', name: 'Naḥw', ar: 'النحو', sub: 'Grammar',
     blurb: 'Sentence structure and grammatical case, from al-Ājurrūmiyyah’s tradition up to Ibn al-Ḥājib.',
     levels: [
-      [{ code: 'Naḥw 101', text: 'Al-Shadharah al-Dhahabiyyah' }],
+      [{ code: 'Naḥw 101', text: 'Al-Shadharah al-Dhahabiyyah', course: 'al-shadharah-al-dhahabiyyah-5lvflh' }],
       [{ code: 'Naḥw 201', text: 'Al-Tuḥfah al-Saniyyah', course: 'al-tuhfat-al-saniyyah' }],
       [{ code: 'Naḥw 301', text: 'Mutammimah al-Ājurrūmiyyah', course: 'mutammimah-al-ajurrumiyyah' }, { code: 'Iʿrāb 101', text: 'Al-Iʿrāb ʿan Qawāʿid al-Iʿrāb', course: 'al-irab-an-qawaid-al-irab' }],
       [{ code: 'Advanced Naḥw 1', text: 'Sharḥ Qaṭr al-Nadā wa-Ball al-Ṣadā', course: 'sharh-qatr-al-nada-wa-ball-al-sada' }],
@@ -36,7 +36,7 @@ export const ROADMAP = [
     k: 'sarf', name: 'Ṣarf', ar: 'الصرف', sub: 'Morphology',
     blurb: 'Word patterns and verb forms, from Binā’ al-Afʿāl to Ibn Mālik’s Lāmiyyah.',
     levels: [
-      [{ code: 'Ṣarf 101', text: 'Matn Binā’ al-Afʿāl' }],
+      [{ code: 'Ṣarf 101', dk: '', text: 'Ṣarf 101', note: 'Talweeh’s first course in morphology', course: 'sarf-101-5lvy2y' }, { code: 'Ṣarf 101', text: 'Matn Binā’ al-Afʿāl' }],
       [{ code: 'Ṣarf 201', text: 'Taṣrīf al-ʿIzzī' }],
       [{ code: 'Ṣarf 301', text: 'Sawāṭiʿ al-Jumān' }],
       [{ code: 'Advanced Ṣarf', text: 'Lāmiyyat al-Afʿāl' }],
@@ -146,7 +146,7 @@ export const ROADMAP = [
     k: 'hadith', name: 'Ḥadīth', ar: 'الحديث', sub: 'The collections',
     blurb: 'From the Forty Ḥadīth to the Dawrat al-Ḥadīth — reading the great collections.',
     levels: [
-      [{ code: 'Ḥadīth 101', text: 'Al-Arbaʿūn al-Nawawiyyah' }],
+      [{ code: 'Ḥadīth 101', text: 'Al-Arbaʿūn al-Nawawiyyah', course: 'al-arbaun-an-nawawiyyah-5wa71u' }],
       [{ code: 'Aḥādīth al-Aḥkām 101', text: 'Āthār al-Sunan' }, { code: 'Ḥadīth 201', dk: '', text: 'Al-Shamāʾil al-Muḥammadiyyah', course: 'al-shamail-al-muhammadiyyah' }],
       [{ code: 'Aḥādīth al-Aḥkām', text: 'Mishkāt al-Maṣābīḥ' }, { code: 'Ḥadīth 301', dk: '', text: 'Al-Adab al-Mufrad', course: 'al-adab-al-mufrad' }],
       [{ code: 'Advanced Ḥadīth', dk: '', text: 'Al-Muwaṭṭaʾayn', note: 'Introduction to al-Muwaṭṭaʾayn, then Muwaṭṭaʾ Muḥammad.', course: 'introduction-to-al-muwattayn', courses: ['introduction-to-al-muwattayn', 'muwatta-muhammad'] }],

@@ -13,7 +13,8 @@ import { ARB } from './arabicWaha'
 
 export const COURSE = new Map(PUBLIC_COURSES.map((c) => [c.slug, c]))
 const live = (x) => typeof x === 'string' && COURSE.has(x)
-const SOON = (soon) => ({ soon })
+// A course not on the site yet: SOON('Name') in seq or start shows it as coming soon.
+const SOON = (soon) => ({ soon }) // eslint-disable-line no-unused-vars
 
 export const GOALS = [
   { k: 'quran', b: 'Understand the Qurʾān in its own language', s: 'Read the Qurʾān in Arabic, not only in translation' },
@@ -44,17 +45,17 @@ export const MODULES = ARB.MODULES.map((m) => ({ n: m.n, name: m.name, d: m.dura
 
 const CHAPTERS = ['takwin-al-asanid', 'tadwin-al-sunnah', 'al-athbat-wal-faharis', 'al-jarh-wa-l-tadil', 'talweeh-od-24-ruwatalhadith', 'makanat-al-sunnah', 'takhri-j-al-h-adi-th-q2zxxj']
 const BAYQUNI = 'talweeh-od-33-manzumahalbayquni'
+const AR101 = 'arabic-101-5kqdyb', SARF101 = 'sarf-101-5lvy2y', SHADHARAH = 'al-shadharah-al-dhahabiyyah-5lvflh', QASAS = 'qasas-al-nabiyyin-ibrahim-alayhi-al-salam-5lvny9', NAWAWI = 'al-arbaun-an-nawawiyyah-5wa71u'
 const AR_FIRST = 'Talweeh teaches this science from intermediate level, so start with Arabic first.'
-const NAWAWI = 'Al-Arbaʿūn al-Nawawiyyah, the first ḥadīth collection, is coming soon. Until then, begin with the ḥadīth sciences, starting with Manẓūmah al-Bayqūnī.'
 const nothing = (what) => `Talweeh’s ${what}, so there’s nothing at your level yet.`
 
 export const PLAN = {
   nahw: {
     name: 'Arabic', roadmap: 'nahw',
-    seq: ['arabic-crash-course', SOON('Arabic 101'), SOON('al-Shadharah al-Dhahabiyyah · Qaṣaṣ al-Nabiyyīn: Ibrāhīm'), 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
-    start: ['arabic-crash-course', 'al-tuhfat-al-saniyyah', 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
-    side: { 2: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'], 3: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'] },
-    note: { 0: 'After the free Crash Course come Arabic 101 and al-Shadharah (taught in the Arabic Program for now), then al-Tuḥfah.' },
+    seq: ['arabic-crash-course', { group: [AR101, SARF101], name: 'Arabic 101 · Ṣarf 101' }, { group: [SHADHARAH, QASAS], name: 'al-Shadharah al-Dhahabiyyah · Qaṣaṣ al-Nabiyyīn: Ibrāhīm' }, 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
+    start: ['arabic-crash-course', SHADHARAH, 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
+    side: { 0: [AR101, SARF101], 1: [QASAS], 2: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'], 3: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'] },
+    note: { 0: 'After the free Crash Course come Arabic 101 and Ṣarf 101, then al-Shadharah and Qaṣaṣ al-Nabiyyīn, then al-Tuḥfah.' },
   },
   mustalah: {
     name: 'Ḥadīth sciences', roadmap: 'mustalah',
@@ -65,10 +66,10 @@ export const PLAN = {
   },
   hadith: {
     name: 'Ḥadīth', roadmap: 'hadith',
-    seq: [SOON('al-Arbaʿūn al-Nawawiyyah'), 'al-shamail-al-muhammadiyyah', 'al-adab-al-mufrad', { group: ['introduction-to-al-muwattayn', 'muwatta-muhammad'], name: 'Introduction to al-Muwaṭṭaʾayn · Muwaṭṭaʾ Muḥammad' }],
-    start: [SOON('al-Arbaʿūn al-Nawawiyyah'), SOON('al-Arbaʿūn al-Nawawiyyah'), 'al-shamail-al-muhammadiyyah', 'al-adab-al-mufrad', 'introduction-to-al-muwattayn'],
-    side: { 4: ['muwatta-muhammad'] }, fb: { 0: 'mustalah', 1: 'mustalah' },
-    note: { 0: NAWAWI, 1: NAWAWI, 4: 'The two Muwaṭṭaʾ courses go together: start with the introduction, then Muwaṭṭaʾ Muḥammad.' },
+    seq: [NAWAWI, 'al-shamail-al-muhammadiyyah', 'al-adab-al-mufrad', { group: ['introduction-to-al-muwattayn', 'muwatta-muhammad'], name: 'Introduction to al-Muwaṭṭaʾayn · Muwaṭṭaʾ Muḥammad' }],
+    start: [NAWAWI, NAWAWI, 'al-shamail-al-muhammadiyyah', 'al-adab-al-mufrad', 'introduction-to-al-muwattayn'],
+    side: { 4: ['muwatta-muhammad'] },
+    note: { 4: 'The two Muwaṭṭaʾ courses go together: start with the introduction, then Muwaṭṭaʾ Muḥammad.' },
   },
   tafsir: { name: 'Tafsīr', roadmap: 'tafsir', seq: ['tafsir-of-juz-amma'], start: [null, null, 'tafsir-of-juz-amma', 'tafsir-of-juz-amma', 'tafsir-of-juz-amma'], fb: { 0: 'nahw', 1: 'nahw' }, note: { 0: AR_FIRST, 1: AR_FIRST } },
   tajwid: {
@@ -101,7 +102,6 @@ export const PLAN = {
 // Arabic (and the Qurʾān) go to the Arabic Program, live or on demand: beginners take the whole programme from Module 1,
 // others join at the module for their level; the Arabic assessment (/arabic/assessment, one stage per module) confirms it.
 const MODULE_FOR = [1, 1, 3, 4, 5]
-const BEGINNER_AR = ['Al-Shadharah al-Dhahabiyyah', 'Qaṣaṣ al-Nabiyyīn: Ibrāhīm ʿalayhi al-salām']
 const isArabic = (a) => a.goal === 'arabic' || a.goal === 'quran' || (a.goal === 'one' && a.sub === 'nahw')
 const goalSci = (a) => (a.goal === 'one' ? a.sub : a.goal === 'unsure' ? null : 'nahw')
 
@@ -127,9 +127,9 @@ export function recommend(a) {
   const add = (slug, label) => { if (live(slug) && slug !== r.start && !r.alts.some((x) => x.slug === slug) && r.alts.length < 2) r.alts.push({ slug, label }) }
   const lv = LEVELS[u].b.toLowerCase()
   if (a.goal === 'unsure') {
-    const picks = [['arabic-crash-course', 'tajwid-mastery-level-one', 'introduction-to-hanafi-fiqh'], ['arabic-crash-course', BAYQUNI, 'nur-al-idah'], ['tafsir-of-juz-amma', 'al-shamail-al-muhammadiyyah', 'introduction-to-usul-al-hadith'], ['tafsir-of-juz-amma', 'al-adab-al-mufrad', 'nukhbat-al-fikr'], ['introduction-to-al-muwattayn', 'muwatta-muhammad', 'tadrib-al-rawi']][u].filter(live)
+    const picks = [['arabic-crash-course', 'tajwid-mastery-level-one', 'introduction-to-hanafi-fiqh'], [AR101, BAYQUNI, NAWAWI], ['tafsir-of-juz-amma', 'al-shamail-al-muhammadiyyah', 'introduction-to-usul-al-hadith'], ['tafsir-of-juz-amma', 'al-adab-al-mufrad', 'nukhbat-al-fikr'], ['introduction-to-al-muwattayn', 'muwatta-muhammad', 'tadrib-al-rawi']][u].filter(live)
     r.start = picks[0]; picks.slice(1).forEach((x) => add(x, COURSE.get(x).free ? 'Also free' : 'Also a good start'))
-    r.why = `You’re not sure yet, so start with a free course that suits a ${lv}. Every lesson is open on the site.`
+    r.why = `You’re not sure yet, so start with a course that suits a ${lv}, and branch out from there.`
     r.path = u <= 1 ? 'nahw' : u <= 3 ? 'tafsir' : 'hadith'
   } else {
     const k = goalSci(a), pl = place(k, u)
@@ -144,7 +144,7 @@ export function recommend(a) {
   }
   if (isArabic(a)) {
     r.module = MODULES[MODULE_FOR[u] - 1]
-    r.alts = u === 1 ? BEGINNER_AR.map((soon) => ({ soon, label: 'Or one course on its own · coming soon' })) : [{ slug: r.start, label: 'Or one course on its own' }, ...r.alts.filter((x) => x.slug !== r.start)].filter((x) => live(x.slug)).slice(0, 2)
+    r.alts = [{ slug: r.start, label: 'Or one course on its own' }, ...r.alts.filter((x) => x.slug !== r.start)].filter((x) => live(x.slug)).slice(0, 2)
     r.start = null; r.soon = null; r.why = ''
     return r
   }
