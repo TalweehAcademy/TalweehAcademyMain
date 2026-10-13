@@ -55,7 +55,7 @@ export const PLAN = {
     seq: ['arabic-crash-course', { group: [AR101, SARF101], name: 'Arabic 101 · Ṣarf 101' }, { group: [SHADHARAH, QASAS], name: 'al-Shadharah al-Dhahabiyyah · Qaṣaṣ al-Nabiyyīn: Ibrāhīm' }, 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
     start: ['arabic-crash-course', SHADHARAH, 'al-tuhfat-al-saniyyah', 'mutammimah-al-ajurrumiyyah', 'sharh-qatr-al-nada-wa-ball-al-sada'],
     side: { 0: [AR101, SARF101], 1: [QASAS], 2: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'], 3: ['al-irab-an-qawaid-al-irab', 'min-adab-al-islam'] },
-    note: { 0: 'After the free Crash Course come Arabic 101 and Ṣarf 101, then al-Shadharah and Qaṣaṣ al-Nabiyyīn, then al-Tuḥfah.' },
+    note: { 0: 'You haven’t studied the language yet, so begin with the free Crash Course.' },
   },
   mustalah: {
     name: 'Ḥadīth sciences', roadmap: 'mustalah',
@@ -128,8 +128,8 @@ export function recommend(a) {
   const lv = LEVELS[u].b.toLowerCase()
   if (a.goal === 'unsure') {
     const picks = [['arabic-crash-course', 'tajwid-mastery-level-one', 'introduction-to-hanafi-fiqh'], [AR101, BAYQUNI, NAWAWI], ['tafsir-of-juz-amma', 'al-shamail-al-muhammadiyyah', 'introduction-to-usul-al-hadith'], ['tafsir-of-juz-amma', 'al-adab-al-mufrad', 'nukhbat-al-fikr'], ['introduction-to-al-muwattayn', 'muwatta-muhammad', 'tadrib-al-rawi']][u].filter(live)
-    r.start = picks[0]; picks.slice(1).forEach((x) => add(x, COURSE.get(x).free ? 'Also free' : 'Also a good start'))
-    r.why = `You’re not sure yet, so start with a course that suits a ${lv}, and branch out from there.`
+    r.start = picks[0]; picks.slice(1).forEach((x) => add(x, 'Also a good start'))
+    r.why = `You’re not sure yet, so start with a course that suits your level (${lv}), and branch out from there.`
     r.path = u <= 1 ? 'nahw' : u <= 3 ? 'tafsir' : 'hadith'
   } else {
     const k = goalSci(a), pl = place(k, u)

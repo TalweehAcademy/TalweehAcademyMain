@@ -15,7 +15,6 @@ import '../start-guide-v1.css'
 
 const Arrow = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 const Back = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
-const Info = () => <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
 const steps = (a) => ['goal', ...(a.goal === 'one' ? ['sub'] : []), 'level', 'mode']
 const priceOf = (c) => (c.free ? 'Free · every lesson' : c.priceCents ? money(c.priceCents, c.currency) : 'Paid course')
 
@@ -35,47 +34,84 @@ function Options({ items, value, onPick }) {
   )
 }
 
-function CourseCard({ slug, kicker, why }) {
-  const c = COURSE.get(slug)
+// The result as a short plan (owner chose layout A, 2026-10-13): numbered steps, each with its own button, sized by
+// how much it matters: step 1 gold, step 2 outlined, the rest as rows with "View →". What they asked for comes first:
+// a live programme when they chose live, the Arabic Program for Arabic, otherwise the course to start with.
+function Card({ to, poster, title, meta, tag, tagKind, btn, gold }) {
   return (
-    <div className="sg-start">
-      <div className="sg-start-row">
-        {c.poster && <img src={c.poster} alt="" loading="lazy" />}
-        <div className="sg-start-t"><span className="cw-kicker">{kicker}</span><h3>{c.title}</h3><p>{c.instructor}{c.lessonCount ? ` · ${c.lessonCount} lessons` : ''}</p></div>
-        <span className={`sg-tag${c.free ? ' free' : ''}`}>{priceOf(c)}</span>
-      </div>
-      {why && <p className="sg-why"><Info />{why}</p>}
-      <div className="sg-acts"><Link className="wh-btn wh-btn-g" to={`/courses/${slug}`}>Go to the course <Arrow /></Link></div>
+    <div className="sg-pcard">
+      {poster && <img src={poster} alt="" loading="lazy" />}
+      <div className="sg-pcard-t"><h4>{title}</h4>{meta && <span className="sg-meta">{meta}</span>}{tag && <span className={`sg-tag${tagKind ? ` ${tagKind}` : ''}`}>{tag}</span>}</div>
+      {btn && <Link className={`wh-btn ${gold ? 'wh-btn-g' : 'wh-btn-glass'} sg-pbtn`} to={to}>{btn}{gold && <Arrow />}</Link>}
     </div>
   )
 }
+const courseCard = (slug, gold, btn) => {
+  const c = COURSE.get(slug)
+  return <Card to={`/courses/${slug}`} poster={c.poster} title={c.title} meta={`${c.instructor}${c.lessonCount ? ` · ${c.lessonCount} lessons` : ''}`} tag={priceOf(c)} tagKind={c.free ? 'free' : ''} btn={btn || (c.free ? 'Start free' : 'Go to the course')} gold={gold} />
+}
+const progCard = (p, gold, btn = 'See the programme') => <Card to={p.to} title={p.t} meta={p.s} tag="Live classes" tagKind="live" btn={btn} gold={gold} />
+function Rows({ items }) {
+  return (
+    <div className="sg-rows">{items.map((x) => x.to
+      ? <Link key={x.key} className="sg-row" to={x.to}><span><b>{x.title}</b><span>{x.sub}</span></span><span className="sg-go">View →</span></Link>
+      : <div key={x.key} className="sg-row"><span><b>{x.title}</b><span>{x.sub}</span></span></div>)}</div>
+  )
+}
+const courseRow = (slug, label) => { const c = COURSE.get(slug); return { key: slug, to: `/courses/${slug}`, title: c.title, sub: `${label ? `${label} · ` : ''}${priceOf(c)} · ${c.instructor}` } }
 
-function Path({ k, cur }) {
+// The course after `slug` in its science's order of study, if Talweeh teaches it.
+function nextAfter(k, slug) {
+  const seq = PLAN[k]?.seq || []
+  const i = seq.findIndex((x) => (x.group ? x.group.includes(slug) : x === slug))
+  for (const x of seq.slice(i + 1)) {
+    const s = x.group ? x.group.find((g) => COURSE.has(g)) : x
+    if (typeof s === 'string' && COURSE.has(s)) return s
+  }
+  return null
+}
+
+function Leads({ k, cur }) {
   const p = PLAN[k]
   if (!p || p.seq.length < 2) return null
-  return (
-    <div className="sg-path">
-      <div className="sg-path-h"><small>Where it leads · {p.name}</small><Link to={`/courses/roadmap?science=${p.roadmap}`}>See it on the Study Roadmap →</Link></div>
-      <ol>{p.seq.map((x, i) => {
-        const here = x.group ? x.group.includes(cur) : x === cur
-        const label = x.soon ? x.soon : x.group ? x.name : COURSE.get(x)?.title
-        if (!label) return null
-        return <li key={i} className={`${here ? 'here' : ''}${x.soon ? ' soon' : ''}`}>{label}{x.soon && <small> · coming soon</small>}</li>
-      })}</ol>
-    </div>
-  )
+  const names = p.seq.map((x) => (x.soon ? x.soon : x.group ? x.name : COURSE.get(x)?.title)).filter(Boolean)
+  const at = p.seq.findIndex((x) => (x.group ? x.group.includes(cur) : x === cur))
+  return <p className="sg-leads"><b>{p.name} after that:</b> {names.slice(Math.max(at, 0) + 1, Math.max(at, 0) + 4).join(' → ') || names.join(' → ')} · <Link to={`/courses/roadmap?science=${p.roadmap}`}>See it on the Roadmap</Link></p>
 }
 
 function Result({ a, onRestart }) {
   const r = recommend(a), M = r.module, whole = M?.n === 1
   const [copied, setCopied] = useState(false)
-  const prog = r.prog && (
-    <Link className="sg-alt sg-progm" to={r.prog.to}>
-      <small>{r.further ? 'Study it further with a teacher' : a.mode === 'live' ? 'Live with a teacher' : 'If you’d like a teacher'}</small>
-      <b>{r.prog.t}</b><span>{r.prog.s}</span>
-    </Link>
-  )
-  const liveFirst = a.mode === 'live' && r.prog && !r.further
+  const steps = []
+  const used = new Set()
+  const take = (slug) => { used.add(slug); return slug }
+  const rest = (label) => r.alts.filter((x) => x.slug && !used.has(x.slug)).map((x) => courseRow(x.slug, label === undefined ? x.label : label))
+
+  if (M) {
+    steps.push({ k: whole ? 'Take the full programme' : `Join at Module ${M.n}`, why: whole ? `You’re at the start of Arabic, so the full programme takes you from Module 1, step by step.${a.mode === 'self' ? ' Modules 1 and 2 are mostly live classes.' : ''}` : `At ${LEVELS[a.level].b.toLowerCase()} level you’d join at Module ${M.n}: ${M.texts.join(', ')}.`,
+      body: <Card to="/arabic" title={`Arabic Program${whole ? '' : ` · Module ${M.n}`}`} meta={whole ? 'Two years, five modules, from your first Arabic sentence to linguistic tafsīr' : `${M.name} · ${M.d}`} tag={whole ? 'Modules 1–2 mostly live' : M.f} tagKind="live" btn="See the Arabic Program" gold /> })
+    steps.push({ k: 'Check your level', body: <Card to="/arabic/assessment" title="Arabic assessment" meta="Free · about 10 minutes · tells you which module to start with" btn="Take the assessment" /> })
+    const rows = r.alts.filter((x) => x.slug).map((x) => courseRow(x.slug, ''))
+    if (rows.length) steps.push({ k: 'Or one course on its own', rows })
+  } else if (r.further) {
+    steps.push({ k: 'Study it further with a teacher', why: r.why, body: progCard(r.prog, true) })
+    const rows = rest('As a review')
+    if (rows.length) steps.push({ k: 'Or review on your own', rows })
+  } else {
+    const liveFirst = a.mode === 'live' && r.prog
+    if (liveFirst) steps.push({ k: 'Join the live classes', body: progCard(r.prog, true) })
+    if (r.soon) steps.push({ k: 'Coming soon', body: <Card title={r.soon} meta="Your starting point; it isn’t on the site yet" tag="Coming soon" /> })
+    if (r.start) {
+      take(r.start)
+      steps.push({ k: liveFirst ? 'Until classes begin, start on your own' : r.soon ? 'Until then, start with' : 'Start here', why: r.why, body: courseCard(r.start, !liveFirst) })
+      const next = nextAfter(r.path, r.start)
+      if (next && !liveFirst && !used.has(next)) { take(next); r.shown = next; steps.push({ k: 'Then', body: courseCard(next, false, 'View the course') }) }
+    } else if (r.why) steps.push({ k: 'Where to begin', why: r.why })
+    const rows = rest()
+    if (r.prog && !liveFirst) rows.push({ key: 'prog', to: r.prog.to, title: r.prog.t, sub: `If you’d like a teacher · ${r.prog.s}` })
+    if (rows.length) steps.push({ k: liveFirst ? 'Then, at the same stage' : 'Alongside', rows })
+  }
+
   const copy = () => {
     const done = () => { setCopied(true); setTimeout(() => setCopied(false), 1800) }
     navigator.clipboard?.writeText(`${window.location.origin}/start#${encode(a)}`).then(done, () => {})
@@ -83,34 +119,20 @@ function Result({ a, onRestart }) {
   return (
     <div className="sg-res">
       <p className="sg-sum">{GOALS.find((x) => x.k === a.goal).b}{a.sub ? ` · ${PLAN[a.sub].name}` : ''} · {LEVELS[a.level].b} · {MODES.find((x) => x.k === a.mode).b}</p>
-      {M && (
-        <div className="sg-start">
-          <div className="sg-start-row">
-            <div className="sg-start-t"><span className="cw-kicker">{whole ? 'Start here · the full programme' : `Start here · join at Module ${M.n}`}</span>
-              <h3>Arabic Program{whole ? '' : ` · Module ${M.n}`}</h3>
-              <p>{whole ? 'Two years, five modules, from your first Arabic sentence to linguistic tafsīr' : `${M.name} · ${M.d}`}</p></div>
-            <span className="sg-tag">{whole ? 'Modules 1–2 mostly live' : M.f}</span>
-          </div>
-          <p className="sg-why"><Info />{whole
-            ? `You’re at the start of Arabic, so the full programme takes you from Module 1, step by step.${a.mode === 'self' ? ' Modules 1 and 2 are mostly live classes.' : ''}`
-            : `At ${LEVELS[a.level].b.toLowerCase()} level you’d join at Module ${M.n}: ${M.texts.join(', ')}.`} The Arabic assessment checks your level in about 10 minutes.</p>
-          <div className="sg-acts"><Link className="wh-btn wh-btn-g" to="/arabic">See the Arabic Program <Arrow /></Link><Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the Arabic assessment</Link></div>
-        </div>
-      )}
-      {liveFirst && <>{prog}<span className="cw-kicker sg-gap">Meanwhile, at your own pace</span></>}
-      {r.soon && <div className="sg-alt sg-soon"><small>Coming soon · your starting point</small><b>{r.soon}</b><span>It isn’t on the site yet.{r.start ? ' Until then:' : ''}</span></div>}
-      {r.start ? <CourseCard slug={r.start} kicker={r.soon ? 'Start with' : 'Start here'} why={r.why} /> : r.why && <p className="sg-why sg-why-solo"><Info />{r.why}</p>}
-      {r.alts.length > 0 && (
-        <div className="sg-alts">{r.alts.map((x) => x.soon
-          ? <div key={x.soon} className="sg-alt sg-soon"><small>{x.label}</small><b>{x.soon}</b><span>Being added as its own course</span></div>
-          : <Link key={x.slug} className="sg-alt" to={`/courses/${x.slug}`}><small>{x.label}</small><b>{COURSE.get(x.slug).title}</b><span>{priceOf(COURSE.get(x.slug))} · {COURSE.get(x.slug).instructor}</span></Link>)}
-        </div>
-      )}
-      {M ? (
-        <div className="sg-path"><div className="sg-path-h"><small>The five modules</small><Link to="/arabic">About the programme →</Link></div>
-          <ol>{MODULES.map((m) => <li key={m.n} className={`${m.n === M.n ? 'here' : ''}${m.n < M.n ? ' done' : ''}`}>{m.n} · {m.name}</li>)}</ol></div>
-      ) : <Path k={r.path} cur={r.start} />}
-      {!liveFirst && !M && prog}
+      <ol className="sg-plan">
+        {steps.map((s, i) => (
+          <li key={i} className={`sg-st${s.rows ? ' later' : ''}`}>
+            <span className="sg-num" aria-hidden="true">{i + 1}</span>
+            <div className="sg-st-b">
+              <small className="sg-k">{s.k}</small>
+              {s.body}
+              {s.rows && <Rows items={s.rows} />}
+              {s.why && <p className="sg-st-why">{s.why}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      {M ? <p className="sg-leads"><b>The five modules:</b> {MODULES.map((m) => `${m.n} ${m.name}`).join(' → ')} · <Link to="/arabic">About the programme</Link></p> : <Leads k={r.path} cur={r.shown || r.start} />}
       <div className="sg-help"><span>Not quite right? Studied somewhere else, or want to talk it through?</span><Link className="wh-btn wh-btn-glass" to="/contact-us">Message us</Link></div>
       <div className="sg-foot"><button type="button" className="sg-link" onClick={copy}>{copied ? 'Link copied' : 'Copy a link to this result'}</button><button type="button" className="wh-btn wh-btn-glass" onClick={onRestart}>Start over</button></div>
     </div>
