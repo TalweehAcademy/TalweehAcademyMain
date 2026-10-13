@@ -745,3 +745,8 @@ html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;
   .sg-pop-head strong{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.sg-pop-dim,.sg-pop-panel{animation:none}}
+/* Under the hero buttons: the Arabic placement test, as a sentence. Body-colour text, a heading-colour link with a gold
+   underline, so it reads clearly on the light page too. */
+.wh-home .wh-hero .wh-assess-line{margin:16px auto 0;max-width:60ch;font-size:15px;color:var(--p-text)}
+.wh-home .wh-assess-line a{color:var(--p-head);font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:4px;transition:color .25s}
+.wh-home .wh-assess-line a:hover{color:var(--p-gold)}

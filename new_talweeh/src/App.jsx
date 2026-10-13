@@ -457,12 +457,12 @@ function LandingPage() {
               <p className="wh-lead" data-r>Study at your own pace, or live with qualified scholars. From your first Arabic lesson to specialist study.</p>
               <div className="wh-acts" data-r>
                 <Link className="wh-btn wh-btn-g" to="/courses/arabic-crash-course" data-magnet>Start the free Arabic Crash Course →</Link>
-                <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the free assessment</Link>
                 <StartLink className="wh-btn wh-btn-glass wh-btn-start">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m15.5 8.5-2 5-5 2 2-5z" /></svg>
                   Find your starting point
                 </StartLink>
               </div>
+              <p className="wh-assess-line" data-r>Already know some Arabic? <Link to="/arabic/assessment">Take the free Arabic assessment</Link> to see which level to begin at.</p>
               <div className="wh-ways" data-r>
                 {/* The title link covers the card; each programme in the line under it is its own link above that. */}
                 <div className="wh-way">
