@@ -19,28 +19,28 @@
     "home:sync": "node scripts/sync-home-feed.mjs"
   },
   "dependencies": {
-    "@fontsource/amiri": "^5.3.0",
-    "@fontsource/amiri-quran": "^5.3.0",
-    "@fontsource/lora": "^5.3.0",
-    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@fontsource/amiri": "5.3.0",
+    "@fontsource/amiri-quran": "5.3.0",
+    "@fontsource/lora": "5.3.0",
+    "@fontsource/plus-jakarta-sans": "5.3.0",
     "@stripe/react-stripe-js": "6.10.0",
     "@stripe/stripe-js": "9.16.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.3",
-    "react-youtube": "^10.1.0"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "7.18.4",
+    "react-youtube": "10.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.3",
-    "eslint": "^9.13.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.14",
-    "globals": "^15.11.0",
-    "sharp": "^0.35.4",
-    "vite": "^5.4.10"
+    "@eslint/js": "9.39.4",
+    "@types/react": "18.3.28",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "4.7.0",
+    "eslint": "9.39.4",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.26",
+    "globals": "15.15.0",
+    "sharp": "0.35.5",
+    "vite": "5.4.21"
   }
 }
