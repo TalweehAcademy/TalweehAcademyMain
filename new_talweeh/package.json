@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/sync-quran-study-publications.mjs && node scripts/sync-portal-catalog.mjs && node scripts/sync-home-feed.mjs && node scripts/verify-public-paid-video-safety.mjs && node scripts/generate-public-course-index.mjs && node scripts/generate-public-course-details.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/portal-origin-csp.mjs && node scripts/verify-static-frontend.mjs",
+    "build": "node scripts/sync-quran-study-publications.mjs && node scripts/sync-portal-catalog.mjs && node scripts/sync-home-feed.mjs && node scripts/verify-public-paid-video-safety.mjs && node scripts/generate-public-course-index.mjs && node scripts/generate-public-course-details.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/prerender-meta.mjs && node scripts/portal-origin-csp.mjs && node scripts/verify-static-frontend.mjs",
     "build:deploy": "npm run build",
     "start": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
@@ -35,6 +35,7 @@
     "@types/react": "18.3.28",
     "@types/react-dom": "18.3.7",
     "@vitejs/plugin-react": "4.7.0",
+    "esbuild": "0.21.5",
     "eslint": "9.39.4",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
