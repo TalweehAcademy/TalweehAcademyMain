@@ -235,8 +235,9 @@ export function mergeCourseWithLive(staticCourse, liveCourse) {
       }
       return Number.isFinite(liveCount) ? liveCount : 0
     })(),
-    durationSeconds: Number(fallback.durationSeconds || 0),
-    timedLessonCount: Number(fallback.timedLessonCount || 0),
+    // Known lesson time: live from the portal when it sends it (no rebuild needed), else the copy from the last build.
+    durationSeconds: Number.isFinite(Number(liveCourse.duration_seconds)) && liveCourse.duration_seconds != null ? Number(liveCourse.duration_seconds) : Number(fallback.durationSeconds || 0),
+    timedLessonCount: Number.isFinite(Number(liveCourse.timed_lesson_count)) && liveCourse.timed_lesson_count != null ? Number(liveCourse.timed_lesson_count) : Number(fallback.timedLessonCount || 0),
     checkoutAvailable: Boolean(liveCourse.checkout_available),
     purchaseOptions,
     liveCommerce: true,
