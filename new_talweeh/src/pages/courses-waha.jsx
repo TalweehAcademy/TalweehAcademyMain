@@ -129,7 +129,12 @@ export default function CoursesWahaPage() {
           <Link className="cw-path wh-glass cw-path-road" to="/courses/roadmap"><small>Guided</small><strong>Study Roadmap</strong><span>Which texts to study, level by level</span></Link>
           <Link className="cw-path wh-glass" to="/alimiyyah"><small>Scheduled</small><strong>Live · Alimiyyah</strong><span>Guided classes with instructors</span></Link>
           <Link className="cw-path wh-glass" to="/hadith-specialization"><small>Focused</small><strong>Specialization</strong><span>Ḥadīth Specialization pathway</span></Link>
-          <StartLink className="cw-path wh-glass cw-path-start"><small>Not sure?</small><strong>Where to begin</strong><span>Four questions, one starting point</span></StartLink>
+        </div>
+        <div className="cw-start-cta" data-r>
+          <StartLink className="wh-btn wh-btn-g">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m15.5 8.5-2 5-5 2 2-5z" /></svg>
+            <span className="cw-start-q">Not sure where to begin? </span>Find your starting point
+          </StartLink>
         </div>
 
         <section className="cw-lib" ref={libRef} style={{ scrollMarginTop: 0 }}>
