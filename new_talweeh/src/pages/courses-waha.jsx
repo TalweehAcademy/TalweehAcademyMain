@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
+import { StartLink } from '../components/StartGuideHost'
 import { formatCommercePrice, primaryPurchaseOption } from '../data/liveCommerceCatalog'
 import { canEnrol, plainText, purchaseOptions, useCourseCatalog, useStudyList } from '../courses/courseKit'
 import { addToStudyList, openStudyList } from '../courses/StudyList'
@@ -128,7 +129,7 @@ export default function CoursesWahaPage() {
           <Link className="cw-path wh-glass cw-path-road" to="/courses/roadmap"><small>Guided</small><strong>Study Roadmap</strong><span>Which texts to study, level by level</span></Link>
           <Link className="cw-path wh-glass" to="/alimiyyah"><small>Scheduled</small><strong>Live · Alimiyyah</strong><span>Guided classes with instructors</span></Link>
           <Link className="cw-path wh-glass" to="/hadith-specialization"><small>Focused</small><strong>Specialization</strong><span>Ḥadīth Specialization pathway</span></Link>
-          <Link className="cw-path wh-glass cw-path-start" to="/start"><small>Not sure?</small><strong>Where to begin</strong><span>Four questions, one starting point</span></Link>
+          <StartLink className="cw-path wh-glass cw-path-start"><small>Not sure?</small><strong>Where to begin</strong><span>Four questions, one starting point</span></StartLink>
         </div>
 
         <section className="cw-lib" ref={libRef} style={{ scrollMarginTop: 0 }}>

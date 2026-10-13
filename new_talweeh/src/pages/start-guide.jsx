@@ -78,7 +78,7 @@ function Result({ a, onRestart }) {
   const liveFirst = a.mode === 'live' && r.prog && !r.further
   const copy = () => {
     const done = () => { setCopied(true); setTimeout(() => setCopied(false), 1800) }
-    navigator.clipboard?.writeText(window.location.href).then(done, () => {})
+    navigator.clipboard?.writeText(`${window.location.origin}/start#${encode(a)}`).then(done, () => {})
   }
   return (
     <div className="sg-res">
@@ -117,9 +117,10 @@ function Result({ a, onRestart }) {
   )
 }
 
-export default function StartGuidePage() {
-  useDocumentMeta({ title: 'Find your starting point', description: 'Not sure where to begin? Four short questions, then the Talweeh course or programme to start with, and where it leads.' })
-  const first = typeof window !== 'undefined' ? decode(window.location.hash) : null
+// The guide itself: on the /start page (popup = false) the result's answers ride in the hash; in the popup
+// (components/StartGuideHost.jsx) the address is left alone and the panel scrolls instead of the page.
+export function StartGuide({ popup = false }) {
+  const first = !popup && typeof window !== 'undefined' ? decode(window.location.hash) : null
   const [a, setA] = useState(first || {})
   const [step, setStep] = useState(first ? steps(first).length : 0)
   const headRef = useRef(null)
@@ -128,23 +129,27 @@ export default function StartGuidePage() {
   useEffect(() => () => clearTimeout(timer.current), [])
   // A result link opened while already on the page (only the hash changes) shows that result.
   useEffect(() => {
+    if (popup) return undefined
     const on = () => { const x = decode(window.location.hash); if (x) { setA(x); setStep(steps(x).length) } }
     window.addEventListener('hashchange', on)
     return () => window.removeEventListener('hashchange', on)
-  }, [])
+  }, [popup])
   // The hash holds the answers once the result shows, and clears while answering.
   useEffect(() => {
+    if (popup) return
     const url = window.location.pathname + window.location.search + (done ? `#${encode(a)}` : '')
     window.history.replaceState(window.history.state, '', url)
-  }, [done, a])
+  }, [done, a, popup])
   const cardRef = useRef(null)
   // Each new question (and the result) starts at the top of the card, below the sticky header.
   useEffect(() => {
     if (step === 0) return
     headRef.current?.focus({ preventScroll: true })
     const el = cardRef.current
-    if (el && el.getBoundingClientRect().top < 90) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [step])
+    if (!el) return
+    if (popup) { const box = el.closest('.sg-pop-panel'); if (box) box.scrollTo({ top: 0, behavior: 'smooth' }) }
+    else if (el.getBoundingClientRect().top < 90) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [step, popup])
 
   const pick = (key, v) => {
     const next = { ...a, [key]: v }
@@ -157,6 +162,33 @@ export default function StartGuidePage() {
   const q = qs[step]
 
   return (
+    <section className={popup ? 'sg-card sg-card-pop' : 'sg-card wh-glass'} aria-live="polite" ref={cardRef}>
+      <div className="sg-top">
+        <button type="button" className="sg-back" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0} aria-label="Back"><Back /></button>
+        <div className="sg-prog" aria-hidden="true">{qs.map((_, i) => <i key={i} className={i < step + (done ? 0 : 1) ? 'on' : ''} />)}</div>
+        <span className="sg-count">{done ? 'Your result' : `${step + 1} of ${total}`}</span>
+      </div>
+
+      {done ? <Result a={a} onRestart={restart} /> : (
+        <div className="sg-q" key={q}>
+          {q === 'goal' && <><h2 ref={headRef} tabIndex={-1}>What would you like to study?</h2><Options items={GOALS} value={a.goal} onPick={(v) => pick('goal', v)} /></>}
+          {q === 'sub' && <><h2 ref={headRef} tabIndex={-1}>Which science?</h2><p className="sg-hint">Sciences with Talweeh courses today.</p>
+            <div className="sg-chips">{SUBJECTS.map(([k, n]) => <button key={k} type="button" className={`sg-chip${a.sub === k ? ' on' : ''}`} aria-pressed={a.sub === k} onClick={() => pick('sub', k)}>{n}<small>{countOf(k)}</small></button>)}</div></>}
+          {q === 'level' && <><h2 ref={headRef} tabIndex={-1}>Where are you now?</h2><p className="sg-hint">Pick the one closest to what you’ve already finished.</p><Options items={LEVELS} value={a.level} onPick={(v) => pick('level', v)} /></>}
+          {q === 'mode' && <><h2 ref={headRef} tabIndex={-1}>How would you like to learn?</h2><Options items={MODES} value={a.mode} onPick={(v) => pick('mode', v)} /></>}
+          <div className="sg-foot">
+            <small>{q === 'level' && (a.goal === 'arabic' || a.goal === 'quran') ? <>Unsure? The <Link to="/arabic/assessment">Arabic assessment</Link> checks it in about 10 minutes.</> : 'Nothing is saved or sent.'}</small>
+            <button type="button" className="wh-btn wh-btn-g" disabled={a[q] === undefined} onClick={() => setStep((s) => s + 1)}>{step === total - 1 ? 'See my starting point' : 'Next'} <Arrow /></button>
+          </div>
+        </div>
+      )}
+    </section>
+  )
+}
+
+export default function StartGuidePage() {
+  useDocumentMeta({ title: 'Find your starting point', description: 'Not sure where to begin? Four short questions, then the Talweeh course or programme to start with, and where it leads.' })
+  return (
     <WahaPage className="cw sg-page">
       <div className="wh-wrap">
         <p className="cw-crumbs"><Link to="/courses">Courses</Link> / Find your starting point</p>
@@ -165,28 +197,7 @@ export default function StartGuidePage() {
           <h1>Find your starting point</h1>
           <p>Four short questions, then the course or programme to start with and where it leads. Nothing is saved or sent.</p>
         </section>
-
-        <section className="sg-card wh-glass" aria-live="polite" ref={cardRef}>
-          <div className="sg-top">
-            <button type="button" className="sg-back" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0} aria-label="Back"><Back /></button>
-            <div className="sg-prog" aria-hidden="true">{qs.map((_, i) => <i key={i} className={i < step + (done ? 0 : 1) ? 'on' : ''} />)}</div>
-            <span className="sg-count">{done ? 'Your result' : `${step + 1} of ${total}`}</span>
-          </div>
-
-          {done ? <Result a={a} onRestart={restart} /> : (
-            <div className="sg-q" key={q}>
-              {q === 'goal' && <><h2 ref={headRef} tabIndex={-1}>What would you like to study?</h2><Options items={GOALS} value={a.goal} onPick={(v) => pick('goal', v)} /></>}
-              {q === 'sub' && <><h2 ref={headRef} tabIndex={-1}>Which science?</h2><p className="sg-hint">Sciences with Talweeh courses today.</p>
-                <div className="sg-chips">{SUBJECTS.map(([k, n]) => <button key={k} type="button" className={`sg-chip${a.sub === k ? ' on' : ''}`} aria-pressed={a.sub === k} onClick={() => pick('sub', k)}>{n}<small>{countOf(k)}</small></button>)}</div></>}
-              {q === 'level' && <><h2 ref={headRef} tabIndex={-1}>Where are you now?</h2><p className="sg-hint">Pick the one closest to what you’ve already finished.</p><Options items={LEVELS} value={a.level} onPick={(v) => pick('level', v)} /></>}
-              {q === 'mode' && <><h2 ref={headRef} tabIndex={-1}>How would you like to learn?</h2><Options items={MODES} value={a.mode} onPick={(v) => pick('mode', v)} /></>}
-              <div className="sg-foot">
-                <small>{q === 'level' && (a.goal === 'arabic' || a.goal === 'quran') ? <>Unsure? The <Link to="/arabic/assessment">Arabic assessment</Link> checks it in about 10 minutes.</> : 'Nothing is saved or sent.'}</small>
-                <button type="button" className="wh-btn wh-btn-g" disabled={a[q] === undefined} onClick={() => setStep((s) => s + 1)}>{step === total - 1 ? 'See my starting point' : 'Next'} <Arrow /></button>
-              </div>
-            </div>
-          )}
-        </section>
+        <StartGuide />
       </div>
     </WahaPage>
   )

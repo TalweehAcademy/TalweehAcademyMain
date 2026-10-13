@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { NavigationDropdown, navLinks, footerLinks } from '../pages/_shared'
 import { useContent } from '../hooks/useContent'
 import { StudyListButton, StudyListHost } from '../courses/StudyList'
+import { StartGuideHost } from './StartGuideHost'
 import SocialGlyph from './SocialGlyph'
 import { useScrollLock } from '../hooks/useScrollLock'
 import { LEGACY_PORTAL } from '../constants/links'
@@ -183,6 +184,7 @@ export function WahaPage({ children, className = '', rootRef, overlays = null })
       <WahaFooter social={g.footer.social} copyright={g.footer.copyright} />
       {overlays}
       <StudyListHost />
+      <StartGuideHost />
     </div>
   )
 }

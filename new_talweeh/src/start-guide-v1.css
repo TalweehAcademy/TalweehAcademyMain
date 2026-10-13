@@ -82,3 +82,6 @@ a.sg-alt:hover{border-color:rgba(215,179,115,.55);transform:translateY(-2px)}
 
 @media(max-width:640px){.sg-card{padding:20px 16px;border-radius:22px;margin-top:20px}.sg-alts{grid-template-columns:1fr}.sg-start-row img{width:60px;height:78px}}
 @media(prefers-reduced-motion:reduce){.sg-q,.sg-res{animation:none}}
+/* Inside the popup the panel is the glass; the card loses its own frame. */
+.sg-card.sg-card-pop{margin:0;max-width:none;padding:6px 26px 26px;border-radius:0;background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+@media(max-width:640px){.sg-card.sg-card-pop{padding:4px 16px 20px}}

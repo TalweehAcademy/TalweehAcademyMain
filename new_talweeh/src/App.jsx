@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom'
 import { extractVideoId } from './utils/youtube'
 import WahaVideoPlayer from './courses/WahaVideoPlayer'
 import { StudyListHost } from './courses/StudyList'
+import { StartGuideHost, StartLink } from './components/StartGuideHost'
 import { PUBLIC_COURSES } from './data/publicCourseIndex'
 import { formatCommercePrice } from './data/liveCommerceCatalog'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
@@ -458,7 +459,7 @@ function LandingPage() {
                 <Link className="wh-btn wh-btn-g" to="/courses/arabic-crash-course" data-magnet>Start the free Arabic Crash Course →</Link>
                 <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the free assessment</Link>
               </div>
-              <p className="wh-start-line" data-r>Not sure where to begin? <Link to="/start">Find your starting point</Link> in a minute.</p>
+              <p className="wh-start-line" data-r>Not sure where to begin? <StartLink>Find your starting point</StartLink> in a minute.</p>
               <div className="wh-ways" data-r>
                 {/* The title link covers the card; each programme in the line under it is its own link above that. */}
                 <div className="wh-way">
@@ -546,6 +547,7 @@ function LandingPage() {
 
       <WahaFooter social={g.footer.social} copyright={g.footer.copyright} />
       <StudyListHost />
+      <StartGuideHost />
     </div>
   )
 }
