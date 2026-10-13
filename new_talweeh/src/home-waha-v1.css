@@ -717,9 +717,8 @@ html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;
   .wh-vs-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--c-line)}
 }
 @media(prefers-reduced-motion:reduce){.wh-vs-panel,.wh-vs-dim{transition:none}}
-/* Under the hero buttons: the way into /start (Find your starting point). */
-.wh-home .wh-start-line{margin:14px 0 0;font-size:14px;color:var(--p-mut)}
-.wh-home .wh-start-line a{color:var(--p-gold);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+/* The third hero button opens Find your starting point; its compass in gold. */
+.wh-btn-start svg{flex:none;color:var(--gold)}
 /* "Find your starting point" popup (components/StartGuideHost.jsx): a centred panel; on a phone, a sheet from the bottom.
    The guide's own styles (sg-) arrive with the guide, start-guide-v1.css. */
 .sg-pop{position:fixed;inset:0;z-index:2147482000;display:grid;place-items:center;padding:24px}
