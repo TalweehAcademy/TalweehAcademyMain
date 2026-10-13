@@ -270,6 +270,9 @@ for (const source of payload.courses) {
         overview: cleanText(lesson?.overview || (typeof prior === 'string' ? '' : prior?.overview) || ''),
         topic: cleanText(topicsById.get(String(lesson?.topic_id))?.title || lesson?.topic || (typeof prior === 'string' ? '' : prior?.topic) || ''),
       }
+      // The lesson's length when the portal knows it (feed duration_seconds); a feed without lengths keeps the old one.
+      const seconds = Math.round(Number(lesson?.duration_seconds ?? (typeof prior === 'string' ? 0 : prior?.durationSeconds) ?? 0))
+      if (seconds > 0) row.durationSeconds = seconds
 
       // SECURITY BOUNDARY: only free courses may carry a public lesson URL.
       if (free) {
@@ -310,6 +313,9 @@ for (const source of payload.courses) {
     learningOutcomes: cleanText(source.learning_outcomes || existing.learningOutcomes || ''),
     lessons,
     lessonCount: lessons.length,
+    // Known lesson time, in seconds, and how many lessons it covers (the rest have no known length yet).
+    durationSeconds: lessons.reduce((sum, lesson) => sum + (lesson.durationSeconds || 0), 0),
+    timedLessonCount: lessons.filter((lesson) => lesson.durationSeconds).length,
     // Approved course reviews (portal Admin → On-Demand → Reviews). A feed from before reviews existed has no
     // reviews key: the committed ones are kept.
     reviews: Array.isArray(source.reviews) ? cleanReviews(source.reviews) : (Array.isArray(existing.reviews) ? existing.reviews : []),

@@ -108,6 +108,9 @@ export default function CoursesWahaPage() {
   const title = access === 'free' ? 'Free Courses' : catLabel || (access === 'paid' ? 'Paid Courses' : 'All Courses')
   const totalLessons = courses.reduce((s, c) => s + Number(c.lessonCount || 0), 0)
   const subjects = categories.filter((k) => courses.some((c) => c.category === k.slug)).length
+  // Hours of recorded lessons: only lessons whose length the portal knows, rounded down, so the figure never overstates.
+  const knownHours = courses.reduce((s, c) => s + Number(c.durationSeconds || 0), 0) / 3600
+  const hours = knownHours >= 200 ? `${Math.floor(knownHours / 50) * 50}+` : knownHours >= 20 ? `${Math.floor(knownHours / 10) * 10}+` : ''
   const subjectList = categories.filter((k) => courses.some((c) => c.category === k.slug)).sort((a, b) => subjectOrder(a.slug).localeCompare(subjectOrder(b.slug)))
   const Opt = ({ on, count, label, onClick }) => <button type="button" className={on ? 'on' : ''} aria-pressed={on} onClick={onClick} disabled={!count && !on}>{label}<b>{count}</b></button>
 
@@ -120,7 +123,9 @@ export default function CoursesWahaPage() {
           <div className="ar" data-r>حَيَاةُ الْعِلْمِ مُذَاكَرَتُهُ</div>
           <h1 data-r>Study the Islamic sciences at your own pace.</h1>
           <p className="lead" data-r>Structured, self-paced courses taught by Talweeh instructors — free courses open right here, paid courses continue in the Student Portal.</p>
-          <div className="cw-stats" data-r><span><b>{courses.length}</b> courses</span><span><b>{courses.filter((c) => c.free).length}</b> free</span><span><b>{totalLessons}</b> lessons</span><span><b>{subjects}</b> subjects</span></div>
+          {hours
+            ? <div className="cw-stats" data-r><span><b>{hours}</b> hours of recorded lessons</span></div>
+            : <div className="cw-stats" data-r><span><b>{courses.length}</b> courses</span><span><b>{courses.filter((c) => c.free).length}</b> free</span><span><b>{totalLessons}</b> lessons</span><span><b>{subjects}</b> subjects</span></div>}
         </section>
 
         <div className="cw-paths" data-stagger>

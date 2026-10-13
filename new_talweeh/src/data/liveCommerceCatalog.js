@@ -235,6 +235,8 @@ export function mergeCourseWithLive(staticCourse, liveCourse) {
       }
       return Number.isFinite(liveCount) ? liveCount : 0
     })(),
+    durationSeconds: Number(fallback.durationSeconds || 0),
+    timedLessonCount: Number(fallback.timedLessonCount || 0),
     checkoutAvailable: Boolean(liveCourse.checkout_available),
     purchaseOptions,
     liveCommerce: true,

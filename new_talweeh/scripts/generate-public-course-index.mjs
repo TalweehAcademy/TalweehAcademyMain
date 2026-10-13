@@ -22,6 +22,8 @@ const summaryFields = [
   'poster',
   'description',
   'primaryText',
+  'durationSeconds',
+  'timedLessonCount',
 ]
 
 const summaries = PUBLIC_COURSES.map((course) => {
