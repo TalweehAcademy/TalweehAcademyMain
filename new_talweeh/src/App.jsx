@@ -25,6 +25,7 @@ const ArticleDetailPage = lazy(() => import('./pages/article-waha'))
 const AboutWahaPage = lazy(() => import('./pages/about-waha'))
 const CourseLandingPage = lazy(() => import('./pages/course-waha'))
 const RoadmapPage = lazy(() => import('./pages/roadmap-waha'))
+const StartGuidePage = lazy(() => import('./pages/start-guide'))
 const CommerceCartPage = lazy(() => import('./pages/cart-waha'))
 const CommerceCheckoutPage = lazy(() => import('./pages/checkout-waha'))
 const QuranReaderPage = lazy(() => import('./pages/quran-reader'))
@@ -457,6 +458,7 @@ function LandingPage() {
                 <Link className="wh-btn wh-btn-g" to="/courses/arabic-crash-course" data-magnet>Start the free Arabic Crash Course →</Link>
                 <Link className="wh-btn wh-btn-glass" to="/arabic/assessment">Take the free assessment</Link>
               </div>
+              <p className="wh-start-line" data-r>Not sure where to begin? <Link to="/start">Find your starting point</Link> in a minute.</p>
               <div className="wh-ways" data-r>
                 {/* The title link covers the card; each programme in the line under it is its own link above that. */}
                 <div className="wh-way">
@@ -624,6 +626,7 @@ function AppInner() {
         <Route path="/instructors/:slug" element={<AboutWahaPage tab="instructors" />} />
         <Route path="/contact-us" element={<AboutWahaPage tab="contact" />} />
         <Route path="/courses/roadmap" element={<RoadmapPage />} />
+        <Route path="/start" element={<StartGuidePage />} />
         <Route path="/courses/:slug" element={<CourseLandingPage />} />
         <Route path="/cart" element={<CommerceCartPage />} />
         <Route path="/checkout" element={<CommerceCheckoutPage />} />

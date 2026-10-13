@@ -8,6 +8,7 @@ const staticPaths = [
   '/',
   '/courses',
   '/courses/roadmap',
+  '/start',
   '/media',
   '/articles',
   '/about-us',

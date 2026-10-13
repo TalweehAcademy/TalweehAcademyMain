@@ -717,3 +717,6 @@ html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;
   .wh-vs-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--c-line)}
 }
 @media(prefers-reduced-motion:reduce){.wh-vs-panel,.wh-vs-dim{transition:none}}
+/* Under the hero buttons: the way into /start (Find your starting point). */
+.wh-home .wh-start-line{margin:14px 0 0;font-size:14px;color:var(--p-mut)}
+.wh-home .wh-start-line a{color:var(--p-gold);font-weight:700;text-decoration:underline;text-underline-offset:3px}

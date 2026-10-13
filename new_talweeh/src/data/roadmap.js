@@ -5,6 +5,9 @@
 // `course` is the slug of the Talweeh course that teaches the text, where one exists; the roadmap shows
 // those as available. A step without a named text is taught from the teacher's notes or is still to be set.
 // `also` lists other Talweeh courses in the same science that sit alongside the core path.
+// Talweeh courses sit at the level the academy teaches them (owner, 2026-10-12), the same placement as the
+// "Find your starting point" guide (data/startGuide.js); some were moved or added for that. `dk` names the
+// roadmapDetails entry when it differs from `code` ('' = none, for a course added beside the document's texts).
 
 export const LEVEL_NAMES = ['Foundations', 'Intermediate', 'Upper-intermediate', 'Advanced', 'Advanced II']
 
@@ -64,27 +67,26 @@ export const ROADMAP = [
     blurb: 'Classical poems of counsel, read for their language and their wisdom.',
     levels: [
       [{ code: 'Adab 101', text: 'Tāʾiyyat al-Ilbīrī', course: 'taiyyah-of-al-ilbiri' }],
-      [{ code: 'Adab 201', text: 'Lāmiyyat Ibn al-Wardī' }],
+      [{ code: 'Adab 201', text: 'Lāmiyyat Ibn al-Wardī' }, { code: 'Adab 201', dk: '', text: 'Lāmiyyat Abī Ṭālib', course: 'lamiyyat-abi-talib' }],
     ],
-    also: ['lamiyyat-abi-talib'],
   },
   {
     k: 'fiqh', name: 'Ḥanafī Fiqh', ar: 'الفقه الحنفي', sub: 'Jurisprudence',
     blurb: 'Practical rulings in the Ḥanafī school, from Nūr al-Īḍāḥ to al-Hidāyah.',
     levels: [
-      [{ code: 'Ḥanafī Fiqh 101', text: 'Nūr al-Īḍāḥ', course: 'nur-al-idah' }, { code: 'Qawāʿid Fiqhiyyah 101', text: 'Legal maxims', note: 'Teacher’s notes' }],
+      [{ code: 'Ḥanafī Fiqh 100', dk: '', text: 'Introduction to Ḥanafī Fiqh', course: 'introduction-to-hanafi-fiqh' }, { code: 'Ḥanafī Fiqh 101', text: 'Nūr al-Īḍāḥ', course: 'nur-al-idah' }, { code: 'Qawāʿid Fiqhiyyah 101', text: 'Legal maxims', note: 'Teacher’s notes' }],
       [{ code: 'Ḥanafī Fiqh 201', text: 'Mukhtaṣar al-Qudūrī', course: 'mukhtasar-al-quduri-qism-al-ibadat', courses: ['mukhtasar-al-quduri-qism-al-ibadat', 'mukhtasar-al-quduri-al-uqubat'] }, { code: 'Qawāʿid Fiqhiyyah 201', text: 'Sharḥ al-Qawāʿid al-Fiqhiyyah (al-Zarqāʾ, on the Majallah)' }],
       [{ code: 'Ḥanafī Fiqh 301', text: 'Fatḥ Bāb al-ʿInāyah / Tuḥfat al-Fuqahāʾ' }],
       [{ code: 'Advanced Ḥanafī Fiqh 1', text: 'Al-Hidāyah fī Sharḥ Bidāyat al-Mubtadī (Part 1)' }],
       [{ code: 'Advanced Ḥanafī Fiqh 2', text: 'Al-Hidāyah fī Sharḥ Bidāyat al-Mubtadī (Part 2)' }],
     ],
-    also: ['introduction-to-hanafi-fiqh'],
   },
   {
     k: 'usul', name: 'Uṣūl al-Fiqh', ar: 'أصول الفقه', sub: 'Legal theory',
     blurb: 'How rulings are derived — along the jurists’ (fuqahāʾ) and the theologians’ (mutakallimūn) paths.',
     levels: [
       [
+        { code: 'Uṣūl al-Fiqh 100', dk: '', text: 'Introduction to Uṣūl al-Fiqh', course: 'introduction-to-usul-al-fiqh' },
         { code: 'Uṣūl al-Fiqh 101', text: 'Mabādiʾ al-Uṣūl' },
         { code: 'Ḥanafī Uṣūl al-Fiqh 101', text: 'Ḥanafī Uṣūl al-Fiqh 101 (Mabādiʾ al-Uṣūl Refined)', course: 'hanafi-usul-al-fiqh-101', note: 'A structured first study of Ḥanafī legal theory from Shaykh Omer Khurshid’s refined text, bridging the gaps of the standard Mabādiʾ al-Uṣūl.' },
       ],
@@ -93,19 +95,17 @@ export const ROADMAP = [
       [{ code: 'Advanced Uṣūl al-Fuqahāʾ', text: 'Al-Tawḍīḥ fī Ḥall Ghawāmiḍ al-Tanqīḥ', path: 'Fuqahāʾ' }, { code: 'Advanced Uṣūl al-Mutakallimīn', text: 'Jamʿ al-Jawāmiʿ', path: 'Mutakallimīn' }],
       [{ code: 'Advanced Comparative Uṣūl', text: 'Musallam al-Thubūt', course: 'musallam-al-thubut' }],
     ],
-    also: ['introduction-to-usul-al-fiqh'],
   },
   {
     k: 'aqidah', name: 'ʿAqīdah', ar: 'العقيدة', sub: 'Theology',
     blurb: 'The creed of Ahl al-Sunnah and how it is understood and defended.',
     levels: [
-      [{ code: 'ʿAqīdah 101', text: 'Tahdhīb al-Sanūsiyyah' }],
+      [{ code: 'ʿAqīdah 100', dk: '', text: 'Introduction to Uṣūl al-Dīn', course: 'introduction-to-usul-al-din' }, { code: 'ʿAqīdah 101', text: 'Tahdhīb al-Sanūsiyyah' }],
       [{ code: 'ʿAqīdah 201', text: 'ʿUmdat al-ʿAqāʾid' }],
       [{ code: 'ʿAqīdah 301', text: 'Al-Masāʾil al-Khamsūn fī Uṣūl al-Dīn' }],
       [{ code: 'Advanced ʿAqīdah 1', text: 'Al-Iqtiṣād fī al-Iʿtiqād' }],
       [{ code: 'Advanced ʿAqīdah 2', text: 'Sharḥ al-ʿAqāʾid al-Nasafiyyah' }],
     ],
-    also: ['introduction-to-usul-al-din'],
   },
   {
     k: 'tajwid', name: 'Tajwīd & Qirāʾāt', ar: 'التجويد والقراءات', sub: 'Recitation',
@@ -122,8 +122,8 @@ export const ROADMAP = [
     k: 'tafsir', name: 'Tafsīr & ʿUlūm al-Qurʾān', ar: 'التفسير وعلوم القرآن', sub: 'Exegesis',
     blurb: 'The meanings of the Qurʾān and the sciences that serve it.',
     levels: [
-      [{ code: 'Tafsīr 101', text: 'Juzʾ ʿAmma', course: 'tafsir-of-juz-amma' }],
-      [{ code: 'ʿUlūm al-Qurʾān', text: 'Text to be announced' }],
+      [],
+      [{ code: 'Tafsīr 201', dk: 'Tafsīr 101', text: 'Juzʾ ʿAmma', course: 'tafsir-of-juz-amma' }, { code: 'ʿUlūm al-Qurʾān', text: 'Text to be announced' }],
       [{ code: 'Tafsīr 301', text: 'Tafsīr al-Jalālayn' }],
       [{ code: 'Advanced Tafsīr', text: 'Tafsīr al-Bayḍāwī' }],
     ],
@@ -132,21 +132,24 @@ export const ROADMAP = [
     k: 'mustalah', name: 'Muṣṭalaḥ al-Ḥadīth', ar: 'مصطلح الحديث', sub: 'Ḥadīth sciences',
     blurb: 'How the ḥadīth masters named and judged narrations.',
     levels: [
-      [{ code: 'Muṣṭalaḥ 101', text: 'Nukhbat al-Fikar', course: 'nukhbat-al-fikr' }],
-      [{ code: 'Muṣṭalaḥ 201', text: 'Al-Mūqiẓah / al-Taqrīb wa al-Taysīr' }],
-      [],
+      [{ code: 'Muṣṭalaḥ 101', dk: '', text: 'Manẓūmah al-Bayqūnī', course: 'talweeh-od-33-manzumahalbayquni' }],
+      [
+        { code: 'Muṣṭalaḥ 201', dk: '', text: 'Introduction to Uṣūl al-Ḥadīth', course: 'introduction-to-usul-al-hadith' },
+        { code: 'Muṣṭalaḥ 201', dk: 'Muṣṭalaḥ 101', text: 'Nukhbat al-Fikar', course: 'nukhbat-al-fikr' },
+        { code: 'Muṣṭalaḥ 201', text: 'Al-Mūqiẓah / al-Taqrīb wa al-Taysīr' },
+      ],
+      [{ code: 'ʿUlūm al-Ḥadīth 301', dk: '', text: 'Chapters of ʿUlūm al-Ḥadīth', note: 'Short courses, each taking one part of ʿUlūm al-Ḥadīth further; take them in any order.', course: 'takwin-al-asanid', courses: ['takwin-al-asanid', 'tadwin-al-sunnah', 'al-athbat-wal-faharis', 'al-jarh-wa-l-tadil', 'talweeh-od-24-ruwatalhadith', 'makanat-al-sunnah', 'takhri-j-al-h-adi-th-q2zxxj'] }],
       [{ code: 'Advanced Muṣṭalaḥ', text: 'Tadrīb al-Rāwī', course: 'tadrib-al-rawi' }],
     ],
-    also: ['introduction-to-usul-al-hadith', 'tadwin-al-sunnah', 'makanat-al-sunnah', 'takwin-al-asanid', 'al-jarh-wa-l-tadil', 'al-athbat-wal-faharis', 'takhri-j-al-h-adi-th-q2zxxj'],
   },
   {
     k: 'hadith', name: 'Ḥadīth', ar: 'الحديث', sub: 'The collections',
     blurb: 'From the Forty Ḥadīth to the Dawrat al-Ḥadīth — reading the great collections.',
     levels: [
       [{ code: 'Ḥadīth 101', text: 'Al-Arbaʿūn al-Nawawiyyah' }],
-      [{ code: 'Aḥādīth al-Aḥkām 101', text: 'Āthār al-Sunan' }],
-      [{ code: 'Aḥādīth al-Aḥkām', text: 'Mishkāt al-Maṣābīḥ' }],
-      [],
+      [{ code: 'Aḥādīth al-Aḥkām 101', text: 'Āthār al-Sunan' }, { code: 'Ḥadīth 201', dk: '', text: 'Al-Shamāʾil al-Muḥammadiyyah', course: 'al-shamail-al-muhammadiyyah' }],
+      [{ code: 'Aḥādīth al-Aḥkām', text: 'Mishkāt al-Maṣābīḥ' }, { code: 'Ḥadīth 301', dk: '', text: 'Al-Adab al-Mufrad', course: 'al-adab-al-mufrad' }],
+      [{ code: 'Advanced Ḥadīth', dk: '', text: 'Al-Muwaṭṭaʾayn', note: 'Introduction to al-Muwaṭṭaʾayn, then Muwaṭṭaʾ Muḥammad.', course: 'introduction-to-al-muwattayn', courses: ['introduction-to-al-muwattayn', 'muwatta-muhammad'] }],
       [
         { code: 'Dawrat al-Ḥadīth', text: 'Ṣaḥīḥ al-Bukhārī' }, { code: 'Dawrat al-Ḥadīth', text: 'Ṣaḥīḥ Muslim' },
         { code: 'Dawrat al-Ḥadīth', text: 'Sunan al-Nasāʾī' }, { code: 'Dawrat al-Ḥadīth', text: 'Sunan Abī Dāwūd' },
@@ -155,6 +158,5 @@ export const ROADMAP = [
         { code: 'Dawrat al-Ḥadīth', text: 'Sharḥ Maʿānī al-Āthār' },
       ],
     ],
-    also: ['introduction-to-al-muwattayn', 'al-shamail-al-muhammadiyyah', 'al-adab-al-mufrad'],
   },
 ]

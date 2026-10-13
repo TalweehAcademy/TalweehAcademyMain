@@ -18,7 +18,8 @@
 .cw-stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
 .cw-stats span{padding:7px 14px;border-radius:999px;background:var(--p-card);border:1px solid var(--p-line);font-size:13px;font-weight:700;color:var(--p-head)}
 .cw-stats b{color:var(--p-gold)}
-.cw-paths{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+.cw-paths{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:8px}
+@media(max-width:1280px){.cw-paths{grid-template-columns:repeat(3,1fr)}}
 .cw-path{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:4px;text-align:left;cursor:pointer;font:inherit;transition:transform .4s var(--spring),border-color .3s,box-shadow .3s}
 .cw-path:hover{transform:translateY(-4px);border-color:var(--gold)}
 .cw-path.on{box-shadow:0 0 0 2px var(--gold),var(--shadow)}
@@ -585,3 +586,5 @@ html .wh-home .cw-paths>.cw-path{transition:transform .35s var(--ease),border-co
   .cw-search:hover,.cw-sort select:hover{border-color:rgba(215,179,115,.4)}
 }
 html .wh-home .cw-paths>.cw-path:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* The sixth route card, to /start (Find your starting point). */
+.cw-path-start{border-style:dashed}

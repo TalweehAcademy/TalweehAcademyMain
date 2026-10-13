@@ -19,7 +19,7 @@ import '../roadmap-page-v1.css'
 const COURSE = new Map(PUBLIC_COURSES.map((c) => [c.slug, c]))
 const taughtIn = (d) => d.levels.flat().filter((s) => s.course).length
 const textsIn = (d) => d.levels.flat().length
-const detailOf = (s) => ROADMAP_DETAILS[s.code] || {}
+const detailOf = (s) => ROADMAP_DETAILS[s.dk ?? s.code] || {}
 const firstSentence = (t = '') => { const m = t.match(/^.{40,220}?[.!?](\s|$)/); return (m ? m[0] : t.slice(0, 200)).trim() }
 const overviewOf = (s) => firstSentence(detailOf(s).paras?.[0] || '') || s.note || ''
 const coursesFor = (s) => (s.courses || (s.course ? [s.course] : [])).map((k) => COURSE.get(k)).filter(Boolean)
