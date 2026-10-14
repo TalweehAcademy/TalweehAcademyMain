@@ -153,7 +153,10 @@ export default function QuranReadPage() {
   const [dockOpen, setDockOpen] = useState(false)
   // Phones: the reading tools live in a sheet behind one floating button, so the page is just the muṣḥaf.
   const [toolsOpen, setToolsOpen] = useState(false)
-  useScrollLock(toolsOpen || dockOpen)
+  // The Display panel is a sheet on phones (quran-pages-v1.css, 640px) and needs the page held still there; on wider
+  // screens it hangs from the sticky toolbar, and holding the page would unstick the toolbar, leaving the panel at
+  // the top of a scrolled page.
+  useScrollLock(toolsOpen || (dockOpen && window.matchMedia('(max-width: 640px)').matches))
   const [pop, setPop] = useState(null)
   const [error, setError] = useState('')
 
