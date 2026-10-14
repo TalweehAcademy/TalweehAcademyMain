@@ -28,8 +28,8 @@ function SurahHead({ s }) {
   )
 }
 
-// One printed page drawn line for line: Madinah (15 lines; pages 1–2 are centred and shorter) or IndoPak (16 lines,
-// in the IndoPak font, whose own glyphs draw each āyah's circle).
+// One printed page drawn line for line: Madinah (15 lines; pages 1–2 are centred and shorter) or IndoPak (13, 15 or
+// 16 lines, in the IndoPak font, whose own glyphs draw each āyah's circle).
 // Every line on the page shares one type size, chosen so the longest line exactly fills the page width,
 // and each line is justified edge to edge, so the page looks the same on a phone as in print.
 // Runs of empty line slots before a surah hold its title (and basmalah, except for al-Tawbah).
@@ -62,7 +62,7 @@ function MushafLines({ lines, no, onTap, selected, layout }) {
     return () => ro.disconnect()
   }, [fit])
 
-  const indopak = layout === 'indopak16'
+  const indopak = layout?.startsWith('indopak')
   const centred = !indopak && no <= 2
   const out = []
   for (let i = 0; i < lines.length; i++) {
@@ -374,7 +374,7 @@ export default function QuranReadPage() {
           <div className="qp-vb-r">
             <button className="qp-ib" type="button" onClick={() => setFs((f) => Math.max(22, f - 2))} aria-label="Smaller text">{Icon.minus}</button>
             <button className="qp-ib" type="button" onClick={() => setFs((f) => Math.min(44, f + 2))} aria-label="Larger text">{Icon.plus}</button>
-            <button className="qp-dbtn" type="button" aria-expanded={dockOpen} onClick={() => setDockOpen((o) => !o)}>{Icon.sliders}<span>Display</span><small>{style.label}{style.script === 'indopak' ? ` ${style.lines}` : ''} · {riw.label}</small></button>
+            <button className="qp-dbtn" type="button" aria-expanded={dockOpen} onClick={() => setDockOpen((o) => !o)}>{Icon.sliders}<span>Display</span><small>{style.label}{style.script === 'indopak' ? ` ${style.detail}` : ''} · {riw.label}</small></button>
             <div className={`qp-dock${dockOpen ? ' open' : ''}`} role="dialog" aria-label="Display options">
               <div className="grp"><span className="lbl">Muṣḥaf style</span>
                 <div className="qp-seg">{STYLES.map((s) => <button key={s.id} type="button" className={s.id === styleId ? 'on' : ''} onClick={() => { setStyleId(s.id); setSub(0) }}>{s.label}<small>{s.detail}</small></button>)}</div>

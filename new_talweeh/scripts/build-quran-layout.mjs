@@ -4,6 +4,9 @@
 // where <folder> holds the unzipped downloads, each in its own folder as it comes out of its zip:
 //   qpc-v2-15-lines.db/qpc-v2-15-lines.db             Mushaf layout · KFGQPC V2 layout (1421H print) · sqlite
 //   taj-indopak-16-lines.db/taj-indopak-16-lines.db   Mushaf layout · Indopak 16 lines layout (Taj company) · sqlite
+//   qudratullah-indopak-15-lines.db/…db               Mushaf layout · Indopak 15 lines layout (Qudratullah) · sqlite
+//   indopak-13-lines-taj-company.db/…db               Mushaf layout · Indopak 13 lines layout (Taj company) · sqlite
+//   indopak-13-lines-layout-qudratullah.db/…db        Mushaf layout · Indopak 13 lines layout (Qudratullah) · sqlite
 //   uthmani.db/uthmani.db                             Quran script · Uthmani (word by word) · sqlite
 //   indopak-nastaleeq.db/indopak-nastaleeq.db         Quran script · Indopak Nastaleeq script - Word by Word · sqlite
 //   english-wbw-translation.json/…json                Translation · English Word by Word Translation · json
@@ -54,6 +57,8 @@ function words(name) {
 // mark (a word of its own there) joins the word before it; where the two split a word differently (37:130 إِلْ
 // يَاسِينَ is one word in QUL), Tanzil words are taken until the letters match.
 const loose = []
+// Each page's first word { s, a, w }: IndoPak pages often begin inside an āyah (Madinah and the 15-line never do).
+const firstWord = new Map()
 function matchTanzil(quls, tanzil, key) {
   const tokens = tanzil.split(' ')
   const out = new Map()
@@ -77,6 +82,7 @@ function matchTanzil(quls, tanzil, key) {
 }
 
 function layout(name, wordsOf, textOf, pages) {
+  firstWord.clear()
   const rows = db(name).prepare('SELECT page_number p, line_number n, line_type type, is_centered c, first_word_id f, last_word_id l, surah_number s FROM pages ORDER BY page_number, line_number').all()
   const byPage = new Map()
   for (const r of rows) {
@@ -88,6 +94,7 @@ function layout(name, wordsOf, textOf, pages) {
       for (let id = Number(r.f); id <= Number(r.l); id++) {
         const w = wordsOf.get(id)
         if (!w) throw new Error(`${name}: page ${r.p} line ${r.n} has no word ${id}`)
+        if (!firstWord.has(r.p)) firstWord.set(r.p, w)
         line.words.push(w.end ? { t: w.text, s: w.s, a: w.a, end: 1 } : { t: textOf(w), s: w.s, a: w.a })
       }
     }
@@ -100,10 +107,11 @@ function layout(name, wordsOf, textOf, pages) {
 async function writePages(dir, byPage, notice) {
   await rm(path.join(out, 'layout', dir), { recursive: true, force: true })
   await mkdir(path.join(out, 'layout', dir), { recursive: true })
+  // Page starts [sūrah, āyah, word]: the word is 1 unless the page begins inside the āyah.
   const starts = []
   for (const [p, lines] of byPage) {
-    const first = lines.flatMap((l) => l.words || [])[0]
-    starts.push([first.s, first.a])
+    const first = firstWord.get(p)
+    starts.push(first.w === 1 ? [first.s, first.a] : [first.s, first.a, first.w])
     await writeFile(path.join(out, 'layout', dir, `${p}.json`), JSON.stringify({ notice, lines }))
   }
   return starts
@@ -131,16 +139,18 @@ const madinah = layout('qpc-v2-15-lines.db', uth.byId, (w) => tanzilOf.get(w.id)
 const madinahStarts = await writePages('madinah15', madinah, `${TANZIL_NOTICE} ${QUL_NOTICE}`)
 report.push('Madinah 15-line (KFGQPC V2, 1421H): 604 pages')
 
-// IndoPak 16-line (Taj company), drawn with QUL's IndoPak words.
-let indopakStarts = null
-try {
-  const indo = words('indopak-nastaleeq.db')
-  const indopak = layout('taj-indopak-16-lines.db', indo.byId, (w) => w.text, 548)
-  indopakStarts = await writePages('indopak16', indopak, `Text of the King Fahd Glorious Qurʾān Printing Complex (Nastaleeq). ${QUL_NOTICE}`)
-  report.push('IndoPak 16-line (Taj company): 548 pages')
-} catch (err) {
-  if (err.code !== 'ENOENT' && !/unable to open/i.test(err.message)) throw err
-  report.push('IndoPak 16-line: skipped (indopak-nastaleeq.db not downloaded yet)')
+// IndoPak prints, drawn with QUL's IndoPak words (all four layouts number their words the same way).
+const INDOPAK = [
+  ['indopak16', 'taj-indopak-16-lines.db', 548, '16-line (Taj company)'],
+  ['indopak15', 'qudratullah-indopak-15-lines.db', 610, '15-line (Qudratullah)'],
+  ['indopak13', 'indopak-13-lines-taj-company.db', 847, '13-line (Taj company)'],
+  ['indopak13q', 'indopak-13-lines-layout-qudratullah.db', 849, '13-line (Qudratullah)'],
+]
+const indopakStarts = {}
+const indo = words('indopak-nastaleeq.db')
+for (const [id, name, pages, label] of INDOPAK) {
+  indopakStarts[id] = await writePages(id, layout(name, indo.byId, (w) => w.text, pages), `Text of the King Fahd Glorious Qurʾān Printing Complex (Nastaleeq). ${QUL_NOTICE}`)
+  report.push(`IndoPak ${label}: ${pages} pages`)
 }
 
 // Word by word, per sūrah: for each āyah its words as [Tanzil text, meaning, transliteration].
@@ -165,7 +175,7 @@ report.push(`Word by word: 114 sūrahs (${missing} words without a meaning)`)
 // Page starts for each layout, so a sūrah or āyah can be opened at its page.
 const indexFile = path.join(out, 'index.json')
 const index = JSON.parse(await readFile(indexFile, 'utf8'))
-index.layouts = { madinah15: madinahStarts, ...(indopakStarts ? { indopak16: indopakStarts } : {}) }
+index.layouts = { madinah15: madinahStarts, ...indopakStarts }
 const same = madinahStarts.every(([s, a], i) => index.pages[i][0] === s && index.pages[i][1] === a)
 report.push(`Madinah page starts ${same ? 'match' : 'DIFFER FROM'} Tanzil's page numbers`)
 await writeFile(indexFile, JSON.stringify(index))

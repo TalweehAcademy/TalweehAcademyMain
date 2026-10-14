@@ -49,7 +49,10 @@ const getIndex = () => once('index', async () => {
   const index = await getJson(`${DATA}/index.json`)
   return { ...index, pages: index.layouts?.madinah15 || index.pages }
 })
-const at = (starts, s, a) => { let n = 1; for (let i = 0; i < starts.length && (starts[i][0] < s || (starts[i][0] === s && starts[i][1] <= a)); i++) n = i + 1; return n }
+// The number of the last start at or before sūrah:āyah (its first word). A start is [s, a] or, for a page that
+// begins inside an āyah, [s, a, word].
+const before = ([s0, a0, w0 = 1], s, a) => s0 < s || (s0 === s && (a0 < a || (a0 === a && w0 <= 1)))
+const at = (starts, s, a) => { let n = 1; for (let i = 0; i < starts.length && before(starts[i], s, a); i++) n = i + 1; return n }
 
 /* ── text sources ─────────────────────────────────────────── */
 // Read Mode riwāyāt (READ_MUSHAFS in quran.jsx); `edition` is the text's folder in /quran-data/v1 (Ḥafṣ: hafs).
@@ -60,12 +63,14 @@ export const RIWAYAT = [
   { id: 'shubah', label: 'Shuʿbah', detail: 'ʿan ʿĀṣim', edition: 'shubah' },
   { id: 'susi', label: 'al-Sūsī', detail: 'ʿan Abī ʿAmr', edition: 'susi' },
 ]
-// Read Mode styles (READ_TEXT_STYLES in quran.jsx); `lines` drives client-side pagination for non-Madinah text.
+// Read Mode styles (READ_TEXT_STYLES in quran.jsx), each a printed muṣḥaf (LAYOUTS) in Ḥafṣ; `lines` drives the
+// pages cut here for the other riwāyāt.
 export const STYLES = [
   { id: 'madinah15', label: 'Madinah', detail: '15-line', script: 'uthmani', lines: 15 },
-  { id: 'indopak13', label: 'IndoPak', detail: '13-line', script: 'indopak', lines: 13 },
-  { id: 'indopak15', label: 'IndoPak', detail: '15-line', script: 'indopak', lines: 15 },
-  { id: 'indopak16', label: 'IndoPak', detail: '16-line', script: 'indopak', lines: 16 },
+  { id: 'indopak13', label: 'IndoPak', detail: '13-line · Taj', script: 'indopak', lines: 13 },
+  { id: 'indopak13q', label: 'IndoPak', detail: '13-line · Qudratullah', script: 'indopak', lines: 13 },
+  { id: 'indopak15', label: 'IndoPak', detail: '15-line · Qudratullah', script: 'indopak', lines: 15 },
+  { id: 'indopak16', label: 'IndoPak', detail: '16-line · Taj', script: 'indopak', lines: 16 },
 ]
 
 // [{ a, text, page, juz }] for the Uthmani (Ḥafṣ) text, with Madinah page + juz numbers.
@@ -85,10 +90,14 @@ export async function getSurahText(surah, { script = 'uthmani', riwayah = 'hafs'
 }
 
 // Printed muṣḥafs Read Mode draws page by page (scripts/build-quran-layout.mjs): Madinah 15-line (1421H print) and
-// IndoPak 16-line (Taj company). `script`: the text its pages hold.
+// IndoPak 16-line (Taj company), 15-line (Qudratullah) and 13-line (Taj company, Qudratullah). `script`: the text its
+// pages hold.
 export const LAYOUTS = {
   madinah15: { pages: 604, script: 'uthmani' },
   indopak16: { pages: 548, script: 'indopak' },
+  indopak15: { pages: 610, script: 'indopak' },
+  indopak13: { pages: 847, script: 'indopak' },
+  indopak13q: { pages: 849, script: 'indopak' },
 }
 export const MUSHAF_PAGES = LAYOUTS.madinah15.pages
 const layoutStarts = async (layout) => { const index = await getIndex(); return index.layouts?.[layout] || index.pages }
@@ -97,11 +106,12 @@ const layoutStarts = async (layout) => { const index = await getIndex(); return 
 export function getMushafPage(page, layout = 'madinah15') {
   return once(`page:${layout}:${page}`, async () => {
     const [pages, { juz }] = await Promise.all([layoutStarts(layout), getIndex()])
-    const [s0, a0] = pages[page - 1], [s1, a1] = pages[page] || [115, 1]
+    // An āyah the next page begins inside (a start with a word) is partly on this page too.
+    const [s0, a0] = pages[page - 1], [s1, a1, w1] = pages[page] || [115, 1]
     const rows = []
     for (let s = s0; s <= Math.min(s1, 114); s++) {
       for (const r of await getSurahText(s, { script: LAYOUTS[layout].script })) {
-        if ((s === s0 && r.a < a0) || (s === s1 && r.a >= a1)) continue
+        if ((s === s0 && r.a < a0) || (s === s1 && (r.a > a1 || (r.a === a1 && !w1)))) continue
         rows.push({ s, a: r.a, text: r.text, juz: at(juz, s, r.a) })
       }
     }
