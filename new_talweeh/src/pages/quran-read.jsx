@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // Read Mode ("Muṣḥaf", from mockups/quran-waha-mushaf.html) at /quran/read.
-// Book view: Madinah + Ḥafṣ shows the real 604-page muṣḥaf layout (lines from api.quran.com, text from this site's copy);
+// Book view: Madinah + Ḥafṣ shows the real 604-page muṣḥaf layout (1421H print, line by line, from this site's copy: scripts/build-quran-layout.mjs);
 // IndoPak styles and the other riwāyāt come per surah and are paginated to the chosen line count.
 // Scroll view: one continuous column, surah after surah.
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
@@ -65,7 +65,7 @@ function MushafLines({ lines, no, onTap, selected }) {
     const l = lines[i]
     if (l.words.length) {
       out.push(
-        <div key={l.n} className={`qp-ml w${centred ? ' c' : ''}`}>
+        <div key={l.n} className={`qp-ml w${centred || (l.centred && l.type === 'ayah') ? ' c' : ''}`}>
           {l.words.map((w, k) => (w.end
             ? <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}><AyahMarker n={w.a} /></span>
             : <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}>{w.t}</span>))}

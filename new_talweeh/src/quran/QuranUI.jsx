@@ -12,9 +12,9 @@ const ext = { target: '_blank', rel: 'noreferrer' }
 export function QuranCredits() {
   return (
     <p className="qp-credits">
-      Qurʾān text, page numbers and translations from the <a href="https://tanzil.net" {...ext}>Tanzil Project</a> (<a href="https://tanzil.net/trans/" {...ext}>translations</a>, each the work of the translator named with it);
+      Qurʾān text, juzʾ divisions and translations from the <a href="https://tanzil.net" {...ext}>Tanzil Project</a> (<a href="https://tanzil.net/trans/" {...ext}>translations</a>, each the work of the translator named with it);
       other riwāyāt and the IndoPak script from the King Fahd Qurʾān Complex, via <a href="https://github.com/fawazahmed0/quran-api" {...ext}>fawazahmed0/quran-api</a>.
-      Muṣḥaf line layout from <a href="https://quran.com" {...ext}>Quran.com</a>; word-by-word meanings from <a href="https://islamic.app" {...ext}>islamic.app</a>; recitations from <a href="https://mp3quran.net" {...ext}>MP3Quran</a>.
+      Muṣḥaf page layouts and word-by-word meanings from the <a href="https://qul.tarteel.ai" {...ext}>Quranic Universal Library</a> (Tarteel); recitations from <a href="https://mp3quran.net" {...ext}>MP3Quran</a>.
     </p>
   )
 }

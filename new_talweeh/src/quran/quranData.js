@@ -1,16 +1,15 @@
 // Browser-only Qurʾān data for the Wāḥa Qurʾān pages (read / study / listen). No Talweeh server involved.
 // The texts are files on this site, /quran-data/v1, written by scripts/build-quran-data.mjs (sources and terms there):
-//   Tanzil              Uthmani text (Ḥafṣ), page and juzʾ starts, the translations, the plain text for search
+//   Tanzil              Uthmani text (Ḥafṣ), juzʾ starts, the translations, the plain text for search
 //   fawazahmed0         Warsh, Qālūn, Shuʿbah, al-Sūsī and IndoPak (King Fahd Qurʾān Complex)
+//   QUL (Tarteel)       the printed pages line by line (Madinah 1421H), word-by-word meaning + transliteration
+//                       (scripts/build-quran-layout.mjs; the words shown are Tanzil's)
 // Still fetched from outside:
-//   api.quran.com       the printed muṣḥaf's line layout (Read Mode, Madinah)
-//   api.islamic.app     word-by-word meaning + transliteration
 //   www.mp3quran.net    reciters, surah audio, per-āyah timings
 // Every call is cached for the session; a failed call rejects so the page can show it.
 import { QURAN_SURAHS } from '../data/quranIndex'
 
 const DATA = '/quran-data/v1'
-const WORDS = 'https://api.islamic.app/v1/words'
 // mp3quran.net 301-redirects its API to www.
 const MP3QURAN = 'https://www.mp3quran.net/api/v3'
 
@@ -44,8 +43,12 @@ export const stripHtml = (t) => String(t || '').replace(/<[^>]*>/g, '').trim()
 
 // The stored texts have the basmalah in front of āyah 1 taken off already (readers show it as a heading).
 const surahFile = (dir, surah) => once(`${dir}:${surah}`, async () => (await getJson(`${DATA}/${dir}/${surah}.json`))?.ayat || [])
-// Page and juzʾ starts of the Madinah muṣḥaf: { pages: [[s, a]…604], juz: [[s, a]…30] }.
-const getIndex = () => once('index', () => getJson(`${DATA}/index.json`))
+// Page and juzʾ starts of the Madinah muṣḥaf: { pages: [[s, a]…604], juz: [[s, a]…30] }. Page numbers follow the
+// 1421H print the Read Mode pages are drawn from (layouts.madinah15); Tanzil's own differ on 25 pages.
+const getIndex = () => once('index', async () => {
+  const index = await getJson(`${DATA}/index.json`)
+  return { ...index, pages: index.layouts?.madinah15 || index.pages }
+})
 const at = (starts, s, a) => { let n = 1; for (let i = 0; i < starts.length && (starts[i][0] < s || (starts[i][0] === s && starts[i][1] <= a)); i++) n = i + 1; return n }
 
 /* ── text sources ─────────────────────────────────────────── */
@@ -98,30 +101,13 @@ export function getMushafPage(page) {
 }
 export const MUSHAF_PAGES = 604
 
-// The printed Madinah muṣḥaf's own layout for one page: its 15 lines, word by word, from quran.com.
+// The printed Madinah muṣḥaf's own layout for one page (1421H print): its 15 lines, word by word.
 // Lines with no words are the surah title and basmalah slots; the reader fills them in.
-// Returns [{ n, words: [{ t, s, a, end }] }] for line numbers 1–15 (pages 1–2 have fewer lines).
-const QURAN_COM = 'https://api.quran.com/api/v4'
-export function getMushafLines(page) {
-  return once(`lines:${page}`, async () => {
-    const json = await getJson(`${QURAN_COM}/verses/by_page/${page}?words=true&word_fields=text_uthmani,line_number&per_page=60&fields=chapter_id`)
-    const byLine = new Map()
-    for (const v of json?.verses || []) {
-      const [s, a] = String(v.verse_key).split(':').map(Number)
-      for (const w of v.words || []) {
-        if (!byLine.has(w.line_number)) byLine.set(w.line_number, [])
-        byLine.get(w.line_number).push({ t: w.text_uthmani, s, a, end: w.char_type_name === 'end' })
-      }
-    }
-    const nums = [...byLine.keys()]
-    if (!nums.length) return []
-    const last = Math.max(15, ...nums)
-    const out = []
-    for (let n = 1; n <= last; n++) out.push({ n, words: byLine.get(n) || [] })
-    // Trim empty slots after the last written line (short final pages).
-    while (out.length && !out[out.length - 1].words.length) out.pop()
-    return out
-  })
+// Returns [{ n, type, centred, words: [{ t, s, a, end }] }] (pages 1–2 have fewer lines; `centred`: a short line the
+// print centres instead of stretching, such as a sūrah's last).
+export function getMushafLines(page, layout = 'madinah15') {
+  return once(`lines:${layout}:${page}`, async () => ((await getJson(`${DATA}/layout/${layout}/${page}.json`))?.lines || [])
+    .map((l) => ({ n: l.n, type: l.type, centred: !!l.c, words: (l.words || []).map((w) => ({ t: w.t, s: w.s, a: w.a, end: !!w.end })) })))
 }
 export async function pageOf(surah, ayah = 1) {
   const rows = await getUthmani(surah)
@@ -138,21 +124,11 @@ export function getTranslation(surah, edition = 'en.sahih') {
   return surahFile(`tr/${id}`, surah)
 }
 
-// Word by word: Map(āyah → [{ ar, en, tl }])
+// Word by word: Map(āyah → [{ ar, en, tl }]); the Arabic is the stored Tanzil text, cut into QUL's words.
 export function getWords(surah) {
   return once(`words:${surah}`, async () => {
-    const page = async (p) => (await getJson(`${WORDS}/${surah}?page=${p}&per_page=50`, 12000))?.data || {}
-    const first = await page(1)
-    const total = Math.max(1, Number(first?.pagination?.total_pages) || 1)
-    const pages = [first, ...(await Promise.all(Array.from({ length: total - 1 }, (_, i) => page(i + 2))))]
-    const byAyah = new Map()
-    for (const p of pages) {
-      for (const ayah of p?.ayahs || []) {
-        const words = (ayah.words || []).filter((w) => !w.char_type || w.char_type === 'word').map((w) => ({ ar: w.text_uthmani, en: w.translation, tl: w.transliteration }))
-        if (words.length) byAyah.set(Number(ayah.ayah_number), words)
-      }
-    }
-    return byAyah
+    const ayat = (await getJson(`${DATA}/words/${surah}.json`))?.ayat || []
+    return new Map(ayat.map((ws, i) => [i + 1, ws.map(([ar, en, tl]) => ({ ar, en, tl }))]))
   })
 }
 

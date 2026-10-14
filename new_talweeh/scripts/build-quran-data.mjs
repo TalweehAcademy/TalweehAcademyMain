@@ -1,7 +1,8 @@
 // Downloads the Qurʾān texts the Qurʾān pages show and writes them to public/quran-data/v1, so the pages read them
 // from this site instead of from outside services (src/quran/quranData.js). Run by hand, not by the build:
 //   node scripts/build-quran-data.mjs
-// then check the report it prints and commit the files. The texts are fixed; a new run is only needed when a source
+// then run scripts/build-quran-layout.mjs (it adds the page layouts to index.json, which this rewrites), check the
+// reports both print and commit the files. The texts are fixed; a new run is only needed when a source
 // publishes a correction (tanzil.net/updates) or a text is added.
 //
 // Sources (credited on the pages, QuranCredits in src/quran/QuranUI.jsx):
