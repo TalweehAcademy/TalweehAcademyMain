@@ -1,0 +1,7 @@
+Qurʾān data for the Talweeh Academy Qurʾān pages, written by scripts/build-quran-data.mjs.
+
+hafs/, search/ar.txt, index.json: Tanzil Quran Text, Copyright (C) 2007-2021 Tanzil Project, License: Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but changing it is not allowed. This Quran text can be used in any website or application, provided that its source (Tanzil Project) is clearly indicated, and a link is made to tanzil.net to enable users to keep track of changes. Please check updates at: http://tanzil.net/updates/
+
+tr/: English translations from Tanzil (https://tanzil.net/trans/), for non-commercial use; each remains the work of its translator and publisher.
+
+warsh/, qalun/, shubah/, susi/, indopak/: Text of the King Fahd Glorious Qurʾān Printing Complex (qurancomplex.gov.sa), from fawazahmed0/quran-api (https://github.com/fawazahmed0/quran-api), public domain.

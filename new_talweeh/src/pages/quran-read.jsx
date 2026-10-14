@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // Read Mode ("Muṣḥaf", from mockups/quran-waha-mushaf.html) at /quran/read.
-// Book view: Madinah + Ḥafṣ shows the real 604-page muṣḥaf layout (api.alquran.cloud/page);
+// Book view: Madinah + Ḥafṣ shows the real 604-page muṣḥaf layout (lines from api.quran.com, text from this site's copy);
 // IndoPak styles and the other riwāyāt come per surah and are paginated to the chosen line count.
 // Scroll view: one continuous column, surah after surah.
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'

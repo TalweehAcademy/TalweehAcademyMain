@@ -6,11 +6,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { QuranCredits } from '../quran/QuranUI'
+import { searchText } from '../quran/quranData'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import '../quran-home-v1.css'
 
-const ALQURAN_SEARCH = 'https://api.alquran.cloud/v1/search'
 // A surah with a published Talweeh study package (src/quran-study-static) to land on from "Study".
 const STUDY_SURAH = 81
 
@@ -72,13 +72,10 @@ function useTextSearch(query) {
     const timer = setTimeout(async () => {
       setState((s) => ({ ...s, status: 'loading' }))
       try {
-        const edition = isArabic(q) ? 'quran-simple-clean' : 'en.sahih'
-        const res = await fetch(`${ALQURAN_SEARCH}/${encodeURIComponent(q)}/all/${edition}`, { signal: controller.signal })
-        const json = await res.json().catch(() => ({}))
-        const matches = Array.isArray(json?.data?.matches) ? json.data.matches : []
-        setState({ status: 'done', matches: matches.slice(0, 8), total: json?.data?.count || matches.length })
-      } catch (err) {
-        if (err.name !== 'AbortError') setState({ status: 'error', matches: [], total: 0 })
+        const { matches, total } = await searchText(q)
+        if (!controller.signal.aborted) setState({ status: 'done', matches: matches.slice(0, 8), total })
+      } catch {
+        if (!controller.signal.aborted) setState({ status: 'error', matches: [], total: 0 })
       }
     }, 350)
     return () => { clearTimeout(timer); controller.abort() }
@@ -137,8 +134,8 @@ function HeroSearch() {
           {text.status === 'loading' && <p className="qh-res-note">Searching the text…</p>}
           {text.matches.length > 0 && <div className="qh-res-h">In the text · {text.total} match{text.total === 1 ? '' : 'es'}</div>}
           {text.matches.map((m) => (
-            <Link key={`${m.surah?.number}:${m.numberInSurah}`} className="qh-res" to={readerUrl(m.surah?.number, { ayah: m.numberInSurah })}>
-              <small>{m.surah?.number}:{m.numberInSurah} · {m.surah?.englishName}</small>
+            <Link key={`${m.s}:${m.a}`} className="qh-res" to={readerUrl(m.s, { ayah: m.a })}>
+              <small>{m.s}:{m.a} · {surahOf(m.s).en}</small>
               <p className={isArabic(m.text || '') ? 'qh-ar qh-res-ar' : ''}>{m.text}</p>
             </Link>
           ))}

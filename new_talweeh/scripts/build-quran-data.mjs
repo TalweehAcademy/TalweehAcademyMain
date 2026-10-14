@@ -1,0 +1,135 @@
+// Downloads the Qurʾān texts the Qurʾān pages show and writes them to public/quran-data/v1, so the pages read them
+// from this site instead of from outside services (src/quran/quranData.js). Run by hand, not by the build:
+//   node scripts/build-quran-data.mjs
+// then check the report it prints and commit the files. The texts are fixed; a new run is only needed when a source
+// publishes a correction (tanzil.net/updates) or a text is added.
+//
+// Sources (credited on the pages, QuranCredits in src/quran/QuranUI.jsx):
+//   Tanzil Project   Uthmani text (Ḥafṣ), version 1.1; the plain text used for Arabic search; page and juzʾ starts of
+//                    the Madinah muṣḥaf; the English translations. Tanzil's terms: copies unchanged, its notice
+//                    kept in every file, its source named and linked; translations for non-commercial use.
+//   fawazahmed0/quran-api (public domain), from the King Fahd Qurʾān Complex: Warsh, Qālūn, Shuʿbah, al-Sūsī, IndoPak.
+//
+// Nothing in a text is changed. The only step is the one the pages always took: the basmalah the sources put in
+// front of āyah 1 (every sūrah but al-Fātiḥah and at-Tawbah) is taken off, since the pages show it as a heading.
+import { execSync } from 'node:child_process'
+import { mkdir, rm, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { TRANSLATIONS } from '../src/quran/translations.js'
+
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
+const out = path.join(root, 'public', 'quran-data', 'v1')
+const TANZIL_TEXT = (type) => `https://tanzil.net/pub/download/index.php?marks=true&sajdah=true&rub=false&tatweel=true&quranType=${type}&outType=txt-2&agree=true`
+const TANZIL_TRANS = (id) => `https://tanzil.net/trans/?transID=${id}&type=txt-2`
+const TANZIL_META = 'https://tanzil.net/res/text/metadata/quran-data.js'
+const FAWAZ = (edition) => `https://raw.githubusercontent.com/fawazahmed0/quran-api/1/editions/${edition}.min.json`
+const RIWAYAT = { warsh: 'ara-quranwarsh', qalun: 'ara-quranqaloon', shubah: 'ara-quranshouba', susi: 'ara-quransoosi', indopak: 'ara-quranindopak' }
+
+const TANZIL_NOTICE = 'Tanzil Quran Text, Copyright (C) 2007-2021 Tanzil Project, License: Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but changing it is not allowed. This Quran text can be used in any website or application, provided that its source (Tanzil Project) is clearly indicated, and a link is made to tanzil.net to enable users to keep track of changes. Please check updates at: http://tanzil.net/updates/'
+const TRANS_NOTICE = (name) => `${name}. Translation from Tanzil (https://tanzil.net/trans/), for non-commercial use; the translation remains the work of its translator and publisher.`
+const FAWAZ_NOTICE = 'Text of the King Fahd Glorious Qurʾān Printing Complex (qurancomplex.gov.sa), from fawazahmed0/quran-api (https://github.com/fawazahmed0/quran-api), public domain.'
+
+async function get(url, as = 'text') {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(60_000) })
+      if (!res.ok) throw new Error(`${res.status}`)
+      return as === 'json' ? await res.json() : await res.text()
+    } catch (err) {
+      if (attempt === 3) throw new Error(`${url}: ${err.message}`)
+      await new Promise((r) => setTimeout(r, 2000 * attempt))
+    }
+  }
+}
+
+// "sura|aya|text" lines (Tanzil's txt-2), the notice lines after "#" left out: Map("s:a" → text).
+function parsePipes(text, label) {
+  const rows = new Map()
+  for (const line of text.split('\n')) {
+    if (!line.trim() || line.startsWith('#')) continue
+    const [s, a, ...rest] = line.replace(/\r$/, '').split('|')
+    rows.set(`${Number(s)}:${Number(a)}`, rest.join('|').replace(/^﻿/, ''))
+  }
+  if (rows.size !== 6236) throw new Error(`${label}: ${rows.size} āyāt, expected 6236`)
+  return rows
+}
+const metaList = (js, name) => {
+  const block = js.split(`QuranData.${name} = [`)[1].split('];')[0]
+  return [...block.matchAll(/\[(\d+),\s*(\d+)[^\]]*\]/g)].map((m) => [Number(m[1]), Number(m[2])])
+    // Tanzil ends each list with an end marker, [115, 1].
+    .filter(([sura]) => sura <= 114)
+}
+
+const BASMALAH = /^(بِسْمِ|بِّسْمِ)\s/
+function withoutBasmalah(s, a, text, label) {
+  if (s === 1 || s === 9 || a !== 1) return text
+  if (!BASMALAH.test(text)) return text
+  const words = text.split(' ')
+  if (words.length < 5) throw new Error(`${label} ${s}:1 is only the basmalah`)
+  return words.slice(4).join(' ')
+}
+
+const counts = []
+const surahRows = (rows, label, { basmalah = true } = {}) => {
+  const bySurah = []
+  for (let s = 1; s <= 114; s++) {
+    const ayat = []
+    for (let a = 1; rows.has(`${s}:${a}`); a++) ayat.push(basmalah ? withoutBasmalah(s, a, rows.get(`${s}:${a}`), label) : rows.get(`${s}:${a}`))
+    if (counts[s - 1] != null && ayat.length !== counts[s - 1]) throw new Error(`${label}: sūrah ${s} has ${ayat.length} āyāt, expected ${counts[s - 1]}`)
+    bySurah.push(ayat)
+  }
+  return bySurah
+}
+async function writeSurahs(dir, bySurah, notice) {
+  await mkdir(path.join(out, dir), { recursive: true })
+  for (let s = 1; s <= 114; s++) await writeFile(path.join(out, dir, `${s}.json`), JSON.stringify({ notice, ayat: bySurah[s - 1] }))
+}
+const report = []
+
+await rm(out, { recursive: true, force: true })
+await mkdir(out, { recursive: true })
+
+// Ḥafṣ (Tanzil Uthmani) fixes the āyah counts every other text is checked against.
+const uthmaniRaw = await get(TANZIL_TEXT('uthmani'))
+if (!/Version 1\.1/.test(uthmaniRaw)) throw new Error('Tanzil Uthmani is no longer version 1.1: read tanzil.net/updates before using it.')
+const uthmani = parsePipes(uthmaniRaw, 'Uthmani')
+for (let s = 1; s <= 114; s++) { let n = 0; while (uthmani.has(`${s}:${n + 1}`)) n++; counts.push(n) }
+await writeSurahs('hafs', surahRows(uthmani, 'Uthmani'), TANZIL_NOTICE)
+report.push('Ḥafṣ (Tanzil Uthmani 1.1): 6236 āyāt')
+
+const meta = await get(TANZIL_META)
+const pages = metaList(meta, 'Page'), juz = metaList(meta, 'Juz')
+if (pages.length !== 604 || juz.length !== 30) throw new Error(`Tanzil metadata: ${pages.length} pages, ${juz.length} ajzāʾ`)
+await writeFile(path.join(out, 'index.json'), JSON.stringify({ notice: 'Page and juzʾ starts of the Madinah muṣḥaf from Tanzil Quran Metadata, Creative Commons Attribution 3.0 (https://tanzil.net).', counts, pages, juz }))
+report.push('Index: 604 page starts, 30 juzʾ starts')
+
+// Arabic search: Tanzil's plain text without marks, one "s|a|text" line per āyah (basmalah kept, as Tanzil gives it).
+const clean = parsePipes(await get(TANZIL_TEXT('simple-clean')), 'Simple clean')
+await mkdir(path.join(out, 'search'), { recursive: true })
+await writeFile(path.join(out, 'search', 'ar.txt'), `# ${TANZIL_NOTICE}\n${[...clean].map(([k, t]) => `${k.replace(':', '|')}|${t}`).join('\n')}\n`)
+report.push('Arabic search text (Tanzil simple-clean): 6236 āyāt')
+
+for (const [id, edition] of Object.entries(RIWAYAT)) {
+  const json = await get(FAWAZ(edition), 'json')
+  const rows = new Map((json.quran || []).map((r) => [`${r.chapter}:${r.verse}`, String(r.text || '')]))
+  await writeSurahs(id, surahRows(rows, edition), FAWAZ_NOTICE)
+  report.push(`${id} (${edition}): ${rows.size} āyāt`)
+}
+
+for (const { edition, name } of TRANSLATIONS) {
+  const rows = parsePipes(await get(TANZIL_TRANS(edition)), edition)
+  const bySurah = surahRows(rows, edition, { basmalah: false })
+  await writeSurahs(`tr/${edition}`, bySurah, TRANS_NOTICE(name))
+  if (edition === 'en.sahih') await writeFile(path.join(out, 'search', 'en.txt'), `# ${TRANS_NOTICE(name)}\n${[...rows].map(([k, t]) => `${k.replace(':', '|')}|${t}`).join('\n')}\n`)
+  report.push(`${edition} (${name}): 6236 āyāt`)
+}
+
+await writeFile(path.join(out, 'NOTICE.txt'), [
+  'Qurʾān data for the Talweeh Academy Qurʾān pages, written by scripts/build-quran-data.mjs.', '',
+  `hafs/, search/ar.txt, index.json: ${TANZIL_NOTICE}`, '',
+  'tr/: English translations from Tanzil (https://tanzil.net/trans/), for non-commercial use; each remains the work of its translator and publisher.', '',
+  `warsh/, qalun/, shubah/, susi/, indopak/: ${FAWAZ_NOTICE}`, '',
+].join('\n'))
+console.log(report.join('\n'))
+console.log(`Written: ${execSync(`du -sh "${out}"`).toString().trim()}`)

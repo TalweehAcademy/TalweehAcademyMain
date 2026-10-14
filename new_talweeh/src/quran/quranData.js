@@ -1,14 +1,15 @@
-// Browser-only Qurʾān data for the Wāḥa Qurʾān pages (read / study / listen).
-// Same public providers as src/pages/quran.jsx — no Talweeh server involved:
-//   api.alquran.cloud   Uthmani text, Madinah page layout, translations, search
-//   cdn.jsdelivr.net    fawazahmed0 mirror: IndoPak script and the other riwāyāt
+// Browser-only Qurʾān data for the Wāḥa Qurʾān pages (read / study / listen). No Talweeh server involved.
+// The texts are files on this site, /quran-data/v1, written by scripts/build-quran-data.mjs (sources and terms there):
+//   Tanzil              Uthmani text (Ḥafṣ), page and juzʾ starts, the translations, the plain text for search
+//   fawazahmed0         Warsh, Qālūn, Shuʿbah, al-Sūsī and IndoPak (King Fahd Qurʾān Complex)
+// Still fetched from outside:
+//   api.quran.com       the printed muṣḥaf's line layout (Read Mode, Madinah)
 //   api.islamic.app     word-by-word meaning + transliteration
 //   www.mp3quran.net    reciters, surah audio, per-āyah timings
 // Every call is cached for the session; a failed call rejects so the page can show it.
 import { QURAN_SURAHS } from '../data/quranIndex'
 
-const ALQURAN = 'https://api.alquran.cloud/v1'
-const FAWAZ = 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1'
+const DATA = '/quran-data/v1'
 const WORDS = 'https://api.islamic.app/v1/words'
 // mp3quran.net 301-redirects its API to www.
 const MP3QURAN = 'https://www.mp3quran.net/api/v3'
@@ -41,22 +42,20 @@ const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩'
 export const arNum = (n) => String(n).replace(/\d/g, (d) => AR_DIGITS[d])
 export const stripHtml = (t) => String(t || '').replace(/<[^>]*>/g, '').trim()
 
-// The API prefixes āyah 1 of every surah except 1 and 9 with the basmalah; readers show it as a heading.
-const BASMALAH_WORDS = 4
-function dropBasmalah(surah, ayah, text) {
-  if (surah === 1 || surah === 9 || ayah !== 1) return text
-  const words = text.replace(/\uFEFF/g, '').split(' ')
-  return /^بِسْمِ/.test(words[0]) ? words.slice(BASMALAH_WORDS).join(' ') : text
-}
+// The stored texts have the basmalah in front of āyah 1 taken off already (readers show it as a heading).
+const surahFile = (dir, surah) => once(`${dir}:${surah}`, async () => (await getJson(`${DATA}/${dir}/${surah}.json`))?.ayat || [])
+// Page and juzʾ starts of the Madinah muṣḥaf: { pages: [[s, a]…604], juz: [[s, a]…30] }.
+const getIndex = () => once('index', () => getJson(`${DATA}/index.json`))
+const at = (starts, s, a) => { let n = 1; for (let i = 0; i < starts.length && (starts[i][0] < s || (starts[i][0] === s && starts[i][1] <= a)); i++) n = i + 1; return n }
 
 /* ── text sources ─────────────────────────────────────────── */
-// Read Mode riwāyāt (READ_MUSHAFS in quran.jsx). Ḥafṣ uses alquran.cloud's Uthmani text.
+// Read Mode riwāyāt (READ_MUSHAFS in quran.jsx); `edition` is the text's folder in /quran-data/v1 (Ḥafṣ: hafs).
 export const RIWAYAT = [
   { id: 'hafs', label: 'Ḥafṣ', detail: 'ʿan ʿĀṣim', edition: null },
-  { id: 'warsh', label: 'Warsh', detail: 'ʿan Nāfiʿ', edition: 'ara-quranwarsh' },
-  { id: 'qalun', label: 'Qālūn', detail: 'ʿan Nāfiʿ', edition: 'ara-quranqaloon' },
-  { id: 'shubah', label: 'Shuʿbah', detail: 'ʿan ʿĀṣim', edition: 'ara-quranshouba' },
-  { id: 'susi', label: 'al-Sūsī', detail: 'ʿan Abī ʿAmr', edition: 'ara-quransoosi' },
+  { id: 'warsh', label: 'Warsh', detail: 'ʿan Nāfiʿ', edition: 'warsh' },
+  { id: 'qalun', label: 'Qālūn', detail: 'ʿan Nāfiʿ', edition: 'qalun' },
+  { id: 'shubah', label: 'Shuʿbah', detail: 'ʿan ʿĀṣim', edition: 'shubah' },
+  { id: 'susi', label: 'al-Sūsī', detail: 'ʿan Abī ʿAmr', edition: 'susi' },
 ]
 // Read Mode styles (READ_TEXT_STYLES in quran.jsx); `lines` drives client-side pagination for non-Madinah text.
 export const STYLES = [
@@ -66,43 +65,35 @@ export const STYLES = [
   { id: 'indopak16', label: 'IndoPak', detail: '16-line', script: 'indopak', lines: 16 },
 ]
 
-async function fawazChapter(edition, surah) {
-  for (const url of [`${FAWAZ}/editions/${edition}/${surah}.min.json`, `${FAWAZ}/editions/${edition}/${surah}.json`]) {
-    try {
-      const json = await getJson(url)
-      const rows = Array.isArray(json?.chapter) ? json.chapter : []
-      if (rows.length) return rows.map((r) => String(r?.text || ''))
-    } catch { /* try the next mirror */ }
-  }
-  throw new Error('This text is unavailable right now')
-}
-
 // [{ a, text, page, juz }] for the Uthmani (Ḥafṣ) text, with Madinah page + juz numbers.
 export function getUthmani(surah) {
   return once(`uth:${surah}`, async () => {
-    try {
-      const json = await getJson(`${ALQURAN}/surah/${surah}/quran-uthmani`)
-      const rows = json?.data?.ayahs || []
-      if (rows.length) return rows.map((r) => ({ a: r.numberInSurah, text: dropBasmalah(surah, r.numberInSurah, r.text), page: r.page, juz: r.juz }))
-    } catch { /* fall back to the mirror */ }
-    const rows = await fawazChapter('ara-quranuthmanihaf', surah)
-    return rows.map((text, i) => ({ a: i + 1, text: dropBasmalah(surah, i + 1, text), page: null, juz: null }))
+    const [ayat, index] = await Promise.all([surahFile('hafs', surah), getIndex()])
+    return ayat.map((text, i) => ({ a: i + 1, text, page: at(index.pages, surah, i + 1), juz: at(index.juz, surah, i + 1) }))
   })
 }
 
 // Text for a style + riwāyah: [{ a, text }]
 export async function getSurahText(surah, { script = 'uthmani', riwayah = 'hafs' } = {}) {
   const r = RIWAYAT.find((x) => x.id === riwayah) || RIWAYAT[0]
-  if (r.edition) return once(`riw:${r.id}:${surah}`, async () => (await fawazChapter(r.edition, surah)).map((text, i) => ({ a: i + 1, text: dropBasmalah(surah, i + 1, text) })))
-  if (script === 'indopak') return once(`indo:${surah}`, async () => (await fawazChapter('ara-quranindopak', surah)).map((text, i) => ({ a: i + 1, text: dropBasmalah(surah, i + 1, text) })))
+  const dir = r.edition || (script === 'indopak' ? 'indopak' : null)
+  if (dir) return (await surahFile(dir, surah)).map((text, i) => ({ a: i + 1, text }))
   return getUthmani(surah)
 }
 
 // One Madinah muṣḥaf page (1–604): [{ s, a, text, juz }]
 export function getMushafPage(page) {
   return once(`page:${page}`, async () => {
-    const json = await getJson(`${ALQURAN}/page/${page}/quran-uthmani`)
-    return (json?.data?.ayahs || []).map((r) => ({ s: r.surah.number, a: r.numberInSurah, text: dropBasmalah(r.surah.number, r.numberInSurah, r.text), juz: r.juz }))
+    const { pages } = await getIndex()
+    const [s0, a0] = pages[page - 1], [s1, a1] = pages[page] || [115, 1]
+    const rows = []
+    for (let s = s0; s <= Math.min(s1, 114); s++) {
+      for (const r of await getUthmani(s)) {
+        if ((s === s0 && r.a < a0) || (s === s1 && r.a >= a1)) continue
+        rows.push({ s, a: r.a, text: r.text, juz: r.juz })
+      }
+    }
+    return rows
   })
 }
 export const MUSHAF_PAGES = 604
@@ -137,21 +128,14 @@ export async function pageOf(surah, ayah = 1) {
   return rows[Math.max(0, Math.min(rows.length - 1, ayah - 1))]?.page || 1
 }
 
-// English translations offered by the reader (DIRECT_TRANSLATIONS in quran.jsx), all on api.alquran.cloud.
-export const TRANSLATIONS = [
-  ['en.sahih', 'Saheeh International'], ['en.pickthall', 'Marmaduke Pickthall'], ['en.yusufali', 'Abdullah Yusuf Ali'],
-  ['en.asad', 'Muhammad Asad'], ['en.ahmedali', 'Ahmed Ali'], ['en.ahmedraza', 'Ahmed Raza Khan'], ['en.arberry', 'A. J. Arberry'],
-  ['en.daryabadi', 'Abdul Majid Daryabadi'], ['en.hilali', 'Hilali & Khan'], ['en.qaribullah', 'Qaribullah & Darwish'],
-  ['en.sarwar', 'Muhammad Sarwar'], ['en.maududi', 'Abul Ala Maududi'], ['en.shakir', 'Mohammad Habib Shakir'],
-  ['en.itani', 'Talal Itani'], ['en.mubarakpuri', 'Mubarakpuri'], ['en.qarai', 'Ali Quli Qarai'], ['en.wahiduddin', 'Wahiduddin Khan'],
-].map(([edition, name]) => ({ edition, name }))
+import { TRANSLATIONS } from './translations'
+export { TRANSLATIONS }
 
 // English translation (Saheeh International by default): array indexed by āyah - 1.
+// An edition no longer offered (a choice remembered from before) falls back to Saheeh International.
 export function getTranslation(surah, edition = 'en.sahih') {
-  return once(`tr:${edition}:${surah}`, async () => {
-    const json = await getJson(`${ALQURAN}/surah/${surah}/${edition}`)
-    return (json?.data?.ayahs || []).map((r) => stripHtml(r.text))
-  })
+  const id = TRANSLATIONS.some((t) => t.edition === edition) ? edition : 'en.sahih'
+  return surahFile(`tr/${id}`, surah)
 }
 
 // Word by word: Map(āyah → [{ ar, en, tl }])
@@ -172,15 +156,24 @@ export function getWords(surah) {
   })
 }
 
-// Full-text search (English via Saheeh International, Arabic via the plain Arabic text).
-// Resolves { matches: [{ s, a, text }], total }; "no results" is a 404 from the API, returned as empty.
+// Full-text search (English in Saheeh International, Arabic in Tanzil's plain text without vowel marks), on this
+// site's copy: the whole text is loaded on the first search. Resolves { matches: [{ s, a, text }], total }.
+const plainArabic = (t) => t.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim()
+const searchRows = (lang) => once(`search:${lang}`, async () => {
+  const res = await fetch(`${DATA}/search/${lang}.txt`)
+  if (!res.ok) throw new Error(`Request failed (${res.status})`)
+  return (await res.text()).split('\n').filter((l) => l && !l.startsWith('#')).map((l) => {
+    const [s, a, ...rest] = l.split('|')
+    const text = rest.join('|')
+    return { s: Number(s), a: Number(a), text, key: lang === 'ar' ? plainArabic(text) : text.toLowerCase() }
+  })
+})
 export async function searchText(q) {
-  const edition = /[\u0600-\u06FF]/.test(q) ? 'quran-simple-clean' : 'en.sahih'
-  const res = await fetch(`${ALQURAN}/search/${encodeURIComponent(q)}/all/${edition}`)
-  if (res.status === 404) return { matches: [], total: 0 }
-  const json = await res.json()
-  const rows = Array.isArray(json?.data?.matches) ? json.data.matches : []
-  return { matches: rows.slice(0, 10).map((m) => ({ s: m.surah?.number, a: m.numberInSurah, text: m.text })), total: json?.data?.count || rows.length }
+  const arabic = /[\u0600-\u06FF]/.test(q)
+  const needle = arabic ? plainArabic(q) : q.trim().toLowerCase().replace(/\s+/g, ' ')
+  if (!needle) return { matches: [], total: 0 }
+  const hits = (await searchRows(arabic ? 'ar' : 'en')).filter((r) => r.key.includes(needle))
+  return { matches: hits.slice(0, 10).map(({ s, a, text }) => ({ s, a, text })), total: hits.length }
 }
 
 /* ── recitation ───────────────────────────────────────────── */
