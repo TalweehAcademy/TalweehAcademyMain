@@ -583,6 +583,10 @@
 .qp-mushaf{--mfs:20px;direction:rtl;font-family:'Amiri Quran','Amiri',serif;font-size:var(--mfs);color:var(--ink);display:flex;flex-direction:column;flex:1}
 .qp-ml{height:2.15em;display:flex;align-items:center;justify-content:space-between;white-space:nowrap;line-height:1}
 .qp-ml.c{justify-content:center;gap:.28em}
+.qp-mushaf.ip{font-family:'Talweeh IndoPak','Amiri',serif}
+.qp-mushaf.ip .qp-ml{height:2.05em}
+.qp-mushaf.ip .qp-cart.with-b{display:flex;align-items:center;justify-content:center;gap:1.4em}
+.qp-mushaf.ip .qp-cart.with-b b{font-weight:400;font-size:.95em;color:var(--ink)}
 .qp-ml.h{justify-content:center}
 .qp-ml.h .qp-cart{width:100%;height:1.8em;margin:0;font-size:.95em}
 .qp-ml.h .qp-bism{font-size:1em;margin:0}

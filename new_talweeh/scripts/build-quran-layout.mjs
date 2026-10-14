@@ -27,7 +27,10 @@ const db = (name) => new DatabaseSync(file(name), { readOnly: true })
 
 const QUL_NOTICE = 'Layout and word data from the Quranic Universal Library (https://qul.tarteel.ai), by Tarteel.'
 const TANZIL_NOTICE = JSON.parse(await readFile(path.join(out, 'hafs', '1.json'), 'utf8')).notice
-const isNumber = (t) => /^[٠-٩۰-۹]+$/.test(t)
+// An āyah's end is its last word, one with no letters: its number (١٣) in the Uthmani list; in the IndoPak one the
+// āyah's circle with its number and waqf sign as glyphs of the site's IndoPak font (public/fonts, "AlQuran IndoPak"
+// by QuranWBW, which has every character that text uses), so the IndoPak pages draw it as it is.
+const LETTER = /[\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FC]/
 // Letters only (marks, tatweel and spaces dropped; the alef forms made one), to match a QUL word to Tanzil's.
 const letters = (t) => t.normalize('NFKD').replace(/[^ء-غف-يٱ]/g, '')
   .replace(/[ٱآأإ]/g, 'ا').replace(/ى/g, 'ي')
@@ -36,12 +39,14 @@ const letters = (t) => t.normalize('NFKD').replace(/[^ء-غف-يٱ]/g, '')
 function words(name) {
   const byId = new Map(), byAyah = new Map()
   for (const r of db(name).prepare('SELECT id, surah, ayah, word, text FROM words ORDER BY id').all()) {
-    const w = { id: r.id, s: r.surah, a: r.ayah, w: r.word, text: r.text, end: isNumber(r.text) }
+    const w = { id: r.id, s: r.surah, a: r.ayah, w: r.word, text: r.text, end: !LETTER.test(r.text) }
     byId.set(r.id, w)
     const k = `${r.surah}:${r.ayah}`
     if (!byAyah.has(k)) byAyah.set(k, [])
     byAyah.get(k).push(w)
   }
+  // A letterless word inside an āyah (a sign of its own, 18:19 and 73:20 in the IndoPak list) is not its end.
+  for (const ws of byAyah.values()) ws.forEach((w, i) => { if (i < ws.length - 1) w.end = false })
   return { byId, byAyah }
 }
 
@@ -83,7 +88,7 @@ function layout(name, wordsOf, textOf, pages) {
       for (let id = Number(r.f); id <= Number(r.l); id++) {
         const w = wordsOf.get(id)
         if (!w) throw new Error(`${name}: page ${r.p} line ${r.n} has no word ${id}`)
-        line.words.push(w.end ? { s: w.s, a: w.a, end: 1 } : { t: textOf(w), s: w.s, a: w.a })
+        line.words.push(w.end ? { t: w.text, s: w.s, a: w.a, end: 1 } : { t: textOf(w), s: w.s, a: w.a })
       }
     }
     byPage.get(r.p).push(line)

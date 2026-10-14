@@ -84,34 +84,42 @@ export async function getSurahText(surah, { script = 'uthmani', riwayah = 'hafs'
   return getUthmani(surah)
 }
 
-// One Madinah muṣḥaf page (1–604): [{ s, a, text, juz }]
-export function getMushafPage(page) {
-  return once(`page:${page}`, async () => {
-    const { pages } = await getIndex()
+// Printed muṣḥafs Read Mode draws page by page (scripts/build-quran-layout.mjs): Madinah 15-line (1421H print) and
+// IndoPak 16-line (Taj company). `script`: the text its pages hold.
+export const LAYOUTS = {
+  madinah15: { pages: 604, script: 'uthmani' },
+  indopak16: { pages: 548, script: 'indopak' },
+}
+export const MUSHAF_PAGES = LAYOUTS.madinah15.pages
+const layoutStarts = async (layout) => { const index = await getIndex(); return index.layouts?.[layout] || index.pages }
+
+// One printed page: [{ s, a, text, juz }]
+export function getMushafPage(page, layout = 'madinah15') {
+  return once(`page:${layout}:${page}`, async () => {
+    const [pages, { juz }] = await Promise.all([layoutStarts(layout), getIndex()])
     const [s0, a0] = pages[page - 1], [s1, a1] = pages[page] || [115, 1]
     const rows = []
     for (let s = s0; s <= Math.min(s1, 114); s++) {
-      for (const r of await getUthmani(s)) {
+      for (const r of await getSurahText(s, { script: LAYOUTS[layout].script })) {
         if ((s === s0 && r.a < a0) || (s === s1 && r.a >= a1)) continue
-        rows.push({ s, a: r.a, text: r.text, juz: r.juz })
+        rows.push({ s, a: r.a, text: r.text, juz: at(juz, s, r.a) })
       }
     }
     return rows
   })
 }
-export const MUSHAF_PAGES = 604
 
-// The printed Madinah muṣḥaf's own layout for one page (1421H print): its 15 lines, word by word.
+// One printed page line by line: its 15 (Madinah) or 16 (IndoPak) lines, word by word.
 // Lines with no words are the surah title and basmalah slots; the reader fills them in.
-// Returns [{ n, type, centred, words: [{ t, s, a, end }] }] (pages 1–2 have fewer lines; `centred`: a short line the
-// print centres instead of stretching, such as a sūrah's last).
+// Returns [{ n, type, centred, words: [{ t, s, a, end }] }] (Madinah pages 1–2 have fewer lines; `centred`: a short
+// line the print centres instead of stretching). An āyah's end is its number (Madinah) or its circle glyph (IndoPak).
 export function getMushafLines(page, layout = 'madinah15') {
   return once(`lines:${layout}:${page}`, async () => ((await getJson(`${DATA}/layout/${layout}/${page}.json`))?.lines || [])
     .map((l) => ({ n: l.n, type: l.type, centred: !!l.c, words: (l.words || []).map((w) => ({ t: w.t, s: w.s, a: w.a, end: !!w.end })) })))
 }
-export async function pageOf(surah, ayah = 1) {
-  const rows = await getUthmani(surah)
-  return rows[Math.max(0, Math.min(rows.length - 1, ayah - 1))]?.page || 1
+// The page of a layout that holds sūrah:āyah.
+export async function pageOf(surah, ayah = 1, layout = 'madinah15') {
+  return at(await layoutStarts(layout), surah, ayah)
 }
 
 import { TRANSLATIONS } from './translations'
