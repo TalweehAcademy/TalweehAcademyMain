@@ -61,16 +61,22 @@ const metaList = (js, name) => {
     .filter(([sura]) => sura <= 114)
 }
 
-const BASMALAH = /^(بِسْمِ|بِّسْمِ)\s/
+// The basmalah is recognised by its letters alone: the sources write its marks in different orders (بِّسْمِ before
+// al-Tīn and al-Qadr), and the riwāyāt and IndoPak spell it their own way.
+const letters = (t) => t.normalize('NFKD').replace(/[^\u0621-\u063A\u0641-\u064A\u0671]/g, '').replace(/[\u0671\u0622\u0623\u0625]/g, '\u0627')
+const BASMALAH = letters('بسم الله الرحمن الرحيم')
 function withoutBasmalah(s, a, text, label) {
   if (s === 1 || s === 9 || a !== 1) return text
-  if (!BASMALAH.test(text)) return text
   const words = text.split(' ')
+  if (letters(words.slice(0, 4).join('')) !== BASMALAH) return text
   if (words.length < 5) throw new Error(`${label} ${s}:1 is only the basmalah`)
+  removed++
   return words.slice(4).join(' ')
 }
 
 const counts = []
+let removed = 0
+const basmalahReport = []
 const surahRows = (rows, label, { basmalah = true } = {}) => {
   const bySurah = []
   for (let s = 1; s <= 114; s++) {
@@ -82,6 +88,10 @@ const surahRows = (rows, label, { basmalah = true } = {}) => {
   return bySurah
 }
 async function writeSurahs(dir, bySurah, notice) {
+  // Tanzil puts the basmalah before āyah 1 of all 112 sūrahs that have one; the fawazahmed0 texts never do.
+  if (!dir.startsWith('tr/') && removed !== 0 && removed !== 112) throw new Error(`${dir}: the basmalah was taken off ${removed} sūrahs, expected 0 or 112`)
+  basmalahReport.push(`${dir} ${removed}`)
+  removed = 0
   await mkdir(path.join(out, dir), { recursive: true })
   for (let s = 1; s <= 114; s++) await writeFile(path.join(out, dir, `${s}.json`), JSON.stringify({ notice, ayat: bySurah[s - 1] }))
 }
@@ -132,4 +142,5 @@ await writeFile(path.join(out, 'NOTICE.txt'), [
   `warsh/, qalun/, shubah/, susi/, indopak/: ${FAWAZ_NOTICE}`, '',
 ].join('\n'))
 console.log(report.join('\n'))
+console.log(`Basmalah taken off (sūrahs): ${basmalahReport.filter((r) => !r.startsWith('tr/')).join(', ')}`)
 console.log(`Written: ${execSync(`du -sh "${out}"`).toString().trim()}`)
