@@ -636,12 +636,14 @@
 .qp-mrk .rk small{font-size:.9em;font-weight:700}
 .qp-mrk .rk small:nth-of-type(1){grid-area:t}.qp-mrk .rk small:nth-of-type(2){grid-area:n}.qp-mrk .rk small:nth-of-type(3){grid-area:b}
 .qp-mrk .rk i{grid-area:k;font-style:normal;font-family:'Talweeh IndoPak','Amiri',serif;font-size:1.7em}
-.qp-mrk .mz{writing-mode:vertical-rl;font-size:.9em;white-space:nowrap}
+.qp-mrk .mz,.qp-mrk .hz,.qp-mrk .sj{writing-mode:vertical-rl;font-size:1.45em;white-space:nowrap;line-height:1.15}
+.qp-mrk .hz i{font-style:normal;color:var(--gold)}
+.qp-mrk .sj{color:var(--gold-b);font-weight:700}
 .qp-mushaf.measure .qp-mrk,.qp-mushaf.check .qp-mrk{display:none}
-/* Room for the marks on the outer edge of IndoPak pages. */
-.qp-page.lined.ip.side-r{padding-right:calc(22px + 1.6em)}
-.qp-page.lined.ip.side-l{padding-left:calc(22px + 1.6em)}
-@media(max-width:760px){.qp-page.lined.ip.side-r{padding-right:30px}.qp-page.lined.ip.side-l{padding-left:30px}.qp-phead{font-size:12px}.qp-phead.ip{font-size:14px}.qp-phead b{font-size:13px}}
+/* Room for the marks on the outer edge of the printed pages. */
+.qp-page.lined.side-r{padding-right:calc(22px + 1.6em)}
+.qp-page.lined.side-l{padding-left:calc(22px + 1.6em)}
+@media(max-width:760px){.qp-page.lined.side-r{padding-right:30px}.qp-page.lined.side-l{padding-left:30px}.qp-phead{font-size:12px}.qp-phead.ip{font-size:14px}.qp-phead b{font-size:13px}}
 
 /* ── Recitation bar (Read Mode's Listen, quran/AyahPlayer.jsx) ─────────────────── */
 .qp-aplay{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:160;display:flex;align-items:center;gap:10px;width:min(720px,calc(100vw - 32px));padding:8px 10px 8px 6px;border-radius:999px;border:1px solid rgba(215,179,115,.35);background:var(--c-solid);box-shadow:0 18px 50px rgba(var(--sh-rgb),.45);color:var(--c-text);opacity:0;pointer-events:none;transform:translate(calc(-50% + var(--dx, 0px)),calc(12px + var(--dy, 0px)));transition:opacity .25s,transform .3s var(--ease)}

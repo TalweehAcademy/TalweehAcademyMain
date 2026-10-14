@@ -111,12 +111,12 @@ report.push('Ḥafṣ (Tanzil Uthmani 1.1): 6236 āyāt')
 
 const meta = await get(TANZIL_META)
 const pages = metaList(meta, 'Page'), juz = metaList(meta, 'Juz')
-// Rukūʿ, manzil and ḥizb-quarter starts, for the printed pages' margins.
-const ruku = metaList(meta, 'Ruku'), manzil = metaList(meta, 'Manzil'), hizbQuarters = metaList(meta, 'HizbQaurter')
-if (ruku.length !== 556 || manzil.length !== 7 || hizbQuarters.length !== 240) throw new Error(`Tanzil metadata: ${ruku.length} rukūʿ, ${manzil.length} manāzil, ${hizbQuarters.length} ḥizb quarters`)
+// Rukūʿ, manzil and ḥizb-quarter starts and the sajdah āyāt, for the printed pages' margins.
+const ruku = metaList(meta, 'Ruku'), manzil = metaList(meta, 'Manzil'), hizbQuarters = metaList(meta, 'HizbQaurter'), sajda = metaList(meta, 'Sajda')
+if (ruku.length !== 556 || manzil.length !== 7 || hizbQuarters.length !== 240 || sajda.length !== 15) throw new Error(`Tanzil metadata: ${ruku.length} rukūʿ, ${manzil.length} manāzil, ${hizbQuarters.length} ḥizb quarters, ${sajda.length} sajdahs`)
 if (pages.length !== 604 || juz.length !== 30) throw new Error(`Tanzil metadata: ${pages.length} pages, ${juz.length} ajzāʾ`)
-await writeFile(path.join(out, 'index.json'), JSON.stringify({ notice: 'Page, juzʾ, rukūʿ, manzil and ḥizb-quarter starts from Tanzil Quran Metadata, Creative Commons Attribution 3.0 (https://tanzil.net).', counts, pages, juz, ruku, manzil, hizbQuarters }))
-report.push('Index: 604 page starts, 30 juzʾ, 556 rukūʿ, 7 manāzil, 240 ḥizb quarters')
+await writeFile(path.join(out, 'index.json'), JSON.stringify({ notice: 'Page, juzʾ, rukūʿ, manzil and ḥizb-quarter starts and sajdah āyāt from Tanzil Quran Metadata, Creative Commons Attribution 3.0 (https://tanzil.net).', counts, pages, juz, ruku, manzil, hizbQuarters, sajda }))
+report.push('Index: 604 page starts, 30 juzʾ, 556 rukūʿ, 7 manāzil, 240 ḥizb quarters, 15 sajdahs')
 
 // Arabic search: Tanzil's plain text without marks, one "s|a|text" line per āyah (basmalah kept, as Tanzil gives it).
 const clean = parsePipes(await get(TANZIL_TEXT('simple-clean')), 'Simple clean')

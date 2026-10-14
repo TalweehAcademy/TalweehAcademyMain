@@ -7,6 +7,7 @@ import './commerce-cart-link.css'
 import './night-portal-v1.css'
 import './social-icons.css'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { RouteError } from './components/RouteError'
 import { RouteMeta } from './hooks/useDocumentMeta'
 import { useScrollLock } from './hooks/useScrollLock'
 import { createPortal } from 'react-dom'
@@ -606,11 +607,13 @@ function RouteLoadingFallback() {
 }
 
 function AppInner() {
+  const location = useLocation()
   return (
     <EditModeProvider>
       <ScrollToTop />
       <EditModeToggle />
       <RouteMeta />
+      <RouteError path={location.pathname}>
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
         <Route path="/navigation-preview/Alimiyyah" element={<AlimiyyahPage />} />
@@ -651,6 +654,7 @@ function AppInner() {
         <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+      </RouteError>
     </EditModeProvider>
   )
 }

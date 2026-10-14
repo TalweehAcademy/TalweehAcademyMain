@@ -136,12 +136,12 @@ export async function pageOf(surah, ayah = 1, layout = 'madinah15') {
   return at(await layoutStarts(layout), surah, ayah)
 }
 
-// What a printed page's header and margins show (Tanzil's metadata): the juzʾ an āyah is in, and for each rukūʿ's last
+// What a printed page's header and margins show (Tanzil's metadata): the juzʾ an āyah is in; for each rukūʿ's last
 // āyah ("s:a") its number in its sūrah, its number of āyāt and its number in its juzʾ (the three figures by the ع in
-// IndoPak margins); for each manzil's first āyah its number.
+// IndoPak margins); each manzil's and ḥizb quarter's first āyah; the 15 sajdah āyāt.
 export function getPrintMarks() {
   return once('marks', async () => {
-    const { ruku, manzil, juz, counts } = await getIndex()
+    const { ruku, manzil, juz, counts, hizbQuarters = [], sajda = [], layouts = {} } = await getIndex()
     const rukuEnd = new Map(), inJuz = new Map()
     let inSurah = 0
     ruku.forEach(([s, a], i) => {
@@ -152,7 +152,16 @@ export function getPrintMarks() {
       inJuz.set(j, (inJuz.get(j) || 0) + 1)
       rukuEnd.set(`${s}:${end}`, { s: inSurah, n: end - a + 1, j: inJuz.get(j) })
     })
-    return { rukuEnd, manzil: new Map(manzil.map(([s, a], i) => [`${s}:${a}`, i + 1])), juzOf: (s, a) => at(juz, s, a) }
+    return {
+      rukuEnd,
+      manzil: new Map(manzil.map(([s, a], i) => [`${s}:${a}`, i + 1])),
+      // ḥizb quarter q (0–239) → ḥizb q÷4+1, quarter q%4 (0 = the ḥizb's start)
+      hizb: new Map(hizbQuarters.map(([s, a], q) => [`${s}:${a}`, { h: Math.floor(q / 4) + 1, part: q % 4 }])),
+      sajda: new Set(sajda.map(([s, a]) => `${s}:${a}`)),
+      juzOf: (s, a) => at(juz, s, a),
+      // true when a layout's page begins inside an āyah (its start then names a word)
+      startsInside: (layout, page) => (layouts[layout]?.[page - 1]?.length || 0) > 2,
+    }
   })
 }
 // Juzʾ names as printed: IndoPak paras by their first words, Madinah by number.

@@ -104,19 +104,32 @@ function MushafLines({ lines, no, onTap, selected, layout, onSize, shared, marks
   const centred = !indopak && no <= 2
   const out = []
   const seen = new Set()
+  const firstLine = lines.findIndex((l) => l.words.length)
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i]
     if (l.words.length) {
-      // Margin: ع with the rukūʿ's number in its sūrah, its āyāt and its number in the juzʾ, beside the line it ends
-      // on (IndoPak prints); منزل at a manzil's first line.
-      const ruku = indopak && marks ? l.words.filter((w) => w.end).map((w) => marks.rukuEnd.get(`${w.s}:${w.a}`)).filter(Boolean) : []
-      const manzil = indopak && marks ? l.words.map((w) => { const k = `${w.s}:${w.a}`; const first = !seen.has(k); seen.add(k); return first && !(i === 0 && w === l.words[0] && w.a !== 1) ? marks.manzil.get(k) : null }).find(Boolean) : null
-      if (!indopak) l.words.forEach((w) => seen.add(`${w.s}:${w.a}`))
+      // Margin marks, on the page's outer edge: āyāt that begin on this line (manzil for IndoPak; ḥizb and juzʾ for
+      // Madinah) and āyāt that end on it (IndoPak: ع with the rukūʿ's number in its sūrah, its āyāt and its number in
+      // the para; both: sajdah).
+      const begins = []
+      l.words.forEach((w, k) => {
+        const key = `${w.s}:${w.a}`
+        if (seen.has(key)) return
+        seen.add(key)
+        if (!(i === firstLine && k === 0 && marks?.startsInside(layout, no))) begins.push(key)
+      })
+      const ends = l.words.filter((w) => w.end).map((w) => `${w.s}:${w.a}`)
+      const ruku = indopak && marks ? ends.map((k) => marks.rukuEnd.get(k)).filter(Boolean) : []
+      const manzil = indopak && marks ? begins.map((k) => marks.manzil.get(k)).find(Boolean) : null
+      const hizb = !indopak && marks ? begins.map((k) => marks.hizb.get(k)).find(Boolean) : null
+      const sajda = marks ? ends.find((k) => marks.sajda.has(k)) : null
       out.push(
-        <div key={l.n} className={`qp-ml w${centred || (l.centred && l.type === 'ayah') ? ' c' : ''}${ruku.length || manzil ? ' has-m' : ''}`}>
-          {(ruku.length > 0 || manzil) && (
+        <div key={l.n} className={`qp-ml w${centred || (l.centred && l.type === 'ayah') ? ' c' : ''}${ruku.length || manzil || hizb || sajda ? ' has-m' : ''}`}>
+          {(ruku.length > 0 || manzil || hizb || sajda) && (
             <span className={`qp-mrk ${side}`} aria-hidden="true">
               {manzil && <span className="mz">منزل {arNum(manzil)}</span>}
+              {hizb && <span className="hz">{hizbLabel(hizb, marks)}</span>}
+              {sajda && <span className="sj">{indopak && sajda === '22:77' ? 'سجدة عند الشافعي' : 'سجدة'}</span>}
               {ruku.map((r, k) => <span key={k} className="rk"><small>{arNum(r.s)}</small><i>ع</i><small>{arNum(r.n)}</small><small>{arNum(r.j)}</small></span>)}
             </span>
           )}
@@ -145,6 +158,13 @@ function MushafLines({ lines, no, onTap, selected, layout, onSize, shared, marks
   // A page with all its print's lines fills the page's height; a shorter one (the Qurʾān's last) keeps its spacing.
   const full = lines.length >= (LAYOUTS[layout]?.lines || 15)
   return <div className={`qp-mushaf${centred ? ' opening' : ''}${indopak ? ' ip' : ''}${full ? ' full' : ''}`} ref={boxRef} style={size ? { '--mfs': `${Math.min(size, shared || size)}px` } : undefined}>{out}</div>
+}
+
+// The Madinah margin at a ḥizb quarter: الحزب ٥٧ at a ḥizb's start (with الجزء at a juzʾ's), ¼ ½ ¾ at its quarters.
+const QUARTERS = ['', '¼', '½', '¾']
+function hizbLabel({ h, part }) {
+  if (part) return `${QUARTERS[part]} الحزب ${arNum(h)}`
+  return h % 2 ? <>الجزء {arNum((h + 1) / 2)} <i>۞</i> الحزب {arNum(h)}</> : `الحزب ${arNum(h)}`
 }
 
 // A printed page's top line: its juzʾ (IndoPak: the para's name and number), its page number, its sūrah.
@@ -246,7 +266,14 @@ export default function QuranReadPage() {
   }, [madinah, layout, view]) // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ── book view, Madinah: two real pages ── */
-  const spreadStart = page ? (page % 2 ? page : page - 1) : 0
+  // Phones and narrow windows show one page at a time (the spread's two pages would sit one above the other).
+  const [single, setSingle] = useState(() => window.matchMedia('(max-width: 900px)').matches)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)'), on = () => setSingle(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  const spreadStart = page ? (single ? page : page % 2 ? page : page - 1) : 0
   const [spreadRows, setSpreadRows] = useState([null, null])
   const [spreadLines, setSpreadLines] = useState([null, null])
   useEffect(() => {
@@ -329,17 +356,27 @@ export default function QuranReadPage() {
   /* ── navigation ── */
   const surahSubCount = subPages.length
   const canPrev = madinah && view === 'book' ? spreadStart > 1 : (sub > 0 || surah > 1)
-  const canNext = madinah && view === 'book' ? spreadStart + 2 <= totalPages : (sub + 2 < surahSubCount || surah < 114)
+  const canNext = madinah && view === 'book' ? spreadStart + (single ? 1 : 2) <= totalPages : (sub + 2 < surahSubCount || surah < 114)
   const turn = useCallback((d) => {
     setPop(null)
-    if (madinah && view === 'book') { setPage((p) => { const s = p % 2 ? p : p - 1; return Math.min(totalPages - 1, Math.max(1, s + d * 2)) }); return }
+    if (madinah && view === 'book') { setPage((p) => (single ? Math.min(totalPages, Math.max(1, p + d)) : Math.min(totalPages - 1, Math.max(1, (p % 2 ? p : p - 1) + d * 2)))); return }
     if (d > 0) { if (sub + 2 < surahSubCount) setSub(sub + 2); else if (surah < 114) { setSurah(surah + 1); setSub(0) } }
     else if (sub > 0) setSub(Math.max(0, sub - 2))
     else if (surah > 1) {
       const prev = surah - 1, rows = texts[`${textKey}:${prev}`]
       setSurah(prev); setSub(rows ? Math.max(0, (paginate(rows, style.lines, fs).length - 1) & ~1) : 0)
     }
-  }, [madinah, totalPages, view, sub, surahSubCount, surah, texts, textKey, style.lines, fs])
+  }, [madinah, single, totalPages, view, sub, surahSubCount, surah, texts, textKey, style.lines, fs])
+  // A sideways swipe turns the page, as in a muṣḥaf: drawn to the right, the next page; to the left, the one before.
+  const swipe = useRef(null)
+  const onSwipeStart = (e) => { const t = e.touches[0]; swipe.current = { x: t.clientX, y: t.clientY } }
+  const onSwipeEnd = (e) => {
+    const from = swipe.current, t = e.changedTouches[0]
+    swipe.current = null
+    if (!from) return
+    const dx = t.clientX - from.x, dy = t.clientY - from.y
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && (dx > 0 ? canNext : canPrev)) turn(dx > 0 ? 1 : -1)
+  }
   useEffect(() => {
     if (view !== 'book') return undefined
     const key = (e) => { if (e.target.closest('input,select,textarea')) return; if (e.key === 'ArrowLeft') turn(1); if (e.key === 'ArrowRight') turn(-1) }
@@ -366,12 +403,12 @@ export default function QuranReadPage() {
   const playerRef = useRef(null)
   const [playKey, setPlayKey] = useState(null)
   const followRef = useRef({})
-  followRef.current = { madinah, view, layout, surah }
+  followRef.current = { madinah, view, layout, surah, single }
   const onPlayAyah = useCallback((s, a) => {
     setPlayKey(`${s}:${a}`)
-    const { madinah: paged, view: v, layout: lay, surah: cur } = followRef.current
+    const { madinah: paged, view: v, layout: lay, surah: cur, single: one } = followRef.current
     // The page follows the voice: printed pages turn to the āyah's spread; scroll view keeps it on screen.
-    if (paged && v === 'book') pageOf(s, a, lay).then((p) => setPage((now) => { const sp = (x) => (x % 2 ? x : x - 1); return sp(p) === sp(now) ? now : p })).catch(() => {})
+    if (paged && v === 'book') pageOf(s, a, lay).then((p) => setPage((now) => { const sp = (x) => (one || x % 2 ? x : x - 1); return sp(p) === sp(now) ? now : p })).catch(() => {})
     else if (v === 'scroll') document.querySelector(`[data-k="${s}:${a}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
     else if (s !== cur) { setSurah(s); setSub(0) }
   }, [])
@@ -406,7 +443,7 @@ export default function QuranReadPage() {
   // The text size each printed page of the spread fits at; both pages use the smaller one.
   const [fitSizes, setFitSizes] = useState({})
   const onSize = useCallback((no, v) => setFitSizes((f) => (f[no] === v ? f : { ...f, [no]: v })), [])
-  const spreadSize = [spreadStart, spreadStart + 1].map((n) => fitSizes[`${layout}:${n}`]).filter(Boolean)
+  const spreadSize = (single ? [spreadStart] : [spreadStart, spreadStart + 1]).map((n) => fitSizes[`${layout}:${n}`]).filter(Boolean)
   const sharedSize = spreadSize.length ? Math.min(...spreadSize) : undefined
   const renderPage = (rows, no, key, lines) => {
     if (lines && lines.length) {
@@ -485,10 +522,12 @@ export default function QuranReadPage() {
         {error && <p className="qp-status err">{error}</p>}
 
         {view === 'book' && (
-          <div className="qp-book">
-            <div className="qp-spread">
+          <div className="qp-book" onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}>
+            <div className={`qp-spread${single && madinah ? ' one' : ''}`}>
               {madinah
-                ? [renderPage(spreadRows[0], spreadStart, 'r', spreadLines[0]), renderPage(spreadRows[1], spreadStart + 1, 'l', spreadLines[1])]
+                ? (single
+                  ? [renderPage(spreadRows[0], spreadStart, spreadStart % 2 ? 'r' : 'l', spreadLines[0])]
+                  : [renderPage(spreadRows[0], spreadStart, 'r', spreadLines[0]), renderPage(spreadRows[1], spreadStart + 1, 'l', spreadLines[1])])
                 : [renderPage(subPages[sub] || (surahRows ? [] : null), sub + 1, 'r'), renderPage(subPages[sub + 1] || (surahRows ? [] : null), subPages[sub + 1] ? sub + 2 : 0, 'l')]}
             </div>
             <button className="qp-turn l" type="button" onClick={() => turn(1)} disabled={!canNext} aria-label="Next page">‹</button>
