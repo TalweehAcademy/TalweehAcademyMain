@@ -8,8 +8,11 @@
 //   www.mp3quran.net    reciters, surah audio, per-āyah timings
 // Every call is cached for the session; a failed call rejects so the page can show it.
 import { QURAN_SURAHS } from '../data/quranIndex'
+import { DATA_VERSION } from './dataVersion'
 
 const DATA = '/quran-data/v1'
+// Every data address carries the data's fingerprint, so a changed file is fetched again despite the 30-day cache.
+const v = (url) => `${url}?v=${DATA_VERSION}`
 // mp3quran.net 301-redirects its API to www.
 const MP3QURAN = 'https://www.mp3quran.net/api/v3'
 
@@ -42,11 +45,11 @@ export const arNum = (n) => String(n).replace(/\d/g, (d) => AR_DIGITS[d])
 export const stripHtml = (t) => String(t || '').replace(/<[^>]*>/g, '').trim()
 
 // The stored texts have the basmalah in front of āyah 1 taken off already (readers show it as a heading).
-const surahFile = (dir, surah) => once(`${dir}:${surah}`, async () => (await getJson(`${DATA}/${dir}/${surah}.json`))?.ayat || [])
+const surahFile = (dir, surah) => once(`${dir}:${surah}`, async () => (await getJson(v(`${DATA}/${dir}/${surah}.json`)))?.ayat || [])
 // Page and juzʾ starts of the Madinah muṣḥaf: { pages: [[s, a]…604], juz: [[s, a]…30] }. Page numbers follow the
 // 1421H print the Read Mode pages are drawn from (layouts.madinah15); Tanzil's own differ on 25 pages.
 const getIndex = () => once('index', async () => {
-  const index = await getJson(`${DATA}/index.json`)
+  const index = await getJson(v(`${DATA}/index.json`))
   return { ...index, pages: index.layouts?.madinah15 || index.pages }
 })
 // The number of the last start at or before sūrah:āyah (its first word). A start is [s, a] or, for a page that
@@ -128,7 +131,7 @@ export function getMushafPage(page, layout = 'madinah15') {
 // Returns [{ n, type, centred, words: [{ t, s, a, end }] }] (Madinah pages 1–2 have fewer lines; `centred`: a short
 // line the print centres instead of stretching). An āyah's end is its number (Madinah) or its circle glyph (IndoPak).
 export function getMushafLines(page, layout = 'madinah15') {
-  return once(`lines:${layout}:${page}`, async () => ((await getJson(`${DATA}/layout/${layout}/${page}.json`))?.lines || [])
+  return once(`lines:${layout}:${page}`, async () => ((await getJson(v(`${DATA}/layout/${layout}/${page}.json`)))?.lines || [])
     .map((l) => ({ n: l.n, type: l.type, centred: !!l.c, words: (l.words || []).map((w) => ({ t: w.t, s: w.s, a: w.a, end: !!w.end })) })))
 }
 // The page of a layout that holds sūrah:āyah.
@@ -182,7 +185,7 @@ export function getTranslation(surah, edition = 'en.sahih') {
 // Word by word: Map(āyah → [{ ar, en, tl }]); the Arabic is the stored Tanzil text, cut into QUL's words.
 export function getWords(surah) {
   return once(`words:${surah}`, async () => {
-    const ayat = (await getJson(`${DATA}/words/${surah}.json`))?.ayat || []
+    const ayat = (await getJson(v(`${DATA}/words/${surah}.json`)))?.ayat || []
     return new Map(ayat.map((ws, i) => [i + 1, ws.map(([ar, en, tl]) => ({ ar, en, tl }))]))
   })
 }
@@ -191,7 +194,7 @@ export function getWords(surah) {
 // site's copy: the whole text is loaded on the first search. Resolves { matches: [{ s, a, text }], total }.
 const plainArabic = (t) => t.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim()
 const searchRows = (lang) => once(`search:${lang}`, async () => {
-  const res = await fetch(`${DATA}/search/${lang}.txt`)
+  const res = await fetch(v(`${DATA}/search/${lang}.txt`))
   if (!res.ok) throw new Error(`Request failed (${res.status})`)
   return (await res.text()).split('\n').filter((l) => l && !l.startsWith('#')).map((l) => {
     const [s, a, ...rest] = l.split('|')

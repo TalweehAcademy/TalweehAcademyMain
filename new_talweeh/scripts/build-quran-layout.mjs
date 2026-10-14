@@ -20,6 +20,7 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 import { fileURLToPath } from 'node:url'
+import { writeDataVersion } from './quran-data-version.mjs'
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const out = path.join(root, 'public', 'quran-data', 'v1')
@@ -180,3 +181,4 @@ const same = madinahStarts.every(([s, a], i) => index.pages[i][0] === s && index
 report.push(`Madinah page starts ${same ? 'match' : 'DIFFER FROM'} Tanzil's page numbers`)
 await writeFile(indexFile, JSON.stringify(index))
 console.log(report.join('\n'))
+console.log(`Data version: ${await writeDataVersion(root)}`)

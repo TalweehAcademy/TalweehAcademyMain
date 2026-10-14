@@ -17,6 +17,7 @@ import { execSync } from 'node:child_process'
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { writeDataVersion } from './quran-data-version.mjs'
 import { TRANSLATIONS } from '../src/quran/translations.js'
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -148,3 +149,4 @@ await writeFile(path.join(out, 'NOTICE.txt'), [
 console.log(report.join('\n'))
 console.log(`Basmalah taken off (sūrahs): ${basmalahReport.filter((r) => !r.startsWith('tr/')).join(', ')}`)
 console.log(`Written: ${execSync(`du -sh "${out}"`).toString().trim()}`)
+console.log(`Data version: ${await writeDataVersion(root)}`)
