@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { audioUrl, getReciters, getTimings, getTranslation, getUthmani, surahInfo } from '../quran/quranData'
-import { AyahMarker, Icon, SurahPicker } from '../quran/QuranUI'
+import { AyahMarker, Icon, SurahPicker, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
 const RECITER_KEY = 'talweeh-listen-reciter'
@@ -253,6 +253,7 @@ export default function QuranListenPage() {
           </div>
           {matches.length > shown.length && <div className="qp-more"><button className="wh-btn wh-btn-glass" type="button" onClick={() => setShowAll(true)}>Show all {matches.length} reciters</button></div>}
         </section>
+        <QuranCredits />
       </div>
     </WahaPage>
   )

@@ -5,6 +5,20 @@ import { useScrollLock } from '../hooks/useScrollLock'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { arNum, surahInfo } from './quranData'
 
+// Where the Qurʾān pages' text, layout, translations and audio come from (quranData.js), shown at the foot of each page.
+// The Tanzil text's terms ask for its source to be named and linked.
+const ext = { target: '_blank', rel: 'noreferrer' }
+export function QuranCredits() {
+  return (
+    <p className="qp-credits">
+      Qurʾān text from the <a href="https://tanzil.net" {...ext}>Tanzil Project</a>, served by <a href="https://alquran.cloud" {...ext}>AlQuran Cloud</a>.
+      Muṣḥaf page layout from <a href="https://quran.com" {...ext}>Quran.com</a>; other riwāyāt and the IndoPak script from <a href="https://github.com/fawazahmed0/quran-api" {...ext}>fawazahmed0/quran-api</a>;
+      word-by-word meanings from <a href="https://islamic.app" {...ext}>islamic.app</a>; recitations from <a href="https://mp3quran.net" {...ext}>MP3Quran</a>.
+      Each translation is the work of the translator named with it.
+    </p>
+  )
+}
+
 export const Icon = {
   search: <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>,
   close: <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>,

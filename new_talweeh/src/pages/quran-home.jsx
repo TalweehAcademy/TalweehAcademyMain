@@ -5,6 +5,7 @@
 // the tiles open Read Mode (/quran/read), Study (/quran/study) and Listen (/quran/listen).
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { QuranCredits } from '../quran/QuranUI'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import '../quran-home-v1.css'
@@ -265,6 +266,7 @@ export default function QuranHomePage() {
         </div>
 
         <QuranIndex />
+        <QuranCredits />
       </div>
     </WahaPage>
   )

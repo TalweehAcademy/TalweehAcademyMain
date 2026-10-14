@@ -9,7 +9,7 @@ import { WahaPage } from '../components/WahaShell'
 import { QURAN_SURAHS } from '../data/quranIndex'
 import { TRANSLATIONS, audioUrl, getReciters, getSurahText, getTimings, getTranslation, getWords, searchText, surahInfo } from '../quran/quranData'
 import { hasStudy } from '../quran/studyData'
-import { AyahMarker, Icon, SurahPicker, useEscape, useHoverCard } from '../quran/QuranUI'
+import { AyahMarker, Icon, SurahPicker, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
 const PREFS_KEY = 'talweeh-reader-prefs'
@@ -303,6 +303,7 @@ export default function QuranReaderPage() {
             <button className="wh-btn wh-btn-g" type="button" onClick={() => go(surah + 1)}>Next surah →</button>
           </div>
         )}
+        <QuranCredits />
       </div>
     </WahaPage>
   )

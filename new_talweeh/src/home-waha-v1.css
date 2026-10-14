@@ -750,3 +750,7 @@ html[data-theme="dark"] .wh-vs{--gold:#EBCB8B;--gold-b:#F6DDA5;--gold-d:#C99A4E;
 .wh-home .wh-hero .wh-assess-line{margin:16px auto 0;max-width:60ch;font-size:15px;color:var(--p-text)}
 .wh-home .wh-assess-line a{color:var(--p-head);font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:4px;transition:color .25s}
 .wh-home .wh-assess-line a:hover{color:var(--p-gold)}
+/* Qurʾān pages: sources line at the foot (QuranCredits in quran/QuranUI.jsx). */
+html .wh-home .qp-credits{max-width:760px;margin:40px auto 0;padding:0 16px;text-align:center;font-size:12px;line-height:1.7;color:var(--c-mut)}
+html .wh-home .qp-credits a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+html .wh-home .qp-credits a:hover{color:var(--gold)}

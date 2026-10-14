@@ -9,7 +9,7 @@ import { WahaPage } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { arNum, getTranslation, getUthmani, getWords, surahInfo } from '../quran/quranData'
 import { STUDY_SURAHS, hasStudy, loadStudy } from '../quran/studyData'
-import { AyahMarker, Icon, useEscape, useHoverCard } from '../quran/QuranUI'
+import { AyahMarker, Icon, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
 // Order follows SOURCE_FEATURE_META in QuranPortalStudyBridge.jsx.
@@ -377,6 +377,7 @@ export default function QuranStudyPage() {
             })}
           </ol>
         </div>
+        <QuranCredits />
       </div>
     </WahaPage>
   )

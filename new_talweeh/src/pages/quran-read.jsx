@@ -8,7 +8,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
-import { AyahMarker, Icon, SurahPicker, useEscape } from '../quran/QuranUI'
+import { AyahMarker, Icon, SurahPicker, useEscape, QuranCredits } from '../quran/QuranUI'
 import { useScrollLock } from '../hooks/useScrollLock'
 import '../quran-pages-v1.css'
 
@@ -406,6 +406,7 @@ export default function QuranReadPage() {
             </div>
           </div>
         )}
+        <QuranCredits />
       </div>
     </WahaPage>
   )
