@@ -91,15 +91,18 @@ export async function getSurahText(surah, { script = 'uthmani', riwayah = 'hafs'
 
 // Printed muṣḥafs Read Mode draws page by page (scripts/build-quran-layout.mjs): Madinah 15-line (1421H print) and
 // IndoPak 16-line (Taj company), 15-line (Qudratullah) and 13-line (Taj company, Qudratullah). `script`: the text its
-// pages hold.
+// pages hold; page numbers here count from the first page of text, shown as printed (printedPage).
 export const LAYOUTS = {
   madinah15: { pages: 604, script: 'uthmani' },
-  indopak16: { pages: 548, script: 'indopak' },
+  // The printed Taj 16-line numbers al-Fātiḥah's page 2 (page 1 is its title page): `numberFrom` is the printed number
+  // of the first page, checked against the print (6:135–141 on its page 132).
+  indopak16: { pages: 548, script: 'indopak', numberFrom: 2 },
   indopak15: { pages: 610, script: 'indopak' },
   indopak13: { pages: 847, script: 'indopak' },
   indopak13q: { pages: 849, script: 'indopak' },
 }
 export const MUSHAF_PAGES = LAYOUTS.madinah15.pages
+export const printedPage = (layout, page) => page + (LAYOUTS[layout]?.numberFrom || 1) - 1
 const layoutStarts = async (layout) => { const index = await getIndex(); return index.layouts?.[layout] || index.pages }
 
 // One printed page: [{ s, a, text, juz }]

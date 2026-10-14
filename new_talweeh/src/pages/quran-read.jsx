@@ -7,7 +7,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
-import { LAYOUTS, RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
+import { LAYOUTS, RIWAYAT, STYLES, MUSHAF_PAGES, arNum, printedPage, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
 import { AyahMarker, Icon, SurahPicker, useEscape, QuranCredits } from '../quran/QuranUI'
 import { useScrollLock } from '../hooks/useScrollLock'
 import '../quran-pages-v1.css'
@@ -313,7 +313,7 @@ export default function QuranReadPage() {
   const firstRow = madinah && view === 'book' ? [...(spreadRows[0] || []), ...(spreadRows[1] || [])].find((r) => r.s === surah) : null
   const locSurah = surahInfo(surah)
   const locSub = madinah && view === 'book'
-    ? `Juz ${firstRow?.juz || juzOf(locSurah.n)} · Page ${spreadStart || '…'}`
+    ? `Juz ${firstRow?.juz || juzOf(locSurah.n)} · Page ${spreadStart ? printedPage(layout, spreadStart) : '…'}`
     : view === 'book' ? `Juz ${juzOf(surah)} · Page ${Math.min(sub + 1, surahSubCount || 1)} of ${surahSubCount || '…'}` : `Juz ${juzOf(surah)} · ${locSurah.ayahs} āyāt`
   const riw = RIWAYAT.find((r) => r.id === riwayah)
 
@@ -323,7 +323,7 @@ export default function QuranReadPage() {
         <article key={key} className="qp-page lined">
           <span className="frame" />
           <MushafLines lines={lines} no={no} onTap={onTap} selected={pop?.k} layout={layout} />
-          <div className="qp-pno">{no ? arNum(no) : ''}</div>
+          <div className="qp-pno">{no ? arNum(printedPage(layout, no)) : ''}</div>
         </article>
       )
     }
