@@ -7,7 +7,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
-import { LAYOUTS, PARA_NAMES, RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getPrintMarks, juzName, printedPage, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
+import { LAYOUTS, PARA_NAMES, RIWAYAT, STYLES, MUSHAF_PAGES, TRANSLATIONS, arNum, getPrintMarks, juzName, printedPage, getMushafLines, getMushafPage, getSurahText, getTranslation, getWords, pageOf, surahInfo } from '../quran/quranData'
 import { AyahMarker, Icon, SurahPicker, useEscape, QuranCredits } from '../quran/QuranUI'
 import { useScrollLock } from '../hooks/useScrollLock'
 import { AyahPlayer } from '../quran/AyahPlayer'
@@ -182,8 +182,45 @@ function PageHead({ lines, layout, no, marks }) {
   )
 }
 
-// Rows [{ s, a, text }] → surah headers + continuous text, one clickable span per āyah.
-function Flow({ rows, center, onTap, selected }) {
+// What Read Mode shows (Display → Text): the Arabic, the Arabic with a translation, or the translation; and, with any of
+// them, the transliteration (QUL's word by word, joined).
+const TEXT_MODES = [['ar', 'Arabic'], ['artr', 'Arabic + Translation'], ['tr', 'Translation']]
+
+// An āyah's transliteration and translation, under its Arabic or on a translation page.
+function AyahNotes({ tl, tr }) {
+  if (!tl && !tr) return null
+  return <span className="qp-an">{tl && <span className="tl" lang="ar-Latn">{tl}</span>}{tr && <span className="tr">{tr}</span>}</span>
+}
+
+// A translation page: the āyāt of one printed page (or of a page cut here), each with its number, transliteration and
+// translation, under the same header as the muṣḥaf page. Sits beside the muṣḥaf page (Arabic + Translation) or in its
+// place (Translation).
+function TranslationPage({ rows, no, layout, side, notes, onTap, selected, label, beside = false }) {
+  if (!rows) return <article className="qp-page trp"><span className="frame" /><p className="qp-status">Loading…</p></article>
+  if (!rows.length) return <article className="qp-page trp blank"><span className="frame" /></article>
+  return (
+    <article className={`qp-page trp${beside ? ' beside' : ''} ${side === 'r' ? 'side-r' : 'side-l'}`}>
+      <span className="frame" />
+      <div className="qp-phead"><span>{label}</span><b>{no ? arNum(printedPage(layout, no)) : ''}</b><span>{surahInfo(rows[0].s).en}</span></div>
+      <ol className="qp-trl">
+        {rows.map((r) => {
+          const k = `${r.s}:${r.a}`, n = notes(r.s, r.a)
+          return (
+            <li key={k} className={selected === k ? 'on' : ''} data-k={k} onClick={(e) => onTap(e, r)}>
+              {r.a === 1 && <span className="sh">{surahInfo(r.s).en} <span className="qp-ar">{surahInfo(r.s).ar}</span></span>}
+              <span className="kn">{k}</span>
+              <AyahNotes tl={n.tl} tr={n.tr || '…'} />
+            </li>
+          )
+        })}
+      </ol>
+    </article>
+  )
+}
+
+// Rows [{ s, a, text }] → surah headers + continuous text, one clickable span per āyah. With a translation or the
+// transliteration on (`notes`), each āyah is a block: its Arabic (unless `arabic` is off), then its notes.
+function Flow({ rows, center, onTap, selected, notes, arabic = true }) {
   const blocks = []
   let cur = null
   for (const r of rows) {
@@ -193,14 +230,28 @@ function Flow({ rows, center, onTap, selected }) {
   return blocks.map((b, i) => (
     <div key={`${b.s}-${i}`}>
       {b.head && <SurahHead s={b.s} />}
-      <div className={`qp-txt${center ? ' center' : ''}`}>
-        {b.rows.map((r) => (
-          <span key={r.a}>
-            <span className={`qp-v${selected === `${r.s}:${r.a}` ? ' on' : ''}`} data-k={`${r.s}:${r.a}`} onClick={(e) => onTap(e, r)}>{r.text} <AyahMarker n={r.a} /></span>
-            {center ? <br /> : ' '}
-          </span>
-        ))}
-      </div>
+      {notes ? (
+        <div className="qp-blocks">
+          {b.rows.map((r) => {
+            const k = `${r.s}:${r.a}`, n = notes(r.s, r.a)
+            return (
+              <div key={r.a} className={`qp-rb${selected === k ? ' on' : ''}`} data-k={k} onClick={(e) => onTap(e, r)}>
+                {arabic ? <p className="qp-txt">{r.text} <AyahMarker n={r.a} /></p> : <span className="kn">{k}</span>}
+                <AyahNotes tl={n.tl} tr={n.tr} />
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <div className={`qp-txt${center ? ' center' : ''}`}>
+          {b.rows.map((r) => (
+            <span key={r.a}>
+              <span className={`qp-v${selected === `${r.s}:${r.a}` ? ' on' : ''}`} data-k={`${r.s}:${r.a}`} onClick={(e) => onTap(e, r)}>{r.text} <AyahMarker n={r.a} /></span>
+              {center ? <br /> : ' '}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   ))
 }
@@ -222,11 +273,14 @@ function paginate(rows, lines, fs) {
 
 export default function QuranReadPage() {
   const [params, setParams] = useSearchParams()
-  const prefs = useMemo(loadPrefs, [])
+  const prefs = useMemo(() => loadPrefs(), [])
   const [view, setView] = useState(prefs.view === 'scroll' ? 'scroll' : 'book')
   const [styleId, setStyleId] = useState(STYLES.some((s) => s.id === prefs.style) ? prefs.style : 'madinah15')
   const [riwayah, setRiwayah] = useState(RIWAYAT.some((r) => r.id === prefs.riwayah) ? prefs.riwayah : 'hafs')
   const [fs, setFs] = useState(Number(prefs.fs) || 30)
+  const [textMode, setTextMode] = useState(TEXT_MODES.some(([id]) => id === prefs.text) ? prefs.text : 'ar')
+  const [showTl, setShowTl] = useState(!!prefs.tl)
+  const [trEd, setTrEd] = useState(TRANSLATIONS.some((t) => t.edition === prefs.tr) ? prefs.tr : 'en.sahih')
   const style = STYLES.find((s) => s.id === styleId)
   // Styles with a printed layout (Madinah 15-line, IndoPak 16-line, both Ḥafṣ) turn real pages; the others are cut
   // into pages here. `madinah` stands for "printed pages" below.
@@ -249,7 +303,7 @@ export default function QuranReadPage() {
   const [pop, setPop] = useState(null)
   const [error, setError] = useState('')
 
-  useEffect(() => { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view, style: styleId, riwayah, fs })) } catch { /* private mode */ } }, [view, styleId, riwayah, fs])
+  useEffect(() => { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ view, style: styleId, riwayah, fs, text: textMode, tl: showTl, tr: trEd })) } catch { /* private mode */ } }, [view, styleId, riwayah, fs, textMode, showTl, trEd])
 
   // First open with ?surah=&ayah= in Madinah book view: find its page.
   const wantAyah = Number(params.get('ayah')) || 1
@@ -273,7 +327,9 @@ export default function QuranReadPage() {
     mq.addEventListener('change', on)
     return () => mq.removeEventListener('change', on)
   }, [])
-  const spreadStart = page ? (single ? page : page % 2 ? page : page - 1) : 0
+  // Arabic + Translation puts one muṣḥaf page beside its translation, so pages turn one at a time, as on a phone.
+  const onePage = single || textMode === 'artr'
+  const spreadStart = page ? (onePage ? page : page % 2 ? page : page - 1) : 0
   const [spreadRows, setSpreadRows] = useState([null, null])
   const [spreadLines, setSpreadLines] = useState([null, null])
   useEffect(() => {
@@ -341,8 +397,9 @@ export default function QuranReadPage() {
       document.querySelectorAll('.qp-sec').forEach((el) => { if (el.getBoundingClientRect().top < 240) top = Number(el.dataset.s) })
       setSurah(top)
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    // (a capturing listener hears the scroll of the window and of the portal's layer alike)
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+    return () => document.removeEventListener('scroll', onScroll, { capture: true })
   }, [view, scrollFrom])
 
   /* ── URL stays shareable ── */
@@ -356,17 +413,17 @@ export default function QuranReadPage() {
   /* ── navigation ── */
   const surahSubCount = subPages.length
   const canPrev = madinah && view === 'book' ? spreadStart > 1 : (sub > 0 || surah > 1)
-  const canNext = madinah && view === 'book' ? spreadStart + (single ? 1 : 2) <= totalPages : (sub + 2 < surahSubCount || surah < 114)
+  const canNext = madinah && view === 'book' ? spreadStart + (onePage ? 1 : 2) <= totalPages : (sub + 2 < surahSubCount || surah < 114)
   const turn = useCallback((d) => {
     setPop(null)
-    if (madinah && view === 'book') { setPage((p) => (single ? Math.min(totalPages, Math.max(1, p + d)) : Math.min(totalPages - 1, Math.max(1, (p % 2 ? p : p - 1) + d * 2)))); return }
+    if (madinah && view === 'book') { setPage((p) => (onePage ? Math.min(totalPages, Math.max(1, p + d)) : Math.min(totalPages - 1, Math.max(1, (p % 2 ? p : p - 1) + d * 2)))); return }
     if (d > 0) { if (sub + 2 < surahSubCount) setSub(sub + 2); else if (surah < 114) { setSurah(surah + 1); setSub(0) } }
     else if (sub > 0) setSub(Math.max(0, sub - 2))
     else if (surah > 1) {
       const prev = surah - 1, rows = texts[`${textKey}:${prev}`]
       setSurah(prev); setSub(rows ? Math.max(0, (paginate(rows, style.lines, fs).length - 1) & ~1) : 0)
     }
-  }, [madinah, single, totalPages, view, sub, surahSubCount, surah, texts, textKey, style.lines, fs])
+  }, [madinah, onePage, totalPages, view, sub, surahSubCount, surah, texts, textKey, style.lines, fs])
   // A sideways swipe turns the page, as in a muṣḥaf: drawn to the right, the next page; to the left, the one before.
   const swipe = useRef(null)
   const onSwipeStart = (e) => { const t = e.touches[0]; swipe.current = { x: t.clientX, y: t.clientY } }
@@ -403,7 +460,7 @@ export default function QuranReadPage() {
   const playerRef = useRef(null)
   const [playKey, setPlayKey] = useState(null)
   const followRef = useRef({})
-  followRef.current = { madinah, view, layout, surah, single }
+  followRef.current = { madinah, view, layout, surah, single: onePage }
   const onPlayAyah = useCallback((s, a) => {
     setPlayKey(`${s}:${a}`)
     const { madinah: paged, view: v, layout: lay, surah: cur, single: one } = followRef.current
@@ -416,8 +473,8 @@ export default function QuranReadPage() {
   useEffect(() => {
     const close = () => setPop(null)
     document.addEventListener('click', close)
-    window.addEventListener('scroll', close, { passive: true })
-    return () => { document.removeEventListener('click', close); window.removeEventListener('scroll', close) }
+    document.addEventListener('scroll', close, { passive: true, capture: true })
+    return () => { document.removeEventListener('click', close); document.removeEventListener('scroll', close, { capture: true }) }
   }, [])
   const closeDock = useCallback(() => setDockOpen(false), [])
   useEscape(dockOpen, closeDock)
@@ -438,13 +495,31 @@ export default function QuranReadPage() {
     : view === 'book' ? `Juz ${juzOf(surah)} · Page ${Math.min(sub + 1, surahSubCount || 1)} of ${surahSubCount || '…'}` : `Juz ${juzOf(surah)} · ${locSurah.ayahs} āyāt`
   const riw = RIWAYAT.find((r) => r.id === riwayah)
 
+  // Translations and transliterations of the sūrahs on screen, loaded when a mode needs them.
+  const [meanings, setMeanings] = useState({})
+  const wantTr = textMode !== 'ar', wantTl = showTl
+  const needNotes = wantTr || wantTl
+  const loadNotes = useCallback((s) => {
+    if (!s) return
+    if (wantTr && !meanings[`tr:${trEd}:${s}`]) getTranslation(s, trEd).then((t) => setMeanings((m) => ({ ...m, [`tr:${trEd}:${s}`]: t }))).catch(() => {})
+    if (wantTl && !meanings[`tl:${s}`]) getWords(s).then((w) => setMeanings((m) => ({ ...m, [`tl:${s}`]: [...w.entries()].reduce((o, [a, ws]) => { o[a - 1] = ws.map((x) => x.tl).filter(Boolean).join(' '); return o }, []) }))).catch(() => {})
+  }, [wantTr, wantTl, trEd, meanings])
+  const notes = useCallback((s, a) => ({ tr: wantTr ? meanings[`tr:${trEd}:${s}`]?.[a - 1] || '' : '', tl: wantTl ? meanings[`tl:${s}`]?.[a - 1] || '' : '' }), [wantTr, wantTl, trEd, meanings])
   const [marks, setMarks] = useState(null)
   useEffect(() => { getPrintMarks().then(setMarks).catch(() => {}) }, [])
   // The text size each printed page of the spread fits at; both pages use the smaller one.
   const [fitSizes, setFitSizes] = useState({})
   const onSize = useCallback((no, v) => setFitSizes((f) => (f[no] === v ? f : { ...f, [no]: v })), [])
-  const spreadSize = (single ? [spreadStart] : [spreadStart, spreadStart + 1]).map((n) => fitSizes[`${layout}:${n}`]).filter(Boolean)
+  const spreadSize = (onePage ? [spreadStart] : [spreadStart, spreadStart + 1]).map((n) => fitSizes[`${layout}:${n}`]).filter(Boolean)
   const sharedSize = spreadSize.length ? Math.min(...spreadSize) : undefined
+  // The sūrahs on screen get their notes as soon as a mode asks for them.
+  useEffect(() => {
+    if (!needNotes) return
+    const shownRows = view === 'book' ? (madinah ? [...(spreadRows[0] || []), ...(spreadRows[1] || [])] : (surahRows || [])) : []
+    const sur = new Set([surah, ...shownRows.map((r) => r.s), ...(view === 'scroll' ? scrollSurahs : [])])
+    sur.forEach(loadNotes)
+  }, [needNotes, view, madinah, spreadRows, surahRows, surah, scrollFrom, scrollCount, loadNotes]) // eslint-disable-line react-hooks/exhaustive-deps
+  const trLabel = TRANSLATIONS.find((t) => t.edition === trEd)?.name || 'Translation'
   const renderPage = (rows, no, key, lines) => {
     if (lines && lines.length) {
       return (
@@ -460,7 +535,7 @@ export default function QuranReadPage() {
     return (
       <article key={key} className="qp-page">
         <span className="frame" />
-        <Flow rows={rows} center={layout === 'madinah15' && no <= 2} onTap={onTap} selected={shown} />
+        <Flow rows={rows} center={layout === 'madinah15' && no <= 2 && !needNotes} onTap={onTap} selected={shown} notes={needNotes ? notes : null} arabic={textMode !== 'tr'} />
         <div className="qp-pno">{no ? arNum(no) : ''}</div>
       </article>
     )
@@ -511,6 +586,14 @@ export default function QuranReadPage() {
               <div className="grp"><span className="lbl">Muṣḥaf style</span>
                 <div className="qp-seg">{STYLES.map((s) => <button key={s.id} type="button" className={s.id === styleId ? 'on' : ''} onClick={() => { setStyleId(s.id); setSub(0) }}>{s.label}<small>{s.detail}</small></button>)}</div>
               </div>
+              <div className="grp"><span className="lbl">Text</span>
+                <div className="qp-seg">{TEXT_MODES.map(([id, l]) => <button key={id} type="button" className={id === textMode ? 'on' : ''} onClick={() => { setTextMode(id); setSub(0) }}>{l}</button>)}</div>
+                <div className="qp-dg-row">
+                  {textMode !== 'ar' && <select value={trEd} onChange={(e) => setTrEd(e.target.value)} aria-label="Translation">{TRANSLATIONS.map((t) => <option key={t.edition} value={t.edition}>{t.name}</option>)}</select>}
+                  <span className="qp-tlsw"><span>Transliteration</span><button type="button" className={`qp-sw${showTl ? ' on' : ''}`} onClick={() => setShowTl((v) => !v)} aria-pressed={showTl} aria-label="Transliteration" /></span>
+                </div>
+                {textMode === 'ar' && showTl && <small className="qp-dhint">On the muṣḥaf pages the transliteration shows with a translation; in Scroll it shows under each āyah.</small>}
+              </div>
               <div className="grp"><span className="lbl">Riwāyah</span>
                 <div className="qp-seg">{RIWAYAT.map((r) => <button key={r.id} type="button" className={r.id === riwayah ? 'on' : ''} onClick={() => { setRiwayah(r.id); setSub(0) }}>{r.label}<small>{r.detail}</small></button>)}</div>
               </div>
@@ -523,8 +606,12 @@ export default function QuranReadPage() {
 
         {view === 'book' && (
           <div className="qp-book" onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}>
-            <div className={`qp-spread${single && madinah ? ' one' : ''}`}>
-              {madinah
+            <div className={`qp-spread${single && madinah ? ' one' : ''}${madinah && textMode === 'artr' ? ' with-tr' : ''}`}>
+              {madinah && textMode === 'artr'
+                ? [renderPage(spreadRows[0], spreadStart, 'r', spreadLines[0]), <TranslationPage key="t" beside rows={spreadRows[0]} no={spreadStart} layout={layout} side="l" notes={notes} onTap={onTap} selected={shown} label={trLabel} />]
+                : madinah && textMode === 'tr'
+                ? (onePage ? [spreadStart] : [spreadStart, spreadStart + 1]).map((n, i) => <TranslationPage key={`t${i}`} rows={spreadRows[i]} no={n <= totalPages ? n : 0} layout={layout} side={i ? 'l' : 'r'} notes={notes} onTap={onTap} selected={shown} label={trLabel} />)
+                : madinah
                 ? (single
                   ? [renderPage(spreadRows[0], spreadStart, spreadStart % 2 ? 'r' : 'l', spreadLines[0])]
                   : [renderPage(spreadRows[0], spreadStart, 'r', spreadLines[0]), renderPage(spreadRows[1], spreadStart + 1, 'l', spreadLines[1])])
@@ -543,7 +630,7 @@ export default function QuranReadPage() {
                 return (
                   <section key={n} className="qp-sec" data-s={n}>
                     {i > 0 && <div className="qp-pb">۞</div>}
-                    {rows ? <Flow rows={rows} center={n === 1} onTap={onTap} selected={shown} /> : <p className="qp-status">Loading {surahInfo(n).en}…</p>}
+                    {rows ? <Flow rows={rows} center={n === 1 && !needNotes} onTap={onTap} selected={shown} notes={needNotes ? notes : null} arabic={textMode !== 'tr'} /> : <p className="qp-status">Loading {surahInfo(n).en}…</p>}
                   </section>
                 )
               })}

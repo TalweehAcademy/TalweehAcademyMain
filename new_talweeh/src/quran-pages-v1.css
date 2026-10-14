@@ -699,3 +699,36 @@
   /* the reading-options button moves up above the bar */
   .qp-aplay.on ~ .qp-fab{bottom:calc(132px + env(safe-area-inset-bottom))}
 }
+
+/* ── Read Mode with a translation or transliteration (Display → Text) ─────────────── */
+.qp-an{display:flex;flex-direction:column;gap:4px;direction:ltr;text-align:left;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.qp-an .tl{font-style:italic;font-size:14px;line-height:1.55;color:var(--gold-d)}
+.qp-an .tr{font-size:15px;line-height:1.65;color:var(--ink)}
+/* Scroll view (and the pages cut here): one block per āyah */
+.qp-blocks{display:flex;flex-direction:column}
+.qp-rb{padding:12px 6px;border-bottom:1px solid rgba(184,137,76,.25);cursor:pointer;border-radius:10px}
+.qp-rb:last-child{border-bottom:0}
+.qp-rb .qp-txt{margin:0 0 6px;padding:0;text-align:right;text-align-last:right;line-height:2.1}
+.qp-rb:hover,.qp-rb.on{background:rgba(215,179,115,.14)}
+.qp-rb .kn,.qp-trl .kn{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--gold-d);margin-bottom:4px}
+/* A translation page beside, or instead of, the printed page */
+.qp-page.trp{direction:ltr}
+.qp-page.trp .qp-phead{direction:ltr;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:12px;letter-spacing:.06em}
+.qp-page.trp .qp-phead span:last-child{text-align:right}
+.qp-trl{list-style:none;margin:0;padding:0 6px;display:flex;flex-direction:column;gap:2px}
+.qp-trl li{padding:8px 8px 10px;border-radius:10px;cursor:pointer;border-bottom:1px solid rgba(184,137,76,.18)}
+.qp-trl li:last-child{border-bottom:0}
+.qp-trl li:hover,.qp-trl li.on{background:rgba(215,179,115,.14)}
+.qp-trl .sh{display:block;margin:6px 0 8px;padding-bottom:6px;border-bottom:1px solid rgba(184,137,76,.45);font-family:'Lora',serif;font-size:17px;color:var(--ink)}
+.qp-trl .sh .qp-ar{font-size:19px;margin-left:8px;color:var(--gold-d)}
+/* Beside a printed page, the printed page sets the spread's height and the translation scrolls inside its own page
+   (on a phone the translation simply follows the page). */
+@media(min-width:901px){
+  .qp-spread.with-tr .qp-page.trp.beside{height:0;min-height:100%;overflow:hidden}
+  .qp-spread.with-tr .qp-page.trp.beside .qp-trl{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+}
+/* Display → Text */
+.qp-dg-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.qp-dg-row select{font:inherit;font-size:13px;padding:7px 10px;border-radius:12px;border:1px solid var(--c-line);background:var(--c-in);color:var(--c-text)}
+.qp-tlsw{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--c-mut)}
+.qp-dhint{font-size:11.5px;color:var(--c-mut);max-width:520px}

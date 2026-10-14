@@ -115,8 +115,9 @@ export function useHoverCard() {
   }, [card])
   useEffect(() => {
     const off = () => setCard(null)
-    window.addEventListener('scroll', off, { passive: true })
-    return () => window.removeEventListener('scroll', off)
+    // (capturing: hears the window's scroll and that of any scrolling layer, such as the portal's Read Mode)
+    document.addEventListener('scroll', off, { passive: true, capture: true })
+    return () => document.removeEventListener('scroll', off, { capture: true })
   }, [])
   const element = <div ref={cardRef} className={`qp-hc${card ? ' on' : ''}`} role="tooltip" onMouseEnter={keep} onMouseLeave={hide}>{card?.content}</div>
   return { element, show, hide }
