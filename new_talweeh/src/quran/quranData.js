@@ -93,13 +93,14 @@ export async function getSurahText(surah, { script = 'uthmani', riwayah = 'hafs'
 // IndoPak 16-line (Taj company), 15-line (Qudratullah) and 13-line (Taj company, Qudratullah). `script`: the text its
 // pages hold; page numbers here count from the first page of text, shown as printed (printedPage).
 export const LAYOUTS = {
-  madinah15: { pages: 604, script: 'uthmani' },
+  madinah15: { pages: 604, lines: 15, script: 'uthmani' },
   // The printed Taj 16-line numbers al-Fātiḥah's page 2 (page 1 is its title page): `numberFrom` is the printed number
-  // of the first page, checked against the print (6:135–141 on its page 132).
-  indopak16: { pages: 548, script: 'indopak', numberFrom: 2 },
-  indopak15: { pages: 610, script: 'indopak' },
-  indopak13: { pages: 847, script: 'indopak' },
-  indopak13q: { pages: 849, script: 'indopak' },
+  // of the first page, checked against the print (6:135–141 on its page 132). Madinah checked too (al-Mulk on 562).
+  indopak16: { pages: 548, lines: 16, script: 'indopak', numberFrom: 2 },
+  indopak15: { pages: 610, lines: 15, script: 'indopak' },
+  // Taj 13-line, like its 16-line, numbers al-Fātiḥah's page 2 (checked: its page 5 holds 2:13–20 line for line).
+  indopak13: { pages: 847, lines: 13, script: 'indopak', numberFrom: 2 },
+  indopak13q: { pages: 849, lines: 13, script: 'indopak' },
 }
 export const MUSHAF_PAGES = LAYOUTS.madinah15.pages
 export const printedPage = (layout, page) => page + (LAYOUTS[layout]?.numberFrom || 1) - 1
@@ -134,6 +135,30 @@ export function getMushafLines(page, layout = 'madinah15') {
 export async function pageOf(surah, ayah = 1, layout = 'madinah15') {
   return at(await layoutStarts(layout), surah, ayah)
 }
+
+// What a printed page's header and margins show (Tanzil's metadata): the juzʾ an āyah is in, and for each rukūʿ's last
+// āyah ("s:a") its number in its sūrah, its number of āyāt and its number in its juzʾ (the three figures by the ع in
+// IndoPak margins); for each manzil's first āyah its number.
+export function getPrintMarks() {
+  return once('marks', async () => {
+    const { ruku, manzil, juz, counts } = await getIndex()
+    const rukuEnd = new Map(), inJuz = new Map()
+    let inSurah = 0
+    ruku.forEach(([s, a], i) => {
+      const [ns, na] = ruku[i + 1] || [115, 1]
+      const end = ns === s ? na - 1 : counts[s - 1]
+      inSurah = i && ruku[i - 1][0] === s ? inSurah + 1 : 1
+      const j = at(juz, s, end)
+      inJuz.set(j, (inJuz.get(j) || 0) + 1)
+      rukuEnd.set(`${s}:${end}`, { s: inSurah, n: end - a + 1, j: inJuz.get(j) })
+    })
+    return { rukuEnd, manzil: new Map(manzil.map(([s, a], i) => [`${s}:${a}`, i + 1])), juzOf: (s, a) => at(juz, s, a) }
+  })
+}
+// Juzʾ names as printed: IndoPak paras by their first words, Madinah by number.
+export const PARA_NAMES = ['الم', 'سيقول', 'تلك الرسل', 'لن تنالوا', 'والمحصنت', 'لا يحب الله', 'واذا سمعوا', 'ولو اننا', 'قال الملا', 'واعلموا', 'يعتذرون', 'وما من دابة', 'وما ابرئ', 'ربما', 'سبحن الذي', 'قال الم', 'اقترب', 'قد افلح', 'وقال الذين', 'امن خلق', 'اتل ما اوحي', 'ومن يقنت', 'وما لي', 'فمن اظلم', 'اليه يرد', 'حم', 'قال فما خطبكم', 'قد سمع الله', 'تبرك الذي', 'عم']
+const ORDINALS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر']
+export const juzName = (n) => `الجزء ${n <= 10 ? ORDINALS[n - 1] : n < 20 ? `${n === 11 ? 'الحادي' : ORDINALS[n - 11]} عشر` : n === 20 ? 'العشرون' : n === 30 ? 'الثلاثون' : `${n === 21 ? 'الحادي' : ORDINALS[n - 21]} والعشرون`}`
 
 import { TRANSLATIONS } from './translations'
 export { TRANSLATIONS }

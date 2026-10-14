@@ -592,6 +592,9 @@
 .qp-ml.h .qp-bism{font-size:1em;margin:0}
 .qp-mushaf.opening{justify-content:center;padding:4% 8%}
 .qp-mushaf.opening .qp-ml{height:2.4em}
+/* Facing pages share one height (the taller one's): a full page's lines share out any height left over, so it reaches
+   its foot as in print, whichever page of the spread is taller. */
+.qp-mushaf.full:not(.opening):not(.measure) .qp-ml{flex:1 0 auto}
 /* while measuring: words packed, so a line's natural width can be read */
 .qp-mushaf.measure{font-size:20px}
 .qp-mushaf.measure .qp-ml.w{justify-content:flex-start;gap:.28em;width:max-content;overflow:visible}
@@ -606,3 +609,91 @@
 .qp-ml{min-width:0}
 @media(max-width:760px){.qp-page.lined{padding:22px 18px 18px}}
 .qp-ml.w{padding:0 .15em;overflow:hidden}
+
+/* ── Printed-page look (Read Mode, printed layouts) ─────────────────────────────── */
+/* The header strip printed above the text: juzʾ / para, page number, sūrah. */
+.qp-phead{direction:rtl;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 6px 8px;padding:0 4px 6px;border-bottom:1px solid rgba(184,137,76,.55);font-family:'Amiri',serif;font-size:15px;color:var(--gold-d);line-height:1.4}
+.qp-phead span{flex:1 1 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-phead span:last-child{text-align:left}
+.qp-phead b{font-weight:700;font-size:16px}
+/* The IndoPak font draws plain Arabic digits as zero-width āyah-number parts, so its numbers are set in Amiri. */
+.qp-phead.ip{font-family:'Talweeh IndoPak','Amiri',serif;font-size:17px}
+.qp-phead.ip i,.qp-phead.ip b{font-family:'Amiri',serif;font-style:normal}
+/* Justified lines: natural word spacing (the stretch is set per line in MushafLines). */
+.qp-lw{flex:1;min-width:0;display:flex;align-items:center;justify-content:inherit;gap:inherit;white-space:nowrap}
+/* Measuring reads the words' natural width, whatever stretch a line was last given (set inline by MushafLines). */
+.qp-mushaf.measure .qp-lw{flex:none!important;width:max-content!important;gap:.28em!important;transform:none!important}
+.qp-mushaf:not(.measure) .qp-ml.w.nat .qp-lw{justify-content:flex-start;gap:.28em;transform-origin:100% 50%}
+/* IndoPak prints rule a line under every line of text. */
+.qp-mushaf.ip .qp-ml{border-bottom:1px solid rgba(184,137,76,.42)}
+.qp-mushaf.ip .qp-ml:last-child{border-bottom:0}
+/* Margin marks: outside the text on the page's outer edge, undoing their line's stretch (--ms). */
+.qp-ml.w.has-m{overflow:visible;position:relative}
+.qp-mrk{position:absolute;top:50%;width:2.2em;display:flex;flex-direction:column;align-items:center;gap:.15em;font-family:'Amiri',serif;font-size:.5em;line-height:1;color:var(--gold-d);transform:translateY(-50%);pointer-events:none}
+.qp-mrk.r{left:calc(100% + .35em)}
+.qp-mrk.l{right:calc(100% + .35em)}
+.qp-mrk .rk{display:grid;grid-template-columns:auto auto;grid-template-areas:"t t" "n k" "b b";align-items:center;justify-items:center;column-gap:.15em;font-size:1em;line-height:1.1}
+.qp-mrk .rk small{font-size:.9em;font-weight:700}
+.qp-mrk .rk small:nth-of-type(1){grid-area:t}.qp-mrk .rk small:nth-of-type(2){grid-area:n}.qp-mrk .rk small:nth-of-type(3){grid-area:b}
+.qp-mrk .rk i{grid-area:k;font-style:normal;font-family:'Talweeh IndoPak','Amiri',serif;font-size:1.7em}
+.qp-mrk .mz{writing-mode:vertical-rl;font-size:.9em;white-space:nowrap}
+.qp-mushaf.measure .qp-mrk,.qp-mushaf.check .qp-mrk{display:none}
+/* Room for the marks on the outer edge of IndoPak pages. */
+.qp-page.lined.ip.side-r{padding-right:calc(22px + 1.6em)}
+.qp-page.lined.ip.side-l{padding-left:calc(22px + 1.6em)}
+@media(max-width:760px){.qp-page.lined.ip.side-r{padding-right:30px}.qp-page.lined.ip.side-l{padding-left:30px}.qp-phead{font-size:12px}.qp-phead.ip{font-size:14px}.qp-phead b{font-size:13px}}
+
+/* ── Recitation bar (Read Mode's Listen, quran/AyahPlayer.jsx) ─────────────────── */
+.qp-aplay{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:160;display:flex;align-items:center;gap:10px;width:min(720px,calc(100vw - 32px));padding:8px 10px 8px 6px;border-radius:999px;border:1px solid rgba(215,179,115,.35);background:var(--c-solid);box-shadow:0 18px 50px rgba(var(--sh-rgb),.45);color:var(--c-text);opacity:0;pointer-events:none;transform:translate(calc(-50% + var(--dx, 0px)),calc(12px + var(--dy, 0px)));transition:opacity .25s,transform .3s var(--ease)}
+.qp-aplay.on{opacity:1;pointer-events:auto;transform:translate(calc(-50% + var(--dx, 0px)),var(--dy, 0px))}
+.qp-aplay.dragging{transition:opacity .25s;box-shadow:0 26px 70px rgba(var(--sh-rgb),.55)}
+.qp-aplay .grip{flex:none;align-self:stretch;width:18px;display:grid;grid-template-columns:repeat(2,3px);grid-auto-rows:3px;gap:3px;place-content:center;cursor:grab;touch-action:none;border-radius:999px 0 0 999px}
+.qp-aplay .grip i{width:3px;height:3px;border-radius:50%;background:var(--c-mut)}
+.qp-aplay.dragging .grip{cursor:grabbing}
+.qp-aplay .pp{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:0;cursor:pointer;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:#1d2a20}
+.qp-aplay .pp svg{width:18px;height:18px;fill:currentColor}
+.qp-aplay .pp:disabled{opacity:.5;cursor:default}
+.qp-aplay .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.qp-aplay .t strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-aplay .t small{font-size:12px;color:var(--c-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-aplay .rc{flex:0 1 220px;min-width:0;display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;border:1px solid var(--c-line);background:var(--c-in);color:var(--c-head);font:inherit;font-size:13px;cursor:pointer}
+.qp-aplay .rc:hover,.qp-aplay .rc[aria-expanded="true"]{border-color:rgba(215,179,115,.6)}
+.qp-aplay .rc .nm{flex:1;min-width:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-aplay .rc .cv{flex:none;width:14px;height:14px;fill:none;stroke:var(--gold);stroke-width:2.2}
+.qp-aplay .av,.qp-rp .av{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:'Amiri',serif;font-size:15px;line-height:1;background:radial-gradient(circle at 30% 30%,rgba(215,179,115,.45),rgba(215,179,115,.12));color:var(--gold-b);border:1px solid rgba(215,179,115,.35)}
+.qp-aplay .kg{flex:none;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--c-mut);cursor:pointer;white-space:nowrap}
+.qp-aplay .kg input{accent-color:var(--gold)}
+.qp-aplay .lp{flex:none;font-size:13px;color:var(--gold);text-decoration:none;white-space:nowrap}
+.qp-aplay .lp:hover{text-decoration:underline}
+.qp-aplay .x{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--c-line);background:transparent;color:var(--c-mut);cursor:pointer}
+.qp-aplay .x svg,.qp-rp .x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
+/* The reciter list: above the bar, or below it when there is more room there (set by quran/AyahPlayer.jsx). */
+.qp-rp{position:absolute;right:0;bottom:calc(100% + 10px);width:min(440px,calc(100vw - 24px));display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:22px;border:1px solid rgba(215,179,115,.35);background:var(--c-solid);box-shadow:0 24px 70px rgba(var(--sh-rgb),.55);color:var(--c-text);cursor:default}
+.qp-rp.down{bottom:auto;top:calc(100% + 10px)}
+.qp-rp-h{display:flex;align-items:center;justify-content:space-between}
+.qp-rp-h strong{font-family:'Lora',serif;font-size:17px;color:var(--c-head)}
+.qp-rp .x{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--c-line);background:transparent;color:var(--c-mut);cursor:pointer}
+.qp-rp .qp-search input{padding:8px 0}
+.qp-rp .qp-seg{align-self:flex-start}
+.qp-rp-list{overflow-y:auto;overscroll-behavior:contain;margin:0 -6px;padding:0 6px}
+.qp-rp-list .lbl{margin:8px 4px 4px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--sage)}
+.qp-rp-list ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+.qp-rp-list li button{width:100%;display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:12px;border:1px solid transparent;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.qp-rp-list li button:hover,.qp-rp-list li button:focus-visible{background:var(--c-in);outline:0}
+.qp-rp-list li button.on{background:rgba(215,179,115,.14);border-color:rgba(215,179,115,.4)}
+.qp-rp-list .nm{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.qp-rp-list .nm strong{font-size:14px;font-weight:600;color:var(--c-head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-rp-list .nm small{font-size:11.5px;color:var(--c-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-rp-list .ar{flex:0 1 auto;min-width:0;max-width:38%;font-family:'Amiri',serif;font-size:15px;color:var(--gold-b);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-rp-list .ck{flex:none;color:var(--gold);font-weight:700}
+.qp-rp-list .none{padding:18px 8px;color:var(--c-mut);font-size:13px}
+@media(max-width:640px){
+  .qp-aplay{flex-wrap:wrap;row-gap:8px;border-radius:22px;bottom:calc(12px + env(safe-area-inset-bottom));width:calc(100vw - 24px)}
+  .qp-aplay .grip{border-radius:16px 0 0 16px}
+  .qp-aplay .rc{order:5;flex:1 1 auto}
+  .qp-aplay .kg{order:6}
+  .qp-aplay .lp{display:none}
+  .qp-rp{left:0;right:0;width:auto}
+  /* the reading-options button moves up above the bar */
+  .qp-aplay.on ~ .qp-fab{bottom:calc(132px + env(safe-area-inset-bottom))}
+}

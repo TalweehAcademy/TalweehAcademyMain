@@ -7,9 +7,10 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_JUZ_STARTS } from '../data/quranIndex'
-import { LAYOUTS, RIWAYAT, STYLES, MUSHAF_PAGES, arNum, printedPage, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
+import { LAYOUTS, PARA_NAMES, RIWAYAT, STYLES, MUSHAF_PAGES, arNum, getPrintMarks, juzName, printedPage, getMushafLines, getMushafPage, getSurahText, getTranslation, pageOf, surahInfo } from '../quran/quranData'
 import { AyahMarker, Icon, SurahPicker, useEscape, QuranCredits } from '../quran/QuranUI'
 import { useScrollLock } from '../hooks/useScrollLock'
+import { AyahPlayer } from '../quran/AyahPlayer'
 import '../quran-pages-v1.css'
 
 const PREFS_KEY = 'talweeh-read-prefs'
@@ -33,17 +34,27 @@ function SurahHead({ s }) {
 // Every line on the page shares one type size, chosen so the longest line exactly fills the page width,
 // and each line is justified edge to edge, so the page looks the same on a phone as in print.
 // Runs of empty line slots before a surah hold its title (and basmalah, except for al-Tawbah).
-function MushafLines({ lines, no, onTap, selected, layout }) {
+// How far a line may be stretched sideways to fill its width before the gaps between words widen too: printed pages
+// fill a line by drawing letters longer (kashīda), which a browser cannot do reliably; a slight stretch looks closer
+// than wide gaps.
+// IndoPak prints stretch letters far more than the Madinah one, so their lines may stretch further.
+const MAX_STRETCH = { madinah: 1.08, indopak: 1.2 }
+
+// `onSize` reports the size this page fits at; `shared` is the one both facing pages use (the smaller), as in print.
+// `marks` (getPrintMarks) puts the rukūʿ and manzil marks in the margin on the page's outer `side` ('r' or 'l').
+function MushafLines({ lines, no, onTap, selected, layout, onSize, shared, marks, side }) {
   const boxRef = useRef(null)
   const [size, setSize] = useState(null)
   const fit = useCallback(() => {
     const box = boxRef.current
     if (!box) return
-    const avail = box.clientWidth
+    // The room a line's words have (the opening pages' lines sit in wider margins than the page box).
+    const line = box.querySelector('.qp-ml.w'), pad = line ? getComputedStyle(line) : null
+    const avail = line ? line.clientWidth - parseFloat(pad.paddingLeft) - parseFloat(pad.paddingRight) : box.clientWidth
     if (!avail) return
     box.classList.add('measure') // lays lines out packed at a fixed 20px (see CSS)
     let widest = 0
-    box.querySelectorAll('.qp-ml.w').forEach((l) => { widest = Math.max(widest, l.scrollWidth) })
+    box.querySelectorAll('.qp-lw').forEach((l) => { widest = Math.max(widest, l.getBoundingClientRect().width) })
     box.classList.remove('measure')
     if (widest) setSize(Math.max(11, Math.min(40, 20 * (avail / widest) * 0.97)))
   }, [])
@@ -52,9 +63,36 @@ function MushafLines({ lines, no, onTap, selected, layout }) {
   useLayoutEffect(() => {
     const box = boxRef.current
     if (!box || !size) return
+    box.classList.add('check') // margin marks out of the way while lines are checked
     const over = [...box.querySelectorAll('.qp-ml.w')].some((l) => l.scrollWidth > l.clientWidth + 1)
+    box.classList.remove('check')
     if (over && size > 11) setSize((v) => Math.max(11, v * 0.96))
-  }, [size])
+    else onSize?.(size)
+  }, [size]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Each justified line: words at their natural spacing, the line stretched up to MAX_STRETCH to meet both edges, and
+  // only what is left over shared out between the words.
+  const used = size ? Math.min(size, shared || size) : null
+  useLayoutEffect(() => {
+    const box = boxRef.current
+    if (!box || !used) return
+    for (const line of box.querySelectorAll('.qp-ml.w:not(.c)')) {
+      const el = line.querySelector(':scope > .qp-lw')
+      el.style.removeProperty('transform'); el.style.removeProperty('gap'); el.style.removeProperty('flex'); el.style.removeProperty('width'); line.classList.add('nat')
+      const words = el.querySelectorAll(':scope > .qp-mw')
+      if (words.length < 2) { line.classList.remove('nat'); continue }
+      const xs = [...words].map((w) => w.getBoundingClientRect())
+      const content = Math.max(...xs.map((r) => r.right)) - Math.min(...xs.map((r) => r.left))
+      const width = el.clientWidth, ratio = width / content
+      if (!(ratio > 1.002)) continue
+      const stretch = Math.min(ratio, layout?.startsWith('indopak') ? MAX_STRETCH.indopak : MAX_STRETCH.madinah)
+      const extra = (width / stretch - content) / (words.length - 1)
+      // The words take width ÷ stretch, so once stretched they meet both edges and nothing runs past the line.
+      el.style.flex = 'none'
+      el.style.width = `${(width / stretch).toFixed(2)}px`
+      el.style.gap = `calc(.28em + ${extra.toFixed(2)}px)`
+      el.style.transform = `scaleX(${stretch.toFixed(4)})`
+    }
+  }, [used, lines, shared, layout])
   useEffect(() => {
     const ro = new ResizeObserver(fit)
     if (boxRef.current) ro.observe(boxRef.current)
@@ -65,14 +103,28 @@ function MushafLines({ lines, no, onTap, selected, layout }) {
   const indopak = layout?.startsWith('indopak')
   const centred = !indopak && no <= 2
   const out = []
+  const seen = new Set()
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i]
     if (l.words.length) {
+      // Margin: ع with the rukūʿ's number in its sūrah, its āyāt and its number in the juzʾ, beside the line it ends
+      // on (IndoPak prints); منزل at a manzil's first line.
+      const ruku = indopak && marks ? l.words.filter((w) => w.end).map((w) => marks.rukuEnd.get(`${w.s}:${w.a}`)).filter(Boolean) : []
+      const manzil = indopak && marks ? l.words.map((w) => { const k = `${w.s}:${w.a}`; const first = !seen.has(k); seen.add(k); return first && !(i === 0 && w === l.words[0] && w.a !== 1) ? marks.manzil.get(k) : null }).find(Boolean) : null
+      if (!indopak) l.words.forEach((w) => seen.add(`${w.s}:${w.a}`))
       out.push(
-        <div key={l.n} className={`qp-ml w${centred || (l.centred && l.type === 'ayah') ? ' c' : ''}`}>
-          {l.words.map((w, k) => (w.end && !indopak
-            ? <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}><AyahMarker n={w.a} /></span>
-            : <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}>{w.t}</span>))}
+        <div key={l.n} className={`qp-ml w${centred || (l.centred && l.type === 'ayah') ? ' c' : ''}${ruku.length || manzil ? ' has-m' : ''}`}>
+          {(ruku.length > 0 || manzil) && (
+            <span className={`qp-mrk ${side}`} aria-hidden="true">
+              {manzil && <span className="mz">منزل {arNum(manzil)}</span>}
+              {ruku.map((r, k) => <span key={k} className="rk"><small>{arNum(r.s)}</small><i>ع</i><small>{arNum(r.n)}</small><small>{arNum(r.j)}</small></span>)}
+            </span>
+          )}
+          <span className="qp-lw">
+            {l.words.map((w, k) => (w.end && !indopak
+              ? <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}><AyahMarker n={w.a} /></span>
+              : <span key={k} className={`qp-mw${selected === `${w.s}:${w.a}` ? ' on' : ''}`} onClick={(e) => onTap(e, w)}>{w.t}</span>))}
+          </span>
         </div>,
       )
       continue
@@ -90,7 +142,24 @@ function MushafLines({ lines, no, onTap, selected, layout }) {
     for (let k = 2; k < run; k++) out.push(<div key={`e${l.n}-${k}`} className="qp-ml h" />)
     i = j - 1
   }
-  return <div className={`qp-mushaf${centred ? ' opening' : ''}${indopak ? ' ip' : ''}`} ref={boxRef} style={size ? { '--mfs': `${size}px` } : undefined}>{out}</div>
+  // A page with all its print's lines fills the page's height; a shorter one (the Qurʾān's last) keeps its spacing.
+  const full = lines.length >= (LAYOUTS[layout]?.lines || 15)
+  return <div className={`qp-mushaf${centred ? ' opening' : ''}${indopak ? ' ip' : ''}${full ? ' full' : ''}`} ref={boxRef} style={size ? { '--mfs': `${Math.min(size, shared || size)}px` } : undefined}>{out}</div>
+}
+
+// A printed page's top line: its juzʾ (IndoPak: the para's name and number), its page number, its sūrah.
+function PageHead({ lines, layout, no, marks }) {
+  const first = lines.find((l) => l.words.length)?.words[0]
+  if (!first) return null
+  const indopak = layout?.startsWith('indopak')
+  const j = marks?.juzOf(first.s, first.a)
+  return (
+    <div className={`qp-phead${indopak ? ' ip' : ''}`}>
+      <span>{j ? (indopak ? <>{PARA_NAMES[j - 1]} <i>{arNum(j)}</i></> : juzName(j)) : ''}</span>
+      <b>{arNum(printedPage(layout, no))}</b>
+      <span>{indopak ? <>{surahInfo(first.s).ar} <i>{arNum(first.s)}</i></> : `سُورَةُ ${surahInfo(first.s).ar}`}</span>
+    </div>
+  )
 }
 
 // Rows [{ s, a, text }] → surah headers + continuous text, one clickable span per āyah.
@@ -291,7 +360,22 @@ export default function QuranReadPage() {
     const rect = e.currentTarget.getBoundingClientRect()
     setPop({ k: `${r.s}:${r.a}`, s: r.s, a: r.a, tr: '', x: Math.max(12, Math.min(window.innerWidth - 372, rect.left + rect.width / 2 - 180)), y: Math.min(window.innerHeight - 190, rect.bottom + 8) })
     getTranslation(r.s).then((t) => setPop((p) => (p && p.k === `${r.s}:${r.a}` ? { ...p, tr: t[r.a - 1] || '' } : p))).catch(() => {})
+    playerRef.current?.prepare(r.s) // so Listen can start the audio straight from the tap
   }
+  /* ── Listen: recitation from the tapped āyah, on this page (AyahPlayer) ── */
+  const playerRef = useRef(null)
+  const [playKey, setPlayKey] = useState(null)
+  const followRef = useRef({})
+  followRef.current = { madinah, view, layout, surah }
+  const onPlayAyah = useCallback((s, a) => {
+    setPlayKey(`${s}:${a}`)
+    const { madinah: paged, view: v, layout: lay, surah: cur } = followRef.current
+    // The page follows the voice: printed pages turn to the āyah's spread; scroll view keeps it on screen.
+    if (paged && v === 'book') pageOf(s, a, lay).then((p) => setPage((now) => { const sp = (x) => (x % 2 ? x : x - 1); return sp(p) === sp(now) ? now : p })).catch(() => {})
+    else if (v === 'scroll') document.querySelector(`[data-k="${s}:${a}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    else if (s !== cur) { setSurah(s); setSub(0) }
+  }, [])
+  const shown = pop?.k || playKey
   useEffect(() => {
     const close = () => setPop(null)
     document.addEventListener('click', close)
@@ -317,13 +401,20 @@ export default function QuranReadPage() {
     : view === 'book' ? `Juz ${juzOf(surah)} · Page ${Math.min(sub + 1, surahSubCount || 1)} of ${surahSubCount || '…'}` : `Juz ${juzOf(surah)} · ${locSurah.ayahs} āyāt`
   const riw = RIWAYAT.find((r) => r.id === riwayah)
 
+  const [marks, setMarks] = useState(null)
+  useEffect(() => { getPrintMarks().then(setMarks).catch(() => {}) }, [])
+  // The text size each printed page of the spread fits at; both pages use the smaller one.
+  const [fitSizes, setFitSizes] = useState({})
+  const onSize = useCallback((no, v) => setFitSizes((f) => (f[no] === v ? f : { ...f, [no]: v })), [])
+  const spreadSize = [spreadStart, spreadStart + 1].map((n) => fitSizes[`${layout}:${n}`]).filter(Boolean)
+  const sharedSize = spreadSize.length ? Math.min(...spreadSize) : undefined
   const renderPage = (rows, no, key, lines) => {
     if (lines && lines.length) {
       return (
-        <article key={key} className="qp-page lined">
+        <article key={key} className={`qp-page lined${layout?.startsWith('indopak') ? ' ip' : ''} ${key === 'r' ? 'side-r' : 'side-l'}`}>
           <span className="frame" />
-          <MushafLines lines={lines} no={no} onTap={onTap} selected={pop?.k} layout={layout} />
-          <div className="qp-pno">{no ? arNum(printedPage(layout, no)) : ''}</div>
+          <PageHead lines={lines} layout={layout} no={no} marks={marks} />
+          <MushafLines lines={lines} no={no} onTap={onTap} selected={shown} layout={layout} onSize={(v) => onSize(`${layout}:${no}`, v)} shared={sharedSize} marks={marks} side={key === 'r' ? 'r' : 'l'} />
         </article>
       )
     }
@@ -332,7 +423,7 @@ export default function QuranReadPage() {
     return (
       <article key={key} className="qp-page">
         <span className="frame" />
-        <Flow rows={rows} center={layout === 'madinah15' && no <= 2} onTap={onTap} selected={pop?.k} />
+        <Flow rows={rows} center={layout === 'madinah15' && no <= 2} onTap={onTap} selected={shown} />
         <div className="qp-pno">{no ? arNum(no) : ''}</div>
       </article>
     )
@@ -340,6 +431,7 @@ export default function QuranReadPage() {
 
   return (
     <WahaPage className="qp qp-readmode" overlays={<>
+      <AyahPlayer ref={playerRef} riwayah={riwayah} onAyah={onPlayAyah} onClose={() => setPlayKey(null)} />
       <button type="button" className={`qp-fab${toolsOpen ? ' hide' : ''}`} onClick={() => setToolsOpen(true)} aria-haspopup="dialog" aria-label="Reading options">
         {Icon.sliders}<span><strong>{locSurah.en}</strong><small>{locSub}</small></span>
       </button>
@@ -349,7 +441,7 @@ export default function QuranReadPage() {
           <small>{pop.k} · {surahInfo(pop.s).en}</small>
           <p>{pop.tr || 'Loading translation…'}</p>
           <div className="row">
-            <Link className="wh-btn wh-btn-g" to={`/quran/listen?surah=${pop.s}&ayah=${pop.a}`}>▶ Listen</Link>
+            <button className="wh-btn wh-btn-g" type="button" onClick={() => { playerRef.current?.play(pop.s, pop.a); setPop(null) }}>▶ Listen</button>
             <Link className="wh-btn wh-btn-glass" to={`/quran/study?surah=${pop.s}&ayah=${pop.a}`}>Study</Link>
             <Link className="wh-btn wh-btn-glass" to={`/quran?surah=${pop.s}&ayah=${pop.a}`}>Reader</Link>
           </div>
@@ -412,7 +504,7 @@ export default function QuranReadPage() {
                 return (
                   <section key={n} className="qp-sec" data-s={n}>
                     {i > 0 && <div className="qp-pb">۞</div>}
-                    {rows ? <Flow rows={rows} center={n === 1} onTap={onTap} selected={pop?.k} /> : <p className="qp-status">Loading {surahInfo(n).en}…</p>}
+                    {rows ? <Flow rows={rows} center={n === 1} onTap={onTap} selected={shown} /> : <p className="qp-status">Loading {surahInfo(n).en}…</p>}
                   </section>
                 )
               })}
