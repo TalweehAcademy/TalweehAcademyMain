@@ -182,7 +182,8 @@ export function getTranslation(surah, edition = 'en.sahih') {
   return surahFile(`tr/${id}`, surah)
 }
 
-// Word by word: Map(āyah → [{ ar, en, tl }]); the Arabic is the stored Tanzil text, cut into QUL's words.
+// Word by word: Map(āyah → [{ ar, en, tl }]); the Arabic is the stored Tanzil text, cut into QUL's words (each word
+// in the file also has its IndoPak spelling, which the portal uses).
 export function getWords(surah) {
   return once(`words:${surah}`, async () => {
     const ayat = (await getJson(v(`${DATA}/words/${surah}.json`)))?.ayat || []

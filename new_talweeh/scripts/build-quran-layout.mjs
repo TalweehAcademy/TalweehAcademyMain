@@ -154,7 +154,9 @@ for (const [id, name, pages, label] of INDOPAK) {
   report.push(`IndoPak ${label}: ${pages} pages`)
 }
 
-// Word by word, per sūrah: for each āyah its words as [Tanzil text, meaning, transliteration].
+// Word by word, per sūrah: for each āyah its words, in Quran.com's word order (the portal's Qurʾān Study notes are
+// attached to those positions), as [Tanzil text, meaning, transliteration, IndoPak spelling]. The IndoPak spelling is
+// QUL's without its private-use glyphs (āyah circles and the like, drawn only by the site's IndoPak font).
 const meaning = JSON.parse(await readFile(file('english-wbw-translation.json'), 'utf8'))
 const translit = JSON.parse(await readFile(file('english-wbw-transliteration.json'), 'utf8'))
 await rm(path.join(out, 'words'), { recursive: true, force: true })
@@ -163,10 +165,13 @@ let missing = 0
 for (let s = 1; s <= 114; s++) {
   const ayat = []
   for (let a = 1; uth.byAyah.has(`${s}:${a}`); a++) {
-    ayat.push(uth.byAyah.get(`${s}:${a}`).filter((w) => !w.end).map((w) => {
+    const words = uth.byAyah.get(`${s}:${a}`).filter((w) => !w.end)
+    if (words.some((w, i) => w.w !== i + 1)) throw new Error(`${s}:${a}: QUL's word numbers have a gap`)
+    ayat.push(words.map((w) => {
       const key = `${s}:${a}:${w.w}`
       if (!meaning[key]) missing++
-      return [tanzilOf.get(w.id), meaning[key] || '', translit[key] || '']
+      const indopak = String(indo.byId.get(w.id)?.text || '').replace(/[\uE000-\uF8FF]/g, '').trim()
+      return [tanzilOf.get(w.id), meaning[key] || '', translit[key] || '', indopak]
     }))
   }
   await writeFile(path.join(out, 'words', `${s}.json`), JSON.stringify({ notice: `${TANZIL_NOTICE} Word meanings and transliteration: ${QUL_NOTICE}`, ayat }))
