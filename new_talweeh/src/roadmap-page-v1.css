@@ -167,3 +167,14 @@
 .rp-peek{cursor:pointer}
 .rp-peek::before{content:'';position:absolute;left:0;right:0;top:-14px;height:14px}
 .rp-peek.up::before{top:auto;bottom:-46px;height:46px}
+/* Phones: the sciences two a row; the "Start with" line left to the science's own page */
+@media(max-width:640px){
+  .rp-sciences{grid-template-columns:1fr 1fr;gap:8px}
+  .rp-sci{padding:12px 13px;border-radius:15px;gap:1px}
+  .rp-sci .ar{font-size:17px}
+  .rp-sci strong{font-size:15px;line-height:1.25}
+  .rp-sci small{font-size:11px}
+  .rp-meta{margin-top:6px;font-size:10px;gap:6px}
+  .rp-meta i{flex-basis:28px}
+  .rp-sciences .rp-first{display:none}
+}

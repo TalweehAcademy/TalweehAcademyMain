@@ -125,3 +125,17 @@
   .wh-home .qh-ft h4{font-size:15px;margin-top:4px;line-height:1.25}
   .qh-ft p{font-size:11.5px;line-height:1.4}
 }
+/* Phones: the surah index two a row (number and Arabic name on top, the English name under) and the juz cards two a row */
+@media(max-width:560px){
+  .qh-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .qh-sc{grid-template-columns:auto 1fr;grid-template-areas:"dia ar" "t t";gap:4px 8px;padding:10px 12px;border-radius:14px}
+  .qh-sc .qh-dia{grid-area:dia;width:30px;height:30px;font-size:11px}
+  .qh-sc-r{display:contents}
+  .qh-sc-r .qh-ar{grid-area:ar;justify-self:end;font-size:19px;line-height:1.3}
+  .qh-sc-r small{display:none}
+  .qh-sc-t{grid-area:t}
+  .qh-sc strong{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .qh-sc-t small{font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .qh-jz{padding:12px 14px;border-radius:14px}
+  .qh-jz b{font-size:19px}
+}

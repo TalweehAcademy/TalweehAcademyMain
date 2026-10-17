@@ -123,3 +123,14 @@
 @media (min-width:641px){.hw-chart .row{height:84px}}
 /* The dot sits where a course's lines run down to what it builds on (see BUILDS_ON in hadith-waha.jsx). */
 .hw-chart .node.dot-below::before{top:auto;bottom:-4px}
+/* Phones: slimmer course cards — the number beside the title, the two tags on one line, smaller type */
+@media(max-width:640px){
+  .hw-cgrid{grid-template-columns:1fr;gap:8px}
+  .hw-cc{grid-template-columns:30px 1fr;gap:8px;padding:12px 14px;border-radius:16px}
+  .hw-cc .n{font-size:20px;padding-top:2px}
+  .hw-cc .ar{font-size:15px;line-height:1.3}
+  .hw-cc strong{font-size:15.5px;line-height:1.3}
+  .hw-cc small{font-size:12px;margin:1px 0 6px}
+  .hw-cc .tags{flex-wrap:nowrap;gap:5px;overflow:hidden}
+  .hw-cc .tags>*{font-size:9.5px;padding:3px 7px;letter-spacing:.02em;white-space:nowrap}
+}

@@ -121,3 +121,17 @@ html[data-theme="light"] .ak .ak-tp-in{
   --ink:#F6F0E2;--p-gold:#EBCB8B;--gold:#EBCB8B;--p-soft:rgba(243,232,211,.06);--p-line:rgba(242,214,158,.2);
   background:#0F271B;border-color:rgba(242,214,158,.35);outline-color:rgba(242,214,158,.22)}
 html[data-theme="light"] .ak .ak-tp-in .wh-btn-glass{background:rgba(255,255,255,.06);border-color:rgba(242,214,158,.35);color:#F6F0E2}
+/* Phones: the three benefits slimmer, the five foundations two a row (the last across) */
+@media(max-width:560px){
+  .ak-benefits{gap:10px;margin-top:36px}
+  .ak-benefits article{padding:16px 18px;border-radius:18px}
+  .wh-home .ak-benefits h3{font-size:19px;margin:6px 0 4px}
+  .ak-benefits p{font-size:13.5px;line-height:1.55}
+  .ak-values{grid-template-columns:1fr 1fr;gap:8px;margin-top:32px}
+  .ak-values article{padding:22px 12px 14px;border-radius:90px 90px 18px 18px}
+  .ak-values article:last-child:nth-child(odd){grid-column:1/-1}
+  .ak-values .va{font-size:24px}
+  .wh-home .ak-values .vt{font-size:17px}
+  .wh-home .ak-values h3{font-size:9.5px;margin:2px 0 6px}
+  .wh-home .ak-values p:last-child{font-size:12px;line-height:1.5}
+}

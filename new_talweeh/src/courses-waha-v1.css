@@ -342,9 +342,22 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
   .cw-ftop .cw-search{width:100%;flex:none}
   .cw-sort,.cw-sort select{width:100%}
   .cw-subs{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px;padding:12px 14px 2px;scrollbar-width:none}
-  .cw-cards{grid-template-columns:minmax(0,1fr);gap:16px}
-  .cw-cc-media img,.cw-cc-media .ph{aspect-ratio:4/3;object-position:center top}
-  .wh-home .cw-cc-t{min-height:0}
+  /* two courses a row: the full poster, a short title, the teacher's name, one slim button */
+  .cw-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .cw-cc{gap:8px;padding:8px 8px 10px;border-radius:18px}
+  .cw-cc-media{border-radius:12px}
+  .cw-cc-media .cw-chip-sub{display:none}
+  .cw-cc-media .cw-chip{top:6px;min-height:20px;padding:2px 8px;font-size:10.5px}
+  .cw-cc-media .cw-chip-price{right:6px}
+  .wh-home .cw-cc-t{font-size:14px;line-height:1.25;min-height:0;padding:0 2px}
+  .cw-cc-who{gap:0;padding:0 2px}
+  .cw-cc-who img,.cw-cc-who .ph{display:none}
+  .cw-cc-who b{font-size:11.5px}
+  .cw-cc-who span{display:block;font-size:10.5px;line-height:1.35}
+  .cw-cc-act{gap:6px}
+  .cw-cc-act .wh-btn{min-height:36px;padding:6px 8px;font-size:12px;border-radius:12px;white-space:nowrap}
+  .cw-cc-icon{width:36px;height:36px;border-radius:11px}
+  .cw-cc-icon svg{width:15px;height:15px}
 }
 
 /* ── Free-course lesson page: course bar, video with the lessons beside it, write-up tabs ── */

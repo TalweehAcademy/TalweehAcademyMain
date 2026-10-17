@@ -755,3 +755,16 @@ html .wh-home .wh-route-error-body{padding:140px 16px 120px;text-align:center}
 html .wh-home .wh-route-error-body h1{font-family:'Lora',serif;font-size:clamp(28px,4vw,40px);color:var(--c-head);margin:0}
 html .wh-home .wh-route-error-body p{margin:14px auto 26px;max-width:520px;color:var(--c-mut)}
 html .wh-home .wh-route-error-body .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* Phones: "Begin today" as slim cards (icon beside the label), and the "Suits you if…" notes left out of "Choose how you learn" */
+@media(max-width:760px){
+  .wh-bt-ways{gap:8px;margin-top:24px}
+  .wh-bt-w{display:grid;grid-template-columns:36px 1fr;column-gap:12px;row-gap:4px;padding:14px 16px;border-radius:18px}
+  .wh-bt-w .wh-bt-ic{grid-row:span 2;width:36px;height:36px;border-radius:11px}
+  .wh-bt-w .wh-bt-ic svg{width:18px;height:18px}
+  .wh-bt-w small{font-size:10px;align-self:end}
+  .wh-home .wh-bt-w h3{font-size:17px}
+  .wh-bt-w p{grid-column:1/-1;font-size:13px;line-height:1.5;margin:2px 0 0}
+  .wh-bt-w .wh-btn{grid-column:1/-1;min-height:40px;padding-block:8px;font-size:13.5px;margin-top:6px}
+  .wh-route-s{display:none}
+  .wh-route{gap:10px}
+}
