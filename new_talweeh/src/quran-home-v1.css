@@ -116,3 +116,12 @@
 @media(max-width:560px){.qh-feats{grid-template-columns:1fr}.qh-cont-ar{font-size:52px}.qh-filter input{width:120px}.qh-search{padding-left:14px}.qh-search .wh-btn{padding:12px 14px}}
 /* phones: the Arabic surah name sits above the title instead of over it */
 @media(max-width:560px){.qh-cont{padding:24px 22px}.qh-cont-ar{position:static;align-self:flex-end;font-size:46px;line-height:1.2;margin:-6px 0 -18px}.wh-home .qh-cont h3{font-size:28px}}
+/* Phones: the four tools as compact 2 × 2 tiles instead of four tall cards stacked */
+@media(max-width:560px){
+  .qh-feats{grid-template-columns:1fr 1fr;gap:8px}
+  .qh-ft{padding:12px 14px;border-radius:16px;gap:3px}
+  .qh-i{width:30px;height:30px;border-radius:9px}
+  .qh-i svg{width:16px;height:16px}
+  .wh-home .qh-ft h4{font-size:15px;margin-top:4px;line-height:1.25}
+  .qh-ft p{font-size:11.5px;line-height:1.4}
+}

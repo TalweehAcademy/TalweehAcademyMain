@@ -588,3 +588,12 @@ html .wh-home .cw-paths>.cw-path:focus-visible{outline:2px solid var(--gold);out
 /* Under the route cards: the gold button into Find your starting point (opens the popup). */
 .cw-start-cta{display:flex;justify-content:center;margin-top:22px}
 @media(max-width:640px){.cw-start-cta .wh-btn{width:100%;justify-content:center}.cw-start-q{display:none}}
+/* Phones: the five ways in as compact two-column tiles (the last one full width) instead of five tall cards stacked */
+@media(max-width:640px){
+  .cw-paths{grid-template-columns:1fr 1fr;gap:8px}
+  .cw-path{padding:12px 14px;border-radius:16px;gap:2px}
+  .cw-paths>.cw-path:last-child:nth-child(odd){grid-column:1/-1}
+  .cw-path small{font-size:9.5px;letter-spacing:.12em}
+  .wh-home .cw-path strong{font-size:16px;line-height:1.25}
+  .cw-path span{font-size:11.5px;line-height:1.35}
+}
