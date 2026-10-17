@@ -60,6 +60,14 @@ export function WahaHeader({ social }) {
   const closeMenu = () => setMenuOpen(false)
   useScrollLock(menuOpen)
 
+  // A tap anywhere outside the bar (and its menu) closes the phone menu.
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onDown = (event) => { if (!event.target.closest?.('.wh-head .wh-bar')) setMenuOpen(false) }
+    document.addEventListener('pointerdown', onDown)
+    return () => document.removeEventListener('pointerdown', onDown)
+  }, [menuOpen])
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()

@@ -168,6 +168,14 @@ export function PageHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   useScrollLock(menuOpen)
 
+  // A tap anywhere outside the nav bar (and its menu) closes the phone menu.
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onDown = (event) => { if (!event.target.closest?.('.academy-header .main-nav')) setMenuOpen(false) }
+    document.addEventListener('pointerdown', onDown)
+    return () => document.removeEventListener('pointerdown', onDown)
+  }, [menuOpen])
+
   return (
     <header className="site-header academy-header">
       <div className="site-header-top">
