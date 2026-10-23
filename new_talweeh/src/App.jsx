@@ -20,6 +20,7 @@ import { formatCommercePrice } from './data/liveCommerceCatalog'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
+import { STUDY_ON } from './quran/studySwitch'
 import HOME_FEED from './data/homeFeed.json'
 const MediaPage = lazy(() => import('./pages/media-waha'))
 const MediaDetailPage = lazy(() => import('./pages/media-watch-waha'))
@@ -565,8 +566,18 @@ function QuranRoute() {
   if (params.get('surah')) at.set('surah', params.get('surah'))
   if (params.get('ayah')) at.set('ayah', params.get('ayah'))
   if (params.get('mode') === 'read') return <Navigate replace to={`/quran/read?${at}`} />
-  if (['study', 'sources'].includes(params.get('quranMode')) || params.get('study') === '1') return <Navigate replace to={`/quran/study?${at}`} />
+  if (STUDY_ON && (['study', 'sources'].includes(params.get('quranMode')) || params.get('study') === '1')) return <Navigate replace to={`/quran/study?${at}`} />
   return params.has('surah') || params.has('ayah') ? <QuranReaderPage /> : <QuranHomePage />
+}
+
+// While the study is hidden (src/quran/studyData.js STUDY_ON), its address opens the reader on the same sūrah and āyah.
+function QuranStudyOff() {
+  const { search } = useLocation()
+  const params = new URLSearchParams(search)
+  const at = new URLSearchParams()
+  at.set('surah', params.get('surah') || '1')
+  if (params.get('ayah')) at.set('ayah', params.get('ayah'))
+  return <Navigate replace to={`/quran?${at}`} />
 }
 
 function NotFoundPage() {
@@ -640,7 +651,7 @@ function AppInner() {
         <Route path="/checkout" element={<CommerceCheckoutPage />} />
         <Route path="/quran" element={<QuranRoute />} />
         <Route path="/quran/read" element={<QuranReadPage />} />
-        <Route path="/quran/study" element={<QuranStudyPage />} />
+        <Route path="/quran/study" element={STUDY_ON ? <QuranStudyPage /> : <QuranStudyOff />} />
         <Route path="/quran/listen" element={<QuranListenPage />} />
         <Route path="/arabic" element={<ArabicPage />} />
         <Route path="/arabic/program" element={<ArabicProgramPage />} />

@@ -8,7 +8,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { QURAN_SURAHS } from '../data/quranIndex'
 import { TRANSLATIONS, audioUrl, getReciters, getSurahText, getTimings, getTranslation, getWords, searchText, surahInfo } from '../quran/quranData'
-import { hasStudy } from '../quran/studyData'
+import { STUDY_ON, hasStudy } from '../quran/studyData'
 import { AyahMarker, Icon, SurahPicker, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
@@ -244,7 +244,7 @@ export default function QuranReaderPage() {
             <span className="sp" />
             <div className="qp-seg" role="group" aria-label="Qurʾān mode">
               <a className="on" href={`/quran?surah=${surah}`} onClick={(e) => e.preventDefault()} aria-current="page">Reader</a>
-              <Link to={`/quran/study?surah=${surah}`}>Study</Link>
+              {STUDY_ON ? <Link to={`/quran/study?surah=${surah}`}>Study</Link> : null}
               <Link to={`/quran/read?surah=${surah}`}>Read Mode</Link>
             </div>
             <button className="qp-tb" type="button" onClick={() => setPanel('search')}>{Icon.search}<span className="lb">Search</span></button>
@@ -260,7 +260,7 @@ export default function QuranReaderPage() {
           <div className="qp-schips"><span>{info.meaning}</span><span>{info.type === 'Meccan' ? 'Makkī' : 'Madanī'}</span><span>{info.ayahs} āyāt</span><span>{trName}</span></div>
           <div className="qp-sacts">
             <button className="wh-btn wh-btn-g" type="button" onClick={() => playFrom(1)}>{Icon.play}Play Surah</button>
-            <Link className="wh-btn wh-btn-glass" to={`/quran/study?surah=${surah}`}>{I.pen}{hasStudy(surah) ? 'Sūrah Study' : 'Study mode'}</Link>
+            {STUDY_ON ? <Link className="wh-btn wh-btn-glass" to={`/quran/study?surah=${surah}`}>{I.pen}{hasStudy(surah) ? 'Sūrah Study' : 'Study mode'}</Link> : null}
           </div>
           <div className="qp-snav">
             {surah > 1 ? <a href={`/quran?surah=${surah - 1}`} onClick={(e) => { e.preventDefault(); go(surah - 1) }}><span className="arr">‹</span><span><small>Previous</small><b>{surahInfo(surah - 1).en}</b></span></a> : <span className="none" />}

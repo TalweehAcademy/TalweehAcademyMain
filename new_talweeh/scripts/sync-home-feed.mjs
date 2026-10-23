@@ -162,7 +162,9 @@ async function main() {
       }
     }
   }
-  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, reviewQuotes, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}), ...(homeSections ? { homeSections } : {}) }, null, 2)}\n`)
+  // The Qurʾān pages: whether Study & Sources are shown (Academic System → Website CMS → Qurʾān pages; src/quran/studySwitch.js).
+  const quran = feed.quran && typeof feed.quran === 'object' ? { studyOn: feed.quran.studyOn === true, sourcesOn: feed.quran.sourcesOn === true } : null
+  await writeFile(outFile, `${JSON.stringify({ videos, testimonials, reviewQuotes, ...(media ? { media } : {}), ...(people ? { instructors } : {}), ...(site ? { site } : {}), ...(homeSections ? { homeSections } : {}), ...(quran ? { quran } : {}) }, null, 2)}\n`)
   console.log(`Home feed sync: ${videos.length} videos, ${testimonials.length} testimonials, ${reviewQuotes.length} review quotes${media ? `, media: ${media.items.length} videos in ${media.topics.length} topics, ${media.shorts.length} shorts` : ''}${people ? `, ${instructors.length} instructors` : ''}.`)
 
   // Articles only: the importer validates the snapshot and saves its images on the site.

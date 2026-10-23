@@ -1,11 +1,15 @@
 // Talweeh study packages (src/quran-study-static/NNN — the same files QuranPortalStaticStore
 // reads) shaped for the Dirāsah study page. Loaded per surah, on demand.
+import { STUDY_ON } from './studySwitch'
+
 const portals = import.meta.glob('../quran-study-static/*/portal.json', { import: 'default' })
 const manifests = import.meta.glob('../quran-study-static/*/sources/manifest.json', { import: 'default' })
 const books = import.meta.glob('../quran-study-static/*/sources/*.json', { import: 'default' })
 
 const dir = (n) => `../quran-study-static/${String(n).padStart(3, '0')}`
-export const STUDY_SURAHS = Object.keys(portals).map((p) => Number(p.match(/static\/(\d{3})\//)[1])).sort((a, b) => a - b)
+// Hidden while STUDY_ON is off (./studySwitch.js): no sūrah has a study.
+export { STUDY_ON }
+export const STUDY_SURAHS = STUDY_ON ? Object.keys(portals).map((p) => Number(p.match(/static\/(\d{3})\//)[1])).sort((a, b) => a - b) : []
 export const hasStudy = (n) => STUDY_SURAHS.includes(Number(n))
 
 const clean = (v) => String(v ?? '').trim()

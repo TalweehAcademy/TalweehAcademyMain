@@ -9,6 +9,7 @@ import { WahaPage } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { arNum, getTranslation, getUthmani, getWords, surahInfo } from '../quran/quranData'
 import { STUDY_SURAHS, hasStudy, loadStudy } from '../quran/studyData'
+import { SOURCES_ON } from '../quran/studySwitch'
 import { AyahMarker, Icon, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
@@ -23,7 +24,7 @@ function options(ay, c, S, sourcesOnly) {
   if (!S) return c === 'words' && ay.words.length ? [{ label: 'Words', title: 'Word by word' }] : []
   const st = ay.st
   const psg = (id) => { const p = S.passages[id]; return p && { label: p.book, sub: p.author, loc: p.locator, ar: p.arabic, by: p.author + (p.heading ? ' · ' + p.heading : ''), title: p.book } }
-  const books = (f) => (ay.src[f] || []).map(psg).filter(Boolean)
+  const books = (f) => (SOURCES_ON ? (ay.src[f] || []).map(psg).filter(Boolean) : [])
   if (c === 'irab') {
     const words = Object.entries(S.wordIrab).filter(([wk]) => wk.startsWith(ay.k + ':')).map(([, r]) => r)
     if (sourcesOnly) return books('irab')
@@ -34,7 +35,7 @@ function options(ay, c, S, sourcesOnly) {
     ]
   }
   if (c === 'tafsir') return books('tafsir')
-  if (c === 'dictionaries') return [...new Set(st.vocab.map((v) => v.root))].filter((id) => S.roots[id]).map((id) => ({ label: S.roots[id].root, sub: `${S.roots[id].dicts.length} dictionaries`, root: id, ar: S.roots[id].dicts[0]?.arabic, title: `Root ${S.roots[id].root}` }))
+  if (c === 'dictionaries') return !SOURCES_ON ? [] : [...new Set(st.vocab.map((v) => v.root))].filter((id) => S.roots[id]).map((id) => ({ label: S.roots[id].root, sub: `${S.roots[id].dicts.length} dictionaries`, root: id, ar: S.roots[id].dicts[0]?.arabic, title: `Root ${S.roots[id].root}` }))
   if (sourcesOnly) return []
   if (c === 'rabt') return st.rabt.map((x, i) => ({ label: `Rabṭ${st.rabt.length > 1 ? ' ' + (i + 1) : ''}`, sub: 'Connection to what precedes', ar: x.arabic, en: x.english, title: 'Rabṭ' }))
   if (c === 'fawaid') return st.fawaid.map((x, i) => ({ label: `Fāʾidah ${i + 1}`, sub: 'Talweeh', ar: x.arabic, en: x.english, title: `Fāʾidah ${i + 1}` }))
@@ -328,7 +329,7 @@ export default function QuranStudyPage() {
             <div className="qp-seg light">
               <Link to={`/quran?surah=${surah}`} className="qp-seglink">Reader</Link>
               <button type="button" className={!sourcesOnly ? 'on' : ''} onClick={() => setSourcesOnly(false)}>Study</button>
-              <button type="button" className={sourcesOnly ? 'on' : ''} onClick={() => setSourcesOnly(true)}>Sources</button>
+              {SOURCES_ON ? <button type="button" className={sourcesOnly ? 'on' : ''} onClick={() => setSourcesOnly(true)}>Sources</button> : null}
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}><span className="lbl">Study language</span>
               <div className="qp-seg light">{[['english', 'English'], ['arabic', 'Arabic'], ['both', 'Both']].map(([v, l]) => <button key={v} type="button" className={lang === v ? 'on' : ''} onClick={() => setLang(v)}>{l}</button>)}</div>
