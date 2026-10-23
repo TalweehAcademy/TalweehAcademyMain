@@ -1,5 +1,5 @@
-// Talweeh study packages (src/quran-study-static/NNN — the same files QuranPortalStaticStore
-// reads) shaped for the Dirāsah study page. Loaded per surah, on demand.
+// Talweeh study packages (src/quran-study-static/NNN — the files the old portal-style reader
+// read) shaped for the Dirāsah study page. Loaded per surah, on demand.
 import { STUDY_ON } from './studySwitch'
 
 const portals = import.meta.glob('../quran-study-static/*/portal.json', { import: 'default' })
@@ -20,7 +20,7 @@ const listish = (v) => {
 }
 const key = (s) => clean(s).replace(/\s/g, '')
 
-// Sūrah study topics, grouped like surahStudyTabs() in QuranReaderStudyLayer.jsx.
+// Sūrah study topics, grouped like surahStudyTabs() in the Qurʾān Study (QuranReaderStudyLayer.jsx in the library site).
 function surahTopics(legacy) {
   const meta = rows(legacy?.metadata)
   const test = (re) => (m) => re.test(`${m.id || ''} ${m.labelArabic || ''} ${m.labelEnglish || ''}`)

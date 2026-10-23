@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // Qurʾān home ("Fihris", from mockups/quran-waha-index.html): search, continue reading,
 // shortcuts, a "Commonly read" pop-up, and the full surah / juz index. Every link opens
-// the Qurʾān pages: surahs and search results open the reader (src/pages/quran.jsx, ?surah=&ayah=);
+// the Qurʾān pages: surahs and search results open the reader (src/pages/quran-reader.jsx, ?surah=&ayah=);
 // the tiles open Read Mode (/quran/read), Study (/quran/study) and Listen (/quran/listen).
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'

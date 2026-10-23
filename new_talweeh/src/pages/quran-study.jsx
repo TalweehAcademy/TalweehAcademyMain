@@ -13,7 +13,7 @@ import { SOURCES_ON } from '../quran/studySwitch'
 import { AyahMarker, Icon, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
-// Order follows SOURCE_FEATURE_META in QuranPortalStudyBridge.jsx.
+// Order follows SOURCE_FEATURE_META of the old portal-style reader (removed 2026-10-22).
 const CATS = [['irab', 'Iʿrāb'], ['tafsir', 'Tafsīr'], ['dictionaries', 'Dictionaries'], ['rabt', 'Rabṭ'], ['fawaid', 'Fawāʾid'], ['qiraat', 'Qirāʾāt'], ['translation', 'Bracket notes'], ['words', 'Words']]
 const plain = (s) => String(s || '').replace(/\s+/g, ' ').trim()
 const normLabel = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()

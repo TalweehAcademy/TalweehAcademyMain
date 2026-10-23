@@ -248,7 +248,7 @@ export default function TalweehMediaPlayer({
 
               try {
                 event.target.setPlaybackRate(playbackRate)
-              } catch {}
+              } catch { /* the player may not support it */ }
             },
 
             onStateChange: (event) => {
@@ -308,7 +308,7 @@ export default function TalweehMediaPlayer({
 
       try {
         playerRef.current?.destroy?.()
-      } catch {}
+      } catch { /* the player may not support it */ }
 
       playerRef.current = null
       initializedRef.current = false
@@ -372,7 +372,7 @@ export default function TalweehMediaPlayer({
 
     try {
       playerRef.current?.seekTo?.(next, true)
-    } catch {}
+    } catch { /* the player may not support it */ }
   }
 
   function seekBy(amount) {
@@ -384,7 +384,7 @@ export default function TalweehMediaPlayer({
 
     try {
       now = Number(player.getCurrentTime?.()) || currentTime
-    } catch {}
+    } catch { /* the player may not support it */ }
 
     const maximum = duration || Number.MAX_SAFE_INTEGER
     const next = Math.min(
@@ -396,7 +396,7 @@ export default function TalweehMediaPlayer({
 
     try {
       player.seekTo(next, true)
-    } catch {}
+    } catch { /* the player may not support it */ }
   }
 
   function toggleMute() {
@@ -425,11 +425,11 @@ export default function TalweehMediaPlayer({
         PLAYBACK_RATE_STORAGE_KEY,
         String(next),
       )
-    } catch {}
+    } catch { /* the player may not support it */ }
 
     try {
       playerRef.current?.setPlaybackRate?.(next)
-    } catch {}
+    } catch { /* the player may not support it */ }
   }
 
   function handleKeyboard(event) {
@@ -466,7 +466,7 @@ export default function TalweehMediaPlayer({
       } else {
         await shell.requestFullscreen()
       }
-    } catch {}
+    } catch { /* the player may not support it */ }
   }
 
   return (
