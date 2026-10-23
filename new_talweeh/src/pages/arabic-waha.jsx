@@ -132,7 +132,7 @@ function Ladder() {
       <div className="ai-detail wh-glass" ref={detailRef}>
         <div>
           <span className="cw-kicker">Module {m.n} · {m.name}</span><h3>{t.t}</h3>
-          <div className="meta">{t.code && <span>{t.code}</span>}<span>{m.duration}</span><span>{m.format}</span><span>{m.hours}</span></div>
+          <div className="meta">{t.code && <span>{t.code}</span>}<span>{m.duration}</span><span>{m.hours}</span></div>
           <p className="ov">{m.overview}</p>
         </div>
         <div className="body"><h4>{s.title}</h4><Rich text={s.text} /></div>
@@ -145,7 +145,7 @@ function Ladder() {
       <div className="ai-sec-h"><div><span className="cw-kicker">Module overviews</span><h2>The ladder of texts</h2></div><p>At Talweeh Arabic, we have curated the most effective texts into a comprehensive two-year curriculum designed to guide you from beginner to advanced proficiency. Choose any text.</p></div>
       <div className="ai-ladder">
         <div className="corner" />
-        {R.MODULES.map((m) => <div key={m.n} className="hd"><small>Module {m.n} · {m.duration}</small><strong>{m.name}</strong><span>{m.format}</span></div>)}
+        {R.MODULES.map((m) => <div key={m.n} className="hd"><small>Module {m.n} · {m.duration}</small><strong>{m.name}</strong></div>)}
         {TRACKS.map((t, r) => (
           <Fragment key={t.k}>
             <div className={`rh t-${t.k}`}><span className="ar" lang="ar">{t.ar}</span><strong>{t.label}</strong></div>

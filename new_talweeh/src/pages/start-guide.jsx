@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import { WahaPage } from '../components/WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { money } from '../data/commerceCheckout'
-import { COURSE, GOALS, LEVELS, MODES, MODULES, PLAN, SUBJECTS, countOf, decode, encode, recommend } from '../data/startGuide'
+import { COURSE, GOALS, LEVELS, MODES, MODULES, PLAN, PROGRAMMES, SUBJECTS, countOf, decode, encode, recommend } from '../data/startGuide'
 import '../courses-waha-v1.css'
 import '../start-guide-v1.css'
 
@@ -88,11 +88,18 @@ function Result({ a, onRestart }) {
   const rest = (label) => r.alts.filter((x) => x.slug && !used.has(x.slug)).map((x) => courseRow(x.slug, label === undefined ? x.label : label))
 
   if (M) {
-    steps.push({ k: whole ? 'Take the full programme' : `Join at Module ${M.n}`, why: whole ? `You’re at the start of Arabic, so the full programme takes you from Module 1, step by step.${a.mode === 'self' ? ' Modules 1 and 2 are mostly live classes.' : ''}` : `At ${LEVELS[a.level].b.toLowerCase()} level you’d join at Module ${M.n}: ${M.texts.join(', ')}.`,
-      body: <Card to="/arabic" title={`Arabic Program${whole ? '' : ` · Module ${M.n}`}`} meta={whole ? 'Two years, five modules, from your first Arabic sentence to linguistic tafsīr' : `${M.name} · ${M.d}`} tag={whole ? 'Modules 1–2 mostly live' : M.f} tagKind="live" btn="See the Arabic Program" gold /> })
+    // Arabic (and the Qurʾān): the live classes are the ʿĀlimiyyah, whose first years are mainly Arabic; the Arabic
+    // Program is on demand. Live: the ʿĀlimiyyah first, the Arabic Program second; at own pace or either: the Arabic
+    // Program, with the ʿĀlimiyyah below for a teacher (either).
+    const live = a.mode === 'live'
+    if (live) steps.push({ k: 'Join the live classes', why: 'The ʿĀlimiyyah’s first years are mainly Arabic, with a teacher and a class.', body: progCard(PROGRAMMES.alim, true) })
+    steps.push({ k: live ? `Or on demand: the Arabic Program${whole ? '' : ` · from Module ${M.n}`}` : whole ? 'Take the full programme' : `Join at Module ${M.n}`,
+      why: whole ? 'You’re at the start of Arabic, so the full programme takes you from Module 1, step by step, at your own pace.' : `At ${LEVELS[a.level].b.toLowerCase()} level you’d join at Module ${M.n}: ${M.texts.join(', ')}.`,
+      body: <Card to="/arabic" title={`Arabic Program${whole ? '' : ` · Module ${M.n}`}`} meta={whole ? 'Two years, five modules, from your first Arabic sentence to linguistic tafsīr' : `${M.name} · ${M.d}`} tag="On demand" btn="See the Arabic Program" gold={!live} /> })
     steps.push({ k: 'Check your level', body: <Card to="/arabic/assessment" title="Arabic assessment" meta="Free · about 10 minutes · tells you which module to start with" btn="Take the assessment" /> })
     const rows = r.alts.filter((x) => x.slug).map((x) => courseRow(x.slug, ''))
     if (rows.length) steps.push({ k: 'Or one course on its own', rows })
+    if (a.mode === 'either') steps.push({ k: 'If you’d like a teacher', rows: [{ key: 'prog', to: PROGRAMMES.alim.to, title: PROGRAMMES.alim.t, sub: 'Live classes · its first years are mainly Arabic' }] })
   } else if (r.further) {
     steps.push({ k: 'Study it further with a teacher', why: r.why, body: progCard(r.prog, true) })
     const rows = rest('As a review')

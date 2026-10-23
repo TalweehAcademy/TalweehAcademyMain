@@ -45,3 +45,17 @@
 :is(.top-bar-social, .wh-tr .wh-socials) { gap: 8px; }
 :is(.top-bar-social, .wh-tr .wh-socials) a { width: 34px !important; height: 34px !important; }
 :is(.top-bar-social, .wh-tr .wh-socials) a .social-glyph { width: 16px !important; height: 16px !important; }
+
+/* Light mode, top bar: the icons sit on the light page, where the pale gold outline barely shows; they take the header
+   bar's deep green, gold on green like the theme button beside them. */
+html[data-theme="light"] .wh-topbar .wh-socials a {
+  background: #0F271B !important;
+  border-color: rgba(242, 214, 158, .32) !important;
+  color: #EBCB8B;
+}
+html[data-theme="light"] .wh-topbar .wh-socials a:hover,
+html[data-theme="light"] .wh-topbar .wh-socials a:focus-visible {
+  background: #173A27 !important;
+  border-color: rgba(242, 214, 158, .7) !important;
+  color: #F6DDA5;
+}

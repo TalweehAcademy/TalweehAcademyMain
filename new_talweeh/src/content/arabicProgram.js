@@ -107,7 +107,7 @@ export const PROGRAM_MODULES = [
       },
       {
         title: 'Integrated Proficiency in Reading, Writing, and Speaking',
-        text: 'Students will be able to: develop conversational Arabic through weekly ḥiwār, focusing on everyday vocabulary and common structures. Strengthen written ability through supplementary writing exercises that reinforce grammar and vocabulary usage. Apply grammar and morphology in both structured and unstructured responses. Engage actively in weekly live sessions to review concepts, ask questions, and refine analytical skills.',
+        text: 'Students will be able to: develop conversational Arabic through weekly ḥiwār, focusing on everyday vocabulary and common structures. Strengthen written ability through supplementary writing exercises that reinforce grammar and vocabulary usage. Apply grammar and morphology in both structured and unstructured responses.',
       },
     ],
   },
@@ -199,17 +199,7 @@ export const PROGRAM_MODULES = [
   },
 ]
 
-export const PROGRAM_CALENDAR_TEXT =
-  'Below is the program calendar outlining the structure of the two-year Arabic program, which is scheduled to commence in April 2026. The first two modules focus primarily on live, instructor-led classes, allowing students to develop a strong foundation in Arabic through direct instruction, guided practice, and real-time interaction with the instructor. The third and fourth modules introduce a balanced combination of live sessions and carefully structured pre-recorded lessons. This format allows students to engage with core material at their own pace while continuing to benefit from regular live instruction and clarification. The fifth module returns to a format that is primarily live, enabling students to refine their understanding, strengthen their analytical skills, and consolidate their ability to engage with Arabic texts. To support consistent progress and review, recordings of all classes will be made available through the student portal, allowing students to revisit lessons and reinforce their learning throughout the duration of the program.'
 
-export const PROGRAM_FACTS = [
-  { label: 'Next cohort', value: 'April 2026' },
-  { label: 'Tuition', value: '$99 USD / month' },
-  { label: 'Weekly commitment', value: '3–6 hours' },
-  { label: 'Language of instruction', value: 'English' },
-  { label: 'Format', value: 'Live + recorded classes' },
-  { label: 'Instructors', value: 'Shaykh Omer Khurshid & Mufti Dawood Khurshid' },
-]
 
 export const PROGRAM_INVITATION =
   'We warmly invite you to join us on this enriching journey of knowledge and growth. Together, we will raise the bar for Islamic education, benefiting individuals and communities alike. Through our collaborative efforts, we hope to cultivate a generation of informed, engaged, and empowered individuals who can contribute positively to society.'
@@ -317,9 +307,7 @@ The program then builds upon this foundation by developing a deeper understandin
   },
   {
     q: 'When does the program begin?',
-    a: `The next cohort of the Two-Year Arabic Program is scheduled to begin in:
-
-**April 2026**`,
+    a: `**Any time.** The program is on demand, so you can start as soon as you enrol and go at your own pace.`,
   },
   {
     q: 'What are the program fees?',
@@ -347,28 +335,10 @@ Arabic terminology and texts will be gradually introduced throughout the program
 Both instructors completed advanced Islamic studies at the **Islamic University of Madinah** and have extensive experience teaching Arabic and Islamic sciences.`,
   },
   {
-    q: 'Are the classes live or recorded?',
-    a: `The program combines **live instruction and pre-recorded lessons**, depending on the module.
+    q: 'Is the program live or on demand?',
+    a: `The Arabic Program is **on demand**: recorded lessons in the **Talweeh Student Portal**, which you follow at your own pace.
 
-- **Module 1 & Module 2:** Primarily live classes
-- **Module 3 & Module 4:** Combination of recorded lessons and live sessions
-- **Module 5:** Primarily live classes
-
-All live classes are recorded and uploaded to the student portal.`,
-  },
-  {
-    q: 'What time are the live classes held?',
-    a: `Live sessions are typically scheduled at the following times:
-
-- **3:00 PM EST (Eastern Standard Time)**
-- **8:00 PM UK Time**
-- **9:00 PM Central European Time**
-- **11:00 PM Gulf Standard Time (UAE / Saudi Arabia)**
-- **12:30 AM Pakistan Standard Time**
-
-A detailed schedule is available in the **Program Calendar** on the program page.
-Daylight savings might affect the time.
-Class timings can potentially be updated based on the commitments of the instructors.`,
+If you would like live classes with a teacher, see the **ʿĀlimiyyah** programme: its first years are mainly Arabic.`,
   },
   {
     q: 'How many hours per week does the program require?',
@@ -378,14 +348,6 @@ Class timings can potentially be updated based on the commitments of the instruc
 - **Modules 2–5:** Approximately 5–6 hours per week
 
 Students are encouraged to complete recommended practice exercises to reinforce their learning.`,
-  },
-  {
-    q: 'Will I have access to class recordings?',
-    a: `Yes. All live classes are recorded and uploaded to the **Talweeh Student Portal**, allowing students to review lessons at their convenience.`,
-  },
-  {
-    q: 'What if I miss a live class?',
-    a: `If you are unable to attend a live session, you can watch the full recording through the student portal shortly after the class is completed.`,
   },
   {
     q: 'How are classes accessed?',
@@ -421,7 +383,7 @@ export const ABOUT_SECTIONS = [
   {
     title: 'Applied Learning',
     paragraphs: [
-      'Alongside technical mastery, Talweeh Arabic emphasizes practical language skills. Weekly ḥiwār (conversation) sessions develop spoken fluency, while structured writing exercises reinforce grammatical accuracy and vocabulary retention. Live sessions provide opportunities for clarification, discussion, and applied analysis, ensuring that learning remains interactive and accountable. Students graduate from the program not only able to read Arabic texts, but able to think through them—analyzing structures, evaluating interpretations, and articulating meaning with precision.',
+      'Alongside technical mastery, Talweeh Arabic emphasizes practical language skills. Weekly ḥiwār (conversation) sessions develop spoken fluency, while structured writing exercises reinforce grammatical accuracy and vocabulary retention. Students graduate from the program not only able to read Arabic texts, but able to think through them—analyzing structures, evaluating interpretations, and articulating meaning with precision.',
     ],
   },
   {

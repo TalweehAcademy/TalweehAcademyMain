@@ -1,5 +1,5 @@
 // Arabic program data for the Wāḥa page (/arabic) — modules, objectives, FAQ, links and the intro video,
-// from src/content/arabicProgram.js. "format"/"hours" per module come from the FAQ answers; "track"
+// from src/content/arabicProgram.js. "hours" per module come from the FAQ answers; "track"
 // groups each text by discipline (Naḥw, Ṣarf, Adab, Qurʾān) for the ladder of texts.
 
 export const ARB = {
@@ -82,7 +82,6 @@ export const ARB = {
           "text": "Perform beginner-level tarkīb by identifying word types, phrases, and simple sentence structures within short texts. Apply iʿrāb principles in guided examples, recognizing cases such as rafʿ, naṣb, and jarr in context. Translate and construct simple Arabic phrases using vocabulary introduced weekly (approximately 10 words per week). Practice identifying common Nahw and Ṣarf mistakes to develop sensitivity to correct grammatical form. Read short curated texts and apply newly learned concepts: fiʿl tables, phrase identification, plurals, nūn of emphasis, and verbal commands/prohibitions."
         }
       ],
-      "format": "Primarily live",
       "hours": "3–4 hrs / week",
       "months": 3
     },
@@ -133,10 +132,9 @@ export const ARB = {
         },
         {
           "title": "Integrated Proficiency in Reading, Writing, and Speaking",
-          "text": "Students will be able to: develop conversational Arabic through weekly ḥiwār, focusing on everyday vocabulary and common structures. Strengthen written ability through supplementary writing exercises that reinforce grammar and vocabulary usage. Apply grammar and morphology in both structured and unstructured responses. Engage actively in weekly live sessions to review concepts, ask questions, and refine analytical skills."
+          "text": "Students will be able to: develop conversational Arabic through weekly ḥiwār, focusing on everyday vocabulary and common structures. Strengthen written ability through supplementary writing exercises that reinforce grammar and vocabulary usage. Apply grammar and morphology in both structured and unstructured responses."
         }
       ],
-      "format": "Primarily live",
       "hours": "5–6 hrs / week",
       "months": 6
     },
@@ -197,7 +195,6 @@ export const ARB = {
           "text": "Students will be able to: conjugate sound and weak verbs with confidence across past, present, and command forms, thulāthī and mazīd patterns, and major morphological derivatives. Recognize and explain changes due to weak letters, stress assimilation, hamzah rules, and additional letters in verb forms. Identify patterns quickly when reading real texts, improving comprehension and retention. Use morphology to support iʿrāb and reading other books and poetry."
         }
       ],
-      "format": "Live + recorded",
       "hours": "5–6 hrs / week",
       "months": 3
     },
@@ -247,7 +244,6 @@ export const ARB = {
           "text": "Students will be able to: read, translate, and interpret all lines of Lāmiyyat Abī Ṭālib, with attention to its emotional and historical background. Perform accurate iʿrāb of poetic lines. Recognize and analyze themes of loyalty, courage, family honor, and Qurashī ethics, along with rhetorical devices, imagery, and emotional tone."
         }
       ],
-      "format": "Live + recorded",
       "hours": "5–6 hrs / week",
       "months": 5
     },
@@ -308,36 +304,8 @@ export const ARB = {
           "text": "Students will receive 10 lessons introducing the main Islamic sciences, including Balaghah, Qira’aat, Tafsir, Usul al-Fiqh, Fiqh, Aqeedah, Mustalah, and Hadith amongst others. An overview of each science will be presented, along with the books a student should cover in order to master each science. Upon covering these lessons, students will have a clear picture of how to access and thereafter study any science. This will help them smoothly transition into other sciences and courses offered in Islamic Institutions."
         }
       ],
-      "format": "Primarily live",
       "hours": "5–6 hrs / week",
       "months": 0
-    }
-  ],
-  "CALENDAR": "Below is the program calendar outlining the structure of the two-year Arabic program, which is scheduled to commence in April 2026. The first two modules focus primarily on live, instructor-led classes, allowing students to develop a strong foundation in Arabic through direct instruction, guided practice, and real-time interaction with the instructor. The third and fourth modules introduce a balanced combination of live sessions and carefully structured pre-recorded lessons. This format allows students to engage with core material at their own pace while continuing to benefit from regular live instruction and clarification. The fifth module returns to a format that is primarily live, enabling students to refine their understanding, strengthen their analytical skills, and consolidate their ability to engage with Arabic texts. To support consistent progress and review, recordings of all classes will be made available through the student portal, allowing students to revisit lessons and reinforce their learning throughout the duration of the program.",
-  "FACTS": [
-    {
-      "label": "Next cohort",
-      "value": "April 2026"
-    },
-    {
-      "label": "Tuition",
-      "value": "$99 USD / month"
-    },
-    {
-      "label": "Weekly commitment",
-      "value": "3–6 hours"
-    },
-    {
-      "label": "Language of instruction",
-      "value": "English"
-    },
-    {
-      "label": "Format",
-      "value": "Live + recorded classes"
-    },
-    {
-      "label": "Instructors",
-      "value": "Shaykh Omer Khurshid & Mufti Dawood Khurshid"
     }
   ],
   "INVITATION": "We warmly invite you to join us on this enriching journey of knowledge and growth. Together, we will raise the bar for Islamic education, benefiting individuals and communities alike. Through our collaborative efforts, we hope to cultivate a generation of informed, engaged, and empowered individuals who can contribute positively to society.",
@@ -372,7 +340,7 @@ export const ARB = {
     },
     {
       "q": "When does the program begin?",
-      "a": "The next cohort of the Two-Year Arabic Program is scheduled to begin in:\n\n**April 2026**"
+      "a": "**Any time.** The program is on demand, so you can start as soon as you enrol and go at your own pace."
     },
     {
       "q": "What are the program fees?",
@@ -387,24 +355,12 @@ export const ARB = {
       "a": "The program is taught by:\n\n**Shaykh Omer Khurshid**\n**Mufti Dawood Khurshid**\n\nBoth instructors completed advanced Islamic studies at the **Islamic University of Madinah** and have extensive experience teaching Arabic and Islamic sciences."
     },
     {
-      "q": "Are the classes live or recorded?",
-      "a": "The program combines **live instruction and pre-recorded lessons**, depending on the module.\n\n- **Module 1 & Module 2:** Primarily live classes\n- **Module 3 & Module 4:** Combination of recorded lessons and live sessions\n- **Module 5:** Primarily live classes\n\nAll live classes are recorded and uploaded to the student portal."
-    },
-    {
-      "q": "What time are the live classes held?",
-      "a": "Live sessions are typically scheduled at the following times:\n\n- **3:00 PM EST (Eastern Standard Time)**\n- **8:00 PM UK Time**\n- **9:00 PM Central European Time**\n- **11:00 PM Gulf Standard Time (UAE / Saudi Arabia)**\n- **12:30 AM Pakistan Standard Time**\n\nA detailed schedule is available in the **Program Calendar** on the program page.\nDaylight savings might affect the time.\nClass timings can potentially be updated based on the commitments of the instructors."
+      "q": "Is the program live or on demand?",
+      "a": "The Arabic Program is **on demand**: recorded lessons in the **Talweeh Student Portal**, which you follow at your own pace.\n\nIf you would like live classes with a teacher, see the **ʿĀlimiyyah** programme: its first years are mainly Arabic."
     },
     {
       "q": "How many hours per week does the program require?",
       "a": "The expected weekly commitment varies by module:\n\n- **Module 1:** Approximately 3–4 hours per week\n- **Modules 2–5:** Approximately 5–6 hours per week\n\nStudents are encouraged to complete recommended practice exercises to reinforce their learning."
-    },
-    {
-      "q": "Will I have access to class recordings?",
-      "a": "Yes. All live classes are recorded and uploaded to the **Talweeh Student Portal**, allowing students to review lessons at their convenience."
-    },
-    {
-      "q": "What if I miss a live class?",
-      "a": "If you are unable to attend a live session, you can watch the full recording through the student portal shortly after the class is completed."
     },
     {
       "q": "How are classes accessed?",
@@ -426,7 +382,7 @@ export const ARB = {
     {
       "title": "Applied Learning",
       "paragraphs": [
-        "Alongside technical mastery, Talweeh Arabic emphasizes practical language skills. Weekly ḥiwār (conversation) sessions develop spoken fluency, while structured writing exercises reinforce grammatical accuracy and vocabulary retention. Live sessions provide opportunities for clarification, discussion, and applied analysis, ensuring that learning remains interactive and accountable. Students graduate from the program not only able to read Arabic texts, but able to think through them—analyzing structures, evaluating interpretations, and articulating meaning with precision."
+        "Alongside technical mastery, Talweeh Arabic emphasizes practical language skills. Weekly ḥiwār (conversation) sessions develop spoken fluency, while structured writing exercises reinforce grammatical accuracy and vocabulary retention. Students graduate from the program not only able to read Arabic texts, but able to think through them—analyzing structures, evaluating interpretations, and articulating meaning with precision."
       ]
     },
     {

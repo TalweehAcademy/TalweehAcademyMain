@@ -38,10 +38,10 @@ export const MODES = [
 ]
 export const PROGRAMMES = {
   alim: { t: 'ʿĀlimiyyah', s: 'Live, guided classes through the core sciences with instructors', to: '/alimiyyah' },
-  arabic: { t: 'Arabic Program', s: 'Two years, five modules; the first two mostly live', to: '/arabic' },
+  arabic: { t: 'Arabic Program', s: 'Two years, five modules, on demand', to: '/arabic' },
   hadith: { t: 'Ḥadīth Specialization', s: 'A two-year programme in the ḥadīth sciences', to: '/hadith-specialization' },
 }
-export const MODULES = ARB.MODULES.map((m) => ({ n: m.n, name: m.name, d: m.duration, f: m.format, texts: m.texts.map((t) => t.t) }))
+export const MODULES = ARB.MODULES.map((m) => ({ n: m.n, name: m.name, d: m.duration, texts: m.texts.map((t) => t.t) }))
 
 const CHAPTERS = ['takwin-al-asanid', 'tadwin-al-sunnah', 'al-athbat-wal-faharis', 'al-jarh-wa-l-tadil', 'talweeh-od-24-ruwatalhadith', 'makanat-al-sunnah', 'takhri-j-al-h-adi-th-q2zxxj']
 const BAYQUNI = 'talweeh-od-33-manzumahalbayquni'
