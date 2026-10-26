@@ -215,10 +215,14 @@ export default function HadithWahaPage() {
         <section className="hw-blk" id="curriculum">
           <div className="hw-sec-h"><div><span className="cw-kicker">Hadith Specialization curriculum</span><h2>{WORD[H.COURSES.length] || H.COURSES.length} courses across two years.</h2></div><p>Select a year, then open any course to read its overview and learning outcomes. {soloCount} of them can also be taken today as standalone Talweeh courses.</p></div>
           <div className="hw-years" role="tablist" aria-label="Year">
+            {/* Each year's box: the tab (whole box) and, inside it, enrollment for that year (Year 1 alone, or the full programme). */}
             {[1, 2].map((y) => (
-              <button key={y} type="button" role="tab" aria-selected={yr === y} className={yr === y ? 'on' : ''} onClick={() => setYr(y)}>
-                <div><span>Year {y}</span><strong>{y === 1 ? '1st Year' : '2nd Year'}</strong></div><small>{year(y).length} courses</small>
-              </button>
+              <div key={y} className={`hw-year${yr === y ? ' on' : ''}`}>
+                <button type="button" role="tab" aria-selected={yr === y} onClick={() => setYr(y)}>
+                  <div><span>Year {y}</span><strong>{y === 1 ? '1st Year' : '2nd Year'}</strong></div><small>{year(y).length} courses</small>
+                </button>
+                <Link className={`wh-btn ${yr === y ? 'wh-btn-g' : 'wh-btn-glass'} hw-year-cta`} to={`${HADITH_PROGRAM_ENROL}?plan=${y === 1 ? 'year1' : 'full'}`}>{y === 1 ? 'Enroll in the first year only' : 'Enroll in the full programme'} →</Link>
+              </div>
             ))}
           </div>
           <div className="hw-cgrid">{year(yr).map((c) => (
@@ -236,7 +240,7 @@ export default function HadithWahaPage() {
           <div className="ar" lang="ar">وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ</div>
           <span className="cw-kicker">Enrollment</span>
           <h2>Interested in the Hadith Specialization?</h2>
-          <p>Pay in full or in monthly installments. Your lessons open in the Student Portal as soon as payment is confirmed.</p>
+          <p>Pay in full, take the first year on its own, or pay in monthly installments. Your lessons open in the Student Portal as soon as payment is confirmed.</p>
           <div className="acts"><Link className="wh-btn wh-btn-g" to={HADITH_PROGRAM_ENROL}>Enroll now →</Link><Link className="wh-btn wh-btn-glass" to="/hadith-specialization/learning">See My Learning month by month</Link><Link className="wh-btn wh-btn-glass" to="/courses?category=hadith-sciences">Browse the standalone courses</Link></div>
           <small>Enrollment inquiries: {H.EMAIL}</small>
         </section>

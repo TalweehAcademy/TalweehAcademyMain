@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-// /arabic/enroll and /hadith-specialization/enroll: a programme's payment options (pay in full, monthly) from
+// /arabic/enroll and /hadith-specialization/enroll: a programme's payment options (pay in full, Year 1, monthly) from
 // the live Commerce catalog (its `programs` list). Each option opens this site's checkout with that option,
 // the same checkout a paid course uses: it asks for the email, says if it is already enrolled, and finishes
 // the account and payment. Styles: program-learning-v1.css (pe-*).
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { WahaPage } from './WahaShell'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { fetchLiveCommerceCatalog, peekLiveCommerceCatalog } from '../data/liveCommerceCatalog'
@@ -18,8 +18,18 @@ function optionsFrom(payload, programKey) {
   return Array.isArray(program?.purchase_options) ? program.purchase_options : []
 }
 
+// An option that opens only the first months (unlock_months, e.g. Year 1 = 12) says so in place of the
+// "whole programme" line (the first of `included`) and on its button.
+const partLine = (months) => months % 12 === 0
+  ? `${months === 12 ? 'Year 1' : `Years 1–${months / 12}`} of the programme (the first ${months} months), month by month, in My Learning`
+  : `The first ${months} months of the programme, month by month, in My Learning`
+const partButton = (months) => (months === 12 ? 'Enroll in Year 1' : `Enroll for ${months} months`)
+
 export default function ProgramEnrolPage({ programKey, title, kicker, lead, included, backHref, backLabel, learningHref }) {
   useDocumentMeta({ title: `Enroll · ${title}`, description: lead })
+  // ?plan=year1 or ?plan=full (the Hadith page's year boxes) marks the matching option.
+  const [params] = useSearchParams()
+  const plan = params.get('plan')
   // A catalog already fetched on the programme page paints the options at once; a fresh copy follows.
   const [state, setState] = useState(() => {
     const cached = optionsFrom(peekLiveCommerceCatalog(), programKey)
@@ -48,14 +58,17 @@ export default function ProgramEnrolPage({ programKey, title, kicker, lead, incl
           {state.loading ? <p className="cw-empty">Loading enrollment options…</p>
             : state.error ? <p className="cw-empty">{state.error}</p>
             : state.options.length ? state.options.map((option) => {
-              const full = option.billing_type === 'one_time'
+              const once = option.billing_type === 'one_time'
+              const months = Number(option.unlock_months) > 0 ? Number(option.unlock_months) : null
+              const full = once && !months
+              const picked = (plan === 'year1' && months === 12) || (plan === 'full' && full)
               return (
-                <article key={option.id} className={`pe-offer cw-card${full ? ' is-full' : ''}`}>
+                <article key={option.id} className={`pe-offer cw-card${full ? ' is-full' : ''}${picked ? ' is-picked' : ''}`}>
                   <header><span className="cw-kicker">{option.display_name || (full ? 'Pay in full' : 'Monthly')}</span>{full ? <span className="pe-badge">Best value</span> : null}</header>
-                  <div className="pe-price"><b>{money(option.amount_cents, option.currency)}</b><small>{full ? 'one payment' : `/ ${option.billing_interval || 'month'}`}</small></div>
+                  <div className="pe-price"><b>{money(option.amount_cents, option.currency)}</b><small>{once ? 'one payment' : `/ ${option.billing_interval || 'month'}`}</small></div>
                   <p className="pe-sub">{option.display_subtitle || optionBillingLabel(option)}</p>
-                  <ul className="pe-list">{included.map((line) => <li key={line}>{line}</li>)}</ul>
-                  <Link className={`wh-btn ${full ? 'wh-btn-g' : 'wh-btn-glass'} pe-cta`} to={`/checkout?options=${encodeURIComponent(option.id)}`}>{full ? 'Pay in full' : 'Pay monthly'} →</Link>
+                  <ul className="pe-list">{included.map((line, index) => (index === 0 && months ? partLine(months) : line)).map((line) => <li key={line}>{line}</li>)}</ul>
+                  <Link className={`wh-btn ${once ? 'wh-btn-g' : 'wh-btn-glass'} pe-cta`} to={`/checkout?options=${encodeURIComponent(option.id)}`}>{months ? partButton(months) : once ? 'Pay in full' : 'Pay monthly'} →</Link>
                 </article>
               )
             }) : <p className="cw-empty">Online enrollment for this programme opens soon. For enrollment now, contact info@talweehacademy.com.</p>}
