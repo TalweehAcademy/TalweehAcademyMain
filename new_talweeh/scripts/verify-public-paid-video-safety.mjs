@@ -27,6 +27,8 @@ for (const course of PUBLIC_COURSES) {
   const lessons = Array.isArray(course?.lessons) ? course.lessons : []
   lessons.forEach((lesson, index) => {
     if (!lesson || typeof lesson === 'string') return
+    // A lesson the portal marks as a free preview may carry its link (ticked by an admin in the course editor).
+    if (lesson.freePreview === true || lesson.free_preview === true) return
 
     for (const key of VIDEO_KEYS) {
       if (isYouTubeLike(lesson[key])) {
@@ -53,5 +55,5 @@ if (violations.length) {
 
 console.log(
   `Paid-video safety check passed: ${PUBLIC_COURSES.length} public courses checked ` +
-  `(source: ${source}); no paid-course YouTube lesson URLs found.`
+  `(source: ${source}); no paid-course YouTube lesson URLs found apart from free previews.`
 )

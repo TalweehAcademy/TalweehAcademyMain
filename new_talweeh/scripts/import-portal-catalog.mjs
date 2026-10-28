@@ -274,12 +274,17 @@ for (const source of payload.courses) {
       const seconds = Math.round(Number(lesson?.duration_seconds ?? (typeof prior === 'string' ? 0 : prior?.durationSeconds) ?? 0))
       if (seconds > 0) row.durationSeconds = seconds
 
-      // SECURITY BOUNDARY: only free courses may carry a public lesson URL.
+      // SECURITY BOUNDARY: only free courses may carry a public lesson URL, and in a paid course only a lesson the
+      // portal marks as a free preview (free_preview: true). A preview's link is never kept from an older catalogue,
+      // so unticking it in the portal takes it off the site at the next build.
       if (free) {
         const incoming = validYouTubeUrl(lesson?.youtube_url || lesson?.youtubeUrl || lesson?.video_url || lesson?.url)
         const previous = validYouTubeUrl(typeof prior === 'string' ? '' : prior?.youtubeUrl || prior?.youtube_url)
         const youtubeUrl = incoming || previous
         if (youtubeUrl) row.youtubeUrl = youtubeUrl
+      } else if (lesson?.free_preview === true) {
+        const youtubeUrl = validYouTubeUrl(lesson?.youtube_url)
+        if (youtubeUrl) { row.youtubeUrl = youtubeUrl; row.freePreview = true }
       }
       return row
     })
@@ -340,11 +345,12 @@ await fs.writeFile(catalogPath, js)
 
 const publicLessonCount = courses.reduce((sum, course) => sum + course.lessonCount, 0)
 const publicFreeCount = courses.filter((course) => course.free).length
-const publicVideoCount = courses.reduce((sum, course) => sum + course.lessons.filter((lesson) => Boolean(lesson.youtubeUrl)).length, 0)
+const publicVideoCount = courses.reduce((sum, course) => sum + course.lessons.filter((lesson) => Boolean(lesson.youtubeUrl) && !lesson.freePreview).length, 0)
+const previewCount = courses.reduce((sum, course) => sum + course.lessons.filter((lesson) => lesson.freePreview).length, 0)
 console.log('Public Course Library sync complete.')
 console.log(`Raw export: ${rawCourseCount} courses / ${rawLessonCount} lessons.`)
 console.log(`Public published: ${courses.length} courses / ${publicLessonCount} lessons.`)
-console.log(`Free public courses: ${publicFreeCount}; public free lesson videos: ${publicVideoCount}.`)
+console.log(`Free public courses: ${publicFreeCount}; public free lesson videos: ${publicVideoCount}; free preview lessons of paid courses: ${previewCount}.`)
 console.log(`Posters downloaded: ${posterDownloaded}; existing posters kept: ${posterKept}; missing posters: ${posterMissing}.`)
 if (posterOptimized) {
   const originalMb = (posterOriginalBytes / 1024 / 1024).toFixed(1)

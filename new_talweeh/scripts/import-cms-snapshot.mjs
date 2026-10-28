@@ -113,7 +113,7 @@ if (snapshot.paidLessonVideoUrlsIncluded !== false) fail('snapshot does not expl
 for (const course of snapshot.courses || []) {
   if (Number(course.price_cents || 0) <= 0) continue
   for (const lesson of course.lessons || []) {
-    if (lesson && (lesson.youtube_url || lesson.youtubeUrl || lesson.video_url || lesson.videoUrl)) {
+    if (lesson && lesson.free_preview !== true && (lesson.youtube_url || lesson.youtubeUrl || lesson.video_url || lesson.videoUrl)) {
       fail(`paid course ${course.slug || course.title || course.id} contains a lesson video URL`)
     }
   }

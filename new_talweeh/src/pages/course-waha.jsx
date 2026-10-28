@@ -2,7 +2,8 @@
 // /courses/:slug — "Majlis" (mockups/course-waha-majlis.html): the course introduces itself in a
 // green hero with its poster; free courses then play in the Talweeh video frame (speed, ±10 s)
 // with the lessons as cards grouped by topic; paid courses offer one "Add to study list" button
-// (with a plan choice when there are several) and list the lessons as locked.
+// (with a plan choice when there are several) and list the lessons as locked, apart from any lesson the portal marks
+// as a free preview (ticked in the course editor): those play under the hero, and their cards say "▶ Free preview".
 // Free courses open as a lesson page: a slim course bar, the video with the lessons beside it, and the lesson's
 // write-up as Summary / Key terms / Lesson notes tabs (courses/lessonText.js).
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -21,6 +22,7 @@ import { cleanLessonTitle, lessonCardText, parseLessonOverview } from '../course
 
 const LEVEL = (v = '') => String(v).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 const PREVIEW = 24
+const isFreePreview = (l) => typeof l !== 'string' && (l?.freePreview === true || l?.free_preview === true)
 
 function useCourse(slug) {
   const [state, setState] = useState({ loading: true, course: null, catalog: PUBLIC_COURSES })
@@ -105,7 +107,8 @@ export default function CourseWahaPage() {
   useDocumentMeta({ title: course?.title, description: course?.description, image: absoluteUrl(course?.poster) })
 
   const lessons = useMemo(() => (Array.isArray(course?.lessons) ? course.lessons : []), [course])
-  const playable = useMemo(() => (course?.free ? lessons.map((l, i) => (lessonVideo(l) ? i : -1)).filter((i) => i >= 0) : []), [course, lessons])
+  // Free courses: every lesson with a video. Paid courses: only their free preview lessons.
+  const playable = useMemo(() => lessons.map((l, i) => (lessonVideo(l) && (course?.free || isFreePreview(l)) ? i : -1)).filter((i) => i >= 0), [course, lessons])
   const requested = Math.max(0, Number.parseInt(params.get('lesson') || '', 10) - 1)
   const cur = playable.includes(requested) ? requested : (playable[0] ?? -1)
   const options = purchaseOptions(course)
@@ -128,6 +131,7 @@ export default function CourseWahaPage() {
   if (!course) return <WahaPage className="cw"><div className="wh-wrap cw-status"><span className="cw-kicker">Courses</span><h1>Course not found</h1><p>This course page is unavailable.</p><p style={{ marginTop: 18 }}><Link className="wh-btn wh-btn-g" to="/courses">Return to all courses</Link></p></div></WahaPage>
 
   const canWatch = course.free && playable.length > 0
+  const canPreview = !course.free && playable.length > 0
   const inList = studyList.some((i) => i.productKey === (course.checkoutSlug || course.slug))
   const description = plainText(course.description)
   const openLesson = (i, fromTap = true) => {
@@ -152,9 +156,9 @@ export default function CourseWahaPage() {
   shown.forEach((l, i) => {
     const topic = typeof l === 'string' ? '' : l?.topic
     if (topic && topic !== lastTopic) { cards.push(<div className="cw-topic" key={`t-${i}`}>{topic}</div>); lastTopic = topic }
-    const play = canWatch && playable.includes(i)
+    const play = (canWatch || canPreview) && playable.includes(i)
     const overview = lessonCardText(lessonOverview(l))
-    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{cleanLessonTitle(lessonTitle(l))}</strong>{overview && <small>{overview}</small>}{(play || course.free) && <span className="tag">{play ? '▶ Watch lesson' : 'Video coming soon'}</span>}</span></>
+    const inner = <><span className="n"><b>{i + 1}</b></span><span><strong>{cleanLessonTitle(lessonTitle(l))}</strong>{overview && <small>{overview}</small>}{(play || course.free) && <span className="tag">{!play ? 'Video coming soon' : course.free ? '▶ Watch lesson' : '▶ Free preview'}</span>}</span></>
     cards.push(play
       ? <button type="button" key={i} className={`cw-lc cw-card${i === cur ? ' on' : ''}`} onClick={() => openLesson(i)}>{inner}</button>
       : <div key={i} className="cw-lc cw-card">{inner}</div>)
@@ -265,6 +269,7 @@ export default function CourseWahaPage() {
                     {options.map((o) => <button type="button" key={o.id} role="radio" aria-checked={plan?.id === o.id} className={plan?.id === o.id ? 'on' : ''} onClick={() => setPlanId(String(o.id))}><b>{o.display_name || 'Access'} · {money(o.amount_cents, o.currency)}</b><small>{optionBillingLabel(o)}</small></button>)}
                   </div>
                 )}
+                {canPreview && <div className="cw-acts"><a className="wh-btn wh-btn-glass" href="#watch" onClick={(e) => { e.preventDefault(); stageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>▶ Watch a free lesson</a></div>}
                 <div className="cw-acts">
                   <span className="pr">{plan ? money(plan.amount_cents, plan.currency) : formatCommercePrice(course)}{plan && <small>{optionBillingLabel(plan)}</small>}</span>
                   {inList
@@ -278,16 +283,20 @@ export default function CourseWahaPage() {
           {course.poster ? <img src={course.poster} alt={`${course.title} course poster`} /> : <span className="ph" />}
         </section>
 
-        {canWatch && cur >= 0 && (
+        {/* A paid course's free preview lessons (a free course with videos opens as the lesson page above instead). */}
+        {canPreview && cur >= 0 && (
           <section className="cw-stage" id="watch" ref={stageRef}>
-            <div className="now"><span className="cw-kicker">Now playing · Lesson {cur + 1} of {lessons.length}</span><h2>{lessonTitle(lessons[cur])}</h2></div>
+            <div className="now"><span className="cw-kicker">Free preview · Lesson {cur + 1} of {lessons.length}</span><h2>{lessonTitle(lessons[cur])}</h2></div>
             <WahaVideoPlayer ref={vpRef} videoId={lessonVideo(lessons[cur])} title={lessonTitle(lessons[cur])} kicker={`Lesson ${cur + 1}`} autoplay={autoplay} onEnded={() => step(1, false)} />
             <div className="ctl">
-              <button type="button" className="wh-btn wh-btn-glass" disabled={playable.indexOf(cur) <= 0} onClick={() => step(-1)}>‹ Previous lesson</button>
-              <p className="cw-keys"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> 10 s · <kbd>&lt;</kbd><kbd>&gt;</kbd> speed · <kbd>F</kbd> full screen</p>
-              <button type="button" className="wh-btn wh-btn-g" disabled={playable.indexOf(cur) >= playable.length - 1} onClick={() => step(1)}>Next lesson ›</button>
+              {playable.length > 1 ? <button type="button" className="wh-btn wh-btn-glass" disabled={playable.indexOf(cur) <= 0} onClick={() => step(-1)}>‹ Previous preview</button> : <span />}
+              <p className="cw-keys">The other {lessons.length - playable.length} lessons open in the Student Portal after enrolment.</p>
+              {playable.length > 1 && playable.indexOf(cur) < playable.length - 1
+                ? <button type="button" className="wh-btn wh-btn-g" onClick={() => step(1)}>Next preview ›</button>
+                : canEnrol(course) && !inList
+                  ? <button type="button" className="wh-btn wh-btn-g" onClick={() => document.getElementById('enrol')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>Enrol in the course</button>
+                  : <span />}
             </div>
-            {lessonOverview(lessons[cur]) && <p className="ov">{lessonOverview(lessons[cur])}</p>}
           </section>
         )}
 
@@ -298,7 +307,7 @@ export default function CourseWahaPage() {
           </div>
           <div className="cw-ptabs-pane" role="tabpanel" id="pt-pane" aria-labelledby={`pt-${pageTab}`}>
             {pageTab === 'curriculum' && <>
-              {!course.free && <p className="cw-ptabs-note">🔒 Lessons for this course are delivered in the Talweeh Student Portal after enrolment.</p>}
+              {!course.free && <p className="cw-ptabs-note">🔒 Lessons for this course are delivered in the Talweeh Student Portal after enrolment.{canPreview ? ` ${playable.length === 1 ? 'The lesson marked Free preview plays' : 'Lessons marked Free preview play'} here for anyone.` : ''}</p>}
               <div className="cw-lgrid">{cards.length ? cards : <p className="cw-empty">The curriculum for this course will be listed soon.</p>}</div>
               {lessons.length > PREVIEW && !showAll && <div className="cw-showall"><button type="button" className="wh-btn wh-btn-glass" onClick={() => setShowAll(true)}>Show all {lessons.length} lessons</button></div>}
             </>}
