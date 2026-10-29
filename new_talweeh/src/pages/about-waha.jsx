@@ -12,6 +12,7 @@ import { absoluteUrl, useDocumentMeta } from '../hooks/useDocumentMeta'
 import { INSTRUCTORS } from '../data/instructors'
 import { TERMS } from '../data/termsContent'
 import { PRIVACY } from '../data/privacyContent'
+import { REFUND } from '../data/refundContent'
 import '../about-waha-v1.css'
 
 const TABS = [
@@ -19,9 +20,10 @@ const TABS = [
   { k: 'instructors', to: '/instructors', label: 'Instructors', title: 'Our Instructors', sub: 'Qualified scholars holding ijāzāt, teaching with clarity, depth and relevance.' },
   { k: 'contact', to: '/contact-us', label: 'Contact', title: 'Contact Us', sub: 'Reach Talweeh Academy on Telegram or by email.' },
   { k: 'terms', to: '/p/terms-conditions', label: 'Terms & Conditions', title: 'Terms & Conditions', sub: 'How access to and use of Talweeh Academy’s courses, services and content is governed.' },
+  { k: 'refunds', to: '/p/refund-policy', label: 'Refund Policy', title: 'Refund Policy', sub: 'How refunds and cancelling a subscription work, from our Terms & Conditions.' },
   { k: 'privacy', to: '/p/privacy-policy', label: 'Privacy Policy', title: 'Privacy Policy', sub: 'How Talweeh Academy collects, uses, stores and protects personal information.' },
 ]
-const SEAL = '/brand/talweeh-seal-gold.png'
+const SEAL = '/brand/talweeh-seal-gold.webp'
 const ICONS = [
   <svg key="a" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>,
   <svg key="b" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="13" rx="2" /><path d="m10 9 5 2.5-5 2.5z" /></svg>,
@@ -141,7 +143,7 @@ function LegalDoc({ doc, name }) {
         <span className="eff">Effective Date · {doc.effective}</span>
         <div className="open">{doc.opening.map((p, i) => <p key={i} dangerouslySetInnerHTML={{ __html: p }} />)}</div>
         {doc.sections.map((s) => <section id={`t${s.n}`} key={s.n}><h2><b>{s.n}.</b>{s.title}</h2><div dangerouslySetInnerHTML={{ __html: s.html }} /></section>)}
-        <div className="aw-ask" id="tq"><div><span className="cw-kicker">Questions about {name === 'Privacy Policy' ? 'this policy' : 'these terms'}?</span><h3>Contact Us</h3><p><span dangerouslySetInnerHTML={{ __html: doc.contact }} /> <a href={`mailto:${doc.email}`}>{doc.email}</a></p></div><Link className="wh-btn wh-btn-g aw-btn-sm" to="/contact-us">Contact Talweeh Academy →</Link></div>
+        <div className="aw-ask" id="tq"><div><span className="cw-kicker">Questions about {name !== 'Terms & Conditions' ? 'this policy' : 'these terms'}?</span><h3>Contact Us</h3><p><span dangerouslySetInnerHTML={{ __html: doc.contact }} /> <a href={`mailto:${doc.email}`}>{doc.email}</a></p></div><Link className="wh-btn wh-btn-g aw-btn-sm" to="/contact-us">Contact Talweeh Academy →</Link></div>
       </article>
     </div>
   )
@@ -162,6 +164,7 @@ export default function AboutWahaPage({ tab = 'talweeh' }) {
   else if (tab === 'instructors') room = person ? <Bio x={person} instructors={INSTRUCTORS} /> : <Instructors a={a} instructors={INSTRUCTORS} />
   else if (tab === 'contact') room = <Contact ct={ct} social={g.footer.social} />
   else if (tab === 'terms') room = <LegalDoc doc={TERMS} name="Terms & Conditions" />
+  else if (tab === 'refunds') room = <LegalDoc doc={REFUND} name="Refund Policy" />
   else if (tab === 'privacy') room = <LegalDoc doc={PRIVACY} name="Privacy Policy" />
   else room = <Talweeh a={a} instructors={INSTRUCTORS} />
 

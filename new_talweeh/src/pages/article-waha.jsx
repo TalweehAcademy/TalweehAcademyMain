@@ -135,7 +135,7 @@ export default function ArticleWahaPage() {
           <span className="cw-kicker">{a.category || 'Article'}</span>
           <h1>{a.title}</h1>
           <div className="meta">
-            <span className="by"><img src="/brand/talweeh-seal-gold.png" alt="" />{a.author || 'Talweeh Academy'}</span>
+            <span className="by"><img src="/brand/talweeh-seal-gold.webp" alt="" />{a.author || 'Talweeh Academy'}</span>
             {a.publishedAt && <span>{formatDate(a.publishedAt)}</span>}
             <span>{readTime(a)}</span>
           </div>

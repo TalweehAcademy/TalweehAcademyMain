@@ -4,7 +4,7 @@ import '../App-legacy-pages.css'
 import '../public-theme-legacy-pages.css'
 import { PageHeader, PageFooter } from './_shared'
 import { ASSET } from '../constants/assets'
-import { ARABIC_LINKS, ABOUT_SECTIONS, PROUD_CARDS } from '../content/arabicProgram'
+import { ABOUT_SECTIONS, PROUD_CARDS } from '../content/arabicProgram'
 
 export default function ArabicAboutPage() {
   return (
@@ -15,7 +15,7 @@ export default function ArabicAboutPage() {
           <h1>About Talweeh Arabic</h1>
           <div className="arb-hero-actions">
             <Link className="arb-btn-primary" to="/arabic/program">Explore Arabic Program</Link>
-            <a className="arb-btn-secondary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
+            <Link className="arb-btn-secondary" to="/arabic/enroll">Become a Member</Link>
           </div>
         </section>
 

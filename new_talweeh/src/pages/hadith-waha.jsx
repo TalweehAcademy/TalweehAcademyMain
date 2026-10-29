@@ -214,11 +214,11 @@ export default function HadithWahaPage() {
 
         <section className="hw-blk" id="curriculum">
           <div className="hw-sec-h"><div><span className="cw-kicker">Hadith Specialization curriculum</span><h2>{WORD[H.COURSES.length] || H.COURSES.length} courses across two years.</h2></div><p>Select a year, then open any course to read its overview and learning outcomes. {soloCount} of them can also be taken today as standalone Talweeh courses.</p></div>
-          <div className="hw-years" role="tablist" aria-label="Year">
+          <div className="hw-years" role="group" aria-label="Year">
             {/* Each year's box: the tab (whole box) and, inside it, enrollment for that year (Year 1 alone, or the full programme). */}
             {[1, 2].map((y) => (
               <div key={y} className={`hw-year${yr === y ? ' on' : ''}`}>
-                <button type="button" role="tab" aria-selected={yr === y} onClick={() => setYr(y)}>
+                <button type="button" aria-pressed={yr === y} onClick={() => setYr(y)}>
                   <div><span>Year {y}</span><strong>{y === 1 ? '1st Year' : '2nd Year'}</strong></div><small>{year(y).length} courses</small>
                 </button>
                 <Link className={`wh-btn ${yr === y ? 'wh-btn-g' : 'wh-btn-glass'} hw-year-cta`} to={`${HADITH_PROGRAM_ENROL}?plan=${y === 1 ? 'year1' : 'full'}`}>{y === 1 ? 'Enroll in the first year only' : 'Enroll in the full programme'} →</Link>

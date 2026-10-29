@@ -119,7 +119,7 @@ export function WahaFooter({ social, copyright }) {
       <div className="wh-wrap">
         <div className="wh-fg">
           <div className="wh-fb">
-            <img src="/brand/talweeh-seal-gold.png" alt="Talweeh Academy seal" />
+            <img src="/brand/talweeh-seal-gold.webp" alt="Talweeh Academy seal" />
             <div><strong>Talweeh Academy</strong><span>Structured Islamic Academia</span><p>Study with clarity, structure, and purpose.</p></div>
           </div>
           {Object.entries(footerLinks).map(([heading, links]) => (

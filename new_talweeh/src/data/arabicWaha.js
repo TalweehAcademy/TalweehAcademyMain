@@ -4,8 +4,8 @@
 
 export const ARB = {
   "LINKS": {
-    "membership": "https://talweeharabic.com/membership-pricing/",
-    "terms": "https://talweeharabic.com/terms-conditions/",
+    "membership": "/arabic/enroll",
+    "terms": "/p/terms-conditions",
     "calendarPdf": "/legacy-assets/talweeharabic/2026/03/Talweeh-Arabic-Calendar.pdf",
     "signupVideo": "https://www.youtube.com/watch?v=f5vb0tnNQQA",
     "telegram": "https://t.me/talweeh_academy"

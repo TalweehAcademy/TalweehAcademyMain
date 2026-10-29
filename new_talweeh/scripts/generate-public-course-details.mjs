@@ -34,7 +34,10 @@ for (const course of PUBLIC_COURSES) {
   seen.add(slug)
 
   const fileName = `${safeFileName(slug)}.js`
+  // Old YouTube text in some lesson overviews still points at talweeharabic.com; the Arabic programme lives at /arabic now.
   const json = JSON.stringify(course, null, 2)
+    .replace(/https?:\/\/(?:www\.)?talweeharabic\.com\/?/gi, 'https://talweehacademy.com/arabic')
+    .replace(/www\.talweeharabic\.com/gi, 'talweehacademy.com/arabic')
   const source = `// AUTO-GENERATED — DO NOT EDIT BY HAND.\nexport default ${json}\n`
   const bytes = Buffer.byteLength(source)
 

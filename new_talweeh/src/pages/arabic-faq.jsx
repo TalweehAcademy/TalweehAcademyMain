@@ -4,7 +4,7 @@ import '../App-legacy-pages.css'
 import '../public-theme-legacy-pages.css'
 import { PageHeader, PageFooter } from './_shared'
 import { ASSET } from '../constants/assets'
-import { ARABIC_LINKS, FAQ_ITEMS } from '../content/arabicProgram'
+import { FAQ_ITEMS } from '../content/arabicProgram'
 import { Accordion } from './arabic-program'
 
 export default function ArabicFaqPage() {
@@ -26,7 +26,7 @@ export default function ArabicFaqPage() {
             If you have any further questions, please feel free to <Link to="/contact-us">contact us</Link>.
           </p>
           <div className="arb-hero-actions">
-            <a className="arb-btn-primary" href={ARABIC_LINKS.membership} target="_blank" rel="noreferrer">Become a Member</a>
+            <Link className="arb-btn-primary" to="/arabic/enroll">Become a Member</Link>
             <a className="arb-btn-outline" href="/arabic#arabic-program-content">View the Full Program</a>
           </div>
         </section>

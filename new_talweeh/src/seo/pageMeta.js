@@ -39,6 +39,7 @@ export const ROUTE_META = {
   '/arabic/assessment': { title: 'Arabic Assessment · Where should you start?', description: 'A free, question-by-question check of your Arabic, from recognising an ism to the iʿrāb and balāghah of Sūrat al-Takwīr. It tells you which module of the Two-Year Arabic Program to start with.' },
   '/arabic/about': { title: 'About the Arabic Programme', description: 'The approach, teaching method and goals behind the Talweeh Academy Arabic programme.' },
   '/p/terms-conditions': { title: 'Terms & Conditions', description: 'How access to and use of Talweeh Academy’s courses, services and content is governed.' },
+  '/p/refund-policy': { title: 'Refund Policy', description: 'How refunds and cancelling a subscription work at Talweeh Academy: written requests, 5–10 business days to the original payment method, and cancelling from the Student Portal.' },
   '/p/privacy-policy': { title: 'Privacy Policy', description: 'How Talweeh Academy collects, uses, stores and protects personal information, in line with PIPEDA.' },
   '/cart': { title: 'Your study list', noindex: true },
   '/checkout': { title: 'Secure checkout', noindex: true },

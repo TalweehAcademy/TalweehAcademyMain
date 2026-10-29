@@ -58,6 +58,7 @@ export const navLinks = [
     { label: 'Instructors', to: '/instructors' },
     { label: 'Contact', to: '/contact-us' },
     { label: 'Terms and Conditions', to: '/p/terms-conditions' },
+    { label: 'Refund Policy', to: '/p/refund-policy' },
     { label: 'Privacy Policy', to: '/p/privacy-policy' },
   ] }] },
 ]
@@ -116,6 +117,7 @@ export const footerLinks = {
     { label: 'Legacy Portal', to: LEGACY_PORTAL },
     { label: 'Contact', to: '/contact-us' },
     { label: 'Terms & Conditions', to: '/p/terms-conditions' },
+    { label: 'Refund Policy', to: '/p/refund-policy' },
     { label: 'Privacy Policy', to: '/p/privacy-policy' },
   ],
 }

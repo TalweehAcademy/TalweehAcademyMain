@@ -35,7 +35,7 @@ export default {
     {
       "portalId": "10a25ed0-2582-4252-a07f-7a349cf90755",
       "title": "Lesson 1: Intro to the Arabic Language",
-      "overview": "In this lesson, we cover the importance of connecting to the Qur'an, as well as understanding the two main sciences of the Arabic language: Nahw and Sarf.\n\nTo enroll in our 2-Year Arabic course, visit our website www.TalweehArabic.com.\nDon't miss out on the 15-day free trial with access to all modules!\n\nFollow us on social media for updates and resources:\n\nTelegram: https://t.me/TalweehAcademy\nTwitter: https://x.com/Talweeh_Academy\nInstagram: https://www.instagram.com/talweeh.academy\n\nMake sure to like, share, and subscribe 🔔 to stay updated with our latest videos!!!",
+      "overview": "In this lesson, we cover the importance of connecting to the Qur'an, as well as understanding the two main sciences of the Arabic language: Nahw and Sarf.\n\nTo enroll in our 2-Year Arabic course, visit our website talweehacademy.com/arabic.\nDon't miss out on the 15-day free trial with access to all modules!\n\nFollow us on social media for updates and resources:\n\nTelegram: https://t.me/TalweehAcademy\nTwitter: https://x.com/Talweeh_Academy\nInstagram: https://www.instagram.com/talweeh.academy\n\nMake sure to like, share, and subscribe 🔔 to stay updated with our latest videos!!!",
       "topic": "",
       "youtubeUrl": "https://www.youtube.com/watch?v=aaIwAmFuaxI"
     },

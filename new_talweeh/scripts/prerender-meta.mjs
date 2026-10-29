@@ -35,10 +35,22 @@ const { ROUTE_META, DEFAULT_DESCRIPTION, DEFAULT_IMAGE, SITE_ORIGIN, absoluteUrl
 const pages = new Map()
 const add = (route, meta) => { if (route && !pages.has(route)) pages.set(route, meta) }
 for (const [route, meta] of Object.entries(ROUTE_META)) if (route !== '/') add(route, meta)
-for (const c of data.PUBLIC_COURSES) add(`/courses/${c.slug}`, { title: c.title, description: c.description || c.primaryText, image: c.poster })
+for (const c of data.PUBLIC_COURSES) add(`/courses/${c.slug}`, { title: c.title, description: c.description || c.primaryText, image: c.poster, course: c })
 for (const a of data.ARTICLES) add(`/articles/${a.slug}`, { title: a.title, description: a.excerpt, image: a.imageUrl })
 for (const v of data.VIDEOS) add(`/media/${v.slug}`, { title: v.title, description: v.shortOverview, image: v.thumbnail })
 for (const p of data.INSTRUCTORS) add(`/instructors/${p.slug}`, { title: p.name, description: p.summary || p.role, image: p.image || p.imageUrl })
+
+// A course page's schema.org Course entry (the site-wide EducationalOrganization is in index.html as #org).
+function courseLd(c, url, description) {
+  const ld = { '@context': 'https://schema.org', '@type': 'Course', name: c.title, description, url, provider: { '@type': 'EducationalOrganization', '@id': `${SITE_ORIGIN}/#org`, name: 'Talweeh Academy', sameAs: `${SITE_ORIGIN}/` }, inLanguage: 'en', isAccessibleForFree: Boolean(c.free) }
+  if (c.poster) ld.image = absoluteUrl(c.poster)
+  if (c.instructor) ld.instructor = { '@type': 'Person', name: c.instructor }
+  if (c.lessonCount) ld.numberOfLessons = c.lessonCount
+  ld.offers = { '@type': 'Offer', category: c.free ? 'Free' : 'Paid', price: c.free ? '0' : (Number(c.priceCents || 0) / 100).toFixed(2), priceCurrency: c.currency || 'USD', url }
+  if (!c.free && !c.priceCents) delete ld.offers.price
+  // "<" can't end the script block early inside JSON text.
+  return `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`
+}
 
 const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const template = await readFile(path.join(dist, 'index.html'), 'utf8')
@@ -66,6 +78,7 @@ function head(route, meta) {
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
     `<meta name="twitter:image" content="${esc(image)}" />`,
+    meta.course ? courseLd(meta.course, url, description) : '',
     END,
   ].filter(Boolean).join('\n    ')
 }

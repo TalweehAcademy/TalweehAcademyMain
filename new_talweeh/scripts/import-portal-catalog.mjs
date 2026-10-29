@@ -205,7 +205,7 @@ for (const source of payload.courses) {
   if (signedPosterUrl) {
     // Normalize every Portal poster to a reasonably sized WebP. The Course Library
     // previously served 2–4 MB PNGs to each card, which made the grid feel slow.
-    // 1280px is sufficient for both the card grid and the individual course page.
+    // 960px is sufficient for both the card grid and the individual course page (shown at most ~480px wide).
     const filename = `${canonicalSlug}.webp`
     const out = path.join(posterDir, filename)
     try {
@@ -216,8 +216,8 @@ for (const source of payload.courses) {
 
       const optimized = await sharp(bytes, { failOn: 'none' })
         .rotate()
-        .resize({ width: 1280, withoutEnlargement: true, fit: 'inside' })
-        .webp({ quality: 78, effort: 4, smartSubsample: true })
+        .resize({ width: 960, withoutEnlargement: true, fit: 'inside' })
+        .webp({ quality: 72, effort: 6, smartSubsample: true })
         .toBuffer()
 
       await fs.writeFile(out, optimized)

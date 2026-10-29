@@ -27,6 +27,7 @@ const staticPaths = [
   '/hadith-specialization/learning',
   '/hadith-specialization/enroll',
   '/p/terms-conditions',
+  '/p/refund-policy',
   '/p/privacy-policy',
 ]
 
