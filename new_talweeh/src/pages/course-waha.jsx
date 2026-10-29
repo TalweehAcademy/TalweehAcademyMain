@@ -99,6 +99,7 @@ export default function CourseWahaPage() {
   const [autoplay, setAutoplay] = useState(false)
   const [about, setAbout] = useState(false)
   const [pageTab, setPageTab] = useState('curriculum')
+  const [lockTab, setLockTab] = useState('overview')
   // Phone: once the price and button scroll away, a slim bar keeps them at the bottom of the screen.
   const [barOn, setBarOn] = useState(false)
   const barRef = useRef(null)
@@ -296,6 +297,18 @@ export default function CourseWahaPage() {
                 : canEnrol(course) && !inList
                   ? <button type="button" className="wh-btn wh-btn-g" onClick={() => document.getElementById('enrol')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>Enrol in the course</button>
                   : <span />}
+            </div>
+            {/* What a preview leaves out, as locked tabs: the lesson's write-up and quiz are in the Student Portal. */}
+            <div className="cw-lock">
+              <div className="cw-wu-tabs" role="tablist" aria-label="More in this lesson">
+                {[['overview', 'Overview'], ['quiz', 'Quiz']].map(([id, label]) => <button key={id} type="button" role="tab" id={`lk-${id}`} aria-selected={lockTab === id} aria-controls="lk-pane" className={lockTab === id ? 'on' : ''} onClick={() => setLockTab(id)}><span aria-hidden="true">🔒</span>{label}</button>)}
+              </div>
+              <div className="cw-lock-pane wh-glass" role="tabpanel" id="lk-pane" aria-labelledby={`lk-${lockTab}`}>
+                <p>{lockTab === 'overview'
+                  ? 'Each lesson’s written overview (summary, key terms and lesson notes) opens in the Student Portal after enrolment.'
+                  : 'Each lesson has a quiz to check what you’ve learned. It opens in the Student Portal after enrolment.'}</p>
+                {canEnrol(course) && !inList && <button type="button" className="wh-btn wh-btn-g" onClick={() => document.getElementById('enrol')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>Enrol to unlock</button>}
+              </div>
             </div>
           </section>
         )}
