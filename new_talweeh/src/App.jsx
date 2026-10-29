@@ -171,6 +171,9 @@ function pickTopicCourses(order) {
   })
 }
 
+// A paid course's free preview lessons (counted at build), as the home cards show them.
+const previewsOf = (c) => (c.free ? 0 : Number(c.freePreviewCount || 0))
+const lessonsLine = (c) => (c.lessonCount ? `${c.lessonCount} lessons` : '')
 function CourseShelf() {
   // First paint keeps the catalogue order so the prerendered page and the browser agree; then shuffle.
   const [topics, setTopics] = useState(() => pickTopicCourses(PUBLIC_COURSES))
@@ -182,16 +185,16 @@ function CourseShelf() {
           <div key={key} className="wh-topic">
             <div className="wh-topic-h"><div><h3>{title}</h3><small>{count} course{count === 1 ? '' : 's'}</small></div><span className="wh-ar">{arabic}</span></div>
             <Link className="wh-tpc" to={`/courses/${lead.slug}`}>
-              <div className="wh-tpc-p"><img src={lead.poster} alt="" loading="lazy" /><span className={`wh-tp-price${lead.free ? ' free' : ''}`}>{formatCommercePrice(lead)}</span></div>
+              <div className="wh-tpc-p"><img src={lead.poster} alt="" loading="lazy" /><span className={`wh-tp-price${lead.free ? ' free' : ''}`}>{formatCommercePrice(lead)}</span>{previewsOf(lead) > 0 && <span className="wh-tp-prev">▶ Free preview</span>}</div>
               <div className="wh-tpc-b">
                 <span className="wh-tpc-sub">{lead.categoryLabel}</span>
                 <h4>{lead.title}</h4>
                 <span className="wh-tpc-meta">{lead.instructor}</span>
-                <span className="wh-tpc-meta is-n">{lead.lessonCount ? `${lead.lessonCount} lessons` : '\u00a0'}</span>
+                <span className="wh-tpc-meta is-n">{lessonsLine(lead) || '\u00a0'}{previewsOf(lead) > 0 && <b className="wh-tp-free"> · {previewsOf(lead)} free to watch</b>}</span>
               </div>
             </Link>
             {[0, 1].map((i) => rest[i]
-              ? <Link key={rest[i].slug} className="wh-tpl" to={`/courses/${rest[i].slug}`}><div><h4>{rest[i].title}</h4><span>{rest[i].lessonCount ? `${rest[i].lessonCount} lessons` : rest[i].categoryLabel}</span></div><span className={`wh-tp-price${rest[i].free ? ' free' : ''}`}>{formatCommercePrice(rest[i])}</span></Link>
+              ? <Link key={rest[i].slug} className="wh-tpl" to={`/courses/${rest[i].slug}${previewsOf(rest[i]) ? '#watch' : ''}`}><div><h4>{rest[i].title}</h4><span>{lessonsLine(rest[i]) || rest[i].categoryLabel}{previewsOf(rest[i]) > 0 && <b className="wh-tp-free" title={`${previewsOf(rest[i])} free preview lesson${previewsOf(rest[i]) === 1 ? '' : 's'}`}> · ▶ {previewsOf(rest[i])} free</b>}</span></div><span className={`wh-tp-price${rest[i].free ? ' free' : ''}`}>{formatCommercePrice(rest[i])}</span></Link>
               : <span key={i} className="wh-tpl is-empty" aria-hidden="true" />)}
             <Link className="wh-topic-more" to={to}>{more}</Link>
           </div>

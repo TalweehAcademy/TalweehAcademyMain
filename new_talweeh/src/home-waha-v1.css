@@ -496,6 +496,8 @@
 .wh-tpl span:not(.wh-tp-price){display:block;font-size:12.5px;color:var(--c-mut);margin-top:2px}
 .wh-tpl:hover h4{color:var(--gold-b)}
 .wh-tp-price{flex:none;display:inline-block;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;white-space:nowrap;background:rgba(var(--gd-rgb),.85);color:var(--cream);border:1px solid rgba(215,179,115,.4)}
+.wh-tpc-p .wh-tp-prev{position:absolute;left:12px;bottom:12px;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:800;white-space:nowrap;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2)}
+.wh-tp-free{font-weight:700;color:var(--gold);white-space:nowrap}
 .wh-tp-price.free{background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2);border-color:transparent}
 .wh-topic-more{align-self:end;padding:14px 2px 2px;font-size:14px;font-weight:700;color:var(--gold-b)}
 .wh-topic-more:hover{color:var(--gold)}
