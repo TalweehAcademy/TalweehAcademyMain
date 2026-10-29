@@ -7,6 +7,7 @@ import { LEGACY_PORTAL } from '../constants/links'
 import { useContent } from '../hooks/useContent'
 import { Editable } from '../components/ContentEditor'
 import CommerceCartLink from '../components/CommerceCartLink'
+import { PortalSignInHost, SignInLink } from '../components/PortalSignIn'
 
 const courseCategoryLink = (label, slug) => ({ label, to: `/courses?category=${encodeURIComponent(slug)}` })
 export const navLinks = [
@@ -112,7 +113,7 @@ export const footerLinks = {
     { label: 'Articles', to: '/articles' },
   ],
   Student: [
-    { label: 'Legacy Portal', to: LEGACY_PORTAL },
+    { label: 'Student Portal', to: LEGACY_PORTAL },
     { label: 'Contact', to: '/contact-us' },
     { label: 'Terms & Conditions', to: '/p/terms-conditions' },
     { label: 'Privacy Policy', to: '/p/privacy-policy' },
@@ -179,9 +180,7 @@ export function PageHeader() {
     <header className="site-header academy-header">
       <div className="site-header-top">
         <div className="top-bar-links">
-          <a className="top-bar-btn" href={LEGACY_PORTAL}>
-            Legacy Portal
-          </a>
+          <SignInLink className="top-bar-btn" />
         </div>
         <div className="academy-top-tools">
           <PublicThemeToggle />
@@ -217,13 +216,14 @@ export function PageHeader() {
             ? <NavigationDropdown key={item.label} item={item} closeMenu={() => setMenuOpen(false)} />
             : <Link to={item.to} key={item.label} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
           <CommerceCartLink className="academy-cart-mobile" onNavigate={() => setMenuOpen(false)} />
-          <a className="academy-portal-mobile" href={LEGACY_PORTAL} onClick={() => setMenuOpen(false)}>Legacy Portal</a>
+          <SignInLink className="academy-portal-mobile" onClick={() => setMenuOpen(false)} />
         </div>
         <div className="nav-actions">
           <CommerceCartLink />
-          <a className="journey-button" href={LEGACY_PORTAL}>Legacy Portal</a>
+          <SignInLink className="journey-button" />
         </div>
       </nav>
+      <PortalSignInHost />
     </header>
   )
 }

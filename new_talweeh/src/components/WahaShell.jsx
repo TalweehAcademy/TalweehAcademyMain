@@ -7,9 +7,9 @@ import { NavigationDropdown, navLinks, footerLinks } from '../pages/_shared'
 import { useContent } from '../hooks/useContent'
 import { StudyListButton, StudyListHost } from '../courses/StudyList'
 import { StartGuideHost } from './StartGuideHost'
+import { PortalSignInHost, SignInLink } from './PortalSignIn'
 import SocialGlyph from './SocialGlyph'
 import { useScrollLock } from '../hooks/useScrollLock'
-import { LEGACY_PORTAL } from '../constants/links'
 import '../home-waha-v1.css'
 import '../courses-waha-v1.css'
 
@@ -80,7 +80,7 @@ export function WahaHeader({ social }) {
     <>
       <div className="wh-topbar">
         <div className="wh-wrap">
-          <a className="wh-portal" href={LEGACY_PORTAL}>Legacy Portal →</a>
+          <SignInLink className="wh-portal">Sign in →</SignInLink>
           <div className="wh-tr"><span>Connect</span><WahaSocials social={social} /></div>
         </div>
       </div>
@@ -93,20 +93,21 @@ export function WahaHeader({ social }) {
               ? <NavigationDropdown key={item.label} item={item} closeMenu={closeMenu} />
               : <Link key={item.label} to={item.to} onClick={closeMenu}>{item.label}</Link>)}
             <StudyListButton className="wh-nav-mobile" onClick={closeMenu} />
-            <a className="wh-nav-mobile" href={LEGACY_PORTAL} onClick={closeMenu}>Legacy Portal</a>
+            <SignInLink className="wh-nav-mobile" onClick={closeMenu} />
           </nav>
           <button type="button" className="wh-theme-btn" onClick={toggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title="Light / dark">
             <span aria-hidden="true">{dark ? '☀' : '☾'}</span>
           </button>
           <StudyListButton />
-          <a className="wh-btn wh-btn-g wh-head-cta" href={LEGACY_PORTAL}>Legacy Portal</a>
+          <SignInLink className="wh-btn wh-btn-g wh-head-cta" />
           <button type="button" className="wh-burger" aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen} aria-controls="wh-main-links" onClick={() => setMenuOpen((o) => !o)}>
             {menuOpen ? '✕' : '☰'}
           </button>
         </div>
       </header>
+      <PortalSignInHost />
     </>
   )
 }

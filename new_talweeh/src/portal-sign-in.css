@@ -1,0 +1,24 @@
+/* The header's "Sign in" box (components/PortalSignIn.jsx). It sits in <body>, outside the page's own colour tokens,
+   so it sets its own: the site's deep green and gold in both themes, like the study list box. */
+.ps-root{--ps-gold:#d7b373;--ps-gold-b:#f0dcb4;--ps-gold-d:#b8894c;--ps-g2:#10251c;--ps-g3:#1e3f31;--ps-cream:#f3e8d3;--ps-text:#dfe7df;--ps-mut:#a3b4a8;--ps-line:rgba(215,179,115,.22);--ps-in:rgba(243,232,211,.06);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.ps-ov{position:fixed;inset:0;z-index:1100;background:rgba(6,16,11,.55);backdrop-filter:blur(4px);animation:ps-fade .3s both}
+.ps-box{position:fixed;left:50%;top:50%;z-index:1110;width:min(500px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow-y:auto;box-sizing:border-box;border-radius:26px;padding:28px;transform:translate(-50%,-50%);color:var(--ps-text);text-align:left;background:url('/brand/talweeh-pattern-dark.webp') repeat top center/620px auto,linear-gradient(165deg,var(--ps-g3),var(--ps-g2));border:1px solid rgba(215,179,115,.4);box-shadow:0 40px 100px rgba(8,20,14,.5);animation:ps-pop .35s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes ps-fade{from{opacity:0}}
+@keyframes ps-pop{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}}
+.ps-x{position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:10px;border:1px solid var(--ps-line);background:var(--ps-in);color:var(--ps-mut);cursor:pointer;font-size:14px}
+.ps-x:hover,.ps-x:focus-visible{color:var(--ps-gold-b);border-color:var(--ps-gold)}
+.ps-kicker{display:block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ps-gold)}
+.ps-box h3{margin:6px 40px 0 0;font:600 26px/1.2 'Lora',Georgia,serif;color:var(--ps-cream);text-wrap:balance}
+.ps-box p{margin:10px 0 0;font-size:14.5px;line-height:1.6}
+.ps-moved{margin-top:18px;padding:14px 16px;border-radius:16px;background:var(--ps-in);border:1px solid var(--ps-line);border-left:3px solid var(--ps-gold)}
+.ps-moved strong{color:var(--ps-cream);font-size:14.5px}
+.ps-moved p{margin-top:4px;font-size:13.5px;color:var(--ps-text)}
+.ps-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.ps-btn{flex:1 1 160px;display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:12px 20px;border-radius:14px;font-weight:700;font-size:14.5px;text-decoration:none;background:rgba(16,37,28,.7);color:var(--ps-cream);border:1px solid rgba(215,179,115,.45);transition:transform .3s,border-color .3s}
+.ps-btn:hover,.ps-btn:focus-visible{transform:translateY(-2px);border-color:var(--ps-gold);color:var(--ps-gold-b)}
+.ps-btn-g{background:linear-gradient(135deg,var(--ps-gold-b),var(--ps-gold) 55%,var(--ps-gold-d));color:var(--ps-g2);border-color:transparent;box-shadow:0 12px 28px rgba(184,137,76,.3)}
+.ps-btn-g:hover,.ps-btn-g:focus-visible{color:var(--ps-g2)}
+.ps-box .ps-note{margin-top:16px;font-size:12.5px;color:var(--ps-mut)}
+.ps-mail{color:var(--ps-gold-b);user-select:all}
+@media (max-width:560px){.ps-box{padding:22px 18px;border-radius:20px}.ps-box h3{font-size:22px}}
+@media (prefers-reduced-motion:reduce){.ps-ov,.ps-box{animation:none}}
