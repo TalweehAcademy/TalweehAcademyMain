@@ -113,7 +113,7 @@ export const footerLinks = {
     { label: 'Articles', to: '/articles' },
   ],
   Student: [
-    { label: 'Student Portal', to: LEGACY_PORTAL },
+    { label: 'Legacy Portal', to: LEGACY_PORTAL },
     { label: 'Contact', to: '/contact-us' },
     { label: 'Terms & Conditions', to: '/p/terms-conditions' },
     { label: 'Privacy Policy', to: '/p/privacy-policy' },
@@ -216,11 +216,11 @@ export function PageHeader() {
             ? <NavigationDropdown key={item.label} item={item} closeMenu={() => setMenuOpen(false)} />
             : <Link to={item.to} key={item.label} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
           <CommerceCartLink className="academy-cart-mobile" onNavigate={() => setMenuOpen(false)} />
-          <SignInLink className="academy-portal-mobile" onClick={() => setMenuOpen(false)} />
+          <a className="academy-portal-mobile" href={LEGACY_PORTAL} onClick={() => setMenuOpen(false)}>Legacy Portal</a>
         </div>
         <div className="nav-actions">
           <CommerceCartLink />
-          <SignInLink className="journey-button" />
+          <a className="journey-button" href={LEGACY_PORTAL}>Legacy Portal</a>
         </div>
       </nav>
       <PortalSignInHost />

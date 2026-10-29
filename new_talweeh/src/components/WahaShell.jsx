@@ -8,6 +8,7 @@ import { useContent } from '../hooks/useContent'
 import { StudyListButton, StudyListHost } from '../courses/StudyList'
 import { StartGuideHost } from './StartGuideHost'
 import { PortalSignInHost, SignInLink } from './PortalSignIn'
+import { LEGACY_PORTAL } from '../constants/links'
 import SocialGlyph from './SocialGlyph'
 import { useScrollLock } from '../hooks/useScrollLock'
 import '../home-waha-v1.css'
@@ -93,14 +94,14 @@ export function WahaHeader({ social }) {
               ? <NavigationDropdown key={item.label} item={item} closeMenu={closeMenu} />
               : <Link key={item.label} to={item.to} onClick={closeMenu}>{item.label}</Link>)}
             <StudyListButton className="wh-nav-mobile" onClick={closeMenu} />
-            <SignInLink className="wh-nav-mobile" onClick={closeMenu} />
+            <a className="wh-nav-mobile" href={LEGACY_PORTAL} onClick={closeMenu}>Legacy Portal</a>
           </nav>
           <button type="button" className="wh-theme-btn" onClick={toggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title="Light / dark">
             <span aria-hidden="true">{dark ? '☀' : '☾'}</span>
           </button>
           <StudyListButton />
-          <SignInLink className="wh-btn wh-btn-g wh-head-cta" />
+          <a className="wh-btn wh-btn-g wh-head-cta" href={LEGACY_PORTAL}>Legacy Portal</a>
           <button type="button" className="wh-burger" aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen} aria-controls="wh-main-links" onClick={() => setMenuOpen((o) => !o)}>
             {menuOpen ? '✕' : '☰'}
