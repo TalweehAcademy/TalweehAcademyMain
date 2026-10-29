@@ -315,6 +315,10 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
 .cw-cc-who b{display:block;font-size:14px;font-weight:600;color:var(--c-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cw-cc-who span{font-size:12.5px;color:var(--c-mut)}
 .cw-cc-act{display:flex;gap:8px;margin-top:auto}
+.cw-chip-prev{top:auto;bottom:10px;left:10px;background:linear-gradient(135deg,var(--gold-b),var(--gold));color:var(--g2)}
+.cw-cc-free{align-self:flex-start;margin:auto 4px -4px;font-size:13.5px;font-weight:700;color:var(--gold);text-decoration:none}
+.cw-cc-free+.cw-cc-act{margin-top:0}
+.cw-cc-free:hover,.cw-cc-free:focus-visible{text-decoration:underline}
 .cw-cc-act .wh-btn{flex:1;justify-content:center;min-height:46px;font-size:14px}
 .cw-cc-icon{flex:none;width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid rgba(215,179,115,.45);background:var(--c-solid);color:var(--gold-b);cursor:pointer}
 .cw-cc-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -326,6 +330,7 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
   .cw-cc:hover .cw-cc-more{opacity:1}
   .cw-cc:hover .cw-cc-who b{color:var(--g2)}
   .cw-cc:hover .cw-cc-who span{color:var(--g3)}
+  .cw-cc:hover .cw-cc-free{color:var(--g2)}
   .wh-home .cw-cc:hover .wh-btn-glass{background:var(--g2);border-color:var(--g2);color:var(--cream)}
   .cw-cc:hover .cw-cc-icon:not(.on){background:none;border-color:rgba(var(--g2-rgb),.4);color:var(--g2)}
 }
@@ -355,6 +360,8 @@ button.cw-lc:hover .n,.cw-lc.on .n{color:var(--g2)}
   .cw-cc-media .cw-chip-sub{display:none}
   .cw-cc-media .cw-chip{top:6px;min-height:20px;padding:2px 8px;font-size:10.5px}
   .cw-cc-media .cw-chip-price{right:6px}
+  .cw-cc-media .cw-chip-prev{top:auto;bottom:6px;left:6px}
+  .cw-cc-free{margin:auto 2px -2px;font-size:11.5px}
   .wh-home .cw-cc-t{font-size:14px;line-height:1.25;min-height:0;padding:0 2px}
   .cw-cc-who{gap:0;padding:0 2px}
   .cw-cc-who img,.cw-cc-who .ph{display:none}

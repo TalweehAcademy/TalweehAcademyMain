@@ -117,6 +117,7 @@ export default function CourseWahaPage() {
   useEffect(() => { setPlanId(''); setShowAll(false); setFullDesc(false); setAutoplay(false); setAbout(false); setPageTab(window.location.hash === '#reviews' ? 'reviews' : 'curriculum') }, [slug])
   useEffect(() => {
     if (window.location.hash === '#enrol') document.getElementById('enrol')?.scrollIntoView({ block: 'center' })
+    if (window.location.hash === '#watch') document.getElementById('watch')?.scrollIntoView({ block: 'start' })
   }, [course?.slug])
   useEffect(() => {
     const el = document.getElementById('enrol')

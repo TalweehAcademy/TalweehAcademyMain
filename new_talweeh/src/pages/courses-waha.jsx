@@ -29,6 +29,7 @@ function Card({ course, inList }) {
   const href = `/courses/${course.slug}`
   const options = purchaseOptions(course)
   const lessons = Number(course.lessonCount || 0)
+  const previews = course.free ? 0 : Number(course.freePreviewCount || 0)
   const subject = shortLabel(course.categoryLabel)
   const price = formatCommercePrice(course)
   const teacher = TEACHERS.get(personKey(course.instructor))
@@ -40,6 +41,7 @@ function Card({ course, inList }) {
           {course.poster ? <img src={course.poster} alt="" loading="lazy" /> : <span className="ph" />}
           {subject && <span className="cw-chip cw-chip-sub">{subject}</span>}
           <span className={`cw-chip cw-chip-price${course.free ? ' free' : ''}`}>{price}</span>
+          {previews > 0 && <span className="cw-chip cw-chip-prev">▶ Free preview</span>}
         </Link>
         <div className="cw-cc-more" aria-hidden="true">
           <div className="cw-cc-chips">{subject && <span>{subject}</span>}{lessons > 0 && <span>{lessons} lessons</span>}<span className={course.free ? 'free' : ''}>{price}</span></div>
@@ -50,8 +52,9 @@ function Card({ course, inList }) {
       <h3 className="cw-cc-t"><Link to={href}>{course.title}</Link></h3>
       <div className="cw-cc-who">
         {teacher ? <img src={teacher.image} alt="" loading="lazy" style={{ objectPosition: teacher.imagePosition || 'center top' }} /> : <span className="ph" aria-hidden="true" />}
-        <div><b>{course.instructor}</b><span>{lessons ? `${lessons} lessons` : 'Curriculum coming soon'} · {course.free ? 'watch on this site' : 'Student Portal'}</span></div>
+        <div><b>{course.instructor}</b><span>{lessons ? `${lessons} lessons` : 'Curriculum coming soon'} · {course.free ? 'watch on this site' : previews ? `${previews} free to watch` : 'Student Portal'}</span></div>
       </div>
+      {previews > 0 && <Link className="cw-cc-free" to={`${href}#watch`}>▶ Watch {previews === 1 ? 'the free lesson' : 'a free lesson'}</Link>}
       <div className="cw-cc-act">
         {course.free
           ? <Link className="wh-btn wh-btn-g" to={href}>▶ Start free course</Link>

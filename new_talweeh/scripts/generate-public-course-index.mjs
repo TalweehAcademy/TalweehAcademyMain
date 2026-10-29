@@ -35,6 +35,11 @@ const summaries = PUBLIC_COURSES.map((course) => {
   summary.lessonCount = Number(
     course.lessonCount || course.lessons?.length || 0
   )
+  // Paid courses: how many lessons play on the site as free previews (the cards show it).
+  const previews = course.free ? 0 : (course.lessons || []).filter(
+    (lesson) => lesson && typeof lesson === 'object' && (lesson.freePreview === true || lesson.free_preview === true) && (lesson.youtubeUrl || lesson.youtube_url)
+  ).length
+  if (previews) summary.freePreviewCount = previews
 
   return summary
 })
