@@ -2,7 +2,7 @@
    so it sets its own: the site's deep green and gold in both themes, like the study list box. */
 .ps-root{--ps-gold:#d7b373;--ps-gold-b:#f0dcb4;--ps-gold-d:#b8894c;--ps-g2:#10251c;--ps-g3:#1e3f31;--ps-cream:#f3e8d3;--ps-text:#dfe7df;--ps-mut:#a3b4a8;--ps-line:rgba(215,179,115,.22);--ps-in:rgba(243,232,211,.06);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
 .ps-ov{position:fixed;inset:0;z-index:1100;background:rgba(6,16,11,.55);backdrop-filter:blur(4px);animation:ps-fade .3s both}
-.ps-box{position:fixed;left:50%;top:50%;z-index:1110;width:min(500px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow-y:auto;box-sizing:border-box;border-radius:26px;padding:28px;transform:translate(-50%,-50%);color:var(--ps-text);text-align:left;background:url('/brand/talweeh-pattern-dark.webp') repeat top center/620px auto,linear-gradient(165deg,var(--ps-g3),var(--ps-g2));border:1px solid rgba(215,179,115,.4);box-shadow:0 40px 100px rgba(8,20,14,.5);animation:ps-pop .35s cubic-bezier(.34,1.56,.64,1) both}
+.ps-box{position:fixed;left:50%;top:50%;z-index:1110;width:min(500px,calc(100vw - 24px));max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;border-radius:26px;padding:28px;transform:translate(-50%,-50%);color:var(--ps-text);text-align:left;background:url('/brand/talweeh-pattern-dark.webp') repeat top center/620px auto,linear-gradient(165deg,var(--ps-g3),var(--ps-g2));border:1px solid rgba(215,179,115,.4);box-shadow:0 40px 100px rgba(8,20,14,.5);animation:ps-pop .35s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes ps-fade{from{opacity:0}}
 @keyframes ps-pop{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}}
 .ps-x{position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:10px;border:1px solid var(--ps-line);background:var(--ps-in);color:var(--ps-mut);cursor:pointer;font-size:14px}
@@ -34,5 +34,18 @@
 .ps-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .ps-box .ps-note{margin-top:16px;font-size:12.5px;color:var(--ps-mut)}
 .ps-mail{color:var(--ps-gold-b);user-select:all}
-@media (max-width:560px){.ps-box{padding:22px 18px;border-radius:20px}.ps-box h3{font-size:22px}.ps-row{flex-direction:column}}
+/* Phones: a bottom sheet sized to the visible screen (dvh leaves room for Safari's toolbars), clear of the home bar. */
+@keyframes ps-up{from{transform:translateY(100%)}}
+@media (max-width:560px){
+  .ps-box{left:0;right:0;top:auto;bottom:0;width:100%;max-height:calc(100vh - 56px);max-height:calc(100dvh - 56px);transform:none;padding:20px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-radius:24px 24px 0 0;border-bottom:0;animation:ps-up .35s cubic-bezier(.22,1,.36,1) both}
+  .ps-box::before{content:'';display:block;width:40px;height:4px;margin:-6px auto 12px;border-radius:2px;background:rgba(243,232,211,.25)}
+  .ps-x{top:14px;right:14px;width:32px;height:32px}
+  .ps-box h3{font-size:22px}
+  .ps-box p{font-size:14px;line-height:1.55}
+  .ps-acts{margin-top:14px;gap:8px}
+  .ps-btn{flex:1 1 0;min-height:44px;padding:10px 12px;font-size:14px}
+  .ps-moved{margin-top:14px;padding:12px 14px}
+  .ps-send{flex:none}
+  .ps-box .ps-note{margin-top:12px}
+}
 @media (prefers-reduced-motion:reduce){.ps-ov,.ps-box{animation:none}}

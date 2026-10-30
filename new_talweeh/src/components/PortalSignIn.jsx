@@ -85,7 +85,7 @@ function Dialog({ onClose }) {
         <button type="button" className="ps-x" onClick={onClose} aria-label="Close">✕</button>
         <span className="ps-kicker">Talweeh Student Portal</span>
         <h3 id="ps-h">Sign in to your courses</h3>
-        <p>The Student Portal is for students enrolled in paid courses and programmes: your lessons, quizzes, class recordings and payments are there.</p>
+        <p>The Student Portal is for students enrolled in paid courses and programmes: your lessons, quizzes, schedule and payments are there.</p>
         <div className="ps-acts">
           <a ref={first} className="ps-btn ps-btn-g" href={SIGN_IN}>Sign in →</a>
           <a className="ps-btn" href={`${LEGACY_PORTAL}/auth/forgot-password`}>Forgot password</a>
