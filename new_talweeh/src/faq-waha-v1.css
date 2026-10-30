@@ -2,7 +2,7 @@
    page's accordion (arabic-waha-v1.css .ai-acc) in one column per topic. Colours are the site's page tokens; --fq-gold is a darker gold for text on the light theme's white cards. */
 .fq{--fq-gold:#87601f}
 html[data-theme="dark"] .fq{--fq-gold:var(--p-gold)}
-.fq-band{padding-bottom:30px}
+.aw-band.fq-band{padding-bottom:34px}
 .fq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
 .fq-chips a{padding:9px 15px;border-radius:999px;font-weight:700;font-size:13.5px;color:var(--cream);background:rgba(243,232,211,.06);border:1px solid rgba(215,179,115,.3);transition:border-color .3s,color .3s,background .3s}
 .fq-chips a:hover,.fq-chips a:focus-visible{border-color:var(--gold);color:var(--gold);background:rgba(243,232,211,.1)}
