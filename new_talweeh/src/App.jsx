@@ -18,6 +18,7 @@ import { StartGuideHost, StartLink } from './components/StartGuideHost'
 import { PUBLIC_COURSES } from './data/publicCourseIndex'
 import { formatCommercePrice } from './data/liveCommerceCatalog'
 const CoursesPage = lazy(() => import('./pages/courses-waha'))
+const FaqPage = lazy(() => import('./pages/faq-waha'))
 const ArticlesPage = lazy(() => import('./pages/articles-waha'))
 import { ARTICLES } from './data/articles'
 import { STUDY_ON } from './quran/studySwitch'
@@ -664,6 +665,7 @@ function AppInner() {
         <Route path="/arabic/faq" element={<ArabicFaqPage />} />
         <Route path="/arabic/about" element={<ArabicAboutPage />} />
         <Route path="/p/terms-conditions" element={<AboutWahaPage tab="terms" />} />
+        <Route path="/faq" element={<FaqPage />} />
         <Route path="/p/refund-policy" element={<AboutWahaPage tab="refunds" />} />
         <Route path="/p/privacy-policy" element={<AboutWahaPage tab="privacy" />} />
         <Route path="*" element={<NotFoundPage />} />

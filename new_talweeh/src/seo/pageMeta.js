@@ -17,6 +17,7 @@ export const ROUTE_META = {
   '/': { title: 'The Gateway to Islamic Scholarship - Talweeh Academy', description: DEFAULT_DESCRIPTION },
   '/courses': { title: 'Courses', description: 'Browse the full Talweeh Academy course library, from foundational Arabic and fiqh to advanced hadith sciences.' },
   '/courses/roadmap': { title: 'Study roadmap', description: 'For each Islamic science, the texts to study level by level — and which of them Talweeh teaches.' },
+  '/faq': { title: 'Frequently Asked Questions', description: 'Answers about Talweeh courses and programmes, free courses, the Student Portal, prices, access, refunds and live classes.' },
   '/start': { title: 'Find your starting point', description: 'Not sure where to begin? Four short questions, then the Talweeh course or programme to start with, and where it leads.' },
   '/media': { title: 'Media', description: 'Lectures, lesson excerpts and discussions from Talweeh Academy instructors.' },
   '/articles': { title: 'Articles', description: 'Written pieces from Talweeh Academy on the Islamic sciences and the life of a student of knowledge.' },

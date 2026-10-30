@@ -1,0 +1,21 @@
+/* /faq (pages/faq-waha.jsx): the About band (about-waha-v1.css) with topic chips instead of tabs, and the Arabic
+   page's accordion (arabic-waha-v1.css .ai-acc) in one column per topic. Colours are the site's page tokens; --fq-gold is a darker gold for text on the light theme's white cards. */
+.fq{--fq-gold:#87601f}
+html[data-theme="dark"] .fq{--fq-gold:var(--p-gold)}
+.fq-band{padding-bottom:30px}
+.fq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.fq-chips a{padding:9px 15px;border-radius:999px;font-weight:700;font-size:13.5px;color:var(--cream);background:rgba(243,232,211,.06);border:1px solid rgba(215,179,115,.3);transition:border-color .3s,color .3s,background .3s}
+.fq-chips a:hover,.fq-chips a:focus-visible{border-color:var(--gold);color:var(--gold);background:rgba(243,232,211,.1)}
+.fq-body{max-width:860px;margin:0 auto;padding-top:20px}
+.fq-group{margin-top:44px;scroll-margin-top:110px}
+.wh-home .fq-group h2{font-size:clamp(24px,2.6vw,32px);margin:0 0 14px;color:var(--p-head);text-wrap:balance}
+.fq-group .ai-acc-a a{color:var(--fq-gold);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.fq-mail{color:var(--fq-gold);font-weight:700;user-select:all}
+.fq-table{overflow-x:auto;margin:6px 0 10px;border-radius:14px;border:1px solid var(--p-line)}
+.fq-table table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+.fq-table th,.fq-table td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--p-line);color:var(--p-text);line-height:1.5}
+.fq-table thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fq-gold)}
+.fq-table tbody th{color:var(--p-head);font-weight:700}
+.fq-table tr:last-child th,.fq-table tr:last-child td{border-bottom:0}
+.fq-ask{margin-bottom:20px}
+@media (max-width:640px){.fq-chips{gap:6px}.fq-chips a{padding:8px 12px;font-size:12.5px}.fq-group{margin-top:34px}.fq-group .ai-acc-i > button{font-size:15.5px}}
