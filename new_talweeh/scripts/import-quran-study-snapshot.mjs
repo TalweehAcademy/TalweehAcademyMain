@@ -38,12 +38,6 @@ function jsonFrom(zip, name, required = true) {
   return JSON.parse(raw.toString('utf8'))
 }
 
-function verseKeyOf(value) {
-  if (typeof value === 'string') return value
-  if (value && typeof value === 'object') return clean(value.verseKey || value.targetKey)
-  return ''
-}
-
 function isKeyInRange(key, surah, fromAyah, toAyah) {
   const [s, a] = clean(key).split(':').map(Number)
   return s === surah && Number.isInteger(a) && a >= fromAyah && a <= toAyah
@@ -105,7 +99,11 @@ function mergePortal(currentRaw, incomingRaw, scope) {
     ...incomingVerses,
     drafts,
     sections: [...keepOutside(currentVerses.sections), ...rows(incomingVerses.sections).filter((row) => rowInRange(row, surah, fromAyah, toAyah))],
-    sourceLinks: [...keepOutside(currentVerses.sourceLinks), ...rows(incomingVerses.sourceLinks).filter((row) => rowInRange(row, surah, fromAyah, toAyah))],
+    // Talweeh's own English notes, and the parts of books the team added to a window (with their references).
+    englishNotes: [...keepOutside(currentVerses.englishNotes), ...rows(incomingVerses.englishNotes).filter((row) => rowInRange(row, surah, fromAyah, toAyah))],
+    quotes: [...keepOutside(currentVerses.quotes), ...rows(incomingVerses.quotes).filter((row) => rowInRange(row, surah, fromAyah, toAyah))],
+    // No book passages are published any more (the library sends none); older links are dropped.
+    sourceLinks: [],
   }
 
   const currentWords = obj(current.words)
@@ -122,56 +120,6 @@ function mergePortal(currentRaw, incomingRaw, scope) {
     irabTerms: mergeById(currentWords.irabTerms, incomingWords.irabTerms),
   }
   return current
-}
-
-function targetInRange(target, scope) {
-  return isKeyInRange(verseKeyOf(target), scope.surah, scope.fromAyah, scope.toAyah)
-}
-
-function targetIdentity(target) {
-  if (typeof target === 'string') return `s:${target}`
-  return `o:${clean(target?.verseKey)}:${Number(target?.wordNumber || 0)}:${clean(target?.rootId)}:${clean(target?.wordArabic)}`
-}
-
-function mergeTargets(a, b) {
-  const out = [], seen = new Set()
-  for (const target of [...rows(a), ...rows(b)]) {
-    const key = targetIdentity(target)
-    if (seen.has(key)) continue
-    seen.add(key)
-    out.push(target)
-  }
-  return out
-}
-
-function stripRangeFromSource(currentRaw, scope) {
-  if (!currentRaw) return null
-  const current = clone(currentRaw)
-  current.entries = rows(current.entries).map((entry) => {
-    const targets = rows(entry.targets)
-    if (!targets.length) return entry
-    const kept = targets.filter((target) => !targetInRange(target, scope))
-    if (!kept.length) return null
-    return { ...entry, targets: kept }
-  }).filter(Boolean)
-  return current
-}
-
-function mergeSourceBook(currentRaw, incomingRaw, scope) {
-  const stripped = stripRangeFromSource(currentRaw, scope) || { schemaVersion: 3, source: incomingRaw?.source || {}, entries: [] }
-  const incoming = clone(incomingRaw || { entries: [] })
-  const map = new Map(rows(stripped.entries).map((entry) => [String(entry.id), entry]))
-  for (const entry of rows(incoming.entries)) {
-    const prior = map.get(String(entry.id))
-    map.set(String(entry.id), prior ? { ...prior, ...entry, targets: mergeTargets(prior.targets, entry.targets) } : entry)
-  }
-  return {
-    ...stripped,
-    ...incoming,
-    schemaVersion: 3,
-    source: { ...obj(stripped.source), ...obj(incoming.source) },
-    entries: [...map.values()],
-  }
 }
 
 async function readJsonIfExists(file) {
@@ -222,15 +170,12 @@ const archiveBase = `surahs/${dir}`
 const portalPath = `${archiveBase}/study/portal.json`
 const englishPath = `${archiveBase}/study/english.json`
 const arabicPath = `${archiveBase}/study/arabic.json`
-const sourceManifestPath = `${archiveBase}/sources/manifest.json`
 const incomingPortal = jsonFrom(zip, portalPath)
-const incomingSourceManifest = jsonFrom(zip, sourceManifestPath)
-if (Number(incomingPortal.schemaVersion) !== 3 || Number(incomingSourceManifest.schemaVersion) !== 3) throw new Error('Snapshot payload schema mismatch.')
+if (Number(incomingPortal.schemaVersion) !== 3) throw new Error('Snapshot payload schema mismatch.')
 if (Number(incomingPortal.surah?.number) !== scope.surah) throw new Error('Portal payload sūrah does not match snapshot scope.')
 
 const outputDir = path.resolve('src/quran-study-static', dir)
 const outputPortal = path.join(outputDir, 'portal.json')
-const outputSources = path.join(outputDir, 'sources')
 const currentPortal = await readJsonIfExists(outputPortal)
 const mergedPortal = mergePortal(currentPortal, incomingPortal, scope)
 await writeJson(outputPortal, mergedPortal)
@@ -241,30 +186,8 @@ const arabic = jsonFrom(zip, arabicPath, false)
 if (english) await writeJson(path.join(outputDir, 'study', 'english.json'), english)
 if (arabic) await writeJson(path.join(outputDir, 'study', 'arabic.json'), arabic)
 
-const currentManifest = await readJsonIfExists(path.join(outputSources, 'manifest.json'))
-const currentBooks = new Map(rows(currentManifest?.books).map((book) => [String(book.id || book.slug), book]))
-const importedSlugs = []
-for (const book of rows(incomingSourceManifest.books)) {
-  const archiveFile = `${archiveBase}/${book.path}`
-  const incomingBook = jsonFrom(zip, archiveFile)
-  const slug = clean(book.slug || incomingBook.source?.slug)
-  if (!slug) throw new Error(`A source book is missing its slug: ${archiveFile}`)
-  const outputFile = path.join(outputSources, `${slug}.json`)
-  const currentBook = await readJsonIfExists(outputFile)
-  const mergedBook = mergeSourceBook(currentBook, incomingBook, scope)
-  await writeJson(outputFile, mergedBook)
-  importedSlugs.push(slug)
-  currentBooks.set(String(book.id || slug), { ...currentBooks.get(String(book.id || slug)), ...book, entryCount: rows(mergedBook.entries).length, path: `sources/${slug}.json` })
-}
-
-const mergedManifest = {
-  ...(currentManifest || {}),
-  ...incomingSourceManifest,
-  schemaVersion: 3,
-  scope: incomingSourceManifest.scope || manifest.scope,
-  books: [...currentBooks.values()].sort((a, b) => (Number(a.sortOrder) || 0) - (Number(b.sortOrder) || 0)),
-}
-await writeJson(path.join(outputSources, 'manifest.json'), mergedManifest)
+// Books are not published: the website shows only what the team wrote or confirmed (portal.json, with its quotes).
+// Book files in an older snapshot are ignored.
 
 const localMetaPath = path.join(outputDir, 'snapshot-manifest.json')
 const priorMeta = await readJsonIfExists(localMetaPath)
@@ -274,5 +197,4 @@ await writeJson(localMetaPath, { ...manifest, imports })
 console.log(`Imported Qurʾān Study schema v3 snapshot ${manifest.snapshotId}.`)
 console.log(`Coverage: ${scope.surah}:${scope.fromAyah}–${scope.toAyah}`)
 console.log(`Study: ${path.relative(process.cwd(), outputPortal)}`)
-console.log(`Sources: ${importedSlugs.length} book file(s) in ${path.relative(process.cwd(), outputSources)}`)
 console.log('Reader/audio/reciter data was not modified.')

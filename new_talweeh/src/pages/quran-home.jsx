@@ -9,7 +9,7 @@ import { QuranCredits } from '../quran/QuranUI'
 import { searchText } from '../quran/quranData'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
-import { SOURCES_ON, STUDY_ON } from '../quran/studySwitch'
+import { STUDY_ON } from '../quran/studySwitch'
 import '../quran-home-v1.css'
 
 // A surah with a published Talweeh study package (src/quran-study-static) to land on from "Study".
@@ -257,7 +257,7 @@ export default function QuranHomePage() {
           </div>
           <div className="qh-feats" data-stagger>
             <Link className="qh-ft wh-glass" to={`/quran/read?surah=${cont.n}`}><span className="qh-i">{Icon.book}</span><h4>Read Mode</h4><p>Madinah &amp; IndoPak muṣḥaf styles, five riwāyāt.</p></Link>
-            {STUDY_ON ? <Link className="qh-ft wh-glass" to={`/quran/study?surah=${STUDY_SURAH}`}><span className="qh-i">{Icon.pen}</span><h4>{SOURCES_ON ? <>Study &amp; Sources</> : 'Study'}</h4><p>{SOURCES_ON ? 'Iʿrāb, tafsīr, dictionaries and qirāʾāt per āyah.' : 'Iʿrāb, rabṭ, fawāʾid and word study per āyah.'}</p></Link> : null}
+            {STUDY_ON ? <Link className="qh-ft wh-glass" to={`/quran/study?surah=${STUDY_SURAH}`}><span className="qh-i">{Icon.pen}</span><h4>Study</h4><p>Iʿrāb, tafsīr, rabṭ, fawāʾid and word study per āyah.</p></Link> : null}
             <Link className="qh-ft wh-glass" to={`/quran/listen?surah=${cont.n}`}><span className="qh-i">{Icon.listen}</span><h4>Listen</h4><p>Recitation that the text follows, with range repeat.</p></Link>
             <button className="qh-ft wh-glass" style={STUDY_ON ? undefined : { gridColumn: '1 / -1' }} type="button" onClick={() => setCommonOpen(true)} aria-haspopup="dialog"><span className="qh-i">{Icon.star}</span><h4>Commonly read</h4><p>Al-Kahf, Yāsīn, Al-Mulk, Āyat al-Kursī and more.</p></button>
           </div>

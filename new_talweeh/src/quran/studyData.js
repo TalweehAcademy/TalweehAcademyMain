@@ -1,10 +1,9 @@
-// Talweeh study packages (src/quran-study-static/NNN — the files the old portal-style reader
-// read) shaped for the Dirāsah study page. Loaded per surah, on demand.
+// Talweeh study packages (src/quran-study-static/NNN/portal.json, published from the library through the portal)
+// shaped for the Dirāsah study page. Loaded per surah, on demand. Only what the team wrote or confirmed is shown: the
+// written text of each window, and the parts of books added to it with their references (quotes); no books themselves.
 import { STUDY_ON } from './studySwitch'
 
 const portals = import.meta.glob('../quran-study-static/*/portal.json', { import: 'default' })
-const manifests = import.meta.glob('../quran-study-static/*/sources/manifest.json', { import: 'default' })
-const books = import.meta.glob('../quran-study-static/*/sources/*.json', { import: 'default' })
 
 const dir = (n) => `../quran-study-static/${String(n).padStart(3, '0')}`
 // Hidden while STUDY_ON is off (./studySwitch.js): no sūrah has a study.
@@ -14,21 +13,26 @@ export const hasStudy = (n) => STUDY_SURAHS.includes(Number(n))
 
 const clean = (v) => String(v ?? '').trim()
 const rows = (v) => (Array.isArray(v) ? v : [])
-const listish = (v) => {
-  if (Array.isArray(v)) return v
-  try { return JSON.parse(String(v).replace(/'/g, '"')) } catch { return [] }
-}
-const key = (s) => clean(s).replace(/\s/g, '')
 
-// Sūrah study topics, grouped like surahStudyTabs() in the Qurʾān Study (QuranReaderStudyLayer.jsx in the library site).
-function surahTopics(legacy) {
-  const meta = rows(legacy?.metadata)
+// Where a quote is from, as printed: «vol. 4 · p. 406», a page range when it runs on.
+export function quoteRef(q) {
+  const f = q.from || {}, t = q.to || {}
+  const pages = f.page && t.page && t.page !== f.page ? `pp. ${f.page}–${t.page}` : f.page ? `p. ${f.page}` : ''
+  return [f.vol ? `vol. ${f.vol}` : '', pages].filter(Boolean).join(' · ')
+}
+const quote = (q) => ({ text: clean(q.text), book: clean(q.titleArabic), author: clean(q.authorArabic), ref: quoteRef(q), url: clean(q.url), summary: q.summary === true })
+
+// Sūrah study topics, as the library's Sūrah Study (surahStudyTabs in QuranReaderStudyLayer.jsx): what was written in
+// each tab (studySections), else the sūrah's own details; then the team's own tabs; each with the parts of books added.
+function surahTopics(surahRow) {
+  const legacy = surahRow?.legacy || {}
+  const meta = rows(legacy.metadata)
   const test = (re) => (m) => re.test(`${m.id || ''} ${m.labelArabic || ''} ${m.labelEnglish || ''}`)
   const join = (pred) => meta.filter(pred).filter((m) => clean(m.valueArabic)).map((m) => `${clean(m.labelArabic)}: ${clean(m.valueArabic)}`).join('\n')
   const isNuzul = test(/revel|nuzul|نزول|مكي|مدني|meccan|medinan|order/i)
   const isCounts = test(/ayah|verse|word|letter|آي|الآيات|كلم|حرف/i)
-  const L = legacy || {}
-  return [
+  const L = legacy
+  const fixed = [
     { id: 'ayat', ar: 'الآيات', en: 'Āyāt', arabic: join(isCounts), english: '' },
     { id: 'nuzul', ar: 'النزول', en: 'Revelation', arabic: join(isNuzul), english: '' },
     { id: 'sabab-nuzul', ar: 'سبب النزول', en: 'Reason of Revelation', arabic: clean(L.sababNuzulArabic), english: clean(L.sababNuzulEnglish) },
@@ -37,6 +41,14 @@ function surahTopics(legacy) {
     { id: 'virtues', ar: 'فضائل السورة', en: 'Virtues', arabic: clean(L.virtuesArabic), english: clean(L.virtuesEnglish) },
     { id: 'notes', ar: 'ملاحظات', en: 'Notes', arabic: clean(L.notesArabic), english: clean(L.notesEnglish) },
   ]
+  const own = rows(surahRow?.sectionTypes).slice().sort((a, b) => (Number(a.sortOrder) || 0) - (Number(b.sortOrder) || 0))
+    .map((t) => ({ id: clean(t.id), ar: clean(t.labelArabic), en: clean(t.labelEnglish) || clean(t.labelArabic), arabic: '', english: '' }))
+  const written = new Map(rows(surahRow?.sections).filter((x) => x.feature === 'surah').map((x) => [clean(x.tabId), x]))
+  const quotes = rows(surahRow?.quotes)
+  return [...fixed, ...own].map((t) => {
+    const w = written.get(t.id)
+    return { ...t, arabic: w ? clean(w.arabic) : t.arabic, english: w ? clean(w.english) : t.english, quotes: quotes.filter((q) => clean(q.section) === t.id).map(quote) }
+  })
 }
 
 const cache = new Map()
@@ -46,49 +58,17 @@ export function loadStudy(n) {
   return cache.get(n)
 }
 
+// The written text of an āyah's window: the library's final version (studySections, tab = the feature) when there is
+// one, else the study's own entries; English from Talweeh's notes when an entry has none.
 async function build(n) {
   const base = dir(n)
   const portal = await portals[`${base}/portal.json`]()
-  const manifest = manifests[`${base}/sources/manifest.json`] ? await manifests[`${base}/sources/manifest.json`]() : { books: [] }
-  const bookList = rows(manifest.books)
-  const bookData = {}
-  await Promise.all(bookList.map(async (b) => {
-    const loader = books[`${base}/${b.path}`]
-    if (loader) bookData[b.id] = await loader()
-  }))
+  const V = portal.verses || {}
 
-  // Book passages (iʿrāb and tafsīr) and which āyāt they cover.
-  const passages = {}, links = {}
-  for (const b of bookList) {
-    if (b.categories?.includes('vocab')) continue
-    const feature = b.categories?.includes('irab') ? 'irab' : 'tafsir'
-    for (const e of rows(bookData[b.id]?.entries)) {
-      const targets = listish(e.targets)
-      if (!targets.length) continue
-      passages[e.id] = {
-        book: b.nameEnglish, bookAr: b.nameArabic, author: b.authorEnglish,
-        heading: clean(e.headingArabic), arabic: clean(e.arabic || e.textArabic),
-        locator: clean(e.locator) || [e.volumeStart ? `vol. ${e.volumeStart}` : '', e.printedPageStart ? `p. ${e.printedPageStart}` : ''].filter(Boolean).join(' · '),
-      }
-      for (const t of targets) ((links[t] ||= {})[feature] ||= []).push(e.id)
-    }
-  }
-
-  // Roots: Talweeh's own excerpt first, then one entry from each dictionary book.
   const roots = {}
   for (const r of rows(portal.words?.roots)) {
     const ex = rows(r.excerpts)[0]
-    roots[r.id] = { root: clean(r.rootArabic), dicts: ex ? [{ name: 'Talweeh notes', arabic: clean(ex.arabic) }] : [] }
-  }
-  for (const b of bookList) {
-    if (!b.categories?.includes('vocab')) continue
-    const seen = new Set()
-    for (const e of rows(bookData[b.id]?.entries)) {
-      const k = key(e.rootArabic || e.rootKey || e.headwordArabic)
-      for (const [id, r] of Object.entries(roots)) {
-        if (key(r.root) === k && !seen.has(id)) { seen.add(id); r.dicts.push({ name: b.nameEnglish, arabic: clean(e.articleArabic || e.arabic || e.textArabic) }) }
-      }
-    }
+    roots[r.id] = { root: clean(r.rootArabic), note: ex ? clean(ex.arabic) : '' }
   }
 
   const wordIrab = {}
@@ -98,18 +78,44 @@ async function build(n) {
     wordIrab[`${rec.verseKey}:${rec.wordNumber}`] = { word: clean(rec.wordArabic), tl: clean(rec.transliteration), conclusion: clean(rec.conclusionArabic), facts: [...new Set(facts)] }
   }
 
-  const pick = (xs) => rows(xs).map((x) => ({ arabic: clean(x.arabic), english: clean(x.english) })).filter((x) => x.arabic || x.english)
+  // Per word (81:1:2): its ṣarf as written, and the parts of books added to its root, iʿrāb or ṣarf.
+  const words = {}
+  const wordOf = (targetKey) => { const m = /^(\d+:\d+):word:(\d+)$/.exec(clean(targetKey)); return m ? `${m[1]}:${m[2]}` : '' }
+  for (const x of rows(V.sections)) {
+    const w = wordOf(x.targetKey)
+    if (w && (clean(x.arabic) || clean(x.english))) ((words[w] ||= { sarf: null, quotes: [] }).sarf = { arabic: clean(x.arabic), english: clean(x.english) })
+  }
+  const quotes = {}
+  for (const q of rows(V.quotes)) {
+    if (!clean(q.text)) continue
+    const w = wordOf(q.targetKey)
+    if (w) { (words[w] ||= { sarf: null, quotes: [] }).quotes.push({ ...quote(q), feature: clean(q.feature) }); continue }
+    ;((quotes[clean(q.targetKey)] ||= {})[clean(q.feature)] ||= []).push(quote(q))
+  }
+
+  const sectionOf = (k, f) => rows(V.sections).find((x) => clean(x.targetKey) === k && clean(x.feature) === f && clean(x.tabId || f) === f)
+  const noteOf = (k, f) => clean(rows(V.englishNotes).find((x) => clean(x.targetKey) === k && clean(x.feature) === f)?.english)
+  const written = (k, f, list) => {
+    const sec = sectionOf(k, f)
+    if (sec) return clean(sec.arabic) || clean(sec.english) ? [{ arabic: clean(sec.arabic), english: clean(sec.english) }] : []
+    const out = rows(list).map((x) => ({ arabic: clean(x.arabic), english: clean(x.english) })).filter((x) => x.arabic || x.english)
+    const en = noteOf(k, f)
+    if (en && out.length && !out[0].english) out[0] = { ...out[0], english: en }
+    return out
+  }
   const ayahs = {}
-  for (const [k, d] of Object.entries(portal.verses?.drafts || {})) {
+  for (const [k, d] of Object.entries(V.drafts || {})) {
     ayahs[k] = {
       tr: rows(d.translations).filter((t) => clean(t.translation)).map((t) => ({
         text: clean(t.translation),
         brackets: rows(t.brackets).filter((b) => clean(b.reason) || clean(b.reference)).map((b) => ({ text: clean(b.text), reason: clean(b.reason), reference: clean(b.reference) })),
       })),
-      rabt: pick(d.rabt), irab: pick(d.irab), fawaid: pick(d.fawaid),
+      rabt: written(k, 'rabt', d.rabt), irab: written(k, 'irab', d.irab), fawaid: written(k, 'fawaid', d.fawaid),
+      tafsir: written(k, 'tafsir', []), qiraat: written(k, 'qiraat', []),
       vocab: rows(d.vocab).filter((v) => roots[v.rootId]).map((v) => ({ w: v.wordNumber, word: clean(v.wordArabic), root: v.rootId })),
+      quotes: quotes[k] || {},
     }
   }
   const legacy = portal.surah?.legacy || null
-  return { surah: n, nameAr: clean(legacy?.nameArabic), topics: surahTopics(legacy), ayahs, links, passages, roots, wordIrab }
+  return { surah: n, nameAr: clean(legacy?.nameArabic), topics: surahTopics(portal.surah), ayahs, roots, wordIrab, words }
 }

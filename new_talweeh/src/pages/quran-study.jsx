@@ -9,42 +9,40 @@ import { WahaPage } from '../components/WahaShell'
 import { QURAN_SURAHS, QURAN_JUZ_STARTS } from '../data/quranIndex'
 import { arNum, getTranslation, getUthmani, getWords, surahInfo } from '../quran/quranData'
 import { STUDY_SURAHS, hasStudy, loadStudy } from '../quran/studyData'
-import { SOURCES_ON } from '../quran/studySwitch'
 import { AyahMarker, Icon, useEscape, useHoverCard, QuranCredits } from '../quran/QuranUI'
 import '../quran-pages-v1.css'
 
-// Order follows SOURCE_FEATURE_META of the old portal-style reader (removed 2026-10-22).
-const CATS = [['irab', 'Iʿrāb'], ['tafsir', 'Tafsīr'], ['dictionaries', 'Dictionaries'], ['rabt', 'Rabṭ'], ['fawaid', 'Fawāʾid'], ['qiraat', 'Qirāʾāt'], ['translation', 'Bracket notes'], ['words', 'Words']]
+// The library's study windows, in its order. Each shows what the team wrote, then the parts of books it added (quotes).
+const CATS = [['irab', 'Iʿrāb'], ['tafsir', 'Tafsīr'], ['rabt', 'Rabṭ'], ['fawaid', 'Fawāʾid'], ['qiraat', 'Qirāʾāt'], ['translation', 'Bracket notes'], ['words', 'Words']]
 const plain = (s) => String(s || '').replace(/\s+/g, ' ').trim()
 const normLabel = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
 const juzOf = (n) => QURAN_JUZ_STARTS.filter(([, s]) => s <= n).pop()?.[0] || 1
 
-/* ── one āyah's study options per category (each option = one source) ── */
-function options(ay, c, S, sourcesOnly) {
+/* ── one āyah's study options per category: Talweeh's written text first, then each part of a book added to it ── */
+const quoteOpt = (q) => ({ label: q.book || 'Book', sub: q.author, loc: q.ref, ar: q.text, by: [q.author, q.summary ? 'summary' : ''].filter(Boolean).join(' · '), title: q.book || 'Book', url: q.url })
+function options(ay, c, S) {
   if (!S) return c === 'words' && ay.words.length ? [{ label: 'Words', title: 'Word by word' }] : []
   const st = ay.st
-  const psg = (id) => { const p = S.passages[id]; return p && { label: p.book, sub: p.author, loc: p.locator, ar: p.arabic, by: p.author + (p.heading ? ' · ' + p.heading : ''), title: p.book } }
-  const books = (f) => (SOURCES_ON ? (ay.src[f] || []).map(psg).filter(Boolean) : [])
+  const quotes = (f) => (st.quotes?.[f] || []).map(quoteOpt)
+  const talweeh = (f, label, title) => (st[f] || []).map((x, i) => ({ label: `${label}${st[f].length > 1 ? ' ' + (i + 1) : ''}`, sub: 'Talweeh', ar: x.arabic, en: x.english, title }))
   if (c === 'irab') {
     const words = Object.entries(S.wordIrab).filter(([wk]) => wk.startsWith(ay.k + ':')).map(([, r]) => r)
-    if (sourcesOnly) return books('irab')
     return [
-      ...st.irab.map((x) => ({ label: 'Talweeh iʿrāb', sub: 'Study notes', ar: x.arabic, en: x.english, title: 'Talweeh iʿrāb' })),
+      ...talweeh('irab', 'Talweeh iʿrāb', 'Iʿrāb'),
       ...(words.length ? [{ label: 'Word by word', sub: `${words.length} word${words.length > 1 ? 's' : ''}`, words, title: 'Iʿrāb of each word', ar: words.map((w) => `${w.word}: ${w.conclusion}`).join(' · ') }] : []),
-      ...books('irab'),
+      ...quotes('irab'),
     ]
   }
-  if (c === 'tafsir') return books('tafsir')
-  if (c === 'dictionaries') return !SOURCES_ON ? [] : [...new Set(st.vocab.map((v) => v.root))].filter((id) => S.roots[id]).map((id) => ({ label: S.roots[id].root, sub: `${S.roots[id].dicts.length} dictionaries`, root: id, ar: S.roots[id].dicts[0]?.arabic, title: `Root ${S.roots[id].root}` }))
-  if (sourcesOnly) return []
-  if (c === 'rabt') return st.rabt.map((x, i) => ({ label: `Rabṭ${st.rabt.length > 1 ? ' ' + (i + 1) : ''}`, sub: 'Connection to what precedes', ar: x.arabic, en: x.english, title: 'Rabṭ' }))
-  if (c === 'fawaid') return st.fawaid.map((x, i) => ({ label: `Fāʾidah ${i + 1}`, sub: 'Talweeh', ar: x.arabic, en: x.english, title: `Fāʾidah ${i + 1}` }))
+  if (c === 'tafsir') return [...talweeh('tafsir', 'Talweeh', 'Tafsīr'), ...quotes('tafsir')]
+  if (c === 'rabt') return [...talweeh('rabt', 'Rabṭ', 'Rabṭ — connection to what precedes'), ...quotes('rabt')]
+  if (c === 'fawaid') return [...talweeh('fawaid', 'Fāʾidah', 'Fāʾidah'), ...quotes('fawaid')]
+  if (c === 'qiraat') return [...talweeh('qiraat', 'Talweeh', 'Qirāʾāt'), ...quotes('qiraat')]
   if (c === 'translation') return st.tr.flatMap((t) => t.brackets).map((b) => ({ label: b.text, sub: 'Supplied wording', ar: b.reference, en: b.reason, title: `“${b.text}”` }))
   if (c === 'words') return ay.words.length ? [{ label: 'Words', title: 'Word by word' }] : []
   return []
 }
-const countOf = (ay, c, S, so) => (c === 'words' ? 0 : options(ay, c, S, so).length)
-const EMPTY = { tr: [], rabt: [], irab: [], fawaid: [], vocab: [] }
+const countOf = (ay, c, S) => (c === 'words' ? 0 : options(ay, c, S).length)
+const EMPTY = { tr: [], rabt: [], irab: [], fawaid: [], tafsir: [], qiraat: [], vocab: [], quotes: {} }
 
 /* ── floating study window: drag, resize, shrink to a corner, enlarge ── */
 const WIN_KEY = 'talweeh-study-window'
@@ -84,6 +82,7 @@ function Block({ o }) {
   return (
     <div className="qp-blk">
       {o.title && <h4>{o.title}{o.loc && <small>{o.loc}</small>}</h4>}
+      {o.url && <a className="by" href={o.url} target="_blank" rel="noreferrer">See the printed page ↗</a>}
       {o.by && <div className="by">{o.by}</div>}
       {o.ar && <div className="arx">{o.ar}</div>}
       {o.en && <div className="enx">{o.en}</div>}
@@ -92,30 +91,38 @@ function Block({ o }) {
   )
 }
 
-function StudyWindow({ open, ay, cat, S, sourcesOnly, onCat, onClose, onStep, canPrev, canNext, surahName, initialOpt }) {
+function StudyWindow({ open, ay, cat, S, onCat, onClose, onStep, canPrev, canNext, surahName, initialOpt }) {
   const w = useStudyWindow()
   const [opt, setOpt] = useState(0)
-  const [dict, setDict] = useState(0)
-  useEffect(() => { setOpt(initialOpt || 0); setDict(0) }, [ay?.k, cat, initialOpt])
+  useEffect(() => { setOpt(initialOpt || 0) }, [ay?.k, cat, initialOpt])
   useEscape(open, onClose)
   if (!ay) return <aside className="qp-sd" aria-hidden="true" />
-  const list = options(ay, cat, S, sourcesOnly)
+  const list = options(ay, cat, S)
   const o = list[Math.min(opt, list.length - 1)]
   let body = null
   if (cat === 'words') {
-    body = <div className="qp-wbw">{ay.words.map((wd, i) => <div key={i} className="qp-wb"><b>{wd.ar}</b><span>{wd.en}</span><i>{wd.tl}</i></div>)}</div>
+    // Each word, then what the team wrote and added for it: its root, iʿrāb, ṣarf and the parts of books added.
+    const studied = ay.words.map((wd, i) => {
+      const n = i + 1, ir = S?.wordIrab[`${ay.k}:${n}`], v = ay.st.vocab.find((x) => x.w === n), root = v && S?.roots[v.root], ws = S?.words?.[`${ay.k}:${n}`]
+      return { wd, root, ir, ws, has: Boolean(root || ir || ws?.sarf || ws?.quotes.length) }
+    }).filter((x) => x.has)
+    body = <>
+      <div className="qp-wbw">{ay.words.map((wd, i) => <div key={i} className="qp-wb"><b>{wd.ar}</b><span>{wd.en}</span><i>{wd.tl}</i></div>)}</div>
+      {studied.map(({ wd, root, ir, ws }, i) => (
+        <div key={i} className="qp-blk">
+          <h4><span className="qp-ar" style={{ fontSize: 22 }}>{wd.ar}</span><small>{[wd.en, root && `الجذر: ${root.root}`].filter(Boolean).join(' · ')}</small></h4>
+          {root?.note && <div className="arx">{root.note}</div>}
+          {ir && <>{ir.facts.length > 0 && <div className="facts">{ir.facts.map((f) => <span key={f}>{f}</span>)}</div>}<div className="arx">{ir.conclusion}</div></>}
+          {ws?.sarf && <><div className="by">Ṣarf</div>{ws.sarf.arabic && <div className="arx">{ws.sarf.arabic}</div>}{ws.sarf.english && <div className="enx">{ws.sarf.english}</div>}</>}
+          {ws?.quotes.map((q, j) => <Block key={j} o={quoteOpt(q)} />)}
+        </div>
+      ))}
+    </>
   } else if (!o) {
     body = <div className="qp-empty">Nothing published in this category for this āyah yet.</div>
-  } else if (cat === 'dictionaries') {
-    const r = S.roots[o.root], d = r.dicts[Math.min(dict, r.dicts.length - 1)]
-    body = <>
-      <div className="qp-pick"><span>Root</span><div className="qp-opts ar">{list.map((x, i) => <button key={x.root} type="button" className={i === opt ? 'on' : ''} onClick={() => { setOpt(i); setDict(0) }}>{x.label}</button>)}</div></div>
-      <div className="qp-pick"><span>Dictionary</span><select className="qp-seldd" value={dict} onChange={(e) => setDict(Number(e.target.value))}>{r.dicts.map((x, i) => <option key={x.name} value={i}>{x.name}</option>)}</select></div>
-      <Block o={{ title: `${d.name} · ${r.root}`, ar: d.arabic }} />
-    </>
   } else {
     body = <>
-      {list.length > 1 && <div className="qp-pick"><span>{cat === 'translation' ? 'Phrase' : 'Source'}</span><div className="qp-opts">{list.map((x, i) => <button key={i} type="button" className={i === opt ? 'on' : ''} onClick={() => setOpt(i)}>{x.label}{x.sub && <small>{x.sub}</small>}</button>)}</div></div>}
+      {list.length > 1 && <div className="qp-pick"><span>{cat === 'translation' ? 'Phrase' : 'Part'}</span><div className="qp-opts">{list.map((x, i) => <button key={i} type="button" className={i === opt ? 'on' : ''} onClick={() => setOpt(i)}>{x.label}{x.sub && <small>{x.sub}</small>}</button>)}</div></div>}
       {o.words ? o.words.map((wd, i) => (
         <div key={i} className="qp-blk"><h4><span className="qp-ar" style={{ fontSize: 22 }}>{wd.word}</span><small>{wd.tl}</small></h4>{wd.facts.length > 0 && <div className="facts">{wd.facts.map((f) => <span key={f}>{f}</span>)}</div>}<div className="arx">{wd.conclusion}</div></div>
       )) : <Block o={o} />}
@@ -140,19 +147,19 @@ function StudyWindow({ open, ay, cat, S, sourcesOnly, onCat, onClose, onStep, ca
         <div className="qp-abox"><p className="qp-qt">{ay.ar} <AyahMarker n={ay.a} /></p>{ay.sahih && <p className="ptr">{ay.sahih}</p>}</div>
         <div className="qp-tabs" role="tablist">
           {CATS.map(([id, l]) => {
-            const n = countOf(ay, id, S, sourcesOnly), enabled = id === 'words' ? ay.words.length > 0 : n > 0
+            const n = countOf(ay, id, S), enabled = id === 'words' ? ay.words.length > 0 : n > 0
             return <button key={id} type="button" role="tab" className={id === cat ? 'on' : ''} disabled={!enabled} onClick={() => onCat(id)}>{l}{n > 0 && <span>{n}</span>}</button>
           })}
         </div>
       </div>
-      <div className="qp-sd-b" key={`${ay.k}-${cat}-${opt}-${dict}`}>{body}</div>
+      <div className="qp-sd-b" key={`${ay.k}-${cat}-${opt}`}>{body}</div>
       <span className="qp-rz" onPointerDown={w.onResizeDown} aria-hidden="true" title="Drag to resize" />
     </aside>
   )
 }
 
 function SurahStudy({ S }) {
-  const topics = S.topics.filter((t) => t.arabic || t.english)
+  const topics = S.topics.filter((t) => t.arabic || t.english || t.quotes.length)
   const [topic, setTopic] = useState(topics.find((t) => t.id === 'introduction')?.id || topics[0]?.id)
   const [openCard, setOpenCard] = useState(true)
   const [full, setFull] = useState(false)
@@ -172,13 +179,14 @@ function SurahStudy({ S }) {
       {openCard && (
         <div className="qp-ss-grid">
           <div className="qp-ss-tabs" role="tablist" aria-orientation="vertical">
-            {S.topics.map((x) => <button key={x.id} type="button" role="tab" className={x.id === topic ? 'on' : ''} disabled={!x.arabic && !x.english} title={!x.arabic && !x.english ? 'Not added yet' : undefined} onClick={() => setTopic(x.id)}><small>{x.en}</small><b>{x.ar}</b></button>)}
+            {S.topics.map((x) => <button key={x.id} type="button" role="tab" className={x.id === topic ? 'on' : ''} disabled={!x.arabic && !x.english && !x.quotes.length} title={!x.arabic && !x.english && !x.quotes.length ? 'Not added yet' : undefined} onClick={() => setTopic(x.id)}><small>{x.en}</small><b>{x.ar}</b></button>)}
           </div>
           {t && (
             <div className="qp-ss-body" key={topic}>
               <h4 className="qp-ss-pt">{t.en} <span>{t.ar}</span></h4>
               {ar}
-              {t.english ? <p className="qp-ss-en">{t.english}</p> : <p className="qp-ss-en qp-ss-none">English for this topic has not been added yet.</p>}
+              {t.english ? <p className="qp-ss-en">{t.english}</p> : t.arabic ? <p className="qp-ss-en qp-ss-none">English for this topic has not been added yet.</p> : null}
+              {t.quotes.map((q, i) => <Block key={i} o={quoteOpt(q)} />)}
             </div>
           )}
         </div>
@@ -214,7 +222,6 @@ export default function QuranStudyPage() {
   const [data, setData] = useState({ status: 'loading' })
   const [S, setS] = useState(null)
   const [lang, setLang] = useState('both')
-  const [sourcesOnly, setSourcesOnly] = useState(false)
   const [ddOpen, setDdOpen] = useState(false)
   const [open, setOpen] = useState(null) // { a, cat, opt }
   const hc = useHoverCard()
@@ -233,7 +240,7 @@ export default function QuranStudyPage() {
     if (data.status !== 'ready') return []
     return data.text.map((r) => {
       const k = `${surah}:${r.a}`
-      return { a: r.a, k, ar: r.text, sahih: data.tr[r.a - 1] || '', words: data.words.get(r.a) || [], st: S?.ayahs[k] || EMPTY, src: S?.links[k] || {} }
+      return { a: r.a, k, ar: r.text, sahih: data.tr[r.a - 1] || '', words: data.words.get(r.a) || [], st: S?.ayahs[k] || EMPTY }
     })
   }, [data, S, surah])
 
@@ -255,15 +262,14 @@ export default function QuranStudyPage() {
   const openAy = open ? ayahs[open.a - 1] : null
   const openWin = (a, cat, opt = 0) => { hc.hide(); setOpen({ a, cat, opt }) }
   const closeWin = useCallback(() => setOpen(null), [])
-  const studied = S ? ayahs.filter((ay) => ay.st.irab.length || ay.st.rabt.length || ay.st.fawaid.length || ay.st.vocab.length || Object.keys(ay.src).length).length : 0
+  const studied = S ? ayahs.filter((ay) => ay.st.irab.length || ay.st.rabt.length || ay.st.fawaid.length || ay.st.tafsir.length || ay.st.qiraat.length || ay.st.vocab.length || Object.keys(ay.st.quotes).length).length : 0
 
   /* hover cards */
   const chipPreview = (el, ay, c) => {
-    const list = options(ay, c, S, sourcesOnly), o = list[0], label = CATS.find(([x]) => x === c)[1]
+    const list = options(ay, c, S), o = list[0], label = CATS.find(([x]) => x === c)[1]
     hc.show(<>
-      <div className="pv-k"><strong>{label} · {ay.k}</strong><small>{list.length > 1 ? `${list.length} sources` : '1 source'}</small></div>
-      {c === 'dictionaries' ? <><div className="pv-src">Roots: {list.map((x) => x.label).join(' · ')}</div><div className="pv">{plain(o.ar)}</div></>
-        : <><div className="pv-src">{o.title || o.label}</div>{o.ar && <div className="pv">{plain(o.ar)}</div>}{o.en && <div className="pv en">{plain(o.en)}</div>}</>}
+      <div className="pv-k"><strong>{label} · {ay.k}</strong><small>{list.length > 1 ? `${list.length} parts` : '1 part'}</small></div>
+      <div className="pv-src">{o.title || o.label}</div>{o.ar && <div className="pv">{plain(o.ar)}</div>}{o.en && <div className="pv en">{plain(o.en)}</div>}
       <span className="hint">Click to open in the study window →</span>
     </>, el)
   }
@@ -274,6 +280,7 @@ export default function QuranStudyPage() {
       <div className="wd">{wd.ar}</div><div className="mn">{wd.en}</div><div className="tl">{wd.tl}</div>
       {(root || ir) && <div className="row">{root && <span className="rt">الجذر: {root.root}</span>}{ir?.facts.slice(0, 4).map((f) => <span key={f}>{f}</span>)}</div>}
       {ir?.conclusion && <div className="ar">{ir.conclusion}</div>}
+      {S?.words?.[`${ay.k}:${i + 1}`] && <span className="hint">Click for this word’s study →</span>}
     </>, el)
   }
   const bracketCard = (el, note, orig) => hc.show(<>
@@ -299,7 +306,7 @@ export default function QuranStudyPage() {
 
   return (
     <WahaPage className={`qp${lang === 'english' ? ' lang-en' : lang === 'arabic' ? ' lang-ar' : ''}`} overlays={<>
-      <StudyWindow open={!!open} ay={openAy} cat={open?.cat} S={S} sourcesOnly={sourcesOnly} initialOpt={open?.opt}
+      <StudyWindow open={!!open} ay={openAy} cat={open?.cat} S={S} initialOpt={open?.opt}
         onCat={(c) => setOpen((o) => ({ ...o, cat: c, opt: 0 }))} onClose={closeWin}
         onStep={(d) => setOpen((o) => ({ ...o, a: Math.min(ayahs.length, Math.max(1, o.a + d)), opt: 0 }))}
         canPrev={open?.a > 1} canNext={open?.a < ayahs.length} surahName={info.en} />
@@ -328,8 +335,7 @@ export default function QuranStudyPage() {
           <div className="qp-modes">
             <div className="qp-seg light">
               <Link to={`/quran?surah=${surah}`} className="qp-seglink">Reader</Link>
-              <button type="button" className={!sourcesOnly ? 'on' : ''} onClick={() => setSourcesOnly(false)}>Study</button>
-              {SOURCES_ON ? <button type="button" className={sourcesOnly ? 'on' : ''} onClick={() => setSourcesOnly(true)}>Sources</button> : null}
+              <button type="button" className="on">Study</button>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}><span className="lbl">Study language</span>
               <div className="qp-seg light">{[['english', 'English'], ['arabic', 'Arabic'], ['both', 'Both']].map(([v, l]) => <button key={v} type="button" className={lang === v ? 'on' : ''} onClick={() => setLang(v)}>{l}</button>)}</div>
@@ -347,14 +353,14 @@ export default function QuranStudyPage() {
 
           <ol className="qp-ayl">
             {ayahs.map((ay) => {
-              const chips = CATS.filter(([c]) => c !== 'words' && countOf(ay, c, S, sourcesOnly))
+              const chips = CATS.filter(([c]) => c !== 'words' && countOf(ay, c, S))
               return (
                 <li key={ay.a} id={`ay-${ay.a}`} className={`qp-ay qp-card${open?.a === ay.a ? ' sel' : ''}${target === ay.a ? ' target' : ''}`}>
                   <div className="top"><span className="k">{ay.k}</span></div>
                   <p className="qp-qt">
                     {ay.words.length ? ay.words.map((wd, i) => {
-                      const has = S && (S.wordIrab[`${ay.k}:${i + 1}`] || ay.st.vocab.some((v) => v.w === i + 1))
-                      return <span key={i}><span className={`qp-w${has ? ' has' : ''}`} onMouseEnter={(e) => wordCard(e.currentTarget, ay, i)} onMouseLeave={hc.hide}>{wd.ar}</span>{' '}</span>
+                      const has = S && (S.wordIrab[`${ay.k}:${i + 1}`] || ay.st.vocab.some((v) => v.w === i + 1) || S.words?.[`${ay.k}:${i + 1}`])
+                      return <span key={i}><span className={`qp-w${has ? ' has' : ''}`} onMouseEnter={(e) => wordCard(e.currentTarget, ay, i)} onMouseLeave={hc.hide} onClick={has ? () => openWin(ay.a, 'words') : undefined}>{wd.ar}</span>{' '}</span>
                     }) : ay.ar} <AyahMarker n={ay.a} />
                   </p>
                   {ay.st.tr.map((t, i) => <Translation key={i} ay={ay} t={t} />)}
@@ -366,7 +372,7 @@ export default function QuranStudyPage() {
                           onMouseEnter={(e) => { const el = e.currentTarget; clearTimeout(hoverTimer.current); hoverTimer.current = setTimeout(() => chipPreview(el, ay, c), 180) }}
                           onMouseLeave={() => { clearTimeout(hoverTimer.current); hc.hide() }}
                           onClick={() => { clearTimeout(hoverTimer.current); openWin(ay.a, c) }}>
-                          {l}<b>{countOf(ay, c, S, sourcesOnly)}</b>
+                          {l}<b>{countOf(ay, c, S)}</b>
                         </button>
                       ))}
                       {ay.words.length > 0 && <button type="button" className={`qp-chip${open?.a === ay.a && open?.cat === 'words' ? ' on' : ''}`} onClick={() => openWin(ay.a, 'words')}>Words</button>}
