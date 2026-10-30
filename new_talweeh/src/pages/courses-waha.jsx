@@ -3,7 +3,7 @@
 // tiles on top; one filter panel (access, search, sort, subjects) above a grid of course cards that
 // turn cream on hover to show the description. URL: ?category=<slug>, ?free=1 (as the header menu links) or ?access=paid.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { WahaPage, useWahaMotion } from '../components/WahaShell'
 import { StartLink } from '../components/StartGuideHost'
 import { formatCommercePrice, primaryPurchaseOption } from '../data/liveCommerceCatalog'
@@ -18,6 +18,120 @@ const BookmarkIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="
 const CheckIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
 
 // "Fiqh (Islamic jurisprudence)" → "Fiqh" for chips; related subjects sit together (Fiqh, then Uṣūl al-Fiqh).
+// Search: accents, ʿayn/hamzah marks, Arabic vowel marks and capitals don't matter ("hadith" finds Ḥadīth, "tuhfah"
+// finds Tuḥfah). Every word typed must appear somewhere; a course ranks by where (title first, then teacher and subject,
+// then the description), so a few letters bring the right courses to the top.
+const fold = (v = '') => String(v).normalize('NFD').replace(/[̀-ًͯ-ٰٟـ]/g, '').replace(/[ʿʾ'’‘`]/g, '').replace(/[-–—_/]/g, ' ').toLowerCase()
+function searchIndex(c) {
+  return { title: fold(`${c.title} ${c.arabicTitle || ''}`), who: fold(`${c.instructor || ''} ${c.categoryLabel || ''}`), text: fold(`${plainText(c.description)} ${c.primaryText || ''}`) }
+}
+function matchScore(ix, words) {
+  let score = 0
+  for (const w of words) {
+    const re = new RegExp(`(^|\\s)${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`)
+    if (re.test(ix.title)) score += 12
+    else if (ix.title.includes(w)) score += 8
+    else if (re.test(ix.who)) score += 6
+    else if (ix.who.includes(w)) score += 4
+    else if (w.length >= 3 && re.test(ix.text)) score += 1
+    else return 0
+  }
+  return score
+}
+const SORTS = [['', 'Recommended'], ['free', 'Free first'], ['az', 'Title A–Z'], ['price', 'Price: low to high'], ['lessons', 'Most lessons']]
+
+// Sort: a styled menu (the browser's own select list can't take the site's look).
+function SortMenu({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const [hi, setHi] = useState(0)
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!open) return undefined
+    const away = (e) => { if (!ref.current?.contains(e.target)) setOpen(false) }
+    document.addEventListener('pointerdown', away)
+    return () => document.removeEventListener('pointerdown', away)
+  }, [open])
+  const pick = (v) => { onChange(v); setOpen(false); ref.current?.querySelector('button')?.focus() }
+  const show = () => { setHi(Math.max(0, SORTS.findIndex(([v]) => v === value))); setOpen(true) }
+  const onKey = (e) => {
+    if (!open && ['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) { e.preventDefault(); show(); return }
+    if (!open) return
+    if (e.key === 'ArrowDown') { e.preventDefault(); setHi((h) => (h + 1) % SORTS.length) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setHi((h) => (h - 1 + SORTS.length) % SORTS.length) }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(SORTS[hi][0]) }
+    else if (e.key === 'Escape' || e.key === 'Tab') setOpen(false)
+  }
+  const label = (SORTS.find(([v]) => v === value) || SORTS[0])[1]
+  return (
+    <div className={`cw-sort${open ? ' open' : ''}`} ref={ref}>
+      <button type="button" aria-haspopup="listbox" aria-expanded={open} aria-label={`Sort courses: ${label}`} onClick={() => (open ? setOpen(false) : show())} onKeyDown={onKey}>
+        <small>Sort</small><span>{label}</span><ChevronIcon />
+      </button>
+      {open && (
+        <ul className="cw-sort-menu" role="listbox" aria-label="Sort courses" aria-activedescendant={`cw-sort-${hi}`}>
+          {SORTS.map(([v, t], i) => (
+            <li key={v || 'rec'} id={`cw-sort-${i}`} role="option" aria-selected={v === value} className={`${i === hi ? 'hi' : ''}${v === value ? ' on' : ''}`} onPointerEnter={() => setHi(i)} onClick={() => pick(v)}>
+              <span>{t}</span>{v === value && <CheckIcon />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+// Search box with suggestions from 2 letters: the best few courses (poster, title, teacher), arrow keys to move, Enter
+// to open one; the grid below filters at the same time.
+function SearchBox({ q, setQ, hits, total, onShowAll }) {
+  const navigate = useNavigate()
+  const [focus, setFocus] = useState(false)
+  const [hi, setHi] = useState(-1)
+  const ref = useRef(null)
+  const show = focus && fold(q).trim().length >= 2
+  const top = hits.slice(0, 6)
+  useEffect(() => { setHi(-1) }, [q])
+  useEffect(() => {
+    if (!show) return undefined
+    const away = (e) => { if (!ref.current?.contains(e.target)) setFocus(false) }
+    document.addEventListener('pointerdown', away)
+    return () => document.removeEventListener('pointerdown', away)
+  }, [show])
+  const go = (c) => { setFocus(false); navigate(`/courses/${c.slug}`) }
+  const onKey = (e) => {
+    if (e.key === 'Escape') { if (show) setFocus(false); else setQ(''); return }
+    if (!show) { if (e.key === 'ArrowDown') setFocus(true); return }
+    if (e.key === 'ArrowDown') { e.preventDefault(); setHi((h) => Math.min(h + 1, top.length)) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setHi((h) => Math.max(h - 1, -1)) }
+    else if (e.key === 'Enter') { e.preventDefault(); if (hi >= 0 && hi < top.length) go(top[hi]); else { setFocus(false); onShowAll() } }
+  }
+  return (
+    <div className="cw-search-wrap" ref={ref}>
+      <label className="cw-search"><SearchIcon />
+        <input value={q} onChange={(e) => { setQ(e.target.value); setFocus(true) }} onFocus={() => setFocus(true)} onKeyDown={onKey}
+          placeholder="Search a book, teacher or subject" aria-label="Search courses" role="combobox" aria-expanded={show} aria-controls="cw-sug" aria-autocomplete="list"
+          aria-activedescendant={show && hi >= 0 ? `cw-sug-${hi}` : undefined} autoComplete="off" spellCheck="false" />
+        {q && <button type="button" className="cw-search-x" aria-label="Clear search" onClick={() => { setQ(''); ref.current?.querySelector('input')?.focus() }}>✕</button>}
+      </label>
+      {show && (
+        <div className="cw-sug" id="cw-sug" role="listbox" aria-label="Matching courses">
+          {top.length ? top.map((c, i) => (
+            <div key={c.slug} id={`cw-sug-${i}`} role="option" aria-selected={i === hi} className={i === hi ? 'hi' : ''} onPointerEnter={() => setHi(i)} onPointerDown={(e) => e.preventDefault()} onClick={() => go(c)}>
+              {c.poster ? <img src={c.poster} alt="" loading="lazy" /> : <span className="ph" />}
+              <span className="t"><strong>{c.title}</strong><small>{[c.instructor, shortLabel(c.categoryLabel)].filter(Boolean).join(' · ')}</small></span>
+              {c.free && <span className="fr">Free</span>}
+            </div>
+          )) : <p className="cw-sug-none">No course matches “{q.trim()}”.</p>}
+          {top.length > 0 && (
+            <div id={`cw-sug-${top.length}`} role="option" aria-selected={hi === top.length} className={`all${hi === top.length ? ' hi' : ''}`} onPointerEnter={() => setHi(top.length)} onPointerDown={(e) => e.preventDefault()} onClick={() => { setFocus(false); onShowAll() }}>
+              {total > top.length ? `See all ${total} results` : 'Show results below'} ↓
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 const shortLabel = (label = '') => label.replace(/\s*\([^)]*\)\s*$/, '')
 const subjectOrder = (slug = '') => `${slug.replace(/^usul-al-/, '')}${slug.startsWith('usul-al-') ? '~' : ''}`
 
@@ -74,6 +188,7 @@ function Card({ course, inList }) {
 export default function CoursesWahaPage() {
   const rootRef = useRef(null)
   const libRef = useRef(null)
+  const cardsRef = useRef(null)
   const [params, setParams] = useSearchParams()
   const { courses, categories } = useCourseCatalog()
   const studyList = useStudyList()
@@ -97,10 +212,17 @@ export default function CoursesWahaPage() {
     if (access || cat) setTimeout(() => libRef.current?.scrollIntoView({ block: 'start' }), 80)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
   const inList = useMemo(() => new Set(studyList.map((i) => i.productKey)), [studyList])
-  const needle = q.trim().toLowerCase()
-  const base = useMemo(() => courses.filter((c) => !needle || `${c.title} ${c.arabicTitle || ''} ${c.instructor} ${c.categoryLabel} ${plainText(c.description)} ${c.primaryText || ''}`.toLowerCase().includes(needle)), [courses, needle])
+  const words = useMemo(() => fold(q).split(/\s+/).filter(Boolean), [q])
+  const indexed = useMemo(() => courses.map((c) => [c, searchIndex(c)]), [courses])
+  const scores = useMemo(() => {
+    const m = new Map()
+    if (words.length) for (const [c, ix] of indexed) { const s = matchScore(ix, words); if (s) m.set(c, s) }
+    return m
+  }, [indexed, words])
+  const base = useMemo(() => (words.length ? courses.filter((c) => scores.has(c)) : courses), [courses, words, scores])
   const pass = (c, skip) => (skip === 'access' || !access || (access === 'free' ? c.free : !c.free)) && (skip === 'cat' || !cat || cats.includes(c.category))
   let list = base.filter((c) => pass(c))
+  if (words.length && !sort) list = [...list].sort((a, b) => scores.get(b) - scores.get(a))
   if (sort === 'free') list = [...list].sort((a, b) => Number(b.free) - Number(a.free))
   if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title))
   if (sort === 'price') list = [...list].sort((a, b) => (Number(primaryPurchaseOption(a)?.amount_cents ?? a.priceCents) || 0) - (Number(primaryPurchaseOption(b)?.amount_cents ?? b.priceCents) || 0))
@@ -154,18 +276,15 @@ export default function CoursesWahaPage() {
                 <Opt on={access === 'free'} count={n((c) => c.free && pass(c, 'access'))} label="Free" onClick={() => setFilter({ access: access === 'free' ? '' : 'free' })} />
                 <Opt on={access === 'paid'} count={n((c) => !c.free && pass(c, 'access'))} label="Paid" onClick={() => setFilter({ access: access === 'paid' ? '' : 'paid' })} />
               </div>
-              <label className="cw-search"><SearchIcon /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search a book, teacher or subject" aria-label="Search courses" /></label>
-              <label className="cw-sort">
-                <select value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort courses"><option value="">Recommended</option><option value="free">Free first</option><option value="az">Title A–Z</option><option value="price">Price: low to high</option><option value="lessons">Most lessons</option></select>
-                <ChevronIcon />
-              </label>
+              <SearchBox q={q} setQ={setQ} hits={words.length ? [...list].sort((a, b) => scores.get(b) - scores.get(a)) : []} total={list.length} onShowAll={() => cardsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
+              <SortMenu value={sort} onChange={setSort} />
             </div>
             <div className="cw-subs" role="group" aria-label="Subject">
               <Opt on={!cat} count={n((c) => pass(c, 'cat'))} label="All subjects" onClick={() => setFilter({ cat: '' })} />
               {subjectList.map((k) => <Opt key={k.slug} on={cats.includes(k.slug)} count={n((c) => c.category === k.slug && pass(c, 'cat'))} label={shortLabel(k.label)} onClick={() => setFilter({ cat: cat === k.slug ? '' : k.slug })} />)}
             </div>
           </div>
-          <div className="cw-cards">
+          <div className="cw-cards" ref={cardsRef} style={{ scrollMarginTop: 110 }}>
             {list.map((c) => <Card key={c.slug} course={c} inList={inList.has(c.checkoutSlug || c.slug)} />)}
             {!list.length && <p className="cw-empty">No course matches these filters. Try another subject or clear the search.</p>}
           </div>
