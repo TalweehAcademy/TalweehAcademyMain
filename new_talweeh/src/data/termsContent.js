@@ -41,7 +41,7 @@ export const TERMS = {
     {
       "n": 7,
       "title": "Course Modifications & Cancellations",
-      "html": "<ul><li><strong>Changes:</strong> Talweeh Academy reserves the right to modify course content, schedules, instructors, or delivery formats as necessary. </li><li><strong>Cancellations:</strong> If a course is canceled by Talweeh Academy before it begins, enrolled students will be entitled to a full refund of fees paid for that course. </li><li> Talweeh Academy reserves the right to remove the content of any given course if the content is updated or requires revising. </li></ul>"
+      "html": "<ul><li><strong>Changes:</strong> Talweeh Academy reserves the right to modify course content, schedules, instructors, or delivery formats as necessary. </li><li><strong>Cancellations:</strong> If a course is canceled by Talweeh Academy before it begins, enrolled students will be entitled to a full refund of fees paid for that course. </li><li> Talweeh Academy reserves the right to remove the content of any given course if the content is updated or requires revising. </li><li><strong>Access Period:</strong> Recorded content remains available for at least the minimum period below. After it, Talweeh Academy is not obliged to continue providing the content, but it stays available for as long as Talweeh Academy keeps it. <ul><li> On-Demand courses: at least one (1) year from the date of enrolment. </li><li> Two-year programmes (such as the Two-Year Arabic Program and the Ḥadīth Specialization): at least two (2) years after the programme fees have been paid in full. </li><li> Monthly plans: access continues only while the subscription is active. </li></ul></li></ul>"
     },
     {
       "n": 8,
