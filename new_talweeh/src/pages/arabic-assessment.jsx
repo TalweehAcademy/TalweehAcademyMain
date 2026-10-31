@@ -19,7 +19,7 @@ const MISSES_TO_ADVISE = 3
 const KEY = 'talweeh:arabic-assessment:public:v1'
 
 const STAGE_INFO = [
-  { title: 'First principles', summary: 'From Arabic 101: the three kinds of word, doer and object, sentences, the verb and first concepts.' },
+  { title: 'First principles', summary: 'From the Overview of the Arabic Language: the three kinds of word, phrases, sentences, the verb and first iʿrāb.' },
   { title: 'Verbs and structure', summary: 'From al-Shadharah al-Dhahabiyyah, Ṣarf 101 and Qaṣaṣ al-Nabiyyīn: first naḥw, verb forms and reading.' },
   { title: 'Iʿrāb and the ḥarakāt', summary: 'Full iʿrāb with its signs, ḥāl, tamyīz and the other manṣūbāt, and vowelling unvowelled sentences.' },
   { title: 'Advanced naḥw and poetry', summary: 'From Mutammimah al-Ājurrūmiyyah and Lāmiyyat Abī Ṭālib: the fuller rules of naḥw, and reading classical verse.' },
