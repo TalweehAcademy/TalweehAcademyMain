@@ -58,9 +58,10 @@ function Route({ d, look, onOpen }) {
   const L = LOOK[look]
   const stops = d.levels.map((lv, i) => ({ lv, i })).filter((x) => x.lv.length)
   // On wider screens the Begin and Mastery flags get lanes of their own at either end, so they never sit on a
-  // stop; on a phone (one stop per row) there is room for them beside the centred stop anyway.
+  // stop; on a phone (one stop per row) there is room for them beside the centred stop anyway. A phone still keeps
+  // a lane at each side for the road's turns down to the next row, so they never run over the texts.
   const wide = (W || 1000) >= 600
-  const x0 = wide ? 14 + FLAG_W.start + 14 : 0, x1 = (W || 1000) - (wide ? 14 + FLAG_W.end + 14 : 0)
+  const x0 = wide ? 14 + FLAG_W.start + 14 : 34, x1 = (W || 1000) - (wide ? 14 + FLAG_W.end + 14 : 34)
   const per = Math.max(1, Math.min(stops.length, Math.floor((x1 - x0) / L.minW)))
   const colW = (x1 - x0) / per
   const top = 70

@@ -142,7 +142,7 @@ export default function AlimiyyahWahaPage() {
       <div className="wh-wrap">
         <section className="ak-tp"><div className="ak-tp-in">
           {/* Split between lām and mīm so Amiri can't stack them (see .t-ar-a in alimiyyah-waha-v1.css). */}
-          <div className="t-ar" lang="ar"><span className="t-ar-a">العَالِ</span>مِيَّة</div>
+          <div className="t-ar" lang="ar"><span className="t-ar-a">العَالِ‍</span>‍مِيَّة</div>
           <div className="rule" aria-hidden="true">✦</div>
           <span className="cw-kicker">Talweeh Academy · Online Seminary</span>
           <h1>Rooted in tradition.<em>Knowledge for a life of service.</em></h1>
