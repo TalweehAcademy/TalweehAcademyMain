@@ -19,11 +19,11 @@ const MISSES_TO_ADVISE = 3
 const KEY = 'talweeh:arabic-assessment:public:v1'
 
 const STAGE_INFO = [
-  { title: 'First principles', summary: 'The three kinds of word, doer and object, the nominal sentence, ṣarf and naḥw, and first concepts like the ḥāl.' },
-  { title: 'Verbs and structure', summary: 'Tense and conjugation, the passive, the mazīd fīhi patterns, tarkīb, and reading narrative sentences.' },
+  { title: 'First principles', summary: 'From Arabic 101: the three kinds of word, doer and object, sentences, the verb and first concepts.' },
+  { title: 'Verbs and structure', summary: 'From al-Shadharah al-Dhahabiyyah, Ṣarf 101 and Qaṣaṣ al-Nabiyyīn: first naḥw, verb forms and reading.' },
   { title: 'Iʿrāb and the ḥarakāt', summary: 'Full iʿrāb with its signs, ḥāl, tamyīz and the other manṣūbāt, and vowelling unvowelled sentences.' },
-  { title: 'Grammarians, ṣarf and texts', summary: 'Baṣran and Kūfan positions, iʿlāl and ibdāl, weak verbs, advanced naḥw, short texts and vocabulary.' },
-  { title: 'The Qurʾān', summary: 'Iʿrāb and balāghah of āyāt from Juzʾ ʿAmma, centred on Sūrat al-Takwīr.' },
+  { title: 'Advanced naḥw and poetry', summary: 'From Mutammimah al-Ājurrūmiyyah and Lāmiyyat Abī Ṭālib: the fuller rules of naḥw, and reading classical verse.' },
+  { title: 'Iʿrāb in depth', summary: 'From al-Iʿrāb ʿan Qawāʿid al-Iʿrāb: sentences, particles and how to parse them, with āyāt of the Qurʾān.' },
 ]
 
 const TOPIC_LABELS = {
@@ -93,7 +93,7 @@ function Intro({ answeredCount, start }) {
     <section className="aas-intro cw-card">
       <div className="aas-intro-copy">
         <span className="cw-kicker">{STAGES.length * QUESTIONS_PER_STAGE}+ questions · about 15–25 minutes</span>
-        <h2>One question at a time, from first principles to Sūrat al-Takwīr</h2>
+        <h2>One question at a time, from first principles to Ibn Hishām’s al-Iʿrāb</h2>
         <p>You get {QUESTIONS_PER_STAGE} questions from each of five stages, drawn at random from a bank of {BANK_SIZE}, so every attempt is different. You’ll see straight away whether each answer is right, and why. If you miss {MISSES_TO_ADVISE} in one stage, we’ll suggest the module to start with. You can always keep going to see the rest.</p>
         <div className="aas-acts">
           <button type="button" className="wh-btn wh-btn-g" onClick={() => start(false)}>{answeredCount ? 'Continue the assessment' : 'Start the assessment'} →</button>
@@ -109,7 +109,7 @@ function Intro({ answeredCount, start }) {
 }
 
 export default function ArabicAssessmentPage() {
-  useDocumentMeta({ title: 'Arabic Assessment · Where should you start?', description: 'A free, question-by-question check of your Arabic, from recognising an ism to the iʿrāb and balāghah of Sūrat al-Takwīr. It tells you which module of the Two-Year Arabic Program to start with.' })
+  useDocumentMeta({ title: 'Arabic Assessment · Where should you start?', description: 'A free, question-by-question check of your Arabic, from recognising an ism to the iʿrāb of Ibn Hishām’s al-Iʿrāb ʿan Qawāʿid al-Iʿrāb, with questions from the program’s own lesson quizzes. It tells you which module of the Two-Year Arabic Program to start with.' })
   const [state, setState] = useState(EMPTY)
   const [ready, setReady] = useState(false)
   useEffect(() => { setState(load()); setReady(true) }, [])
@@ -308,7 +308,7 @@ export default function ArabicAssessmentPage() {
           <Link className="aas-back" to="/arabic">← About the Arabic Program</Link>
           <span className="cw-kicker">Talweeh Arabic · Assessment</span>
           <h1>Where should you start?</h1>
-          <p className="lead">A question-by-question check of your Arabic, from recognising an ism to the iʿrāb and balāghah of Sūrat al-Takwīr. It tells you which module to start with.</p>
+          <p className="lead">A question-by-question check of your Arabic, from recognising an ism to the iʿrāb of Ibn Hishām’s al-Iʿrāb ʿan Qawāʿid al-Iʿrāb, with questions from the program’s own lesson quizzes. It tells you which module to start with.</p>
         </section>
         <div className="aas">{body}</div>
       </div>
