@@ -45,6 +45,37 @@ const NEXT_STEPS = [
 
 // Arabic options (Arabic letters, no Latin) are set right-to-left in the Arabic face.
 const isArabic = (text) => /[؀-ۿ]/.test(text) && !/[A-Za-z]/.test(text)
+// Arabic words inside English text, shown larger in the Arabic font so the student reads the Arabic itself.
+const ARABIC_RUN = /([؀-ۿ][؀-ۿ\s،؛؟()«»﴿﴾"'.-]*[؀-ۿ])|([؀-ۿ])/g
+function Ar({ children: text }) {
+  if (!text || isArabic(text) || !/[؀-ۿ]/.test(text)) return text
+  const out = []
+  let last = 0
+  for (const m of text.matchAll(ARABIC_RUN)) {
+    if (m.index > last) out.push(text.slice(last, m.index))
+    out.push(<span key={m.index} className="aas-ar" lang="ar" dir="rtl">{m[0]}</span>)
+    last = m.index + m[0].length
+  }
+  out.push(text.slice(last))
+  return out
+}
+// What to revisit: the missed questions by book and lesson (the source reads "Book · Lesson N"), each book linked to
+// its course where it is one on the website, else to the program month by month.
+const BOOK_COURSE = { 'al-tuḥfat al-saniyyah': 'al-tuhfat-al-saniyyah', 'mutammimah al-ājurrūmiyyah': 'mutammimah-al-ajurrumiyyah', 'lāmiyyat abī ṭālib': 'lamiyyat-abi-talib', 'al-iʿrāb ʿan qawāʿid al-iʿrāb': 'al-irab-an-qawaid-al-irab' }
+function toRevisit(missed) {
+  const books = new Map()
+  for (const { question } of missed) {
+    const [book, lesson] = (question.s || '').split(' · ')
+    if (!book || !/^Lesson \d+$/.test(lesson || '')) continue
+    const row = books.get(book) || { book, lessons: new Set(), count: 0 }
+    row.lessons.add(Number(lesson.slice(7))); row.count += 1
+    books.set(book, row)
+  }
+  return [...books.values()].sort((a, b) => b.count - a.count).map((row) => {
+    const slug = BOOK_COURSE[row.book.toLowerCase()]
+    return { ...row, lessons: [...row.lessons].sort((a, b) => a - b), to: slug ? `/courses/${slug}` : '/arabic/learning', label: slug ? 'View course' : 'See it in the program' }
+  })
+}
 const STAGES = ARABIC_ASSESSMENT_BANK.map((questions, i) => ({ number: i + 1, module: i + 1, ...STAGE_INFO[i], questions }))
 const BY_ID = new Map(STAGES.flatMap((stage) => stage.questions.map((question) => [question.id, { question, stage }])))
 const BANK_SIZE = BY_ID.size
@@ -182,6 +213,7 @@ export default function ArabicAssessmentPage() {
     const stopStage = stop ? STAGES[stop.stage - 1] : null
     const moduleName = (n) => ARB.MODULES[n - 1]?.name
     const weak = weakestTopics(missed.map(({ question }) => question.t))
+    const revisit = toRevisit(missed)
     body = (
       <>
         {bar}
@@ -215,6 +247,20 @@ export default function ArabicAssessmentPage() {
             <Link className="wh-btn wh-btn-glass" to="/courses">Explore all courses</Link>
           </section>
         ) : null}
+        {revisit.length ? (
+          <section className="aas-revisit cw-card" aria-labelledby="aas-revisit-title">
+            <h2 id="aas-revisit-title">What to revisit</h2>
+            <p>The lessons your missed questions come from.</p>
+            <ul>
+              {revisit.map((row) => (
+                <li key={row.book}>
+                  <span><strong>{row.book}</strong><small>{row.lessons.length === 1 ? 'Lesson' : 'Lessons'} {row.lessons.join(', ')} · {row.count} missed</small></span>
+                  <Link to={row.to}>{row.label} →</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         {missed.length ? (
           <details className="aas-review cw-card" open>
             <summary><strong>Review your mistakes</strong><small>{missed.length} {missed.length === 1 ? 'question' : 'questions'}, with the right answers</small></summary>
@@ -225,13 +271,13 @@ export default function ArabicAssessmentPage() {
                 return (
                   <li key={question.id}>
                     <span className="aas-review-stage">Stage {stage.number} · {stage.title}</span>
-                    <strong>{question.p}</strong>
+                    <strong><Ar>{question.p}</Ar></strong>
                     {question.a ? <div className="aas-review-ar" dir="rtl" lang="ar">{question.a}</div> : null}
                     <div className="aas-review-ans">
-                      <span className="is-miss">✕ <em dir={isArabic(chosen) ? 'rtl' : undefined}>{chosen}</em></span>
-                      <span className="is-right">✓ <em dir={isArabic(right) ? 'rtl' : undefined}>{right}</em></span>
+                      <span className="is-miss">✕ <em dir={isArabic(chosen) ? 'rtl' : undefined}><Ar>{chosen}</Ar></em></span>
+                      <span className="is-right">✓ <em dir={isArabic(right) ? 'rtl' : undefined}><Ar>{right}</Ar></em></span>
                     </div>
-                    {question.e ? <p>{question.e}</p> : null}
+                    {question.e ? <p><Ar>{question.e}</Ar></p> : null}
                   </li>
                 )
               })}
@@ -262,7 +308,7 @@ export default function ArabicAssessmentPage() {
               {counting ? <span className="aas-lives" title={`${stageMisses} of ${MISSES_TO_ADVISE} misses in this stage`} aria-label={`${stageMisses} of ${MISSES_TO_ADVISE} misses in this stage`}>{Array.from({ length: MISSES_TO_ADVISE }, (_, i) => <i key={i} className={i < stageMisses ? 'is-miss' : ''} />)}</span> : null}
             </span>
           </header>
-          <h2 className="aas-prompt">{question.p}</h2>
+          <h2 className="aas-prompt"><Ar>{question.p}</Ar></h2>
           {question.a ? <div className="aas-arabic" dir="rtl" lang="ar">{question.a}</div> : null}
           {question.s ? <small className="aas-source">{question.s}</small> : null}
           <div className="aas-options" role="radiogroup" aria-label="Answers">
@@ -275,14 +321,14 @@ export default function ArabicAssessmentPage() {
               return (
                 <button key={original} type="button" role="radio" aria-checked={isPicked} disabled={answered} className={cls} onClick={() => choose(original)}>
                   <span className="aas-key" aria-hidden="true">{isAnswer ? '✓' : answered && isPicked ? '✕' : position + 1}</span>
-                  <span className="aas-opt-text" dir={ar ? 'rtl' : undefined} lang={ar ? 'ar' : undefined}>{text}</span>
+                  <span className="aas-opt-text" dir={ar ? 'rtl' : undefined} lang={ar ? 'ar' : undefined}><Ar>{text}</Ar></span>
                 </button>
               )
             })}
           </div>
           {answered ? (
             <div className={`aas-feedback${right ? ' is-right' : ' is-miss'}`} aria-live="polite">
-              <div><strong>{right ? 'Correct' : 'Not quite'}</strong>{question.e ? <p>{question.e}</p> : null}</div>
+              <div><strong>{right ? 'Correct' : 'Not quite'}</strong>{question.e ? <p><Ar>{question.e}</Ar></p> : null}</div>
               <button type="button" className="wh-btn wh-btn-g" onClick={next} autoFocus>{state.index >= total - 1 ? 'See my result' : 'Next question'} ↵</button>
             </div>
           ) : (
