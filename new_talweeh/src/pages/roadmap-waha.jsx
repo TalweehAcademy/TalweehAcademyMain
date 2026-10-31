@@ -46,6 +46,31 @@ function useWidth(ref) {
   return w
 }
 
+// On a phone the path is a trail: one gold line down the side with a numbered stop per level, each level a card
+// with its texts (the first four; the rest counted). The line stays gold through the levels Talweeh teaches and
+// turns grey after the last of them. Tapping a level opens it in full, as clicking a stop does on the road.
+function Trail({ stops, onOpen }) {
+  const lastLit = stops.reduce((a, s, k) => (s.lv.some((x) => x.course) ? k : a), -1)
+  return (
+    <ol className="rt-trail">
+      <li className="rt-trail-start"><span className="rt-trail-pin go">Begin</span></li>
+      {stops.map((p, k) => {
+        const lit = p.lv.some((s) => s.course), more = p.lv.length - 4, last = k === stops.length - 1
+        return (
+          <li key={p.i} className={`${lit ? 'lit' : ''}${k < lastLit ? ' gold' : ''}`}>
+            <span className="rt-trail-pin">{p.i + 1}</span>
+            <button type="button" className="rt-trail-card" onClick={() => onOpen(p.i)}>
+              <small>Level {p.i + 1} · {LEVEL_NAMES[p.i]}{last ? ' · Mastery' : ''}</small>
+              <ul>{p.lv.slice(0, more > 0 ? 3 : 4).map((s, j) => <li key={j} className={s.course ? 'lit' : ''}><i />{s.text}</li>)}</ul>
+              {more > 0 && <em>+ {more + 1} more texts{p.lv.slice(3).some((s) => s.course) ? ` · ${p.lv.slice(3).filter((s) => s.course).length} taught at Talweeh` : ''}</em>}
+            </button>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
 function Route({ d, look, onOpen }) {
   const boxRef = useRef(null)
   const W = useWidth(boxRef)
@@ -57,6 +82,7 @@ function Route({ d, look, onOpen }) {
   useEffect(() => () => clearTimeout(closeT.current), [])
   const L = LOOK[look]
   const stops = d.levels.map((lv, i) => ({ lv, i })).filter((x) => x.lv.length)
+  if (W > 0 && W < 600) return <div className="rp-route rp-trail" ref={boxRef}><Trail stops={stops} onOpen={onOpen} /></div>
   // On wider screens the Begin and Mastery flags get lanes of their own at either end, so they never sit on a
   // stop; on a phone (one stop per row) there is room for them beside the centred stop anyway. A phone still keeps
   // a lane at each side for the road's turns down to the next row, so they never run over the texts.
@@ -287,7 +313,7 @@ export default function RoadmapWahaPage() {
           <section className="rp-path" ref={roadRef}>
             <div className="rp-path-h">
               <div><span className="ar" lang="ar">{d.ar}</span><h2>{d.name}{d.sub && <small> · {d.sub}</small>}</h2><p>{d.blurb}</p></div>
-              <div className="rp-legend"><span><i className="lit" />Taught at Talweeh</span><span><i />Not yet at Talweeh</span><span className="tip">Hover a stop to preview · click for the full level</span></div>
+              <div className="rp-legend"><span><i className="lit" />Taught at Talweeh</span><span><i />Not yet at Talweeh</span><span className="tip">Hover a stop to preview · click for the full level</span><span className="tip phone">Tap a level for all its texts</span></div>
             </div>
             {import.meta.env.DEV && (
               <div className="rp-dev" role="group" aria-label="Path design (local preview only)">
